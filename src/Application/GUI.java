@@ -33,7 +33,6 @@ import javax.swing.JPanel;
 public abstract class GUI {
 
 	// protected abstract void redraw(); 	// T RECONSIDER
-	// protected abstract void editMap();		// JIO RECONSIDER
 	// protected abstract void loadGame();		// BENETTE RECONSIDER
 	// protected abstract void saveGame();		// BENETTE RECONSIDER
 	protected abstract void onStart();		// loads a GameWorld (new or saved)
@@ -158,7 +157,7 @@ public abstract class GUI {
 		load.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// loadGame();
+				// loadGame();			// BENNETTE RECONSIDER
 			}
 
 		});
@@ -167,7 +166,7 @@ public abstract class GUI {
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// saveGame();
+				// saveGame();			// BENNETTE RECONSIDER
 			}
 
 		});
@@ -185,17 +184,8 @@ public abstract class GUI {
 		game.add(save);
 		game.add(newGame);
 
-		// EDIT: edit the game world map
-		JMenu edit = new JMenu("Edit");
-		edit.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				// editMap();
-			}
-		});
-
 		mb.add(help);
 		mb.add(game);
-		mb.add(edit);
 		mb.add(quit);
 		frame.setJMenuBar(mb);
 	}
