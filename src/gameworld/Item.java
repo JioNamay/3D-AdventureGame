@@ -6,7 +6,7 @@ package gameworld;
  */
 public abstract class Item {
 
-	private Location location;
+	protected Location location;
 
 	/**
 	 *
