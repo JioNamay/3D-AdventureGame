@@ -39,7 +39,7 @@ public class Chest extends Item {
 		if (k == null)
 			throw new IllegalArgumentException("Argument cannot be null.");
 
-		if (!k instanceof Key)
+		if (!(k instanceof Key))
 			throw new IllegalArgumentException("Item passed in argument must be a Key!");
 
 		// if k is in not in player's inventory, throw exception ("player doesn't have the correct key")
