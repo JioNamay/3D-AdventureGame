@@ -1,4 +1,6 @@
-package gameworld;
+package gameitems;
+
+import gameworld.Location;
 
 /**
  * A Door is an Item that cannot be picked up and moved around.

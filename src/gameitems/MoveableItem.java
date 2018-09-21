@@ -1,7 +1,10 @@
 /**
  * 
  */
-package gameworld;
+package gameitems;
+
+import gameworld.Location;
+import gameworld.Player;
 
 /**
  * The Class MoveableItem.

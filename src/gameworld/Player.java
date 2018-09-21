@@ -1,5 +1,7 @@
 package gameworld;
 
+import gameitems.Inventory;
+
 /**
  * The Class Player.
  * 

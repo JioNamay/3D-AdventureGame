@@ -1,4 +1,6 @@
-package gameworld;
+package gameitems;
+
+import gameworld.Location;
 
 /**
  * @author Deanne Alabastro

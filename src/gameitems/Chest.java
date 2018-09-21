@@ -1,4 +1,7 @@
-package gameworld;
+package gameitems;
+
+import gameworld.Location;
+import gameworld.Player;
 
 /**
  * Chest is an immovable item that contains other items.
