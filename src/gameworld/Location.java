@@ -1,6 +1,4 @@
-/**
- * 
- */
+package gameworld;
 
 /**
  * @author Deanne Alabastro
@@ -26,3 +24,6 @@ public class Location {
 		return this.col;
 	}
 }
+
+
+
