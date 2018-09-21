@@ -26,18 +26,17 @@ public abstract class MoveableItem extends Item{
 	 * @return true, if successful
 	 */
 	public boolean pickUp(Player player) {
-		// check if player's inventory is full
-		if(player.getInventory().isFull()) {
-			return false;
-		}else {
+		// add item to inventory if not full
+		if(player.getInventory().add(this)) {
 			setLocation(player.getLocation()); // set item's loc to player's
-			player.getInventory().add(this); // add item to inventory
 			return true;
+		}else {
+			return false;
 		}
 	}
 	
 	/**
-	 * Drop.
+	 * Drops the item.
 	 *
 	 * @param player the player
 	 * @return true, if successful
