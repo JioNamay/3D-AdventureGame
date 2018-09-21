@@ -91,7 +91,7 @@ public class Player {
 
 		if (health - healthToDecrease < 0) {
 			health = 0; // minimum health is 0
-			// gameLost();
+			// gameLost(); // player loses if out of health
 		} else {
 			health -= healthToDecrease;
 		}
