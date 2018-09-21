@@ -3,10 +3,11 @@ package gameworld;
 public class Player {
 	
 	private Location location;
-	private MoveableItem[] inventory = new MoveableItem[10];
+	private Inventory inventory;
 	
-	public Player(Location location) {
+	public Player(Location location, Inventory inventory) {
 		this.location = location;
+		this.inventory = inventory;
 	}
 
 	public Location getLocation() {
@@ -17,9 +18,11 @@ public class Player {
 		this.location = location;
 	}
 	
-	public MoveableItem[] getInventory() {
-		return null;
+	public Inventory getInventory() {
+		return this.inventory;
 	}
+	
+	
 	
 	
 
