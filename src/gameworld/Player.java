@@ -82,7 +82,7 @@ public class Player {
 	}
 
 	/**
-	 * Decreases the health of the player by the specified number of points.
+	 * Decreases the health of the monster by the specified number of points.
 	 * 
 	 * @param healthToDecrease
 	 *            the number of health points to be deducted
@@ -90,7 +90,7 @@ public class Player {
 	public void decreaseHealth(int healthToDecrease) {
 
 		if (health - healthToDecrease < 0) {
-			health = 100; // minimum health is 0
+			health = 0; // minimum health is 0
 			// gameLost();
 		} else {
 			health -= healthToDecrease;
