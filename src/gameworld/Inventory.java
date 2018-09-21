@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * The Class Inventory.
+ * @author Deanne Alabastro
  */
 public class Inventory {
 	
