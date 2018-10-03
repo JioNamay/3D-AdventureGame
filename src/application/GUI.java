@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
@@ -23,6 +25,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 
 
@@ -63,21 +66,39 @@ public abstract class GUI {
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
 		//container.add(Box.createVerticalGlue());
-		//container.setBackground(Color.RED); 		// test
 
 		setMenuBar();
+
+		JPanel midInfo = new JPanel();
+		midInfo.setBackground(Color.RED); 		// test
+		midInfo.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
 		// canvas to render the game world on (center the canvas?)
 		drawing = new JComponent() {							// T RECONSIDER
 			protected void paintComponent(Graphics g) {
 				g.setColor(Color.GRAY);
 				g.fillRect(0, 0, DRAWING_SIZE, DRAWING_SIZE);
-				// redraw();
+				// call redraw(); (?) to render
 			}
 		};
 		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
 		drawing.setVisible(true);
-		container.add(drawing);
+		midInfo.add(drawing);
+
+		midInfo.add(Box.createRigidArea(new Dimension(10, 0)));		// spacing between drawing and info
+		JPanel descriptions = new JPanel(new GridLayout(3,1));		// 3 rows, 1 column
+		descriptions.setBackground(Color.blue); 		// test
+
+		//	display description of examined item
+		JTextArea examinedItem = new JTextArea("display examined item's info here", 10, 20);
+		examinedItem.setEditable(false);
+		examinedItem.setLineWrap(true);
+		descriptions.add(examinedItem);
+
+
+
+		midInfo.add(descriptions);
+		container.add(midInfo);
 
 		// area at the bottom to display items and action buttons
 		playerInfo = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
@@ -117,7 +138,7 @@ public abstract class GUI {
 		// add everything to the frame
 		frame.add(container);
 		frame.pack();
-		// resize frame here
+		// TODO: resize frame here!!!
 		frame.setVisible(true);
 	}
 
