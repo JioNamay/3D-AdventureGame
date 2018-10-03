@@ -70,7 +70,7 @@ public abstract class GUI {
 		setMenuBar();
 
 		JPanel midInfo = new JPanel();
-		midInfo.setBackground(Color.RED); 		// test
+		//midInfo.setBackground(Color.RED); 		// test
 		midInfo.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
 		// canvas to render the game world on (center the canvas?)
@@ -86,8 +86,8 @@ public abstract class GUI {
 		midInfo.add(drawing);
 
 		midInfo.add(Box.createRigidArea(new Dimension(10, 0)));		// spacing between drawing and info
-		JPanel descriptions = new JPanel(new GridLayout(3,1));		// 3 rows, 1 column
-		descriptions.setBackground(Color.blue); 		// test
+		JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10));		// 3 rows, 1 column
+		//descriptions.setBackground(Color.blue); 		// test
 
 		//	display description of examined item
 		JTextArea examinedItem = new JTextArea("display examined item's info here", 10, 20);
@@ -95,7 +95,17 @@ public abstract class GUI {
 		examinedItem.setLineWrap(true);
 		descriptions.add(examinedItem);
 
+		//	display player stats
+		JTextArea playerStats = new JTextArea("display player stats here", 10, 20);
+		playerStats.setEditable(false);
+		playerStats.setLineWrap(true);
+		descriptions.add(playerStats);
 
+		//display something.....
+		JTextArea something = new JTextArea("???", 10, 20);
+		something.setEditable(false);
+		something.setLineWrap(true);
+		descriptions.add(something);
 
 		midInfo.add(descriptions);
 		container.add(midInfo);
