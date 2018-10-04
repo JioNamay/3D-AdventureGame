@@ -31,6 +31,25 @@ public abstract class Entity {
 		this.location = location;
 	}
 	
+	// ********** ABSTRACT METHODS ********** //
+	
+	/**
+	 * When the health is 0, entity dies. This is where item drop is done. 
+	 */
+	abstract protected void die();
+	
+	/**
+	 * Update.
+	 */
+	abstract protected void update();
+	
+	/**
+	 * Render.
+	 */
+	abstract protected void render();
+	
+	// ********** IMPLEMENTED METHODS ********** //
+	
 	/**
 	 * Decrease health.
 	 *
@@ -45,11 +64,8 @@ public abstract class Entity {
 			health -= amount;
 		}
 	}
-
-	/**
-	 * When the health is 0, entity dies. This is where item drop is done. 
-	 */
-	abstract protected void die();
+	
+	// ********** GETTERS AND SETTERS ********** //
 
 	/**
 	 * Gets the location.
