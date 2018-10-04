@@ -14,7 +14,7 @@ public class Assets {
 
 	public static void init() {
 		try {
-			grass = ImageIO.read(new File("/Users/Jio/Downloads/textures/grass_texture.jpg"));
+			grass = ImageIO.read(new File("/grass_texture.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
