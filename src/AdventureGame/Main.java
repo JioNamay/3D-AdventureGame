@@ -1,5 +1,7 @@
 package AdventureGame;
 
+import states.AdventureGame;
+
 /**
  * Launches the Adventure Game.
  */

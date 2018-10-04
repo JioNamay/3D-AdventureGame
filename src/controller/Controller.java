@@ -1,5 +1,6 @@
 package controller;
 
+import gameworld.GameWorld;
 import states.AdventureGame;
 
 /**
