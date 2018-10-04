@@ -1,4 +1,4 @@
-package AdventureGame;
+package adventuregame;
 
 import states.AdventureGame;
 
