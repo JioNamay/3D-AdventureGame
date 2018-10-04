@@ -4,7 +4,7 @@
 package gameitems;
 
 import gameworld.Location;
-import gameworld.Player;
+import gameworld.entities.Player;
 
 /**
  * The Class MoveableItem.

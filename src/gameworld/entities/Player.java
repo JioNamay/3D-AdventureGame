@@ -1,6 +1,7 @@
-package gameworld;
+package gameworld.entities;
 
 import gameitems.Inventory;
+import gameworld.Location;
 
 /**
  * The Class Player.

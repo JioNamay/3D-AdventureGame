@@ -1,7 +1,7 @@
 package gameitems;
 
 import gameworld.Location;
-import gameworld.Player;
+import gameworld.entities.Player;
 
 /**
  * A LockedDoor is a Door that can be locked/unlocked only if the player
