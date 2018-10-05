@@ -14,6 +14,4 @@ public class GameWorldApp extends GUI {
 	public static void main(String[] args) {
 		new GameWorldApp();
 	}
-
-
 }

@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -27,18 +29,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-
+import renderer.Board;
 
 /**
  * Class provides the graphical display of the GameWorld.
+ * 
  * @author yangcarr
  */
-public abstract class GUI {
+public abstract class GUI{
 
-	// protected abstract void redraw(); 	// T RECONSIDER
-	// protected abstract void loadGame();		// BENETTE RECONSIDER
-	// protected abstract void saveGame();		// BENETTE RECONSIDER
-	protected abstract void onStart();		// loads a GameWorld (new or saved)
+	// protected abstract void redraw(); // T RECONSIDER
+	// protected abstract void loadGame(); // BENETTE RECONSIDER
+	// protected abstract void saveGame(); // BENETTE RECONSIDER
+	protected abstract void onStart(); // loads a GameWorld (new or saved)
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
@@ -48,14 +51,13 @@ public abstract class GUI {
 	}
 
 	protected JFrame frame;
-	protected JPanel container;		// global container to hold all the components in frame
-	protected JComponent drawing;
+	protected JPanel container; // global container to hold all the components in frame
+	protected Board board;
 	protected JPanel playerInfo;
 
 	/**
-	 * Sets up the GUI window: the menubars, the canvas for drawing the game,
-	 * the items player is holding, and the various actions the player can
-	 * perform.
+	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
+	 * items player is holding, and the various actions the player can perform.
 	 */
 	public void initialise() {
 		frame = new JFrame("Adventure Game");
@@ -65,43 +67,40 @@ public abstract class GUI {
 		container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
-		//container.add(Box.createVerticalGlue());
+		// container.add(Box.createVerticalGlue());
 
 		setMenuBar();
 
 		JPanel midInfo = new JPanel();
-		//midInfo.setBackground(Color.RED); 		// test
+		// midInfo.setBackground(Color.RED); // test
 		midInfo.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
-		// canvas to render the game world on (center the canvas?)
-		drawing = new JComponent() {							// T RECONSIDER
-			protected void paintComponent(Graphics g) {
-				g.setColor(Color.GRAY);
-				g.fillRect(0, 0, DRAWING_SIZE, DRAWING_SIZE);
-				// call redraw(); (?) to render
-			}
-		};
-		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
-		drawing.setVisible(true);
-		midInfo.add(drawing);
+		// RENDERER:
+		JPanel boardPanel = new JPanel();
+		boardPanel.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
+		boardPanel.setBounds(0, 0, DRAWING_SIZE, DRAWING_SIZE);
+		boardPanel.setVisible(true);
+		
+		this.board = new Board(this, boardPanel);
+		midInfo.add(boardPanel, BorderLayout.LINE_START);
 
-		midInfo.add(Box.createRigidArea(new Dimension(10, 0)));		// spacing between drawing and info
-		JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10));		// 3 rows, 1 column
-		//descriptions.setBackground(Color.blue); 		// test
+		midInfo.add(Box.createRigidArea(new Dimension(10, 0))); // spacing between drawing and info
+		JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10)); // 3 rows, 1 column
+		// descriptions.setBackground(Color.blue); // test
 
-		//	display description of examined item
+		// display description of examined item
 		JTextArea examinedItem = new JTextArea("display examined item's info here", 10, 20);
 		examinedItem.setEditable(false);
 		examinedItem.setLineWrap(true);
 		descriptions.add(examinedItem);
 
-		//	display player stats
+		// display player stats
 		JTextArea playerStats = new JTextArea("display player stats here", 10, 20);
 		playerStats.setEditable(false);
 		playerStats.setLineWrap(true);
 		descriptions.add(playerStats);
 
-		//display something.....
+		// display something.....
 		JTextArea something = new JTextArea("???", 10, 20);
 		something.setEditable(false);
 		something.setLineWrap(true);
@@ -113,11 +112,12 @@ public abstract class GUI {
 		// area at the bottom to display items and action buttons
 		playerInfo = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
 		playerInfo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE-10, 155));
-		//playerInfo.setBackground(Color.GREEN); 			// test
+		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
+		// playerInfo.setBackground(Color.GREEN); // test
 
-		//JPanel inventory = new JPanel(new GridLayout(2, 5));		// player can hold max 10 items(?)
-		//inventory.setPreferredSize(new Dimension(FRAME_SIZE+50/2, 110)));
+		// JPanel inventory = new JPanel(new GridLayout(2, 5)); // player can hold max
+		// 10 items(?)
+		// inventory.setPreferredSize(new Dimension(FRAME_SIZE+50/2, 110)));
 		JComponent inventoryDrawing = new JComponent() {
 			protected void paintComponent(Graphics g) {
 				// draw every item of player's inventory here?
@@ -125,9 +125,11 @@ public abstract class GUI {
 				// test:
 				int width = 80;
 				int height = 50;
+				g.setColor(Color.RED);
+				g.fillRect(0, 0, 200, 50);
 				g.drawRect(0, 0, 400, 100);
-				//g.setColor(Color.WHITE);		// test
-				//g.fillRect(0, 0, 400, 110);	// test
+				// g.setColor(Color.WHITE); // test
+				// g.fillRect(0, 0, 400, 110); // test
 				// draw outlines of grid for testing purposes
 
 				// in actuality, draw the items that player is carrying
@@ -136,7 +138,7 @@ public abstract class GUI {
 		};
 		inventoryDrawing.setPreferredSize(new Dimension(410, 110));
 		inventoryDrawing.setVisible(true);
-		//playerInfo.add(inventory);
+		// playerInfo.add(inventory);
 		playerInfo.add(inventoryDrawing);
 		container.add(playerInfo);
 
@@ -153,11 +155,10 @@ public abstract class GUI {
 	}
 
 	/**
-	 * Creates the menu bar for the application window. This has the options:
-	 * 		HELP -> synopsis of game
-	 * 		GAME -> load a saved game, save current game, load a new game
-	 * 		EDIT -> change the layout of the current map (?)
-	 * 		QUIT -> exit the game(?)
+	 * Creates the menu bar for the application window. This has the options: HELP
+	 * -> synopsis of game GAME -> load a saved game, save current game, load a new
+	 * game EDIT -> change the layout of the current map (?) QUIT -> exit the
+	 * game(?)
 	 */
 	private void setMenuBar() {
 		JMenuBar mb = new JMenuBar();
@@ -166,8 +167,9 @@ public abstract class GUI {
 		JMenu help = new JMenu("Help");
 		help.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				String str = "GAME INFO HERE";		// <-- CHANGE THIS LATER
-				JOptionPane.showMessageDialog(frame, str, "Game info", JOptionPane.INFORMATION_MESSAGE);;
+				String str = "GAME INFO HERE"; // <-- CHANGE THIS LATER
+				JOptionPane.showMessageDialog(frame, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
+				;
 			}
 		});
 
@@ -184,25 +186,25 @@ public abstract class GUI {
 		// GAME: Options to save, load, generate new game
 		JMenu game = new JMenu("Game");
 
-		JMenuItem load = new JMenuItem("Load");		// load
+		JMenuItem load = new JMenuItem("Load"); // load
 		load.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// loadGame();			// BENNETTE RECONSIDER
+				// loadGame(); // BENNETTE RECONSIDER
 			}
 
 		});
 
-		JMenuItem save = new JMenuItem("Save");		// save
+		JMenuItem save = new JMenuItem("Save"); // save
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// saveGame();			// BENNETTE RECONSIDER
+				// saveGame(); // BENNETTE RECONSIDER
 			}
 
 		});
 
-		JMenuItem newGame = new JMenuItem("New");		// new game
+		JMenuItem newGame = new JMenuItem("New"); // new game
 		newGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -260,11 +262,11 @@ public abstract class GUI {
 			}
 		});
 
-		JPanel navigation = new JPanel(new GridLayout(2,3));
+		JPanel navigation = new JPanel(new GridLayout(2, 3));
 		navigation.setMaximumSize(new Dimension(150, 60));
-		navigation.add(new JButton());		// blank area
+		navigation.add(new JButton()); // blank area
 		navigation.add(north);
-		navigation.add(new JButton());		// blank area
+		navigation.add(new JButton()); // blank area
 		navigation.add(west);
 		navigation.add(south);
 		navigation.add(east);
@@ -322,8 +324,8 @@ public abstract class GUI {
 		});
 
 		playerInfo.add(Box.createRigidArea(new Dimension(10, 0)));
-		JPanel actions = new JPanel(new GridLayout(3,2));
-		actions.setMaximumSize(new Dimension(240, 90));			// does anything?
+		JPanel actions = new JPanel(new GridLayout(3, 2));
+		actions.setMaximumSize(new Dimension(240, 90)); // does anything?
 
 		actions.add(take);
 		actions.add(examine);
