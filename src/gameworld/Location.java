@@ -1,5 +1,7 @@
 package gameworld;
 
+import gameworld.tiles.Tile;
+
 /**
  * @author Deanne Alabastro
  *
@@ -7,7 +9,8 @@ package gameworld;
 public class Location {
 	private int row;
 	private int col;
-	
+	private Tile tile;
+
 	/**
 	 * 
 	 */
@@ -15,7 +18,7 @@ public class Location {
 		this.row = row;
 		this.col = col;
 	}
-	
+
 	public int getRow() {
 		return this.row;
 	}
@@ -23,7 +26,8 @@ public class Location {
 	public int getCol() {
 		return this.col;
 	}
+
+	public Tile getTile() {
+		return this.tile;
+	}
 }
-
-
-
