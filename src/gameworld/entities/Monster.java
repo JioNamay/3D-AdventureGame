@@ -54,7 +54,7 @@ public class Monster {
 		// maxDamage]
 		int damage = ThreadLocalRandom.current().nextInt(minDamage, maxDamage + 1);
 
-		opponent.decreaseHealth(damage);
+		opponent.hurt(damage);
 
 	}
 

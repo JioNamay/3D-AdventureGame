@@ -11,13 +11,13 @@ import controller.Controller;
 public class Inventory {
 	
 	/** The inventory. */
-	private final List<Pickupable> inventory;
+	private final List<PickupableEntity> inventory;
 	
 	/**
 	 * Instantiates a new inventory.
 	 */
 	public Inventory(Controller controller) {
-		this.inventory = new ArrayList<Pickupable>();
+		this.inventory = new ArrayList<PickupableEntity>();
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class Inventory {
 	 * @param item the item
 	 * @return true, if successful
 	 */
-	public boolean add(Pickupable item) {
+	public boolean add(PickupableEntity item) {
 		if(this.isFull()) {
 			return false;
 		}else {
@@ -49,7 +49,7 @@ public class Inventory {
 	 *
 	 * @param item the item
 	 */
-	public void remove(Pickupable item) {
+	public void remove(PickupableEntity item) {
 		inventory.remove(item);
 	}
 }

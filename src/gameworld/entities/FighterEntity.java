@@ -7,14 +7,13 @@ import gameworld.Location;
 /**
  * The Class FighterEntity.
  */
-public abstract class FighterEntity extends Entity {
+public abstract class FighterEntity extends DamageableEntity {
 	
 	/** The min damage. */
 	protected int minDamage;
 	
 	/** The max damage. */
 	protected int maxDamage;
-	
 
 	/**
 	 * Instantiates a new fighter entity.
@@ -31,6 +30,6 @@ public abstract class FighterEntity extends Entity {
 	 *
 	 * @param opponent the opponent
 	 */
-	abstract protected void attack(Entity opponent);
+	abstract protected void attack(DamageableEntity opponent);
 	
 }

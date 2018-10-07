@@ -3,15 +3,15 @@ package gameworld.entities;
 import controller.Controller;
 import gameworld.Location;
 
-public class Player extends Entity implements Damageable{
-	private boolean canHealthRegenerate;
+public class Player extends FighterEntity {
 	private int health;
 	private Inventory inventory;
+	private Weapon weapon;
+	
 
 	public Player(Controller controller, Location loc) {
 		// TODO Auto-s constructor stub
 		super(controller, loc);
-		this.canHealthRegenerate = true;
 		this.health = 100;
 	}
 	
@@ -23,12 +23,11 @@ public class Player extends Entity implements Damageable{
 		return this.inventory;
 	}
 	
-	// ********** INHERITED METHODS ********** //
-	
-	@Override
-	public boolean canHealthRegenerate() {
-		return canHealthRegenerate;
+	public void equipWeapon() {
+		
 	}
+	
+	// ********** INHERITED METHODS ********** //
 
 	@Override
 	public void die() {
@@ -36,20 +35,8 @@ public class Player extends Entity implements Damageable{
 		
 	}
 
-	@Override
 	public void recover(int amount) {
 		health = ((this.health + amount) > 100) ? 100 : health + amount;
-	}
-
-	@Override
-	public void hurt(int amount) {
-		if((this.health - amount) < 0) {
-			this.health = 0;
-			this.setActive(false);
-			this.die();
-		}else {
-			health -= amount;
-		}
 	}
 
 	@Override
@@ -61,6 +48,11 @@ public class Player extends Entity implements Damageable{
 	@Override
 	protected void render() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void attack(DamageableEntity opponent) {
 		
 	}
 }

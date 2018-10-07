@@ -1,6 +1,6 @@
 package gameworld.entities;
 
-public interface Pickupable {
+public interface PickupableEntity {
 	public boolean pickUp();
 	public void drop();
 }
