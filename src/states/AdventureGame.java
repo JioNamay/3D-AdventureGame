@@ -54,9 +54,36 @@ public class AdventureGame implements Runnable{
 	public void run() {
 		init();
 		
+		// CLOCK VARIABLES
+		int fps = 60;
+		double timePerUpdate = 1_000_000_000 / fps; 
+		double targetTime = 0.0;
+		long start = 0;
+		long elapsed = System.nanoTime();
+		
+		// testing variables
+		long timer = 0;
+		int ticks = 0;
+		
 		while(isThreadRunning){
-			update();
-			render();
+			start = System.nanoTime();
+			targetTime += (start - elapsed);
+			timer += start - elapsed; // for testing
+			elapsed = start; // for testing
+			
+			if(targetTime >= timePerUpdate) {
+				update();
+				render();
+				ticks++; // for testing if we have the correct frame rate
+				targetTime -= timePerUpdate;
+			}
+			
+			// tests to see if our clock and fps are correct
+			if(timer >= 1_000_000_000){
+				System.out.println("Ticks and Frames: " + ticks);
+				ticks = 0;
+				timer = 0;
+			}
 		}
 		
 		stop();
