@@ -1,104 +1,66 @@
 package gameworld.entities;
 
-import gameitems.Inventory;
+import controller.Controller;
 import gameworld.Location;
 
-/**
- * The Class Player.
- * 
- * @author Deanne Alabastro
- */
-public class Player {
-
-	/** The location. */
-	private Location location;
-
-	/** The inventory. */
+public class Player extends Entity implements Damageable{
+	private boolean canHealthRegenerate;
+	private int health;
 	private Inventory inventory;
 
-	private int health;
-
-	/**
-	 * Instantiates a new player.
-	 *
-	 * @param location
-	 *            the location
-	 * @param inventory
-	 *            the inventory
-	 */
-	public Player(Location location, Inventory inventory, int health) {
-		this.location = location;
-		this.inventory = inventory;
-		this.health = health;
+	public Player(Controller controller, Location loc) {
+		// TODO Auto-s constructor stub
+		super(controller, loc);
+		this.canHealthRegenerate = true;
+		this.health = 100;
 	}
-
-	/**
-	 * Gets the location.
-	 *
-	 * @return the location
-	 */
-	public Location getLocation() {
-		return this.location;
+	
+	public void setInventory(Inventory inventory) {
+		if(this.inventory == null) this.inventory = inventory;
 	}
-
-	/**
-	 * Moves the player.
-	 *
-	 * @param location
-	 *            the location
-	 */
-	public void move(Location location) {
-		// NOTE, ADD CHECKS FOR IF LOCATION IS MOVEABLE
-		this.location = location;
-	}
-
-	/**
-	 * Gets the inventory.
-	 *
-	 * @return the inventory
-	 */
+	
 	public Inventory getInventory() {
 		return this.inventory;
 	}
-
-	/**
-	 * @return the health
-	 */
-	public int getHealth() {
-		return health;
+	
+	// ********** INHERITED METHODS ********** //
+	
+	@Override
+	public boolean canHealthRegenerate() {
+		return canHealthRegenerate;
 	}
 
-	/**
-	 * Increases the health of the player by the specified number of points.
-	 * 
-	 * @param healthToAdd
-	 *            the number of health points to be added
-	 */
-	public void increaseHealth(int healthToAdd) {
+	@Override
+	public void die() {
+		// Game end
+		
+	}
 
-		if (health + healthToAdd > 100) {
-			health = 100; // maximum health is 100
-		} else {
-			health += healthToAdd;
+	@Override
+	public void recover(int amount) {
+		health = ((this.health + amount) > 100) ? 100 : health + amount;
+	}
+
+	@Override
+	public void hurt(int amount) {
+		if((this.health - amount) < 0) {
+			this.health = 0;
+			this.setActive(false);
+			this.die();
+		}else {
+			health -= amount;
 		}
-
 	}
 
-	/**
-	 * Decreases the health of the monster by the specified number of points.
-	 * 
-	 * @param healthToDecrease
-	 *            the number of health points to be deducted
-	 */
-	public void decreaseHealth(int healthToDecrease) {
-
-		if (health - healthToDecrease < 0) {
-			health = 0; // minimum health is 0
-			// gameLost(); // player loses if out of health
-		} else {
-			health -= healthToDecrease;
-		}
-
+	@Override
+	protected void update() {
+		// TODO Auto-generated method stub
+		
 	}
 
+	@Override
+	protected void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

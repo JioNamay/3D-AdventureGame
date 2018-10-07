@@ -14,9 +14,6 @@ public abstract class Entity {
 	/** The location. */
 	private Location location;
 	
-	/** The health. */
-	protected int health;
-	
 	/** The active. */
 	protected boolean active = true;
 	
@@ -32,12 +29,6 @@ public abstract class Entity {
 	}
 	
 	// ********** ABSTRACT METHODS ********** //
-	
-	/**
-	 * When the health is 0, entity dies. This is where item drop is done. 
-	 */
-	abstract protected void die();
-	
 	/**
 	 * Update.
 	 */
@@ -47,23 +38,6 @@ public abstract class Entity {
 	 * Render.
 	 */
 	abstract protected void render();
-	
-	// ********** IMPLEMENTED METHODS ********** //
-	
-	/**
-	 * Decrease health.
-	 *
-	 * @param amount the amount
-	 */
-	public void decreaseHealth(int amount) {
-		if (health - amount <= 0) {
-			health = 0; // minimum health is 0
-			active = false;
-			die();
-		} else {
-			health -= amount;
-		}
-	}
 	
 	// ********** GETTERS AND SETTERS ********** //
 
@@ -83,24 +57,6 @@ public abstract class Entity {
 	 */
 	public void setLocation(Location location) {
 		this.location = location;
-	}
-
-	/**
-	 * Gets the health.
-	 *
-	 * @return the health
-	 */
-	public int getHealth() {
-		return health;
-	}
-
-	/**
-	 * Sets the health.
-	 *
-	 * @param health the health to set
-	 */
-	public void setHealth(int health) {
-		this.health = health;
 	}
 
 	/**
