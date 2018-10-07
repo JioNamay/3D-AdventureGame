@@ -6,7 +6,7 @@ import gameworld.Location;
 public class Player extends FighterEntity {
 	private int health;
 	private Inventory inventory;
-	private Weapon weapon;
+	private WeaponEntity weapon;
 	
 
 	public Player(Controller controller, Location loc) {
@@ -23,10 +23,21 @@ public class Player extends FighterEntity {
 		return this.inventory;
 	}
 	
-	public void equipWeapon() {
-		
+	public void equipWeapon(WeaponEntity weapon) {
+		this.weapon = weapon;
+		setAttackDamage();
 	}
 	
+	private void setAttackDamage() {
+		if(this.weapon == null) {
+			// player uses fist
+			this.minDamage = 0;
+			this.maxDamage = 5;
+		}else {
+			//this.minDamage = 
+		}
+	}
+
 	// ********** INHERITED METHODS ********** //
 
 	@Override
