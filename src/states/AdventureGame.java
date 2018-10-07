@@ -1,5 +1,6 @@
 package states;
 
+import application.GameWorldApp;
 import controller.Controller;
 
 /**
@@ -16,6 +17,12 @@ public class AdventureGame implements Runnable{
 	/** Is thread running. */
 	private boolean isThreadRunning;
 
+	private GameState gameState;
+
+	private StateManager stateManager;
+
+	private GameWorldApp application;
+
 	/**
 	 * Instantiates a new adventure game.
 	 */
@@ -27,24 +34,28 @@ public class AdventureGame implements Runnable{
 	 * Inits the States and controller.
 	 */
 	private void init(){
+		application = new GameWorldApp();
 		controller = new Controller(this);
-		//gameState = new GameState(handler);
+		
+		// set states
+		stateManager = new StateManager();
+		gameState = new GameState();
 		//menuState = new MenuState(handler);
-		//State.setState(menuState);
+		stateManager.setState(gameState);
 	}
 	
 	/**
 	 * Update.
 	 */
 	private void update(){
-
+		stateManager.update();
 	}
 	
 	/**
 	 * Render.
 	 */
 	private void render(){
-		
+		stateManager.render();
 	}
 
 	/* (non-Javadoc).
@@ -53,38 +64,42 @@ public class AdventureGame implements Runnable{
 	@Override
 	public void run() {
 		init();
-		
-		// CLOCK VARIABLES
-		int fps = 60;
-		double timePerUpdate = 1_000_000_000 / fps; 
-		double targetTime = 0.0;
-		long start = 0;
-		long elapsed = System.nanoTime();
-		
-		// testing variables
-		long timer = 0;
-		int ticks = 0;
-		
-		while(isThreadRunning){
-			start = System.nanoTime();
-			targetTime += (start - elapsed);
-			timer += start - elapsed; // for testing
-			elapsed = start; // for testing
-			
-			if(targetTime >= timePerUpdate) {
-				update();
-				render();
-				ticks++; // for testing if we have the correct frame rate
-				targetTime -= timePerUpdate;
-			}
-			
-			// tests to see if our clock and fps are correct
-			if(timer >= 1_000_000_000){
-				System.out.println("Ticks and Frames: " + ticks);
-				ticks = 0;
-				timer = 0;
-			}
+		while(isThreadRunning) {
+			update();
+			render();
 		}
+		
+//		// CLOCK VARIABLES
+//		int fps = 60;
+//		double timePerUpdate = 1_000_000_000 / fps; 
+//		double targetTime = 0.0;
+//		long start = 0;
+//		long elapsed = System.nanoTime();
+//		
+//		// testing variables
+//		long timer = 0;
+//		int ticks = 0;
+//		
+//		while(isThreadRunning){
+//			start = System.nanoTime();
+//			targetTime += (start - elapsed);
+//			timer += start - elapsed; // for testing
+//			elapsed = start; // for testing
+//			
+//			if(targetTime >= timePerUpdate) {
+//				update();
+//				render();
+//				ticks++; // for testing if we have the correct frame rate
+//				targetTime -= timePerUpdate;
+//			}
+//			
+//			// tests to see if our clock and fps are correct
+//			if(timer >= 1_000_000_000){
+//				System.out.println("Ticks and Frames: " + ticks);
+//				ticks = 0;
+//				timer = 0;
+//			}
+//		}
 		
 		stop();
 		

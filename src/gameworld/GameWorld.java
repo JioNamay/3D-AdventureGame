@@ -15,8 +15,8 @@ public class GameWorld {
 	 *
 	 * @param controller the controller
 	 */
-	public GameWorld(Controller controller) {
-		this.controller = controller;
+	public GameWorld() {
+		//this.controller = controller;
 	}
 	
 	/**

@@ -11,7 +11,7 @@ public class GameWorldApp extends GUI {
 		// System.out.println("Test");
 	}
 
-	public static void main(String[] args) {
-		new GameWorldApp();
-	}
+//	public static void main(String[] args) {
+//		new GameWorldApp();
+//	}
 }
