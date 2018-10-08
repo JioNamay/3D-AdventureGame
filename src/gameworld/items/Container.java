@@ -1,3 +1,4 @@
+package gameworld.items;
 //package gameitems;
 //
 //import gameworld.Location;

@@ -3,7 +3,7 @@ package gameworld.entities;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-import gameitems.Item;
+import gameworld.items.Item;
 import gameworld.Location;
 
 public class Monster {

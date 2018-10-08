@@ -1,6 +1,7 @@
 package gameworld.items;
 
 import gameworld.GameObjectInterface;
+import gameworld.Location;
 import gameworld.entities.Player;
 
 public abstract class Item implements GameObjectInterface{
@@ -8,12 +9,20 @@ public abstract class Item implements GameObjectInterface{
 		EXAMINE,
 		PICKUP, 
 		DROP,
-		USE
+		USE,
+		PLACE,
+		TAKE,
+		OPEN,
+		CLOSE
 	}
 	protected String description;
 	protected String name;
-	protected Item.ItemActionStrategy strategy;
+	protected Location location;
 	protected boolean isInPlayerInventory = false;
+	
+	public Item(Location location) {
+		this.location = location;
+	}
 	
 	/**
 	 * @return true if in player's inventory
@@ -29,31 +38,9 @@ public abstract class Item implements GameObjectInterface{
 		this.isInPlayerInventory = isInPlayerInventory;
 	}
 
-	// ********** STRATEGY METHODS ********** //
-	protected String performAction(Action action, Item item, Player player) {
-		switch(action) {
-		case PICKUP:
-			strategy = new PickupableStrategy();
-			break;
-		case DROP:
-			strategy = new PickupableStrategy();
-			break;
-		default:
-			break;
-		}
-		return strategy.performAction(action, this, player);
-	} 
-	
-	protected void setItemAction(ItemActionStrategy strategy) {
-		this.strategy = strategy;
-	}
-	
 	// ********** ABSTRACT METHODS ********** //
 	abstract protected String examine();
+	abstract protected String performAction(Action action,Player player);
 	abstract protected String[] getActions();
 	
-	// ********** STRATEGY INTERFACE ********** //
-	public interface ItemActionStrategy {
-		public String performAction(Action action,Item item, Player player);
-	}
 }

@@ -1,11 +1,13 @@
 package gameworld.items;
 
+import gameworld.Location;
+
 public abstract class DamageableItem extends Item{
 
 	protected int uses;
 
-	public DamageableItem() {
-		// TODO Auto-generated constructor stub
+	public DamageableItem(Location location) {
+		super(location);
 	}
 	
 	/**
@@ -20,13 +22,14 @@ public abstract class DamageableItem extends Item{
 	 */
 	protected void setUses(int uses) {
 		this.uses = uses;
-		if(uses == 0) makeUnusable();
 	}
 	
-	protected String makeUnusable() {
-		this.setLocation(null);
-		this.setInPlayerInventory(false);
-		return "It seems that the " + this.name + " has been used too many times. It broke.";
+	protected String use() {
+		this.uses--;
+		if(uses == 0) return makeUnusable();
+		return "Player used " + this.name;
 	}
+	
+	abstract protected String makeUnusable();
 
 }

@@ -1,4 +1,4 @@
-package gameworld.entities;
+package gameworld.items;
 
 public class Key {
 
