@@ -3,15 +3,13 @@ package gameworld.entities;
 import controller.Controller;
 import gameworld.Location;
 
-public class Player extends FighterEntity {
+public class Player extends Entity {
 	private int health;
 	private Inventory inventory;
 	private WeaponEntity weapon;
+	private Location location;
 	
-
 	public Player(Controller controller, Location loc) {
-		// TODO Auto-s constructor stub
-		super(controller, loc);
 		this.health = 100;
 	}
 	
@@ -31,14 +29,13 @@ public class Player extends FighterEntity {
 	private void setAttackDamage() {
 		if(this.weapon == null) {
 			// player uses fist
-			this.minDamage = 0;
 			this.maxDamage = 5;
 		}else {
-			//this.minDamage = 
+			//this.maxDamage = weapon.getAttackDamage(); 
 		}
 	}
 
-	// ********** INHERITED METHODS ********** //
+	// ********** INHERITED "ABSTRACT" METHODS ********** //
 
 	@Override
 	public void die() {
@@ -51,19 +48,30 @@ public class Player extends FighterEntity {
 	}
 
 	@Override
-	protected void update() {
+	public Location getLocation() {
+		return location;
+	}
+
+	@Override
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
+	@Override
+	protected String[] getStats() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected void render() {
+	public void render() {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void attack(DamageableEntity opponent) {
 		
 	}
 }

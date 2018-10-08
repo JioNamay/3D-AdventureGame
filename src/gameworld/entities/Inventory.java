@@ -3,7 +3,7 @@ package gameworld.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.Controller;
+import gameworld.items.Item;
 
 /**
  * The Class Inventory.
@@ -11,13 +11,13 @@ import controller.Controller;
 public class Inventory {
 	
 	/** The inventory. */
-	private final List<PickupableEntity> inventory;
+	private final List<Item> inventory;
 	
 	/**
 	 * Instantiates a new inventory.
 	 */
-	public Inventory(Controller controller) {
-		this.inventory = new ArrayList<PickupableEntity>();
+	public Inventory() {
+		this.inventory = new ArrayList<Item>();
 	}
 	
 	/**
@@ -35,7 +35,7 @@ public class Inventory {
 	 * @param item the item
 	 * @return true, if successful
 	 */
-	public boolean add(PickupableEntity item) {
+	public boolean add(Item item) {
 		if(this.isFull()) {
 			return false;
 		}else {
@@ -49,7 +49,17 @@ public class Inventory {
 	 *
 	 * @param item the item
 	 */
-	public void remove(PickupableEntity item) {
+	public void remove(Item item) {
 		inventory.remove(item);
+	}
+	
+	/**
+	 * Checks if the item is in the player's inventory
+	 *
+	 * @param item the item
+	 * @return true, if successful
+	 */
+	public boolean contains(Item item) {
+		return inventory.contains(item);
 	}
 }
