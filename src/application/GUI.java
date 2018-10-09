@@ -33,7 +33,7 @@ import renderer.Board;
 
 /**
  * Class provides the graphical display of the GameWorld.
- * 
+ *
  * @author yangcarr
  */
 public abstract class GUI{
@@ -54,6 +54,7 @@ public abstract class GUI{
 	protected JPanel container; // global container to hold all the components in frame
 	protected Board board;
 	protected JPanel playerInfo;
+	protected JTextArea examinedItem, playerStats, something;
 
 	/**
 	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
@@ -67,12 +68,10 @@ public abstract class GUI{
 		container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
-		// container.add(Box.createVerticalGlue());
 
 		setMenuBar();
 
 		JPanel midInfo = new JPanel();
-		// midInfo.setBackground(Color.RED); // test
 		midInfo.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
 		// RENDERER:
@@ -80,7 +79,7 @@ public abstract class GUI{
 		boardPanel.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
 		boardPanel.setBounds(0, 0, DRAWING_SIZE, DRAWING_SIZE);
 		boardPanel.setVisible(true);
-		
+
 		this.board = new Board(this, boardPanel);
 		midInfo.add(boardPanel, BorderLayout.LINE_START);
 
@@ -89,19 +88,19 @@ public abstract class GUI{
 		// descriptions.setBackground(Color.blue); // test
 
 		// display description of examined item
-		JTextArea examinedItem = new JTextArea("display examined item's info here", 10, 20);
+		examinedItem = new JTextArea("display examined item's info here", 10, 20);
 		examinedItem.setEditable(false);
 		examinedItem.setLineWrap(true);
 		descriptions.add(examinedItem);
 
 		// display player stats
-		JTextArea playerStats = new JTextArea("display player stats here", 10, 20);
+		playerStats = new JTextArea("display player stats here", 10, 20);
 		playerStats.setEditable(false);
 		playerStats.setLineWrap(true);
 		descriptions.add(playerStats);
 
 		// display something.....
-		JTextArea something = new JTextArea("???", 10, 20);
+		something = new JTextArea("???", 10, 20);
 		something.setEditable(false);
 		something.setLineWrap(true);
 		descriptions.add(something);
@@ -335,4 +334,22 @@ public abstract class GUI{
 		actions.add(attack);
 		playerInfo.add(actions);
 	}
+
+	/**
+	 * Returns the JTextArea to display the description of examined
+	 * items or rooms.
+	 */
+	public JTextArea getExaminedItemDisplay() {
+		return examinedItem;
+	}
+
+	/**
+	 * Returns the display area that holds player's information,
+	 * like health and money.
+	 */
+	public JTextArea getPlayerStatDisplay() {
+		return playerStats;
+	}
+
+	// method to return the last JTextArea
 }
