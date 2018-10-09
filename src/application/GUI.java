@@ -54,7 +54,8 @@ public abstract class GUI{
 	protected JPanel container; // global container to hold all the components in frame
 	protected Board board;
 	protected JPanel playerInfo;
-	protected JTextArea examinedItem, playerStats, something;
+	protected static JTextArea examinedItem, playerStats;
+	protected JTextArea something;
 
 	/**
 	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
@@ -339,7 +340,7 @@ public abstract class GUI{
 	 * Returns the JTextArea to display the description of examined
 	 * items or rooms.
 	 */
-	public JTextArea getExaminedItemDisplay() {
+	public static JTextArea getExaminedItemDisplay() {
 		return examinedItem;
 	}
 
@@ -347,7 +348,7 @@ public abstract class GUI{
 	 * Returns the display area that holds player's information,
 	 * like health and money.
 	 */
-	public JTextArea getPlayerStatDisplay() {
+	public static JTextArea getPlayerStatDisplay() {
 		return playerStats;
 	}
 

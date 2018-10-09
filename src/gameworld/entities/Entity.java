@@ -3,21 +3,56 @@ package gameworld.entities;
 import java.util.Random;
 
 import gameworld.GameObjectInterface;
+import gameworld.Location;
 
 /**
- * The Entity class includes any attackable thing that may optionally drop items
- * upon death
+ * Entity is the context class where the various items are used.
+ * An instance of entity is made in the gameworld, where certain items
+ * are placed in certain locations.
+ *
+ * @author yangcarr
  */
 public abstract class Entity implements GameObjectInterface {
-	
+	protected Location location;
+	protected Strategy item;
+
+	/**
+	 * An instance of an Entity is made on the specified location.
+	 * It takes in an instance of Strategy, which will allow the item
+	 * to perform its respective behaviours.
+	 */
+	public Entity(Location location, Strategy item) {
+		this.location = location;
+		this.item = item;
+	}
+
+	/**
+	 * Returns the string description of the item, based on whatever
+	 * instance of Strategy it is.
+	 */
+	public String getDescription() {
+		return item.description();
+	}
+
+	/**
+	 * Renders the item depending on what instance of Strategy it is.
+	 */
+	public void render() {
+		item.render();
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
 	// ********** ATTACKING METHODS ********** //
-	
+
 	/** The max damage. */
 	protected int maxDamage;
-	
+
 	/** The health. */
 	protected int health;
-	
+
 	/**
 	 * Decrease the object's health.
 	 *
@@ -81,19 +116,13 @@ public abstract class Entity implements GameObjectInterface {
 
 		return damage;
 	}
-	
+
 	// ********** ABSTRACT METHODS ********** //
-	
+
 	/**
 	 * Die.
 	 */
 	protected abstract void die();
-	
-	/**
-	 * Gets the entity's stats.
-	 *
-	 * @return the stats
-	 */
-	abstract protected String[] getStats();
+
 
 }
