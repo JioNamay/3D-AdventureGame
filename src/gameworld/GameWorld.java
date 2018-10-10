@@ -1,6 +1,7 @@
 package gameworld;
 
 import controller.Controller;
+import gameworld.entities.Player;
 
 /**
  * GameWorld handles all the entities and items.
@@ -9,14 +10,14 @@ public class GameWorld {
 	
 	/** The controller. */
 	private Controller controller;
+	private Player player = Player.getInstance();
 	
 	/**
 	 * Instantiates a new game world.
 	 *
-	 * @param controller the controller
 	 */
 	public GameWorld() {
-		//this.controller = controller;
+		player.setLocation(new Location(4,2));
 	}
 	
 	/**

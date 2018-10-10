@@ -1,9 +1,12 @@
 package gameworld.items;
 
+import java.util.Arrays;
+import java.util.List;
+
 import gameworld.Location;
 import gameworld.entities.Player;
 
-public class Potion extends PickeupableItem {
+public class Potion extends PickupableItem {
 
 	public Potion(Location location) {
 		super(location);
@@ -40,12 +43,12 @@ public class Potion extends PickeupableItem {
 	}
 
 	@Override
-	protected String[] getActions() {
+	protected List<String> getActions() {
 		if (!this.isInPlayerInventory)
-			return new String[] { Action.EXAMINE.toString(), Action.PICKUP.toString() };
+			return Arrays.asList(Action.EXAMINE.toString(), Action.PICKUP.toString() );
 		else
-			return new String[] { Action.EXAMINE.toString(), Action.PICKUP.toString(), Action.DROP.toString(),
-					Action.USE.toString() };
+			return Arrays.asList(Action.EXAMINE.toString(), Action.PICKUP.toString(), Action.DROP.toString(),
+					Action.USE.toString());
 	}
 
 	@Override

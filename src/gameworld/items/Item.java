@@ -1,5 +1,7 @@
 package gameworld.items;
 
+import java.util.List;
+
 import gameworld.GameObjectInterface;
 import gameworld.Location;
 import gameworld.entities.Player;
@@ -13,7 +15,16 @@ public abstract class Item implements GameObjectInterface{
 		PLACE,
 		TAKE,
 		OPEN,
-		CLOSE
+		CLOSE,
+		UNLOCK,
+		LOCK
+	}
+	
+	public enum Direction{
+		NORTH,
+		SOUTH,
+		EAST,
+		WEST
 	}
 	protected String description;
 	protected String name;
@@ -24,6 +35,34 @@ public abstract class Item implements GameObjectInterface{
 		this.location = location;
 	}
 	
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 	/**
 	 * @return true if in player's inventory
 	 */
@@ -41,6 +80,6 @@ public abstract class Item implements GameObjectInterface{
 	// ********** ABSTRACT METHODS ********** //
 	abstract protected String examine();
 	abstract protected String performAction(Action action,Player player);
-	abstract protected String[] getActions();
+	abstract protected List<String> getActions();
 	
 }

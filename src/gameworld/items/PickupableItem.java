@@ -3,9 +3,9 @@ package gameworld.items;
 import gameworld.Location;
 import gameworld.entities.Player;
 
-public abstract class PickeupableItem extends DamageableItem{
+public abstract class PickupableItem extends DamageableItem{
 
-	public PickeupableItem(Location location) {
+	public PickupableItem(Location location) {
 		super(location);
 	}
 
