@@ -49,7 +49,7 @@ public abstract class Entity implements GameObjectInterface {
 	 * @param amount the amount
 	 * @return the damaged
 	 */
-	protected void getDamaged(int amount) {
+	public void getDamaged(int amount) {
 		if((this.health - amount) < 0) {
 			this.health = 0;
 			this.die();

@@ -13,6 +13,8 @@ public class Player extends AttackingEntity {
 	/** The location. */
 	private Location location;
 	
+	private int coins = 0;
+	
 	// ********** SINGLETON PATTERN ********** //
 	/** The only instance of player. */
 	private static Player instance = new Player();
@@ -33,6 +35,20 @@ public class Player extends AttackingEntity {
 		return instance;
 	}
 	
+	/**
+	 * @return the coins
+	 */
+	public int getCoins() {
+		return coins;
+	}
+
+	/**
+	 * @param coins the coins to set
+	 */
+	public void addCoins(int coins) {
+		this.coins += coins;
+	}
+
 	/**
 	 * Sets the inventory.
 	 *

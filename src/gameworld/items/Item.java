@@ -30,11 +30,33 @@ public abstract class Item implements GameObjectInterface{
 	protected String name;
 	protected Location location;
 	protected boolean isInPlayerInventory = false;
+	protected int coinBank;
 	
 	public Item(Location location) {
 		this.location = location;
 	}
 	
+	/**
+	 * @return the coinBank
+	 */
+	public int getCoinBank() {
+		return coinBank;
+	}
+
+	/**
+	 * @param coinBank the coinBank to set
+	 */
+	public void setCoinBank(int coinBank) {
+		this.coinBank = coinBank;
+	}
+	
+	public String givePlayerCoins(int amount) {
+		if(coinBank == 0) return description;
+		Player.getInstance().addCoins(amount);
+		coinBank -= amount;
+		return "You found " + amount + " coins";
+	}
+
 	/**
 	 * @return the description
 	 */
