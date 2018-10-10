@@ -1,18 +1,31 @@
 package gameworld.items;
 
 import gameworld.Location;
-import gameworld.entities.Player;
 
-public final class LockableItem extends Item{
+public abstract class LockableItem extends Item{
 	
-	private boolean isOpen = false;
-	private boolean isLocked = true;
+	protected boolean isOpen = false;
+	protected boolean isLocked = true;
+	protected Direction direction;
 	
 	public LockableItem(Location location) {
 		super(location);
 	}
-
 	
+	/**
+	 * @return the direction
+	 */
+	public Direction getDirection() {
+		return direction;
+	}
+
+	/**
+	 * @param direction the direction to set
+	 */
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
 	public boolean open() {
 		return isOpen;
 	}
@@ -34,49 +47,5 @@ public final class LockableItem extends Item{
 	 */
 	public void setLocked(boolean isLocked) {
 		this.isLocked = isLocked;
-	}
-	
-	
-	
-	
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setLocation(Location location) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected String examine() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected String performAction(Action action, Player player) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	protected String[] getActions() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
