@@ -13,6 +13,7 @@ public class Potion extends PickupableItem {
 		this.uses = 1;
 		this.description = "A magical potion that restores 10 points of health";
 		this.name = "Health Potion";
+		this.coinBank = 3;
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class Potion extends PickupableItem {
 
 	@Override
 	protected String examine() {
-		return description;
+		return givePlayerCoins(3);
 	}
 
 	@Override

@@ -51,10 +51,20 @@ public abstract class Item implements GameObjectInterface{
 	}
 	
 	public String givePlayerCoins(int amount) {
-		if(coinBank == 0) return description;
+		// if coinbank is not 0 but the amount is more than what coinbank has, just add all the remaining to player
+		if((coinBank - amount < 0) && coinBank != 0) {
+			Player.getInstance().addCoins(coinBank);
+			String returnStr = "You found " + coinBank + " coins\n" + description;
+			coinBank = 0;
+			return returnStr;
+		}
+		
+		if(coinBank == 0) return description; // no more coins left, return just description
+		
+		// give player the amount of coins
 		Player.getInstance().addCoins(amount);
 		coinBank -= amount;
-		return "You found " + amount + " coins";
+		return "You found " + amount + " coins\n" + description;
 	}
 
 	/**

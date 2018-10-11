@@ -12,6 +12,7 @@ public abstract class ContainerItem extends LockableItem{
 		super(location);
 		this.item = item;
 		if(item != null) containsItem = true;
+		location.setSolid(true);
 	}
 	
 	/**

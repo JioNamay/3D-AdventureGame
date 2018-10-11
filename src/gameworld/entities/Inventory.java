@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gameworld.items.Item;
+import gameworld.items.Key;
 
 /**
  * The Class Inventory.
@@ -12,6 +13,7 @@ public class Inventory {
 	
 	/** The inventory. */
 	private final List<Item> inventory;
+	private boolean hasKey;
 	
 	/**
 	 * Instantiates a new inventory.
@@ -60,6 +62,21 @@ public class Inventory {
 	 * @return true, if successful
 	 */
 	public boolean contains(Item item) {
+		if(item instanceof Key) hasKey = true;
 		return inventory.contains(item);
+	}
+
+	/**
+	 * @return the hasKey
+	 */
+	public boolean hasKey() {
+		return hasKey;
+	}
+
+	/**
+	 * @param hasKey the hasKey to set
+	 */
+	public void setHasKey(boolean hasKey) {
+		this.hasKey = hasKey;
 	}
 }

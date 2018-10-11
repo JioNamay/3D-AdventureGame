@@ -1,5 +1,6 @@
 package gameworld.items;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +32,7 @@ public class Cactus extends Item{
 		int probability = rand.nextInt(4 + 1) + 1;
 		switch(probability) {
 		case 1:
-			givePlayerCoins(1);
+			return givePlayerCoins(1);
 		case 2:
 			int damage = rand.nextInt(4 + 1) + 1;
 			Player.getInstance().getDamaged(damage);
@@ -49,14 +50,13 @@ public class Cactus extends Item{
 
 	@Override
 	protected String performAction(Action action, Player player) {
-		// TODO Auto-generated method stub
-		return null;
+		return examine();
+		
 	}
 
 	@Override
 	protected List<String> getActions() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList(Action.EXAMINE.toString());
 	}
 
 }
