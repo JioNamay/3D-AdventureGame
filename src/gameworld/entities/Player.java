@@ -1,57 +1,63 @@
 package gameworld.entities;
 
-import gameitems.Inventory;
 import gameworld.Location;
 
-/**
- * The Class Player.
- * 
- * @author Deanne Alabastro
- */
-public class Player {
-
-	/** The location. */
-	private Location location;
-
+public class Player extends AttackingEntity {
+	
 	/** The inventory. */
 	private Inventory inventory;
-
-	private int health;
-
+	
+	/** The weapon. */
+	private WeaponEntity weapon;
+	
+	/** The location. */
+	private Location location;
+	
+	private int coins = 0;
+	
+	// ********** SINGLETON PATTERN ********** //
+	/** The only instance of player. */
+	private static Player instance = new Player();
+	
 	/**
-	 * Instantiates a new player.
-	 *
-	 * @param location
-	 *            the location
-	 * @param inventory
-	 *            the inventory
+	 * Instantiates a new player - private to ensure that only one player is ever made.
 	 */
-	public Player(Location location, Inventory inventory, int health) {
-		this.location = location;
-		this.inventory = inventory;
-		this.health = health;
+	private Player() {
+		this.health = 100;
+	}
+	
+	/**
+	 * Gets the single instance of Player.
+	 *
+	 * @return single instance of Player
+	 */
+	public static Player getInstance() {
+		return instance;
+	}
+	
+	/**
+	 * @return the coins
+	 */
+	public int getCoins() {
+		return coins;
 	}
 
 	/**
-	 * Gets the location.
-	 *
-	 * @return the location
+	 * @param coins the coins to set
 	 */
-	public Location getLocation() {
-		return this.location;
+	public void addCoins(int coins) {
+		this.coins += coins;
 	}
 
 	/**
-	 * Moves the player.
+	 * Sets the inventory.
 	 *
-	 * @param location
-	 *            the location
+	 * @param inventory the new inventory
 	 */
-	public void move(Location location) {
-		// NOTE, ADD CHECKS FOR IF LOCATION IS MOVEABLE
-		this.location = location;
+	public void setInventory(Inventory inventory) {
+		if(this.inventory == null) this.inventory = inventory;
 	}
-
+	
 	/**
 	 * Gets the inventory.
 	 *
@@ -60,45 +66,89 @@ public class Player {
 	public Inventory getInventory() {
 		return this.inventory;
 	}
-
+	
 	/**
-	 * @return the health
+	 * Equip weapon.
+	 *
+	 * @param weapon the weapon
 	 */
-	public int getHealth() {
-		return health;
+	public void equipWeapon(WeaponEntity weapon) {
+		this.weapon = weapon;
+		setAttackDamage();
 	}
-
+	
 	/**
-	 * Increases the health of the player by the specified number of points.
-	 * 
-	 * @param healthToAdd
-	 *            the number of health points to be added
+	 * Sets the attack damage.
 	 */
-	public void increaseHealth(int healthToAdd) {
-
-		if (health + healthToAdd > 100) {
-			health = 100; // maximum health is 100
-		} else {
-			health += healthToAdd;
+	private void setAttackDamage() {
+		if(this.weapon == null) {
+			// player uses fist
+			this.maxDamage = 5;
+		}else {
+			//this.maxDamage = weapon.getAttackDamage(); 
 		}
+	}
 
+	// ********** INHERITED "ABSTRACT" METHODS ********** //
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Entity#die()
+	 */
+	@Override
+	public void die() {
+		// Game end
+		
 	}
 
 	/**
-	 * Decreases the health of the monster by the specified number of points.
-	 * 
-	 * @param healthToDecrease
-	 *            the number of health points to be deducted
+	 * Recover.
+	 *
+	 * @param amount the amount
 	 */
-	public void decreaseHealth(int healthToDecrease) {
-
-		if (health - healthToDecrease < 0) {
-			health = 0; // minimum health is 0
-			// gameLost(); // player loses if out of health
-		} else {
-			health -= healthToDecrease;
-		}
-
+	public void recover(int amount) {
+		health = ((this.health + amount) > 100) ? 100 : health + amount;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.GameObjectInterface#getLocation()
+	 */
+	@Override
+	public Location getLocation() {
+		return location;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.GameObjectInterface#setLocation(gameworld.Location)
+	 */
+	@Override
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+	
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Entity#getStats()
+	 */
+	@Override
+	protected String[] getStats() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.GameObjectInterface#update()
+	 */
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.GameObjectInterface#render()
+	 */
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
 }

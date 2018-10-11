@@ -11,6 +11,9 @@ public class Location {
 	private int col;
 	private Tile tile;
 
+	private boolean isSolid;
+	
+
 	/**
 	 * 
 	 */
@@ -25,6 +28,20 @@ public class Location {
 
 	public int getCol() {
 		return this.col;
+	}
+
+	/**
+	 * @return the isSolid
+	 */
+	public boolean isSolid() {
+		return isSolid;
+	}
+
+	/**
+	 * @param isSolid the isSolid to set
+	 */
+	public void setSolid(boolean isSolid) {
+		this.isSolid = isSolid;
 	}
 
 	public Tile getTile() {

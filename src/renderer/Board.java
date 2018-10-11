@@ -15,8 +15,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import application.GUI;
-import gameitems.Chest;
-import gameitems.Item;
+import gameworld.items.Item;
+import gameworld.items.Potion;
 import gameworld.Location;
 
 /**
@@ -47,7 +47,7 @@ public class Board {
 		int randRow = 0 + (int) (Math.random() * (LOCATION_ROWS));
 		int randCol = 0 + (int) (Math.random() * (LOCATION_COLS));
 
-		items.add(new Chest(new Location(randRow, randCol)));
+		items.add(new Potion(new Location(randRow, randCol)));
 
 		loadBoard();
 		drawBoard();
