@@ -1,5 +1,6 @@
 package adventuregame;
 
+import persistence.Persistence;
 import states.AdventureGame;
 
 /**
