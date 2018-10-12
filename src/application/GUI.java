@@ -44,7 +44,7 @@ public abstract class GUI{
 	protected abstract void loadGame();
 	protected abstract void saveGame();
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
-	protected abstract void updateInventory(JPanel inventory);	// redraws the inventory
+	protected abstract void updateInventory();	// redraws the inventory
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
@@ -135,7 +135,8 @@ public abstract class GUI{
 
 		inventory = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
 		inventory.setPreferredSize(new Dimension(410, 110));
-		updateInventory(inventory);	// displays inventory to jpanel
+		updateInventory();	// displays inventory to jpanel
+		//inventory.setVisible(true);
 		playerInfo.add(inventory);
 
 		container.add(playerInfo);

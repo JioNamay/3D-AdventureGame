@@ -1,11 +1,13 @@
 package application;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
 import gameworld.entities.Item;
+import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Inventory;
 
 
@@ -18,26 +20,16 @@ import gameworld.entities.Inventory;
  */
 public class InventoryDisplay extends JComponent implements MouseListener {
 	// the width and height of an individual area within the inventory panel
-	private static final int IMAGE_WIDTH = 410/5;
-	private static final int IMAGE_HEIGHT = 110/2;
+	public static final int IMAGE_WIDTH = 410/5;
+	public static final int IMAGE_HEIGHT = 110/2;
 
-	private Item item;
+	private PickUpAbleStrategy item;
 
 	/**
 	 * An instance of this JComponent needs to know what item it represents.
 	 * @param item
 	 */
-	public InventoryDisplay(Item item) {
-		this.item = item;
-	}
-
-	/**
-	 * Repaints the component to display the image of the item.
-	 */
-	@Override
-	public void paintComponent(Graphics g) {
-		g.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-		//g.drawImage(img, x, y, width, height, observer)
+	public InventoryDisplay() {
 	}
 
 	@Override

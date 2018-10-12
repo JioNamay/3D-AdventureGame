@@ -9,13 +9,13 @@ public abstract class CoinBank implements Strategy{
 
 	/** The location. */
 	protected Location location;
-	
+
 	/** A long description of the entity. */
 	protected String description;
-	
+
 	/** The name of the entity (short description) */
 	protected String name;
-	
+
 	/** The coin bank. */
 	protected int coinBank;
 
@@ -27,7 +27,7 @@ public abstract class CoinBank implements Strategy{
 	public CoinBank(Location location) {
 		this.location = location;
 	}
-	
+
 	/**
 	 * Give player coins.
 	 *
@@ -36,7 +36,7 @@ public abstract class CoinBank implements Strategy{
 	 */
 	protected String givePlayerCoins(int amount) {
 		if(coinBank == 0) return description;
-		
+
 		int givenAmount = amount; // the amount of coins actually given to player
 		// add the rest of coinbank to player if amount exceeds coinbank
 		if(((coinBank - amount) < 0) && coinBank != 0){
@@ -47,7 +47,7 @@ public abstract class CoinBank implements Strategy{
 			Player.getInstance().addCoins(amount);
 			coinBank -= amount;
 		}
-		
+
 		return "You found " + givenAmount + " coins\n" + description;
 	}
 

@@ -4,21 +4,32 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import application.GUI;
 import application.InventoryDisplay;
 import gameworld.GameWorld;
+import gameworld.entities.Inventory;
+import gameworld.entities.Key;
+import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
+import gameworld.entities.Potion;
 
 /**
  * Handles threads and game state.
  */
 public class AdventureGame extends GUI{
 	private GameWorld game;			// containing the game logic
-	private Player player;			// player within the game
+	private Player player = Player.getInstance();			// player within the game
 
 	private String saveFile = "";	// XML filename to store saved game
 	private String loadFile = "";	// XML filename to load game from
@@ -31,7 +42,6 @@ public class AdventureGame extends GUI{
 	 */
 	public AdventureGame() {
 		game = new GameWorld();
-		player = Player.getInstance();
 		init();
 	}
 
@@ -100,13 +110,40 @@ public class AdventureGame extends GUI{
 	 * Draws the items in player's inventory.
 	 */
 	@Override
-	protected void updateInventory(JPanel inventory) {
-		if (player == null)
-			return;
+	public void updateInventory() {
+//		if (player == null) {
+//			System.out.println("player is null");
+//			return;
+//		}
+
 
 		// go through player's inventory
 		// make an Inventory display
 		// add to inventory
+
+		// TEST:
+		Inventory i = new Inventory();
+		for (int index=0; index<10; index++)
+			i.add(new Potion(null));
+
+		//player.setInventory(i);
+
+		for (PickUpAbleStrategy item: i) {
+			InventoryDisplay inventoryImageComponent = new InventoryDisplay() {
+				// Repaints the component to display the image of the item.
+				@Override
+				public void paintComponent(Graphics g) {
+					// draw images of the items
+					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
+					g.drawImage(img, 0, 0, InventoryDisplay.IMAGE_WIDTH-5, InventoryDisplay.IMAGE_HEIGHT-5, null);
+
+				}
+			};
+			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
+			inventory.add(inventoryImageComponent);
+
+			System.out.println(item.getDescription());
+		}
 	}
 
 	/**

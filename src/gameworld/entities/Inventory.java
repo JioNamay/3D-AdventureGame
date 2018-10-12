@@ -97,7 +97,7 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 
 			@Override
 			public PickUpAbleStrategy next() {
-				return inventory.get(currentIndex);
+				return inventory.get(currentIndex++);
 			}
 
 			@Override
