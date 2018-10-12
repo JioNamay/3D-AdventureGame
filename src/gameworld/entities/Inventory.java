@@ -3,7 +3,7 @@ package gameworld.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import gameworld.items.Item;
+import gameworld.entities.Item;
 
 /**
  * The Class Inventory.
@@ -60,7 +60,7 @@ public class Inventory {
 	 * @param item the item
 	 * @return true, if successful
 	 */
-	public boolean contains(Entity item) {
+	public boolean contains(Item item) {
 		if(item.getItem() instanceof Key) hasKey = true;	// rewritten to check strategy
 		return inventory.contains(item);
 	}
