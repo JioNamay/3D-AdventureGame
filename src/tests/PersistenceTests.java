@@ -21,5 +21,11 @@ public class PersistenceTests {
 		per.loadTempRoom();
 		
 	}
+	
+	@Test
+	public void saveGameWorld(){
+		Persistence per = new Persistence();
+		per.saveGameWorld();
+	}
 
 }

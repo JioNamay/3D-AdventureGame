@@ -1,28 +1,40 @@
 package gameworld;
 
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import controller.Controller;
 import gameworld.entities.Player;
 
 /**
  * GameWorld handles all the entities and items.
  */
+@XmlRootElement(name = "GameWorld")
 public class GameWorld {
-	
+
 	/** The controller. */
 	private Controller controller;
 	private Player player = Player.getInstance();
+	
+	private Room currentRoom;
 	
 	/**
 	 * Instantiates a new game world.
 	 *
 	 */
 	public GameWorld() {
-		Room currentRoom = new Room("Test Room");
+		this.currentRoom = new Room("Test Room");
 		
-		player.setLocation(new Location(4,2));
+		
+		//player.setLocation(new Location(4,2));
 		
 	}
+	
+	@XmlElement(name = "CurrentRoom")
+	public Room getCurrentRoom() {
+		return currentRoom;
+	} 
 	
 	/**
 	 * Update.
