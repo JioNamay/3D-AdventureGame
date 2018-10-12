@@ -15,8 +15,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import application.GUI;
-import gameworld.items.Item;
-import gameworld.items.Potion;
+import gameworld.entities.Item;
+import gameworld.entities.Potion;
 import gameworld.Location;
 
 /**
