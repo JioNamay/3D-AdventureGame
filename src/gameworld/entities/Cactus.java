@@ -6,8 +6,6 @@ import java.util.Random;
 
 import gameworld.Location;
 import gameworld.entities.Item.Action;
-import gameworld.entities.Player;
-import gameworld.entities.Strategy;
 
 public class Cactus extends CoinBank{
 	public Cactus(Location location) {

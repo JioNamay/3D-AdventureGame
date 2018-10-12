@@ -1,20 +1,35 @@
 package gameworld.entities;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import gameworld.Location;
 import gameworld.entities.Item.Action;
 
 public abstract class LockableStrategy implements Strategy {
-	protected List<String> actions = Arrays.asList("Examine", "Unlock", "Open"); // REDO
+	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString()); 
 
 	protected boolean isOpen, isLocked;
 
-	// **************** ABSTRACT METHODS ****************
+	protected Location location;
+	protected String description;
+	protected String name;
+	
+	public LockableStrategy(Location location) {
+		this.location = location;
+	}
 
 	@Override
 	public List<String> getActions() {
-		return actions;
+		if(isLocked) {
+			if (Player.getInstance().getInventory().hasKey())
+				return actions;
+			else return Arrays.asList(Action.EXAMINE.toString());
+		}else {
+			if(isOpen) return Arrays.asList(Action.EXAMINE.toString(), Action.CLOSE.toString());
+			else return Arrays.asList(Action.EXAMINE.toString(), Action.CLOSE.toString());
+		}
 	}
 
 	@Override
@@ -28,5 +43,11 @@ public abstract class LockableStrategy implements Strategy {
 		}
 		return null;
 	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
 
 }

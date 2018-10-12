@@ -1,6 +1,6 @@
 package gameworld.entities;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import gameworld.Location;
@@ -61,11 +61,7 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 		if(!Player.getInstance().getInventory().contains(this)) return actions; // return default actions if not in inventory
 		
 		// return new action if in inventory
-		List<String> inventoryActions = new ArrayList<String>();
-		inventoryActions.add(Action.EXAMINE.toString());
-		inventoryActions.add(Action.USE.toString());
-		inventoryActions.add(Action.DROP.toString());
-		return inventoryActions;
+		return Arrays.asList(Action.EXAMINE.toString(), Action.USE.toString(), Action.DROP.toString());
 	}
 
 }

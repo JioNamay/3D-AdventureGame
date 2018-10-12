@@ -5,24 +5,21 @@ import java.util.List;
 
 import gameworld.Location;
 import gameworld.Room;
+import gameworld.entities.Item.Action;
 import gameworld.entities.LockableStrategy;
-import gameworld.entities.Player;
+
 
 public class Door extends LockableStrategy {
 
 	Room goesTo;
 
 
-//	public Door(Location location, Room connectingRoom) {
-//		super(location);
-//		this.goesTo = connectingRoom;
-//		this.description = "A door that leads to the " + connectingRoom.getName();
-//	}
-
-	
-	/*public Door(Location location) {
+	public Door(Location location, Room connectingRoom) {
 		super(location);
-	}*/
+		this.goesTo = connectingRoom;
+		this.description = "A door that leads to the " + connectingRoom.getName();
+		this.name = "Door";
+	}
 
 	/**
 	 * @return the goesTo
@@ -37,29 +34,20 @@ public class Door extends LockableStrategy {
 	public void setGoesTo(Room goesTo) {
 		this.goesTo = goesTo;
 	}
-
+	
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		if(isLocked) return "A locked " + name;
+		if(!isLocked && isOpen) return "An open " + name;
+		return description;
 	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 
-	// ==============================================================
-
-	/*
-	 * 	@Override
+	@Override
 	protected String performAction(Action action, Player player) {
 		switch(action) {
 		case EXAMINE:
-			return examine();
+			return getDescription();
 		case UNLOCK:
 			//return unlock();
 		case OPEN:
@@ -70,17 +58,4 @@ public class Door extends LockableStrategy {
 			throw new IllegalArgumentException("Unknown action: " + action);
 		}
 	}
-
-	@Override
-	protected List<String> getActions() {
-		if(isLocked) {
-			if (Player.getInstance().getInventory().hasKey())
-				return Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString());
-			else return Arrays.asList(Action.EXAMINE.toString());
-		}else {
-			return Arrays.asList(Action.EXAMINE.toString(), Action.OPEN.toString(), Action.CLOSE.toString());
-		}
-	}
-	 */
-
 }
