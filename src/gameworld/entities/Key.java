@@ -1,14 +1,17 @@
 package gameworld.entities;
 
+import java.util.List;
+
+import gameworld.Location;
+import gameworld.entities.Item.Action;
+
 public class Key extends PickUpAbleStrategy implements Damageable {
 
 
-	/**
-	 * String description of the key
-	 */
-	@Override
-	public String description() {
-		return "Key is able to open any locked item.";
+
+	public Key(Location location) {
+		super(location);
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -18,15 +21,17 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 	 * is in the same location as a locked door
 	 * Otherwise it will perform the parent's actions.
 	 */
-	public void performAction(String action) {
+	public String performAction(Action action) {
 		if (action.equals("Examine")) {
 			// get examinedItem display area from GUI
 			// and return the string description of the item to it
 			// along with maybe a rendered image of it
 		}
 		else {
-			super.performAction(action);
+			return super.performAction(action);
 		}
+		
+		return null;
 	}
 
 	@Override
@@ -46,6 +51,12 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 	public void getDamaged(int amount) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<String> getActions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

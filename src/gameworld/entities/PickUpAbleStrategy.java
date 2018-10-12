@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import gameworld.Location;
+import gameworld.entities.Item.Action;
 
 /**
  * Contains the pick up behaviors for items the player can pick up.
@@ -24,9 +25,19 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 
 	/** The actions. */
 	// all pickup-able items are, by default, not in the player's inventory at the start
-	protected List<String> actions = Arrays.asList("Examine", "Pick-Up");
-
-	// **************** ABSTRACT METHODS ****************
+	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.PICKUP.toString());
+	
+	@Override
+	public String performAction(Action action) {
+		switch(action) {
+		case PICKUP:
+			return pickUp();
+		case DROP:
+			return drop();
+		default:
+			throw new IllegalArgumentException("Unknown action: " + action.toString());
+		}
+	}
 	
 	/**
 	 * Pick up item from current room.

@@ -5,28 +5,14 @@ import java.util.List;
 import java.util.Random;
 
 import gameworld.Location;
+import gameworld.entities.Item.Action;
 import gameworld.entities.Player;
 import gameworld.entities.Strategy;
 
 public class Cactus implements Strategy{
 	protected List<String> actions = Arrays.asList("Examine");
 
-	@Override
-	public String description() {
-		// TODO description of cactus
-		return "";
-	}
-
-	@Override
-	public void performAction(String action) {
-		if (action.equals("Examine")) {
-			// get examinedItem display area from GUI
-			// and return the string description of the item to it
-			// along with maybe a rendered image of it
-
-			//String desc = examine();	// write desc to display area
-		}
-	}
+	
 
 	/*@Override
 	protected String examine() {
@@ -53,6 +39,30 @@ public class Cactus implements Strategy{
 	@Override
 	public List<String> getActions() {
 		return actions;
+	}
+
+
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public String performAction(Action action) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// ==================================================================================
