@@ -35,6 +35,7 @@ public class Player implements Damageable {
 	 * @return single instance of Player
 	 */
 	public static Player getInstance() {
+		//if(instance == null) instance = new Player();
 		return instance;
 	}
 
@@ -59,7 +60,9 @@ public class Player implements Damageable {
 	 */
 	public void setInventory(Inventory inventory) {
 		if(this.inventory == null) this.inventory = inventory;
-	}
+		// only used for test to allow the inventory to be reset: 
+		this.inventory = inventory;
+	} 
 
 	/**
 	 * Gets the inventory.
