@@ -1,6 +1,7 @@
 package gameworld.entities;
 
 import gameworld.Location;
+import gameworld.Room;
 
 public class Player implements Damageable {
 
@@ -12,6 +13,8 @@ public class Player implements Damageable {
 
 	/** The location. */
 	private Location location;
+	
+	private Room currentRoom;
 
 	private int coins = 0;
 
@@ -119,5 +122,33 @@ public class Player implements Damageable {
 	public void getDamaged(int amount) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @return the currentRoom
+	 */
+	public Room getCurrentRoom() {
+		return currentRoom;
+	}
+
+	/**
+	 * @param currentRoom the currentRoom to set
+	 */
+	public void setCurrentRoom(Room currentRoom) {
+		this.currentRoom = currentRoom;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 }
