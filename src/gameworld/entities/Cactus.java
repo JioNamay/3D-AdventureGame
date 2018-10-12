@@ -9,79 +9,54 @@ import gameworld.entities.Item.Action;
 import gameworld.entities.Player;
 import gameworld.entities.Strategy;
 
-public class Cactus implements Strategy{
-	protected List<String> actions = Arrays.asList("Examine");
+public class Cactus extends CoinBank{
+	public Cactus(Location location) {
+		super(location);
+		this.description = "An innocent cactus";
+		this.name = "Cactus";
+		this.coinBank = 5;
+	}
 
-	
+	private List<String> actions = Arrays.asList(Action.EXAMINE.toString());
 
-	/*@Override
-	protected String examine() {
+	private String examine() {
+		// generate random probability
 		Random rand = new Random();
 		int probability = rand.nextInt(4 + 1) + 1;
+		
+		// do action depending on probability
 		switch(probability) {
 		case 1:
+			// give player coins, returns description if not enough coins in coinbank
 			return givePlayerCoins(1);
 		case 2:
+			// deal some damage to the player
 			int damage = rand.nextInt(4 + 1) + 1;
 			Player.getInstance().getDamaged(damage);
 			return "Shouldn't have gotten too close to the cactus. It decided to take " + damage + " bits of your life";
 		case 3:
+			// give the player a key if their inventory isn't full, else follow case 1
 			if(Player.getInstance().getInventory().isFull()) givePlayerCoins(1);
-			Key key = new Key(Player.getInstance().getLocation());
+			Key key = new Key(null);
 			Player.getInstance().getInventory().add(key);
-			key.setInPlayerInventory(true);
 			return "You found a " + key.getName();
 		default:
 			return description;
 		}
-	}*/
+	}
 
 	@Override
 	public List<String> getActions() {
 		return actions;
 	}
 
-
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
 	@Override
 	public String performAction(Action action) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	// ==================================================================================
-			/*public Cactus(Location location) {
-			super(location);
-			coinBank = 5;
+		switch(action) {
+		case EXAMINE:
+			return examine();
+		default: 
+			throw new IllegalArgumentException("Unknown action: " + action.toString());
 		}
-
-
-
-
-			@Override
-	protected String performAction(Action action, Player player) {
-		return examine();
-
 	}
-
-	@Override
-	protected List<String> getActions() {
-		return Arrays.asList(Action.EXAMINE.toString());
-	}*/
 }
