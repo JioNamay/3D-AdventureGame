@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import gameworld.items.Item;
 import gameworld.Location;
 
-public class Monster extends AttackingEntity{
+public class Monster implements Damageable{
 
 	private ArrayList<Item> itemDrops; // the list of possible items the monster can drop after being defeated
 
@@ -22,7 +22,7 @@ public class Monster extends AttackingEntity{
 
 	/**
 	 * Get the list of possible items the monster can drop after being defeated.
-	 * 
+	 *
 	 * @return the itemDrops
 	 */
 	public ArrayList<Item> getItemDrops() {
@@ -31,7 +31,7 @@ public class Monster extends AttackingEntity{
 
 	/**
 	 * Set the list of possible items the monster can drop after being defeated.
-	 * 
+	 *
 	 * @param itemDrops
 	 *            the list of possible items the monster can drop after being
 	 *            defeated
@@ -40,40 +40,23 @@ public class Monster extends AttackingEntity{
 		this.itemDrops = itemDrops;
 	}
 
+
 	@Override
-	public void update() {
+	public void die() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void render() {
+	public int getHealth() {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 	@Override
-	protected void die() {
+	public int getDamage() {
 		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected String[] getStats() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Location getLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setLocation(Location location) {
-		// TODO Auto-generated method stub
-		
+		return 0;
 	}
 
 }

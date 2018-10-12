@@ -1,36 +1,22 @@
-package gameworld.items;
+package gameworld.entities;
 
 import java.util.Arrays;
 import java.util.List;
 
 import gameworld.Location;
 import gameworld.Room;
+import gameworld.entities.LockableStrategy;
 import gameworld.entities.Player;
 
-public class Door extends LockableItem {
-	
+public class Door extends LockableStrategy {
+
 	Room goesTo;
 
-	public Door(Location location) {
+	/*public Door(Location location) {
 		super(location);
-	}
+	}*/
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected String examine() {
-		return description;
-	}
 
 	/**
 	 * @return the goesTo
@@ -47,6 +33,15 @@ public class Door extends LockableItem {
 	}
 
 	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	// ==============================================================
+
+	/*
+	 * 	@Override
 	protected String performAction(Action action, Player player) {
 		switch(action) {
 		case EXAMINE:
@@ -72,5 +67,6 @@ public class Door extends LockableItem {
 			return Arrays.asList(Action.EXAMINE.toString(), Action.OPEN.toString(), Action.CLOSE.toString());
 		}
 	}
+	 */
 
 }

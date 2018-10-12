@@ -70,6 +70,8 @@ public abstract class GUI{
 	protected JPanel playerInfo;
 	protected JComponent drawing; // the canvas to display the rendered world
 	protected Graphics graphics;
+	protected static JTextArea examinedItem, playerStats;
+	protected JTextArea something;
 
 	/**
 	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
@@ -83,7 +85,6 @@ public abstract class GUI{
 		container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
-		// container.add(Box.createVerticalGlue());
 
 		setMenuBar();
 
@@ -96,7 +97,7 @@ public abstract class GUI{
 		boardPanel.setBounds(0, 0, DRAWING_SIZE, DRAWING_SIZE);
 		boardPanel.setVisible(true);
 		this.board = new Board(this, boardPanel);
-		midInfo.add(boardPanel, BorderLayout.LINE_START);*/
+		rendererPanel.add(boardPanel, BorderLayout.LINE_START);*/
 
 		drawing = new JComponent() {
 			protected void paintComponent(Graphics g) {
@@ -114,19 +115,19 @@ public abstract class GUI{
 		// descriptions.setBackground(Color.blue); // test
 
 		// display description of examined item
-		JTextArea examinedItem = new JTextArea("display examined item's info here", 10, 20);
+		examinedItem = new JTextArea("display examined item's info here", 10, 20);
 		examinedItem.setEditable(false);
 		examinedItem.setLineWrap(true);
 		descriptions.add(examinedItem);
 
 		// display player stats
-		JTextArea playerStats = new JTextArea("display player stats here", 10, 20);
+		playerStats = new JTextArea("display player stats here", 10, 20);
 		playerStats.setEditable(false);
 		playerStats.setLineWrap(true);
 		descriptions.add(playerStats);
 
 		// display something.....
-		JTextArea something = new JTextArea("???", 10, 20);
+		something = new JTextArea("???", 10, 20);
 		something.setEditable(false);
 		something.setLineWrap(true);
 		descriptions.add(something);
@@ -360,4 +361,22 @@ public abstract class GUI{
 		actions.add(attack);
 		playerInfo.add(actions);
 	}
+
+	/**
+	 * Returns the JTextArea to display the description of examined
+	 * items or rooms.
+	 */
+	public static JTextArea getExaminedItemDisplay() {
+		return examinedItem;
+	}
+
+	/**
+	 * Returns the display area that holds player's information,
+	 * like health and money.
+	 */
+	public static JTextArea getPlayerStatDisplay() {
+		return playerStats;
+	}
+
+	// method to return the last JTextArea
 }
