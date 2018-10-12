@@ -126,8 +126,6 @@ public class AdventureGame extends GUI{
 		for (int index=0; index<10; index++)
 			i.add(new Potion(null));
 
-		//player.setInventory(i);
-
 		for (PickUpAbleStrategy item: i) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay() {
 				// Repaints the component to display the image of the item.
