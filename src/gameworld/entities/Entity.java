@@ -9,7 +9,7 @@ import gameworld.Location;
  *
  * @author yangcarr
  */
-public abstract class Entity {
+public class Entity {
 	protected Location location;
 	protected Strategy item;
 

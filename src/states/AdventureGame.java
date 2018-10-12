@@ -1,9 +1,15 @@
 package states;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import application.GUI;
+import application.InventoryDisplay;
 import gameworld.GameWorld;
 import gameworld.entities.Player;
 
@@ -15,9 +21,10 @@ public class AdventureGame extends GUI{
 	private Player player;			// player within the game
 
 	private String saveFile = "";	// XML filename to store saved game
-	private String loadFile;	// XML filename to load game from
+	private String loadFile = "";	// XML filename to load game from
 
 	private boolean isSaved = false; // when a new game is made, it's not saved
+	//private InventoryDisplay[] inventoryItems = new InventoryDisplay[10];
 
 	/**
 	 * Instantiates a new adventure game.
@@ -29,8 +36,7 @@ public class AdventureGame extends GUI{
 	}
 
 	/**
-	 * Private method within the game to initialise the game,
-	 * ie. set the player within the gameworld
+	 * Initialise the game.
 	 */
 	private void init() {
 
@@ -54,6 +60,7 @@ public class AdventureGame extends GUI{
 
 		// load game from loadfile
 		// isSaved = false;
+		//redraw(drawingArea);
 	}
 
 	/**
@@ -86,14 +93,35 @@ public class AdventureGame extends GUI{
 
 		game = new GameWorld();	// load new game
 		// isSaved = false;
+		//redraw(drawingArea);
 	}
 
+	/**
+	 * Draws the items in player's inventory.
+	 */
+	@Override
+	protected void updateInventory(JPanel inventory) {
+		if (player == null)
+			return;
+
+		// go through player's inventory
+		// make an Inventory display
+		// add to inventory
+	}
+
+	/**
+	 * Renders the game world to the display area.
+	 */
 	@Override
 	protected void redraw(Graphics g) { // renders the world
 		// TEST:
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, DRAWING_SIZE, DRAWING_SIZE);
+
+		// gameworld.getroom
+		// render the room's items plus player if needed
 	}
+
 
 	/**
 	 * Main method to run the AdventureGame.
@@ -101,8 +129,5 @@ public class AdventureGame extends GUI{
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
-
-
-
 
 }
