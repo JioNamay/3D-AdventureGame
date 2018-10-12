@@ -13,7 +13,7 @@ public class Player implements Damageable {
 
 	/** The location. */
 	private Location location;
-	
+
 	private Room currentRoom;
 
 	private int coins = 0;
@@ -124,7 +124,7 @@ public class Player implements Damageable {
 	@Override
 	public void getDamaged(int amount) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**

@@ -13,7 +13,7 @@ import gameworld.Location;
 public class Item {
 	public enum Action{
 		EXAMINE,
-		PICKUP, 
+		PICKUP,
 		DROP,
 		USE,
 		PLACE,
