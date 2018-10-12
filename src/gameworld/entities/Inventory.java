@@ -3,22 +3,20 @@ package gameworld.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import gameworld.entities.Item;
-
 /**
  * The Class Inventory.
  */
 public class Inventory {
 
 	/** The inventory. */
-	private final List<Item> inventory;
-	private boolean hasKey;
+	private final List<PickUpAbleStrategy> inventory;
+	private int keyCount;
 
 	/**
 	 * Instantiates a new inventory.
 	 */
 	public Inventory() {
-		this.inventory = new ArrayList<Item>();
+		this.inventory = new ArrayList<PickUpAbleStrategy>();
 	}
 
 	/**
@@ -36,7 +34,7 @@ public class Inventory {
 	 * @param item the item
 	 * @return true, if successful
 	 */
-	public boolean add(Item item) {
+	public boolean add(PickUpAbleStrategy item) {
 		if(this.isFull()) {
 			return false;
 		}else {
@@ -50,7 +48,7 @@ public class Inventory {
 	 *
 	 * @param item the item
 	 */
-	public void remove(Item item) {
+	public void remove(PickUpAbleStrategy item) {
 		inventory.remove(item);
 	}
 
@@ -60,8 +58,7 @@ public class Inventory {
 	 * @param item the item
 	 * @return true, if successful
 	 */
-	public boolean contains(Item item) {
-		if(item.getItem() instanceof Key) hasKey = true;	// rewritten to check strategy
+	public boolean contains(PickUpAbleStrategy item) {
 		return inventory.contains(item);
 	}
 
@@ -69,13 +66,17 @@ public class Inventory {
 	 * @return the hasKey
 	 */
 	public boolean hasKey() {
-		return hasKey;
+		return keyCount > 0;
+	}
+	
+	public void incrementKeys() {
+		keyCount++;
 	}
 
 	/**
 	 * @param hasKey the hasKey to set
 	 */
-	public void setHasKey(boolean hasKey) {
-		this.hasKey = hasKey;
+	public void setKeyCount(int keyCount) {
+		this.keyCount = keyCount;
 	}
 }
