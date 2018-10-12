@@ -9,7 +9,7 @@ import gameworld.Location;
  *
  * @author yangcarr
  */
-public abstract class Entity {
+public class Item {
 	protected Location location;
 	protected Strategy item;
 
@@ -18,7 +18,7 @@ public abstract class Entity {
 	 * It takes in an instance of Strategy, which will allow the item
 	 * to perform its respective behaviours.
 	 */
-	public Entity(Location location, Strategy item) {
+	public Item(Location location, Strategy item) {
 		this.location = location;
 		this.item = item;
 	}
