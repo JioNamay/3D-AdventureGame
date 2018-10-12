@@ -62,7 +62,7 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 		
 		// return new action if in inventory
 		List<String> inventoryActions = new ArrayList<String>();
-		inventoryActions.remove(Action.PICKUP.toString());
+		inventoryActions.add(Action.EXAMINE.toString());
 		inventoryActions.add(Action.USE.toString());
 		inventoryActions.add(Action.DROP.toString());
 		return inventoryActions;
