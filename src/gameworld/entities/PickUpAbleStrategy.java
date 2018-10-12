@@ -14,7 +14,6 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 	protected List<String> actions = Arrays.asList("Examine", "Pick-Up");
 
 	// **************** ABSTRACT METHODS ****************
-	public abstract String description();
 
 	/**
 	 * A pickup-able item can be:	examined, picked up, dropped
@@ -25,6 +24,15 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 	@Override
 	public List<String> getActions() {
 		return actions;
+	}
+	
+	protected String pickUp() {
+		Player player = Player.getInstance();
+		if(player.getInventory().isFull()) return "Cannot pickup " + this.getName() + ". Inventory is full.";
+		
+		// add item to player inventory and remove from room
+		player.getCurrentRoom().removeGameObject(this.getLocation());
+		player.getInventory().add(new Item(player.getLocation(), this));
 	}
 
 	/**
