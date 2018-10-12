@@ -28,7 +28,7 @@ public abstract class Entity {
 	 * instance of Strategy it is.
 	 */
 	public String getDescription() {
-		return item.description();
+		return item.getDescription();
 	}
 
 	public Location getLocation() {

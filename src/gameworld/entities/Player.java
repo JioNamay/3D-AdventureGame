@@ -116,8 +116,8 @@ public class Player implements Damageable {
 	}
 
 	@Override
-	public int getDamage() {
+	public void getDamaged(int amount) {
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
 }

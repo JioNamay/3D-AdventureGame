@@ -1,0 +1,106 @@
+package gameworld.entities;
+
+import gameworld.Location;
+
+/**
+ * The coinbank class is extended by every entity who is able to give player coins when a player interacts with it.
+ */
+public abstract class CoinBank implements Strategy{
+
+	/** The location. */
+	private Location location;
+	
+	/** A long description of the entity. */
+	private String description;
+	
+	/** The name of the entity (short description) */
+	private String name;
+	
+	/** The coin bank. */
+	private int coinBank;
+
+	/**
+	 * Instantiates a new coin bank.
+	 *
+	 * @param location the location
+	 */
+	public CoinBank(Location location) {
+		this.location = location;
+	}
+	
+	/**
+	 * Give player coins.
+	 *
+	 * @param amount the amount
+	 * @return the string
+	 */
+	protected String givePlayerCoins(int amount) {
+		if(coinBank == 0) return description;
+		
+		int givenAmount = amount; // the amount of coins actually given to player
+		// add the rest of coinbank to player if amount exceeds coinbank
+		if(((coinBank - amount) < 0) && coinBank != 0){
+			Player.getInstance().addCoins(coinBank);
+			givenAmount = coinBank;
+			coinBank = 0;
+		}else {
+			Player.getInstance().addCoins(amount);
+			coinBank -= amount;
+		}
+		
+		return "You found " + givenAmount + " coins\n" + description;
+	}
+
+	/**
+	 * Gets the location.
+	 *
+	 * @return the location
+	 */
+	public Location getLocation() {
+		return location;
+	}
+
+	/**
+	 * Sets the location.
+	 *
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Gets the coin bank.
+	 *
+	 * @return the coinBank
+	 */
+	public int getCoinBank() {
+		return coinBank;
+	}
+
+	/**
+	 * Sets the coin bank.
+	 *
+	 * @param coinBank the coinBank to set
+	 */
+	public void setCoinBank(int coinBank) {
+		this.coinBank = coinBank;
+	}
+
+}

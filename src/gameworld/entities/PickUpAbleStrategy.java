@@ -1,10 +1,15 @@
 package gameworld.entities;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class PickUpAbleStrategy implements Strategy {
+import gameworld.Location;
+
+public abstract class PickUpAbleStrategy extends CoinBank {
+	public PickUpAbleStrategy(Location location) {
+		super(location);
+	}
+
 	// all pickup-able items are, by default, not in the player's inventory at the start
 	protected List<String> actions = Arrays.asList("Examine", "Pick-Up");
 
