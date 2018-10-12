@@ -5,51 +5,66 @@ import java.util.List;
 
 import gameworld.Location;
 
+/**
+ * Contains the pick up behaviors for items the player can pick up.
+ * 
+ * @author alabasdean 300346210
+ * @author yangcarr 300368805
+ */
 public abstract class PickUpAbleStrategy extends CoinBank {
+	
+	/**
+	 * Instantiates a new pick up able strategy.
+	 *
+	 * @param location the location
+	 */
 	public PickUpAbleStrategy(Location location) {
 		super(location);
 	}
 
+	/** The actions. */
 	// all pickup-able items are, by default, not in the player's inventory at the start
 	protected List<String> actions = Arrays.asList("Examine", "Pick-Up");
 
 	// **************** ABSTRACT METHODS ****************
-
-	/**
-	 * A pickup-able item can be:	examined, picked up, dropped
-	 * depending on player's uses of it throughout the game.
-	 * For example, if the player already picked up the item, then the
-	 * only possible actions are: examine, drop
-	 */
-	@Override
-	public List<String> getActions() {
-		return actions;
-	}
 	
+	/**
+	 * Pick up item from current room.
+	 *
+	 * @return string result of pickup 
+	 */
 	protected String pickUp() {
 		Player player = Player.getInstance();
+		// check if pickup is valid.
 		if(player.getInventory().isFull()) return "Cannot pickup " + this.getName() + ". Inventory is full.";
 		
-		// add item to player inventory and remove from room
+		// add item to player inventory and remove from room.
 		player.getCurrentRoom().removeGameObject(this.getLocation());
-		player.getInventory().add(new Item(player.getLocation(), this));
+		player.getInventory().add(this);
+		
+		return "You picked up " + this.getName();
 	}
-
+	
 	/**
-	 * Depending on the user's choice, will perform the required action
-	 * on the item
+	 * Drop the item from player inventory.
+	 *
+	 * @return string result of drop
 	 */
-	@Override
-	public void performAction(String action) {
-		if (action.equals("PickUp")){
-			// add item to player's inventory
-			// set board's location where the item was, to null
-		}
-		else if (action.equals("Drop")) {
-			// remove item from player's inventory
-			// set it to mew instance of player's location (otherwise it will reference the
-			// player and 'follow' him around
-		}
+	protected String drop() {
+		Player player = Player.getInstance();
+		
+		// check if drop valid.
+		if(player.getInventory().contains(this)) return "How are you going to drop an item you aren't even holding?";
+		
+		// drop item by removing from player inventory and adding it to current room objects.
+		player.getInventory().remove(this);
+		
+		Location dropLoc = new Location(player.getLocation().getRow(), player.getLocation().getCol());
+		Item droppedItem = new Item(dropLoc, this); 
+		player.getCurrentRoom().addGameObject(droppedItem);
+
+		return "Player dropped " + this.name;
+
 	}
 
 }
