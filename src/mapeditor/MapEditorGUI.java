@@ -344,7 +344,7 @@ public class MapEditorGUI {
 //			map[0][1] = 'R';
 //			map[0][2] = 'R';
 
-			for (mapeditor.MapEditorGUI.BoardPanel.BoardPanelComponent tile : boardTiles) {
+			for (BoardPanelComponent tile : boardTiles) {
 				tile.paintComponent(g);
 			}
 
@@ -386,7 +386,7 @@ public class MapEditorGUI {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
