@@ -1,4 +1,4 @@
-package gameworld.items;
+package gameworld.entities;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,27 +6,29 @@ import java.util.Random;
 
 import gameworld.Location;
 import gameworld.entities.Player;
+import gameworld.entities.Strategy;
 
-public class Cactus extends Item{
+public class Cactus implements Strategy{
+	protected List<String> actions = Arrays.asList("Examine");
 
-	public Cactus(Location location) {
-		super(location);
-		coinBank = 5;
+	@Override
+	public String description() {
+		// TODO description of cactus
+		return "";
 	}
 
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
+	public void performAction(String action) {
+		if (action.equals("Examine")) {
+			// get examinedItem display area from GUI
+			// and return the string description of the item to it
+			// along with maybe a rendered image of it
+
+			//String desc = examine();	// write desc to display area
+		}
 	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+	/*@Override
 	protected String examine() {
 		Random rand = new Random();
 		int probability = rand.nextInt(4 + 1) + 1;
@@ -46,17 +48,30 @@ public class Cactus extends Item{
 		default:
 			return description;
 		}
-	}
+	}*/
 
 	@Override
+	public List<String> getActions() {
+		return actions;
+	}
+
+	// ==================================================================================
+			/*public Cactus(Location location) {
+			super(location);
+			coinBank = 5;
+		}
+
+
+
+
+			@Override
 	protected String performAction(Action action, Player player) {
 		return examine();
-		
+
 	}
 
 	@Override
 	protected List<String> getActions() {
 		return Arrays.asList(Action.EXAMINE.toString());
-	}
-
+	}*/
 }

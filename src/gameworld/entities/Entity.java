@@ -1,75 +1,41 @@
 package gameworld.entities;
-import gameworld.GameObjectInterface;
+
 import gameworld.Location;
 
 /**
- * The Entity class includes any attackable thing that may optionally drop items
- * upon death
+ * Entity is the context class where the various items are used.
+ * An instance of entity is made in the gameworld, where certain items
+ * are placed in certain locations.
+ *
+ * @author yangcarr
  */
-public abstract class Entity implements GameObjectInterface {
-	
-	/** The max damage. */
-	protected int maxDamage;
-	
-	/** The health. */
-	protected int health;
+public abstract class Entity {
+	protected Location location;
+	protected Strategy item;
 
 	/**
-	 * @return the health
+	 * An instance of an Entity is made on the specified location.
+	 * It takes in an instance of Strategy, which will allow the item
+	 * to perform its respective behaviours.
 	 */
-	public int getHealth() {
-		return health;
+	public Entity(Location location, Strategy item) {
+		this.location = location;
+		this.item = item;
 	}
 
 	/**
-	 * @param health the health to set
+	 * Returns the string description of the item, based on whatever
+	 * instance of Strategy it is.
 	 */
-	public void setHealth(int health) {
-		this.health = health;
+	public String getDescription() {
+		return item.description();
 	}
 
-	
-	/**
-	 * @return the maxDamage
-	 */
-	public int getMaxDamage() {
-		return maxDamage;
+	public Location getLocation() {
+		return location;
 	}
 
-	/**
-	 * @param maxDamage the maxDamage to set
-	 */
-	public void setMaxDamage(int maxDamage) {
-		this.maxDamage = maxDamage;
+	public Strategy getItem() {
+		return item;
 	}
-
-	/**
-	 * Decrease the object's health.
-	 *
-	 * @param amount the amount
-	 * @return the damaged
-	 */
-	public void getDamaged(int amount) {
-		if((this.health - amount) < 0) {
-			this.health = 0;
-			this.die();
-		}else {
-			health -= amount;
-		}
-	}
-	
-	// ********** ABSTRACT METHODS ********** //
-	
-	/**
-	 * Die.
-	 */
-	protected abstract void die();
-	
-	/**
-	 * Gets the entity's stats.
-	 *
-	 * @return the stats
-	 */
-	abstract protected String[] getStats();
-
 }

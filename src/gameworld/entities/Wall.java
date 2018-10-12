@@ -1,28 +1,38 @@
-package gameworld.items;
+package gameworld.entities;
 
 import java.util.List;
 
 import gameworld.Location;
 import gameworld.entities.Player;
+import gameworld.entities.Strategy;
 
-public class Wall extends Item{
+public class Wall implements Strategy{
 
-	public Wall(Location location) {
+	@Override
+	public List<String> getActions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String description() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void performAction(String action) {
+		// TODO Auto-generated method stub
+
+	}
+
+	// ======================================================
+
+	/*public Wall(Location location) {
 		super(location);
 		location.setSolid(true);
 	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	protected String examine() {
@@ -40,6 +50,6 @@ public class Wall extends Item{
 	protected List<String> getActions() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
 }

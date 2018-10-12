@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -33,18 +34,31 @@ import renderer.Board;
 
 /**
  * Class provides the graphical display of the GameWorld.
- * 
+ *
  * @author yangcarr
  */
 public abstract class GUI{
+	/*
+	 * changes
+- got rid of controller, from within Adventure Game
+- had AdventureGame extend GUI as the main 'controller' of the entire game world
+- commented out the previus renderer to pass graphics object to renderer
+- added methods to allow persistance to save/load games
+- renamed 'midInfo' to 'rendererPanel -- this is the JPanel for renderer's use
+- added constant field for screen size
+	 */
 
-	// protected abstract void redraw(); // T RECONSIDER
-	// protected abstract void loadGame(); // BENETTE RECONSIDER
-	// protected abstract void saveGame(); // BENETTE RECONSIDER
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
+	protected abstract void redraw(Graphics g); // T RECONSIDER
+	protected abstract void loadGame(); // BENETTE RECONSIDER
+	protected abstract void saveGame(); // BENETTE RECONSIDER
+
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
+	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+
+	// board field, called within the redraw method(?)
 
 	public GUI() {
 		initialise();
@@ -54,6 +68,10 @@ public abstract class GUI{
 	protected JPanel container; // global container to hold all the components in frame
 	protected Board board;
 	protected JPanel playerInfo;
+	protected JComponent drawing; // the canvas to display the rendered world
+	protected Graphics graphics;
+	protected static JTextArea examinedItem, playerStats;
+	protected JTextArea something;
 
 	/**
 	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
@@ -67,47 +85,55 @@ public abstract class GUI{
 		container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
-		// container.add(Box.createVerticalGlue());
 
 		setMenuBar();
 
-		JPanel midInfo = new JPanel();
-		// midInfo.setBackground(Color.RED); // test
-		midInfo.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+		JPanel rendererPanel = new JPanel();
+		rendererPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
 		// RENDERER:
-		JPanel boardPanel = new JPanel();
+		/*JPanel boardPanel = new JPanel();
 		boardPanel.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
 		boardPanel.setBounds(0, 0, DRAWING_SIZE, DRAWING_SIZE);
 		boardPanel.setVisible(true);
-		
 		this.board = new Board(this, boardPanel);
-		midInfo.add(boardPanel, BorderLayout.LINE_START);
+		rendererPanel.add(boardPanel, BorderLayout.LINE_START);*/
 
-		midInfo.add(Box.createRigidArea(new Dimension(10, 0))); // spacing between drawing and info
+		drawing = new JComponent() {
+			protected void paintComponent(Graphics g) {
+				graphics = g;
+				redraw(graphics);		// render the board
+			}
+		};
+		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
+		drawing.setVisible(true);
+		drawing.repaint();
+		rendererPanel.add(drawing);
+
+		rendererPanel.add(Box.createRigidArea(new Dimension(10, 0))); // spacing between drawing and info
 		JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10)); // 3 rows, 1 column
 		// descriptions.setBackground(Color.blue); // test
 
 		// display description of examined item
-		JTextArea examinedItem = new JTextArea("display examined item's info here", 10, 20);
+		examinedItem = new JTextArea("display examined item's info here", 10, 20);
 		examinedItem.setEditable(false);
 		examinedItem.setLineWrap(true);
 		descriptions.add(examinedItem);
 
 		// display player stats
-		JTextArea playerStats = new JTextArea("display player stats here", 10, 20);
+		playerStats = new JTextArea("display player stats here", 10, 20);
 		playerStats.setEditable(false);
 		playerStats.setLineWrap(true);
 		descriptions.add(playerStats);
 
 		// display something.....
-		JTextArea something = new JTextArea("???", 10, 20);
+		something = new JTextArea("???", 10, 20);
 		something.setEditable(false);
 		something.setLineWrap(true);
 		descriptions.add(something);
 
-		midInfo.add(descriptions);
-		container.add(midInfo);
+		rendererPanel.add(descriptions);
+		container.add(rendererPanel);
 
 		// area at the bottom to display items and action buttons
 		playerInfo = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
@@ -234,7 +260,7 @@ public abstract class GUI{
 		west.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				// move player west
-				// redraw player position
+				// redraw player position (redraw the world)
 			}
 		});
 
@@ -335,4 +361,22 @@ public abstract class GUI{
 		actions.add(attack);
 		playerInfo.add(actions);
 	}
+
+	/**
+	 * Returns the JTextArea to display the description of examined
+	 * items or rooms.
+	 */
+	public static JTextArea getExaminedItemDisplay() {
+		return examinedItem;
+	}
+
+	/**
+	 * Returns the display area that holds player's information,
+	 * like health and money.
+	 */
+	public static JTextArea getPlayerStatDisplay() {
+		return playerStats;
+	}
+
+	// method to return the last JTextArea
 }

@@ -37,7 +37,7 @@ public class Board {
 
 	private Location[][] locations;
 	private Location clickedCell;
-	public List<Item> items = new ArrayList<Item>();
+	public List<Item> items = new ArrayList<Item>();	// list of entity -> edit: yangcarr
 
 	public Board(GUI frame, JPanel parentPanel) {
 		this.parentPanel = parentPanel;
@@ -47,7 +47,8 @@ public class Board {
 		int randRow = 0 + (int) (Math.random() * (LOCATION_ROWS));
 		int randCol = 0 + (int) (Math.random() * (LOCATION_COLS));
 
-		items.add(new Potion(new Location(randRow, randCol)));
+		// add new Entity(new Location(randRow, randCol), new Potion()); -> edit: yangcarr
+		// items.add(new Potion(new Location(randRow, randCol)));
 
 		loadBoard();
 		drawBoard();

@@ -1,139 +1,108 @@
 package states;
 
-import application.GameWorldApp;
-import controller.Controller;
+import java.awt.Color;
+import java.awt.Graphics;
+
+import application.GUI;
+import gameworld.GameWorld;
+import gameworld.entities.Player;
 
 /**
  * Handles threads and game state.
  */
-public class AdventureGame implements Runnable{
+public class AdventureGame extends GUI{
+	private GameWorld game;			// containing the game logic
+	private Player player;			// player within the game
 
-	/** The controller. */
-	private Controller controller;
-	
-	/** The thread. */
-	private Thread thread;
-	
-	/** Is thread running. */
-	private boolean isThreadRunning;
+	private String saveFile = "";	// XML filename to store saved game
+	private String loadFile;	// XML filename to load game from
 
-	private GameState gameState;
-
-	private StateManager stateManager;
-
-	private GameWorldApp application;
+	private boolean isSaved = false; // when a new game is made, it's not saved
 
 	/**
 	 * Instantiates a new adventure game.
 	 */
 	public AdventureGame() {
-		
-	}
-	
-	/**
-	 * Inits the States and controller.
-	 */
-	private void init(){
-		application = new GameWorldApp();
-		controller = new Controller(this);
-		
-		// set states
-		stateManager = new StateManager();
-		gameState = new GameState();
-		//menuState = new MenuState(handler);
-		stateManager.setState(gameState);
-	}
-	
-	/**
-	 * Update.
-	 */
-	private void update(){
-		stateManager.update();
-	}
-	
-	/**
-	 * Render.
-	 */
-	private void render(){
-		stateManager.render();
+		game = new GameWorld();
+		player = Player.getInstance();
+		init();
 	}
 
-	/* (non-Javadoc).
-	 * @see java.lang.Runnable#run()
+	/**
+	 * Private method within the game to initialise the game,
+	 * ie. set the player within the gameworld
+	 */
+	private void init() {
+
+	}
+
+	/**
+	 * Loads a game from the XML file.
+	 * If a game is currently going on, asks user if to save before
+	 * loading a previously saved game
 	 */
 	@Override
-	public void run() {
-		init();
-		while(isThreadRunning) {
-			update();
-			render();
-		}
-		
-//		// CLOCK VARIABLES
-//		int fps = 60;
-//		double timePerUpdate = 1_000_000_000 / fps; 
-//		double targetTime = 0.0;
-//		long start = 0;
-//		long elapsed = System.nanoTime();
-//		
-//		// testing variables
-//		long timer = 0;
-//		int ticks = 0;
-//		
-//		while(isThreadRunning){
-//			start = System.nanoTime();
-//			targetTime += (start - elapsed);
-//			timer += start - elapsed; // for testing
-//			elapsed = start; // for testing
-//			
-//			if(targetTime >= timePerUpdate) {
-//				update();
-//				render();
-//				ticks++; // for testing if we have the correct frame rate
-//				targetTime -= timePerUpdate;
-//			}
-//			
-//			// tests to see if our clock and fps are correct
-//			if(timer >= 1_000_000_000){
-//				System.out.println("Ticks and Frames: " + ticks);
-//				ticks = 0;
-//				timer = 0;
-//			}
-//		}
-		
-		stop();
-		
-	}
-	
-	/**
-	 * Starts the thread.
-	 */
-	public synchronized void start(){
-		// check if there is already a thread running, do nothing if that is the case
-		if(isThreadRunning)
+	protected void loadGame() {
+		if (game == null) {
+			game = new GameWorld();
 			return;
-		
-		// create new thread and start running
-		isThreadRunning = true;
-		thread = new Thread(this); // set up the game class to run on thread
-		thread.start(); // run game (calls run())
-	}
-	
-	/**
-	 * Stops the thread.
-	 */
-	public synchronized void stop(){
-		// check if thread has already stopped, do nothing if that is the case
-		if(!isThreadRunning)
-			return;
-		
-		// stop the thread
-		isThreadRunning = false;
-		try {
-			thread.join(); // waits for thread to stop and then closes
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
+
+		// ask user whether to save or not
+		// if yes, then loadfile = save file
+		// and save current game
+
+		// load game from loadfile
+		// isSaved = false;
 	}
-	
+
+	/**
+	 * Saves the current game to the XML file
+	 */
+	@Override
+	protected void saveGame() { // save game to file
+		if (isSaved)
+			return;	// game already saved
+
+		// save game to file
+
+		// isSaved = true;	// indicate whether was saved
+	}
+
+	/**
+	 * Starts a new game.
+	 * If a game is currently going on, asks user if to save before
+	 * loading a new game
+	 */
+	@Override
+	protected void onStart() {
+		if (game == null) {	// no game yet, so nothing to save
+			game = new GameWorld();	// game starting state?
+			return;
+		}
+
+		// ask user whether to save or not
+		// if yes, then save current game
+
+		game = new GameWorld();	// load new game
+		// isSaved = false;
+	}
+
+	@Override
+	protected void redraw(Graphics g) { // renders the world
+		// TEST:
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, DRAWING_SIZE, DRAWING_SIZE);
+	}
+
+	/**
+	 * Main method to run the AdventureGame.
+	 */
+	public static void main(String[] args) {
+		new AdventureGame();
+	}
+
+
+
+
 }
