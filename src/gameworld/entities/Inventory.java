@@ -3,25 +3,24 @@ package gameworld.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import gameworld.items.Item;
-import gameworld.items.Key;
+import gameworld.entities.Item;
 
 /**
  * The Class Inventory.
  */
 public class Inventory {
-	
+
 	/** The inventory. */
 	private final List<Item> inventory;
 	private boolean hasKey;
-	
+
 	/**
 	 * Instantiates a new inventory.
 	 */
 	public Inventory() {
 		this.inventory = new ArrayList<Item>();
 	}
-	
+
 	/**
 	 * Checks if the inventory is full.
 	 *
@@ -30,7 +29,7 @@ public class Inventory {
 	public boolean isFull() {
 		return inventory.size() == 10;
 	}
-	
+
 	/**
 	 * Adds the item to the inventory if there is space.
 	 *
@@ -45,7 +44,7 @@ public class Inventory {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Removes the item from the inventory.
 	 *
@@ -54,7 +53,7 @@ public class Inventory {
 	public void remove(Item item) {
 		inventory.remove(item);
 	}
-	
+
 	/**
 	 * Checks if the item is in the player's inventory
 	 *
@@ -62,7 +61,7 @@ public class Inventory {
 	 * @return true, if successful
 	 */
 	public boolean contains(Item item) {
-		if(item instanceof Key) hasKey = true;
+		if(item.getItem() instanceof Key) hasKey = true;	// rewritten to check strategy
 		return inventory.contains(item);
 	}
 

@@ -1,10 +1,7 @@
 package gameworld;
-
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import controller.Controller;
 import gameworld.entities.Player;
 
 /**
@@ -13,21 +10,17 @@ import gameworld.entities.Player;
 @XmlRootElement(name = "GameWorld")
 public class GameWorld {
 
-	/** The controller. */
-	private Controller controller;
-	private Player player = Player.getInstance();
-	
+
 	private Room currentRoom;
-	
+	private Player player = Player.getInstance();
+
 	/**
 	 * Instantiates a new game world.
 	 *
 	 */
 	public GameWorld() {
+		
 		this.currentRoom = new Room("Test Room");
-		
-		
-		//player.setLocation(new Location(4,2));
 		
 	}
 	
@@ -35,18 +28,19 @@ public class GameWorld {
 	public Room getCurrentRoom() {
 		return currentRoom;
 	} 
-	
+
 	/**
 	 * Update.
 	 */
 	public void update() {
-		
+
 	}
-	
+
 	/**
 	 * Render.
 	 */
 	public void render() {
+
 		
 	}
 	
@@ -68,21 +62,5 @@ public class GameWorld {
 		
 	}
 	
-	/**
-	 * Gets the controller.
-	 *
-	 * @return the controller
-	 */
-	public Controller getController() {
-		return controller;
-	}
 
-	/**
-	 * Sets the controller.
-	 *
-	 * @param controller the new controller
-	 */
-	public void setController(Controller controller) {
-		this.controller = controller;
-	}
 }

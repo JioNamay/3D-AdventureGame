@@ -1,6 +1,7 @@
 package renderer;
 
 import java.awt.Color;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -15,9 +16,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import application.GUI;
-import gameworld.items.Item;
-import gameworld.items.Potion;
 import gameworld.Location;
+import gameworld.entities.Item;
 
 /**
  * Package: Renderer Class: Board
@@ -37,7 +37,7 @@ public class Board {
 
 	private Location[][] locations;
 	private Location clickedCell;
-	public List<Item> items = new ArrayList<Item>();
+	public List<Item> items = new ArrayList<Item>();	// list of entity -> edit: yangcarr
 
 	public Board(GUI frame, JPanel parentPanel) {
 		this.parentPanel = parentPanel;
@@ -47,7 +47,8 @@ public class Board {
 		int randRow = 0 + (int) (Math.random() * (LOCATION_ROWS));
 		int randCol = 0 + (int) (Math.random() * (LOCATION_COLS));
 
-		items.add(new Potion(new Location(randRow, randCol)));
+		// add new Entity(new Location(randRow, randCol), new Potion()); -> edit: yangcarr
+		// items.add(new Potion(new Location(randRow, randCol)));
 
 		loadBoard();
 		drawBoard();

@@ -1,31 +1,34 @@
 package gameworld.entities;
 
 import gameworld.Location;
+import gameworld.Room;
 
-public class Player extends AttackingEntity {
-	
+public class Player implements Damageable {
+
 	/** The inventory. */
 	private Inventory inventory;
-	
-	/** The weapon. */
-	private WeaponEntity weapon;
-	
+
+	/** Player's health */
+	private int health;
+
 	/** The location. */
 	private Location location;
 	
+	private Room currentRoom;
+
 	private int coins = 0;
-	
+
 	// ********** SINGLETON PATTERN ********** //
 	/** The only instance of player. */
 	private static Player instance = new Player();
-	
+
 	/**
 	 * Instantiates a new player - private to ensure that only one player is ever made.
 	 */
 	private Player() {
 		this.health = 100;
 	}
-	
+
 	/**
 	 * Gets the single instance of Player.
 	 *
@@ -34,7 +37,7 @@ public class Player extends AttackingEntity {
 	public static Player getInstance() {
 		return instance;
 	}
-	
+
 	/**
 	 * @return the coins
 	 */
@@ -57,7 +60,7 @@ public class Player extends AttackingEntity {
 	public void setInventory(Inventory inventory) {
 		if(this.inventory == null) this.inventory = inventory;
 	}
-	
+
 	/**
 	 * Gets the inventory.
 	 *
@@ -66,28 +69,28 @@ public class Player extends AttackingEntity {
 	public Inventory getInventory() {
 		return this.inventory;
 	}
-	
+
 	/**
 	 * Equip weapon.
 	 *
 	 * @param weapon the weapon
 	 */
-	public void equipWeapon(WeaponEntity weapon) {
+	/*public void equipWeapon(WeaponEntity weapon) {
 		this.weapon = weapon;
 		setAttackDamage();
-	}
-	
+	}*/
+
 	/**
 	 * Sets the attack damage.
 	 */
-	private void setAttackDamage() {
+	/*private void setAttackDamage() {
 		if(this.weapon == null) {
 			// player uses fist
 			this.maxDamage = 5;
 		}else {
-			//this.maxDamage = weapon.getAttackDamage(); 
+			//this.maxDamage = weapon.getAttackDamage();
 		}
-	}
+	}*/
 
 	// ********** INHERITED "ABSTRACT" METHODS ********** //
 
@@ -97,7 +100,7 @@ public class Player extends AttackingEntity {
 	@Override
 	public void die() {
 		// Game end
-		
+
 	}
 
 	/**
@@ -109,46 +112,43 @@ public class Player extends AttackingEntity {
 		health = ((this.health + amount) > 100) ? 100 : health + amount;
 	}
 
-	/* (non-Javadoc)
-	 * @see gameworld.GameObjectInterface#getLocation()
-	 */
 	@Override
+	public int getHealth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void getDamaged(int amount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @return the currentRoom
+	 */
+	public Room getCurrentRoom() {
+		return currentRoom;
+	}
+
+	/**
+	 * @param currentRoom the currentRoom to set
+	 */
+	public void setCurrentRoom(Room currentRoom) {
+		this.currentRoom = currentRoom;
+	}
+
+	/**
+	 * @return the location
+	 */
 	public Location getLocation() {
 		return location;
 	}
 
-	/* (non-Javadoc)
-	 * @see gameworld.GameObjectInterface#setLocation(gameworld.Location)
+	/**
+	 * @param location the location to set
 	 */
-	@Override
 	public void setLocation(Location location) {
 		this.location = location;
-	}
-	
-	/* (non-Javadoc)
-	 * @see gameworld.entities.Entity#getStats()
-	 */
-	@Override
-	protected String[] getStats() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see gameworld.GameObjectInterface#update()
-	 */
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/* (non-Javadoc)
-	 * @see gameworld.GameObjectInterface#render()
-	 */
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		
 	}
 }
