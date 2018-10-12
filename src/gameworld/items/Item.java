@@ -17,7 +17,8 @@ public abstract class Item implements GameObjectInterface{
 		OPEN,
 		CLOSE,
 		UNLOCK,
-		LOCK
+		LOCK,
+		THROWCOINS
 	}
 	
 	public enum Direction{

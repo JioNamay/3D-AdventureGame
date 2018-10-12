@@ -11,8 +11,10 @@ public class Door extends LockableItem {
 	
 	Room goesTo;
 
-	public Door(Location location) {
+	public Door(Location location, Room connectingRoom) {
 		super(location);
+		this.goesTo = connectingRoom;
+		this.description = "A door that leads to the " + connectingRoom.getName();
 	}
 
 	@Override

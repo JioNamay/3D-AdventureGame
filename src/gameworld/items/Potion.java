@@ -48,7 +48,7 @@ public class Potion extends PickupableItem {
 		if (!this.isInPlayerInventory)
 			return Arrays.asList(Action.EXAMINE.toString(), Action.PICKUP.toString() );
 		else
-			return Arrays.asList(Action.EXAMINE.toString(), Action.PICKUP.toString(), Action.DROP.toString(),
+			return Arrays.asList(Action.EXAMINE.toString(), Action.DROP.toString(),
 					Action.USE.toString());
 	}
 
