@@ -9,7 +9,6 @@ import gameworld.tiles.Tile;
 public class Location {
 	private int row;
 	private int col;
-	private Tile tile;
 
 	private boolean isSolid;
 	
@@ -44,7 +43,4 @@ public class Location {
 		this.isSolid = isSolid;
 	}
 
-	public Tile getTile() {
-		return this.tile;
-	}
 }

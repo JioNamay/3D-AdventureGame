@@ -1,15 +1,18 @@
 package gameworld;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import gameworld.items.Door;
+import gameworld.entities.Door;
+import gameworld.entities.Item;
 
 public class Room {
 
 	public static final int SIZE = 7;
 	Location[][] locations = new Location[SIZE][SIZE];
-	List<GameObjectInterface> gameObjects = new ArrayList<GameObjectInterface>();
+	Map<Location,Item> gameItems = new HashMap<Location,Item>();
 	List<Door> doors = new ArrayList<Door>();
 	String name;
 	
@@ -36,15 +39,15 @@ public class Room {
 	/**
 	 * @return the gameObjects
 	 */
-	public List<GameObjectInterface> getGameObjects() {
-		return gameObjects;
+	public Map<Location, Item> getGameObjects() {
+		return gameItems;
 	}
 
 	/**
 	 * @param gameObjects the gameObjects to set
 	 */
-	public void setGameObjects(List<GameObjectInterface> gameObjects) {
-		this.gameObjects = gameObjects;
+	public void setGameObjects(Map<Location, Item> gameObjects) {
+		this.gameItems = gameObjects;
 	}
 
 	/**
@@ -61,12 +64,12 @@ public class Room {
 		this.name = name;
 	}
 	
-	public void addGameObject(GameObjectInterface obj) {
-		this.gameObjects.add(obj);
+	public void addGameObject(Item e) {
+		this.gameItems.put(e.getLocation(), e);
 	}
 	
-	public void removeGameObject(GameObjectInterface obj) {
-		this.gameObjects.remove(obj);
+	public void removeGameObject(Location loc) {
+		this.gameItems.remove(loc);
 	}
 
 	/**

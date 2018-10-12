@@ -53,7 +53,7 @@ public abstract class GUI{
 	protected JFrame frame;
 	protected JPanel container; // global container to hold all the components in frame
 	protected Board board;
-	protected JPanel playerInfo;
+	protected JPanel playerInfo, inventory;
 	protected JComponent drawing; // the canvas to display the rendered world
 	protected Graphics drawingArea;
 	protected JTextArea examinedItem, playerStats;
@@ -133,7 +133,7 @@ public abstract class GUI{
 		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
 		// playerInfo.setBackground(Color.GREEN); // test
 
-		JPanel inventory = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
+		inventory = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
 		inventory.setPreferredSize(new Dimension(410, 110));
 		updateInventory(inventory);	// displays inventory to jpanel
 		playerInfo.add(inventory);

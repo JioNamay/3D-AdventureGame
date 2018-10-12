@@ -1,24 +1,22 @@
 package gameworld.entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-import gameworld.items.Item;
 
 /**
  * The Class Inventory.
  */
-public class Inventory {
-
+public class Inventory implements Iterable<PickUpAbleStrategy> {
 	/** The inventory. */
-	private final List<Item> inventory;
-	private boolean hasKey;
+	private final List<PickUpAbleStrategy> inventory;
+	private int keyCount;
 
 	/**
 	 * Instantiates a new inventory.
 	 */
 	public Inventory() {
-		this.inventory = new ArrayList<Item>();
+		this.inventory = new ArrayList<PickUpAbleStrategy>();
 	}
 
 	/**
@@ -33,13 +31,14 @@ public class Inventory {
 	/**
 	 * Adds the item to the inventory if there is space.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 * @return true, if successful
 	 */
-	public boolean add(Item item) {
-		if(this.isFull()) {
+	public boolean add(PickUpAbleStrategy item) {
+		if (this.isFull()) {
 			return false;
-		}else {
+		} else {
 			inventory.add(item);
 			return true;
 		}
@@ -48,20 +47,21 @@ public class Inventory {
 	/**
 	 * Removes the item from the inventory.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	public void remove(Item item) {
+	public void remove(PickUpAbleStrategy item) {
 		inventory.remove(item);
 	}
 
 	/**
 	 * Checks if the item is in the player's inventory
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 * @return true, if successful
 	 */
-	public boolean contains(Entity item) {
-		if(item.getItem() instanceof Key) hasKey = true;	// rewritten to check strategy
+	public boolean contains(PickUpAbleStrategy item) {
 		return inventory.contains(item);
 	}
 
@@ -69,13 +69,43 @@ public class Inventory {
 	 * @return the hasKey
 	 */
 	public boolean hasKey() {
-		return hasKey;
+		return keyCount > 0;
+	}
+
+	public void incrementKeys() {
+		keyCount++;
 	}
 
 	/**
-	 * @param hasKey the hasKey to set
+	 * @param hasKey
+	 *            the hasKey to set
 	 */
-	public void setHasKey(boolean hasKey) {
-		this.hasKey = hasKey;
+	public void setKeyCount(int keyCount) {
+		this.keyCount = keyCount;
 	}
+
+	@Override
+	public Iterator<PickUpAbleStrategy> iterator() {
+		Iterator<PickUpAbleStrategy> it = new Iterator<PickUpAbleStrategy>() {
+
+			private int currentIndex = 0;
+
+			@Override
+			public boolean hasNext() {
+				return currentIndex < inventory.size();
+			}
+
+			@Override
+			public PickUpAbleStrategy next() {
+				return inventory.get(currentIndex);
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
+		return it;
+	}
+
 }

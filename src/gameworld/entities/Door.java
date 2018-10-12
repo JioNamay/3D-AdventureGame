@@ -12,11 +12,17 @@ public class Door extends LockableStrategy {
 
 	Room goesTo;
 
+
+//	public Door(Location location, Room connectingRoom) {
+//		super(location);
+//		this.goesTo = connectingRoom;
+//		this.description = "A door that leads to the " + connectingRoom.getName();
+//	}
+
+	
 	/*public Door(Location location) {
 		super(location);
 	}*/
-
-
 
 	/**
 	 * @return the goesTo

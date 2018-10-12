@@ -16,8 +16,6 @@ public class GameWorld {
 	public GameWorld() {
 		Room currentRoom = new Room("Test Room");
 
-		player.setLocation(new Location(4,2));
-
 	}
 
 	/**

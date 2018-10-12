@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
-import gameworld.entities.Entity;
+import gameworld.entities.Item;
 import gameworld.entities.Inventory;
 
 
@@ -21,13 +21,13 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 	private static final int IMAGE_WIDTH = 410/5;
 	private static final int IMAGE_HEIGHT = 110/2;
 
-	private Entity item;
+	private Item item;
 
 	/**
 	 * An instance of this JComponent needs to know what item it represents.
 	 * @param item
 	 */
-	public InventoryDisplay(Entity item) {
+	public InventoryDisplay(Item item) {
 		this.item = item;
 	}
 

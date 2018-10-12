@@ -3,13 +3,8 @@ package gameworld.entities;
 import gameworld.Location;
 
 /**
- * Entity is the context class where the various items are used.
- * An instance of entity is made in the gameworld, where certain items
- * are placed in certain locations.
- *
- * @author yangcarr
- */
-public class Entity {
+ * Entity is the context class where the various items are used.*/
+public class Item {
 	protected Location location;
 	protected Strategy item;
 
@@ -18,7 +13,7 @@ public class Entity {
 	 * It takes in an instance of Strategy, which will allow the item
 	 * to perform its respective behaviours.
 	 */
-	public Entity(Location location, Strategy item) {
+	public Item(Location location, Strategy item) {
 		this.location = location;
 		this.item = item;
 	}
@@ -28,7 +23,7 @@ public class Entity {
 	 * instance of Strategy it is.
 	 */
 	public String getDescription() {
-		return item.description();
+		return item.getDescription();
 	}
 
 	public Location getLocation() {
