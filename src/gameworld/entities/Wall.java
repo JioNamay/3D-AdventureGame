@@ -1,55 +1,40 @@
 package gameworld.entities;
 
-import java.util.List;
-
 import gameworld.Location;
-import gameworld.entities.Player;
-import gameworld.entities.Strategy;
 
-public class Wall implements Strategy{
+/**
+ * The wall object represents a wall and marks a location as solid so that a player cannot walk past it.
+ */
+public class Wall{
+	
+	/** The location. */
+	private Location location;
 
-	@Override
-	public List<String> getActions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void performAction(String action) {
-		// TODO Auto-generated method stub
-
-	}
-
-	// ======================================================
-
-	/*public Wall(Location location) {
-		super(location);
+	/**
+	 * Instantiates a new wall.
+	 *
+	 * @param location the location
+	 */
+	public Wall(Location location) {
+		this.setLocation(location);
 		location.setSolid(true);
 	}
 
-
-	@Override
-	protected String examine() {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Gets the location.
+	 *
+	 * @return the location
+	 */
+	public Location getLocation() {
+		return location;
 	}
 
-	@Override
-	protected String performAction(Action action, Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * Sets the location.
+	 *
+	 * @param location the location to set
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
 	}
-
-	@Override
-	protected List<String> getActions() {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
-
 }
