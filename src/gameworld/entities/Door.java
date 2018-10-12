@@ -43,8 +43,8 @@ public class Door extends LockableStrategy {
 	}
 	
 
-	@Override
-	protected String performAction(Action action, Player player) {
+	@Override 
+	public String performAction(Action action) {
 		switch(action) {
 		case EXAMINE:
 			return getDescription();
