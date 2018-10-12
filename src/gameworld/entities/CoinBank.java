@@ -8,16 +8,16 @@ import gameworld.Location;
 public abstract class CoinBank implements Strategy{
 
 	/** The location. */
-	private Location location;
+	protected Location location;
 	
 	/** A long description of the entity. */
-	private String description;
+	protected String description;
 	
 	/** The name of the entity (short description) */
-	private String name;
+	protected String name;
 	
 	/** The coin bank. */
-	private int coinBank;
+	protected int coinBank;
 
 	/**
 	 * Instantiates a new coin bank.

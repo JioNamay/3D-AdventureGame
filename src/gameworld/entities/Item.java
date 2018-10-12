@@ -7,9 +7,23 @@ import gameworld.Location;
  * An instance of entity is made in the gameworld, where certain items
  * are placed in certain locations.
  *
- * @author yangcarr
+ * @author yangcarr 300368805
+ * @author alabasdean 300346210
  */
 public class Item {
+	public enum Action{
+		EXAMINE,
+		PICKUP, 
+		DROP,
+		USE,
+		PLACE,
+		TAKE,
+		OPEN,
+		CLOSE,
+		UNLOCK,
+		LOCK
+	}
+
 	protected Location location;
 	protected Strategy item;
 
