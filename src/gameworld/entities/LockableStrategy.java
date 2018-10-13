@@ -21,7 +21,7 @@ public abstract class LockableStrategy implements Strategy {
 			else return Arrays.asList(Action.EXAMINE.toString());
 		}else {
 			if(isOpen) return Arrays.asList(Action.EXAMINE.toString(), Action.CLOSE.toString());
-			else return Arrays.asList(Action.EXAMINE.toString(), Action.CLOSE.toString());
+			else return Arrays.asList(Action.EXAMINE.toString(), Action.OPEN.toString());
 		}
 	}
 
