@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import gameworld.Location.Direction;
 import gameworld.entities.*;
 
 public class Room {
@@ -27,7 +28,7 @@ public class Room {
 				locations[row][col] = new Location(row, col);
 			}
 		}
-	}
+	} 
 
 	/**
 	 * @return the locations
@@ -130,5 +131,29 @@ public class Room {
 	public void setDoors(List<Door> doors) {
 		this.doors = doors;
 	}
-
+	
+	public boolean movePlayer(Direction dir) {
+		int playerLocRow = Player.getInstance().getLocation().getRow();
+		int playerLocCol = Player.getInstance().getLocation().getCol();
+		switch(dir){
+		case NORTH:
+			if(locations[playerLocRow + 1][playerLocCol].isSolid()) return false;
+			Player.getInstance().setLocation(locations[playerLocRow + 1][playerLocCol]);
+			return true;
+		case EAST:
+			if(locations[playerLocRow][playerLocCol + 1].isSolid()) return false;
+			Player.getInstance().setLocation(locations[playerLocRow][playerLocCol + 1]);
+			return true;
+		case SOUTH:
+			if(locations[playerLocRow - 1][playerLocCol].isSolid()) return false;
+			Player.getInstance().setLocation(locations[playerLocRow - 1][playerLocCol]);
+			return true;
+		case WEST:
+			if(locations[playerLocRow][playerLocCol - 1].isSolid()) return false;
+			Player.getInstance().setLocation(locations[playerLocRow - 1][playerLocCol]);
+			return true;
+		default:
+			throw new IllegalArgumentException("Direction: " + dir.toString() + " not recognised");
+		}
+	}
 }
