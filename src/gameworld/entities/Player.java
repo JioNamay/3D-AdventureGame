@@ -138,7 +138,10 @@ public class Player implements Damageable {
 	 * @param currentRoom the currentRoom to set
 	 */
 	public void setCurrentRoom(Room currentRoom) {
+		if(this.currentRoom != null) this.currentRoom.setHasPlayer(false); // tell the old room that it no longer has player
 		this.currentRoom = currentRoom;
+		currentRoom.setHasPlayer(true);
+		
 	}
 
 	/**
