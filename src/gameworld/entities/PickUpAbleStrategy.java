@@ -16,7 +16,7 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 	/** The actions. */
 	// all pickup-able items are, by default, not in the player's inventory at the start
 	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.PICKUP.toString());
-	
+	 
 	@Override
 	public String performAction(Action action) {
 		switch(action) {

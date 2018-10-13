@@ -1,12 +1,12 @@
 package gameworld.entities;
 
-import gameworld.Location;
+import gameworld.Location.Direction;
 
 /**
  * The coinbank class is extended by every entity who is able to give player coins when a player interacts with it.
  */
 public abstract class CoinBank implements Strategy{
-
+ 
 	/** A long description of the entity. */
 	protected String description;
 
@@ -15,6 +15,9 @@ public abstract class CoinBank implements Strategy{
 
 	/** The coin bank. */
 	protected int coinBank;
+
+	/** The direction the item is facing. */
+	private Direction direction;
 
 	/**
 	 * Give player coins.
@@ -71,6 +74,23 @@ public abstract class CoinBank implements Strategy{
 	 */
 	public void setCoinBank(int coinBank) {
 		this.coinBank = coinBank;
+	}
+	
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getDirection()
+	 */
+	@Override
+	public Direction getDirection() {
+		// TODO Auto-generated method stub
+		return direction;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#setDirection()
+	 */
+	@Override
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 }

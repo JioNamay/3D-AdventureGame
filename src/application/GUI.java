@@ -207,7 +207,7 @@ public abstract class GUI{
 			}
 
 		});
-
+ 
 		game.add(load);
 		game.add(save);
 		game.add(newGame);

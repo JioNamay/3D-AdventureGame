@@ -9,7 +9,7 @@ import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
 
 public class Potion extends PickUpAbleStrategy implements Damageable {
-
+ 
 	private int uses;
 
 	public Potion() {

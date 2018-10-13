@@ -2,6 +2,7 @@ package gameworld.entities;
 
 import java.util.List;
 
+import gameworld.Location.Direction;
 import gameworld.entities.Item.Action;
 
 /**
@@ -45,6 +46,18 @@ public interface Strategy {
 	 * @return true, if is door
 	 */
 	public boolean isDoor();
+	
+	/**
+	 * Gets the direction that the item is facing.
+	 *
+	 * @return the direction
+	 */
+	public Direction getDirection();
+	
+	/**
+	 * Sets the direction that the item is facing.
+	 */
+	public void setDirection(Direction direction);
 	
 	/**
 	 * Performs specified action based on user choice or item behavior.

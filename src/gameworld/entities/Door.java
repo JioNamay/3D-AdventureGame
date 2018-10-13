@@ -1,5 +1,6 @@
 package gameworld.entities;
 
+import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Item.Action;
 import gameworld.entities.LockableStrategy;
@@ -72,5 +73,17 @@ public class Door extends LockableStrategy {
 	@Override
 	public boolean isDoor() {
 		return true;
+	}
+
+	@Override
+	public Direction getDirection() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setDirection(Direction direction) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -35,7 +35,6 @@ public class Player implements Damageable {
 	 * @return single instance of Player
 	 */
 	public static Player getInstance() {
-		//if(instance == null) instance = new Player();
 		return instance;
 	}
 
@@ -117,13 +116,17 @@ public class Player implements Damageable {
 
 	@Override
 	public int getHealth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return health;
 	}
 
 	@Override
 	public void getDamaged(int amount) {
-		// TODO Auto-generated method stub
+		if((this.health - amount) < 0) {
+			this.health = 0;
+			this.die();
+		}else {
+			health -= amount;
+		}
 
 	}
 

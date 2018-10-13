@@ -1,8 +1,6 @@
 package gameworld;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import gameworld.Location.Direction;
@@ -14,7 +12,7 @@ public class Room {
 	Location[][] locations = new Location[SIZE][SIZE];
 	Map<Location, Item> gameItems = new HashMap<Location, Item>();
 	boolean hasPlayer;
-	String name;
+	String name; 
 
 	public Room(String name) {
 		this.name = name;

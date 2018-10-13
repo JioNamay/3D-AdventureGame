@@ -36,7 +36,7 @@ public class AdventureGame extends GUI{
 
 	private boolean isSaved = false; // when a new game is made, it's not saved
 	//private InventoryDisplay[] inventoryItems = new InventoryDisplay[10];
-
+ 
 	/**
 	 * Instantiates a new adventure game.
 	 */
