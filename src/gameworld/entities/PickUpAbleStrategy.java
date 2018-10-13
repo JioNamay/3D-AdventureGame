@@ -3,7 +3,6 @@ package gameworld.entities;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.Location;
 import gameworld.entities.Item.Action;
 
 /**
@@ -13,15 +12,6 @@ import gameworld.entities.Item.Action;
  * @author yangcarr 300368805
  */
 public abstract class PickUpAbleStrategy extends CoinBank {
-	
-	/**
-	 * Instantiates a new pick up able strategy.
-	 *
-	 * @param location the location
-	 */
-	public PickUpAbleStrategy(Location location) {
-		super(location);
-	}
 
 	/** The actions. */
 	// all pickup-able items are, by default, not in the player's inventory at the start
@@ -35,8 +25,7 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 		case DROP:
 			return drop();
 		default:
-			throw new IllegalArgumentException("Unknown action: " + action.toString());
-		}
+			throw new IllegalArgumentException("Unknown action: " + action.toString() + " for object: "+ this.name);		}
 	}
 	
 	/**
@@ -50,7 +39,7 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 		if(player.getInventory().isFull()) return "Cannot pickup " + this.getName() + ". Inventory is full.";
 		
 		// add item to player inventory and remove from room.
-		player.getCurrentRoom().removeGameObject(this.getLocation());
+		player.getCurrentRoom().removeGameObject(this);
 		player.getInventory().add(this);
 		
 		return "You picked up " + this.getName();
@@ -65,16 +54,10 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 		Player player = Player.getInstance();
 		
 		// check if drop valid.
-		if(player.getInventory().contains(this)) return "How are you going to drop an item you aren't even holding?";
+		if(!player.getInventory().contains(this)) return "How are you going to drop an item you aren't even holding?";
 		
-		// drop item by removing from player inventory and adding it to current room objects.
-		player.getInventory().remove(this);
-		
-		Location dropLoc = new Location(player.getLocation().getRow(), player.getLocation().getCol());
-		Item droppedItem = new Item(dropLoc, this); 
-		player.getCurrentRoom().addGameObject(droppedItem);
-
-		return "Player dropped " + this.name;
+		// delegate drop to room - drops if location is available, else does nothing (but returns string with result)
+		return player.getCurrentRoom().playerDropGameObject(this);
 
 	}
 

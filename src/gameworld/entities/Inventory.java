@@ -75,6 +75,10 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 	public void incrementKeys() {
 		keyCount++;
 	}
+	
+	public void decrementKeys() {
+		keyCount--;
+	}
 
 	/**
 	 * @param hasKey
@@ -82,6 +86,10 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 	 */
 	public void setKeyCount(int keyCount) {
 		this.keyCount = keyCount;
+	}
+	
+	public int getKeyCount() {
+		return keyCount;
 	}
 
 	@Override
