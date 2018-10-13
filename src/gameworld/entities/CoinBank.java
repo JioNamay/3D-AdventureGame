@@ -17,7 +17,7 @@ public abstract class CoinBank implements Strategy{
 	protected int coinBank;
 
 	/** The direction the item is facing. */
-	private Direction direction;
+	protected Direction direction;
 
 	/**
 	 * Give player coins.
