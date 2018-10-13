@@ -3,21 +3,15 @@ package gameworld.entities;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.Location;
 import gameworld.entities.Item.Action;
 
 public abstract class LockableStrategy implements Strategy {
 	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString()); 
 
 	protected boolean isOpen, isLocked;
-
-	protected Location location;
+	
 	protected String description;
 	protected String name;
-	
-	public LockableStrategy(Location location) {
-		this.location = location;
-	}
  
 	@Override
 	public List<String> getActions() {
@@ -33,14 +27,16 @@ public abstract class LockableStrategy implements Strategy {
 
 	@Override
 	public String performAction(Action action) {
-		if (action.equals("Unlock")){
-			// check if player has key in inventory
-			// then actions = examine, open
+		switch(action) {
+		case UNLOCK:
+			return unlock();
+		case OPEN:
+			return open();
+		case CLOSE:
+			return close();
+		default:
+			throw new IllegalArgumentException("Unknown action: " + action.toString() + " for object: "+ this.name);
 		}
-		else if (action.equals("Open")) {
-			// actions = examine, close
-		}
-		return null;
 	}
 
 	@Override
@@ -48,5 +44,26 @@ public abstract class LockableStrategy implements Strategy {
 		return name;
 	}
 
+	private String unlock() {
+		if (Player.getInstance().getInventory().hasKey()) {
+			PickUpAbleStrategy key = Player.getInstance().getInventory().getAKey();
+			key.performAction(Action.USE);
+			isLocked = false;
+			return "Player unlocked " + this.name;
+		}
+		return "You cannot unlock something without a key";
+	}
+	
+	private String open() {
+		if(isLocked) return "You cannot open a " + this.name + " while it is locked!";
+		isOpen = true;
+		return "You opened a " + this.name;
+	}
+	
+	private String close() {
+		if(isLocked || !isOpen) return "You cannot close a door that's locked or already closed!";
+		isOpen = false;
+		return "You closed a " + this.name;
+	}
 
 }
