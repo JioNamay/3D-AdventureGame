@@ -3,13 +3,10 @@ package gameworld.entities;
 import gameworld.Location;
 import gameworld.Room;
 
-public class Player implements Damageable {
+public class Player extends AttackingEntity {
 
 	/** The inventory. */
 	private Inventory inventory;
-
-	/** Player's health */
-	private int health;
 
 	/** The location. */
 	private Location location;
@@ -17,6 +14,8 @@ public class Player implements Damageable {
 	private Room currentRoom;
 	
 	private PickUpAbleStrategy selectedItem;
+	
+	private EquipableStrategy equipedWeapon;
 
 	private int coins = 0;
 
@@ -29,6 +28,7 @@ public class Player implements Damageable {
 	 */
 	private Player() {
 		this.health = 100;
+		this.maxDamage = 5;
 	}
 
 	/**
@@ -61,9 +61,14 @@ public class Player implements Damageable {
 	 */
 	public void setInventory(Inventory inventory) {
 		if(this.inventory == null) this.inventory = inventory;
-		// only used for test to allow the inventory to be reset: 
-		this.inventory = inventory;
 	} 
+	
+	/**
+	 * Reset inventory for test. Only used for testing.
+	 */
+	public void resetInventoryForTest() {
+		this.inventory = new Inventory();
+	}
 
 	/**
 	 * Gets the inventory.
@@ -75,26 +80,16 @@ public class Player implements Damageable {
 	}
 
 	/**
-	 * Equip weapon.
-	 *
-	 * @param weapon the weapon
-	 */
-	/*public void equipWeapon(WeaponEntity weapon) {
-		this.weapon = weapon;
-		setAttackDamage();
-	}*/
-
-	/**
 	 * Sets the attack damage.
 	 */
-	/*private void setAttackDamage() {
-		if(this.weapon == null) {
+	private void setAttackDamage() {
+		if(equipedWeapon == null) {
 			// player uses fist
 			this.maxDamage = 5;
 		}else {
-			//this.maxDamage = weapon.getAttackDamage();
+			this.maxDamage = equipedWeapon.getAttackDamage();
 		}
-	}*/
+	}
 
 	// ********** INHERITED "ABSTRACT" METHODS ********** //
 
@@ -116,21 +111,6 @@ public class Player implements Damageable {
 		health = ((this.health + amount) > 100) ? 100 : health + amount;
 	}
 
-	@Override
-	public int getHealth() {
-		return health;
-	}
-
-	@Override
-	public void getDamaged(int amount) {
-		if((this.health - amount) < 0) {
-			this.health = 0;
-			this.die();
-		}else {
-			health -= amount;
-		}
-
-	}
 
 	/**
 	 * @return the currentRoom
@@ -175,5 +155,20 @@ public class Player implements Damageable {
 	 */
 	public void setSelectedItem(PickUpAbleStrategy selectedItem) {
 		this.selectedItem = selectedItem;
+	}
+
+	/**
+	 * @return the equipedWeapon
+	 */
+	public EquipableStrategy getEquipedWeapon() {
+		return equipedWeapon;
+	}
+
+	/**
+	 * @param equipedWeapon the equipedWeapon to set
+	 */
+	public void setEquipedWeapon(EquipableStrategy equipedWeapon) {
+		this.equipedWeapon = equipedWeapon;
+		setAttackDamage(); // update player's attack damage
 	}
 }

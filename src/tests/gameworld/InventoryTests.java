@@ -27,7 +27,7 @@ class InventoryTests {
 	@BeforeEach
 	public void setupPlayerAndInventory() {
 		player = Player.getInstance();
-		player.setInventory(new Inventory());
+		player.resetInventoryForTest();
 	}
 	
 	@Test
