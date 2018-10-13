@@ -1,7 +1,5 @@
 package gameworld.entities;
 
-import gameworld.Location;
-
 /**
  * Entity is the context class where the various items are used.
  * An instance of entity is made in the gameworld, where certain items
@@ -24,7 +22,6 @@ public class Item {
 		LOCK
 	}
 
-	protected Location location;
 	protected Strategy item;
 
 	/**
@@ -32,8 +29,7 @@ public class Item {
 	 * It takes in an instance of Strategy, which will allow the item
 	 * to perform its respective behaviours.
 	 */
-	public Item(Location location, Strategy item) {
-		this.location = location;
+	public Item(Strategy item) {
 		this.item = item;
 	}
 
@@ -44,9 +40,13 @@ public class Item {
 	public String getDescription() {
 		return item.getDescription();
 	}
-
-	public Location getLocation() {
-		return location;
+	
+	public String getName() {
+		return item.getName();
+	}
+	
+	public boolean isSolid() {
+		return item.isSolid();
 	}
 
 	public Strategy getItem() {

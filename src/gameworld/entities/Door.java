@@ -58,4 +58,9 @@ public class Door extends LockableStrategy {
 			throw new IllegalArgumentException("Unknown action: " + action);
 		}
 	}
+
+	@Override
+	public boolean isSolid() {
+		return false;
+	}
 }

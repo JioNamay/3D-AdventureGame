@@ -3,7 +3,6 @@ package gameworld.entities;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.Location;
 import gameworld.entities.Damageable;
 import gameworld.entities.Item.Action;
 import gameworld.entities.PickUpAbleStrategy;
@@ -13,8 +12,7 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 
 	private int uses;
 
-	public Potion(Location location) {
-		super(location);
+	public Potion() {
 		this.uses = 1;
 		this.description = "A magical potion that restores 10 points of health";
 		this.name = "Health Potion";
@@ -62,6 +60,12 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 		
 		// return new action if in inventory
 		return Arrays.asList(Action.EXAMINE.toString(), Action.USE.toString(), Action.DROP.toString());
+	}
+
+
+	@Override
+	public boolean isSolid() {
+		return false;
 	}
 
 }

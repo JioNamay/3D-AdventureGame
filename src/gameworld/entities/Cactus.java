@@ -54,7 +54,7 @@ public class Cactus extends CoinBank{
 		case EXAMINE:
 			return examine();
 		default: 
-			throw new IllegalArgumentException("Unknown action: " + action.toString());
+			throw new IllegalArgumentException("Unknown action: " + action.toString() + " for object: "+ this.name);
 		}
 	}
 }

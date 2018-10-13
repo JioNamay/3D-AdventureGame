@@ -7,9 +7,6 @@ import gameworld.Location;
  */
 public abstract class CoinBank implements Strategy{
 
-	/** The location. */
-	protected Location location;
-
 	/** A long description of the entity. */
 	protected String description;
 
@@ -18,15 +15,6 @@ public abstract class CoinBank implements Strategy{
 
 	/** The coin bank. */
 	protected int coinBank;
-
-	/**
-	 * Instantiates a new coin bank.
-	 *
-	 * @param location the location
-	 */
-	public CoinBank(Location location) {
-		this.location = location;
-	}
 
 	/**
 	 * Give player coins.
@@ -49,24 +37,6 @@ public abstract class CoinBank implements Strategy{
 		}
 
 		return "You found " + givenAmount + " coins\n" + description;
-	}
-
-	/**
-	 * Gets the location.
-	 *
-	 * @return the location
-	 */
-	public Location getLocation() {
-		return location;
-	}
-
-	/**
-	 * Sets the location.
-	 *
-	 * @param location the location to set
-	 */
-	public void setLocation(Location location) {
-		this.location = location;
 	}
 
 	/**

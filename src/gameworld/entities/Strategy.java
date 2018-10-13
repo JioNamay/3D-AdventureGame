@@ -13,5 +13,6 @@ public interface Strategy {
 	public List<String> getActions();			// uses of the item that user can perform on it
 	public String getDescription();		// description of the item when user 'examines' it
 	public String getName(); // the name of the item
+	public boolean isSolid(); // true if player cannot walk on its location
 	public String performAction(Action action);	// performs specified action based on user choice
 }

@@ -1,6 +1,5 @@
 package gameworld.entities;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public abstract class LockableStrategy implements Strategy {
 	public LockableStrategy(Location location) {
 		this.location = location;
 	}
-
+ 
 	@Override
 	public List<String> getActions() {
 		if(isLocked) {
