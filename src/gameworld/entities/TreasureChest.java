@@ -4,15 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import gameworld.Location.Direction;
 import gameworld.entities.Item.Action;
 
 public class TreasureChest extends LockableStrategy implements Container {
 
 	private PickUpAbleStrategy item;
-	private int coins = 5;
+
 
 	public TreasureChest() {
+		this.coinBank = 5;
 		this.description = "a mysterious chest";
 		this.name = "Chest";
 		Random rand = new Random();
@@ -54,13 +54,13 @@ public class TreasureChest extends LockableStrategy implements Container {
 	public String performAction(Action action) {
 		switch (action) {
 		case EXAMINE:
-			return getDescription();
+			return givePlayerCoins(1);
 		case TAKE:
 			if(Player.getInstance().getInventory().isFull()) return "Can't take anything, inventory is full";
-			if(item == null && coins > 0) {
+			if(item == null && coinBank > 0) {
 				Player.getInstance().addCoins(1);
 				return "You got a coin from the chest";
-			}else if(item == null && coins == 0) {
+			}else if(item == null && coinBank == 0) {
 				return "The chest is empty, there is nothing to take";
 			}else {
 				Player.getInstance().getInventory().add(item);
@@ -70,7 +70,10 @@ public class TreasureChest extends LockableStrategy implements Container {
 			}
 		case PLACE:
 			if(item != null) return "Can't place anything in the chest. It is full";
-			return "Can't place anything in the chest. It wont let you.";
+			PickUpAbleStrategy itemToPlace = Player.getInstance().getSelectedItem();
+			placeItem(itemToPlace);
+			if(itemToPlace == null) return "Player placed nothing in the chest.";
+			return "Player placed " + itemToPlace.getName() + " in the chest.";
 		default:
 			return super.performAction(action);
 		}
@@ -90,21 +93,14 @@ public class TreasureChest extends LockableStrategy implements Container {
 	public String getDescription() {
 		if (isLocked)
 			return "A locked " + description;
-		if (!isLocked && isOpen)
-			return "An open " + description + "containing ";
+		if (!isLocked && isOpen) {
+			String containsStr = null;
+			if(item == null && coinBank == 0) containsStr = "nothing.";
+			else if(item == null && coinBank > 0) containsStr = "coins.";
+			else containsStr = item.getName();
+				
+			return "An open " + description + "containing " + containsStr;
+		}
 		return "A closed " + description;
 	}
-
-	@Override
-	public Direction getDirection() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setDirection(Direction direction) {
-		// TODO Auto-generated method stub
-
-	}
-
 }
