@@ -19,7 +19,6 @@ public class Item {
 		OPEN,
 		CLOSE,
 		UNLOCK,
-		LOCK
 	}
 
 	protected Strategy item;
@@ -47,6 +46,10 @@ public class Item {
 	
 	public boolean isSolid() {
 		return item.isSolid();
+	}
+	
+	public boolean isDoor() {
+		return item.isDoor();
 	}
 
 	public Strategy getItem() {

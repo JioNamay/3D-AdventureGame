@@ -39,7 +39,7 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 			uses -= amount;
 		}
 	}
-
+ 
 
 	@Override
 	public String performAction(Action action) {
@@ -48,7 +48,7 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 			return givePlayerCoins(3);
 		case USE:
 			getDamaged(1);
-			return "It seems that the " + this.name + " has been used too many times. It broke.";
+			return "Player drank the potion. As the last drop of liquid leaves the bottle, the bottle magically disappears!";
 		default:
 			return super.performAction(action);
 		}	
@@ -65,6 +65,12 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 
 	@Override
 	public boolean isSolid() {
+		return false;
+	}
+
+
+	@Override
+	public boolean isDoor() {
 		return false;
 	}
 

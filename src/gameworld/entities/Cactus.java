@@ -60,4 +60,9 @@ public class Cactus extends CoinBank{
 	public boolean isSolid() {
 		return true;
 	}
+
+	@Override
+	public boolean isDoor() {
+		return false;
+	}
 }

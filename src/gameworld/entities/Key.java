@@ -35,10 +35,13 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 			result = drop();
 			if(result.equals("Player dropped " + this.getName())) Player.getInstance().getInventory().decrementKeys();
 			return result;
+		case USE:
+			getDamaged(1);
+			return "Player used key. The key was too fragile and broke.";
 		default:
 			throw new IllegalArgumentException("Unknown action: " + action.toString() + " for object: "+ this.name);
 		}
-	}
+	} 
 
 	@Override
 	public int getHealth() {
@@ -71,6 +74,11 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 
 	@Override
 	public boolean isSolid() {
+		return false;
+	}
+
+	@Override
+	public boolean isDoor() {
 		return false;
 	}
 

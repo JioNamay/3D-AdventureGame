@@ -124,7 +124,7 @@ public class AdventureGame extends GUI{
 		// TEST:
 		Inventory i = new Inventory();
 		for (int index=0; index<10; index++)
-			i.add(new Potion(null));
+			i.add(new Potion());
 
 		for (PickUpAbleStrategy item: i) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay() {

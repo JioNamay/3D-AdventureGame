@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * The Class Inventory.
+ * The player's inventory. Can only hold 10 items.
  */
 public class Inventory implements Iterable<PickUpAbleStrategy> {
 	/** The inventory. */
 	private final List<PickUpAbleStrategy> inventory;
+	
+	/** The key count. */
 	private int keyCount;
 
 	/**
@@ -18,7 +20,7 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 	public Inventory() {
 		this.inventory = new ArrayList<PickUpAbleStrategy>();
 	}
-
+ 
 	/**
 	 * Checks if the inventory is full.
 	 *
@@ -55,43 +57,71 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 	}
 
 	/**
-	 * Checks if the item is in the player's inventory
+	 * Checks if the item is in the player's inventory.
 	 *
-	 * @param item
-	 *            the item
+	 * @param item            the item
 	 * @return true, if successful
 	 */
 	public boolean contains(PickUpAbleStrategy item) {
 		return inventory.contains(item);
 	}
+	
+	/**
+	 * Gets the first key found in the inventory.
+	 *
+	 * @return a key
+	 */
+	public PickUpAbleStrategy getAKey() {
+		for(PickUpAbleStrategy item : inventory) {
+			if(item instanceof Key) return item;
+		}
+		return null;	
+	}
 
 	/**
+	 * Checks for key.
+	 *
 	 * @return the hasKey
 	 */
 	public boolean hasKey() {
 		return keyCount > 0;
 	}
 
+	/**
+	 * Increment keys.
+	 */
 	public void incrementKeys() {
 		keyCount++;
 	}
 	
+	/**
+	 * Decrement keys.
+	 */
 	public void decrementKeys() {
 		keyCount--;
 	}
 
 	/**
-	 * @param hasKey
-	 *            the hasKey to set
+	 * Sets the key count.
+	 *
+	 * @param keyCount the new key count
 	 */
 	public void setKeyCount(int keyCount) {
 		this.keyCount = keyCount;
 	}
 	
+	/**
+	 * Gets the key count.
+	 *
+	 * @return the key count
+	 */
 	public int getKeyCount() {
 		return keyCount;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
 	@Override
 	public Iterator<PickUpAbleStrategy> iterator() {
 		Iterator<PickUpAbleStrategy> it = new Iterator<PickUpAbleStrategy>() {
