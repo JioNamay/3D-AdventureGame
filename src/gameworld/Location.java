@@ -1,12 +1,16 @@
 package gameworld;
 
-import gameworld.tiles.Tile;
-
 /**
  * @author Deanne Alabastro
  *
  */
 public class Location {
+	public enum Direction { 
+		NORTH,
+		SOUTH,
+		EAST,
+		WEST
+	}
 	private int row;
 	private int col;
 
