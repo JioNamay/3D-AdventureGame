@@ -4,12 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import gameworld.Location;
 import gameworld.entities.Item.Action;
 
 public class Cactus extends CoinBank{
-	public Cactus(Location location) {
-		super(location);
+	public Cactus() {
 		this.description = "An innocent cactus";
 		this.name = "Cactus";
 		this.coinBank = 5;
@@ -35,7 +33,7 @@ public class Cactus extends CoinBank{
 		case 3:
 			// give the player a key if their inventory isn't full, else follow case 1
 			if(Player.getInstance().getInventory().isFull()) givePlayerCoins(1);
-			Key key = new Key(null);
+			Key key = new Key();
 			Player.getInstance().getInventory().add(key);
 			return "You found a " + key.getName();
 		default:
@@ -56,5 +54,10 @@ public class Cactus extends CoinBank{
 		default: 
 			throw new IllegalArgumentException("Unknown action: " + action.toString() + " for object: "+ this.name);
 		}
+	}
+
+	@Override
+	public boolean isSolid() {
+		return true;
 	}
 }
