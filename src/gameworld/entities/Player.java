@@ -13,7 +13,7 @@ public class Player implements Damageable {
 
 	/** The location. */
 	private Location location;
-	
+
 	private Room currentRoom;
 
 	private int coins = 0;
@@ -35,6 +35,7 @@ public class Player implements Damageable {
 	 * @return single instance of Player
 	 */
 	public static Player getInstance() {
+		//if(instance == null) instance = new Player();
 		return instance;
 	}
 
@@ -59,7 +60,9 @@ public class Player implements Damageable {
 	 */
 	public void setInventory(Inventory inventory) {
 		if(this.inventory == null) this.inventory = inventory;
-	}
+		// only used for test to allow the inventory to be reset: 
+		this.inventory = inventory;
+	} 
 
 	/**
 	 * Gets the inventory.
@@ -121,7 +124,7 @@ public class Player implements Damageable {
 	@Override
 	public void getDamaged(int amount) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -135,7 +138,10 @@ public class Player implements Damageable {
 	 * @param currentRoom the currentRoom to set
 	 */
 	public void setCurrentRoom(Room currentRoom) {
+		if(this.currentRoom != null) this.currentRoom.setHasPlayer(false); // tell the old room that it no longer has player
 		this.currentRoom = currentRoom;
+		currentRoom.setHasPlayer(true);
+		
 	}
 
 	/**

@@ -1,28 +1,34 @@
 package gameworld.entities;
 
-import java.util.Arrays;
-import java.util.List;
-
-import gameworld.Location;
 import gameworld.Room;
+import gameworld.entities.Item.Action;
 import gameworld.entities.LockableStrategy;
-import gameworld.entities.Player;
 
 public class Door extends LockableStrategy {
 
 	Room goesTo;
+	Room from;
 
+	public Door(Room connectingRoom1, Room connectingRoom2) {
+		this.from = connectingRoom1;
+		this.goesTo = connectingRoom2;
+		this.description = "door between " + connectingRoom1.getName() + " and " + connectingRoom2.getName();
+		this.name = "Door";
+	}
 
-//	public Door(Location location, Room connectingRoom) {
-//		super(location);
-//		this.goesTo = connectingRoom;
-//		this.description = "A door that leads to the " + connectingRoom.getName();
-//	}
+	/**
+	 * @return the from
+	 */
+	public Room getFrom() {
+		return from;
+	}
 
-	
-	/*public Door(Location location) {
-		super(location);
-	}*/
+	/**
+	 * @param from the from to set
+	 */
+	public void setFrom(Room from) {
+		this.from = from;
+	}
 
 	/**
 	 * @return the goesTo
@@ -32,59 +38,39 @@ public class Door extends LockableStrategy {
 	}
 
 	/**
-	 * @param goesTo the goesTo to set
+	 * @param goesTo
+	 *            the goesTo to set
 	 */
 	public void setGoesTo(Room goesTo) {
 		this.goesTo = goesTo;
 	}
 
 	@Override
-	public String description() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		if (isLocked)
+			return "A locked " + description;
+		if (!isLocked && isOpen)
+			return "An open " + description;
+		return "A closed " + description;
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	// ==============================================================
-
-	/*
-	 * 	@Override
-	protected String performAction(Action action, Player player) {
-		switch(action) {
+	public String performAction(Action action) {
+		switch (action) {
 		case EXAMINE:
-			return examine();
-		case UNLOCK:
-			//return unlock();
-		case OPEN:
-			//return drop(player, this);
-		case CLOSE:
-			//return use();
+			return getDescription();
 		default:
-			throw new IllegalArgumentException("Unknown action: " + action);
+			return super.performAction(action);
 		}
 	}
 
 	@Override
-	protected List<String> getActions() {
-		if(isLocked) {
-			if (Player.getInstance().getInventory().hasKey())
-				return Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString());
-			else return Arrays.asList(Action.EXAMINE.toString());
-		}else {
-			return Arrays.asList(Action.EXAMINE.toString(), Action.OPEN.toString(), Action.CLOSE.toString());
-		}
+	public boolean isSolid() {
+		return false;
 	}
-	 */
 
+	@Override
+	public boolean isDoor() {
+		return true;
+	}
 }

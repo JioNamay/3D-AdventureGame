@@ -38,40 +38,30 @@ import renderer.Board;
  * @author yangcarr
  */
 public abstract class GUI{
-	/*
-	 * changes
-- got rid of controller, from within Adventure Game
-- had AdventureGame extend GUI as the main 'controller' of the entire game world
-- commented out the previus renderer to pass graphics object to renderer
-- added methods to allow persistance to save/load games
-- renamed 'midInfo' to 'rendererPanel -- this is the JPanel for renderer's use
-- added constant field for screen size
-	 */
 
-	protected abstract void onStart(); // loads a GameWorld (new or saved)
+	// ************** ABSTRACT METHODS ****************** //
 	protected abstract void redraw(Graphics g); // T RECONSIDER
-	protected abstract void loadGame(); // BENETTE RECONSIDER
-	protected abstract void saveGame(); // BENETTE RECONSIDER
-
+	protected abstract void loadGame();
+	protected abstract void saveGame();
+	protected abstract void onStart(); // loads a GameWorld (new or saved)
+	protected abstract void updateInventory();	// redraws the inventory
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
-	// board field, called within the redraw method(?)
+	protected JFrame frame;
+	protected JPanel container; // global container to hold all the components in frame
+	protected Board board;
+	protected JPanel playerInfo, inventory;
+	protected JComponent drawing; // the canvas to display the rendered world
+	protected Graphics drawingArea;
+	protected JTextArea examinedItem, playerStats;
+	protected JTextArea something;
 
 	public GUI() {
 		initialise();
 	}
-
-	protected JFrame frame;
-	protected JPanel container; // global container to hold all the components in frame
-	protected Board board;
-	protected JPanel playerInfo;
-	protected JComponent drawing; // the canvas to display the rendered world
-	protected Graphics graphics;
-	protected static JTextArea examinedItem, playerStats;
-	protected JTextArea something;
 
 	/**
 	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
@@ -99,12 +89,14 @@ public abstract class GUI{
 		this.board = new Board(this, boardPanel);
 		rendererPanel.add(boardPanel, BorderLayout.LINE_START);*/
 
+		// sets the graphics when application window is first run, so you'll always have the area to draw on
 		drawing = new JComponent() {
 			protected void paintComponent(Graphics g) {
-				graphics = g;
-				redraw(graphics);		// render the board
+				drawingArea = g;
+				redraw(drawingArea);		// render the room
 			}
 		};
+
 		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
 		drawing.setVisible(true);
 		drawing.repaint();
@@ -135,48 +127,26 @@ public abstract class GUI{
 		rendererPanel.add(descriptions);
 		container.add(rendererPanel);
 
-		// area at the bottom to display items and action buttons
+		// PLAYER'S INFO: holds inventory and player actions
 		playerInfo = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
 		playerInfo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
 		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
 		// playerInfo.setBackground(Color.GREEN); // test
 
-		// JPanel inventory = new JPanel(new GridLayout(2, 5)); // player can hold max
-		// 10 items(?)
-		// inventory.setPreferredSize(new Dimension(FRAME_SIZE+50/2, 110)));
-		JComponent inventoryDrawing = new JComponent() {
-			protected void paintComponent(Graphics g) {
-				// draw every item of player's inventory here?
+		inventory = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
+		inventory.setPreferredSize(new Dimension(410, 110));
+		updateInventory();	// displays inventory to jpanel
+		//inventory.setVisible(true);
+		playerInfo.add(inventory);
 
-				// test:
-				int width = 80;
-				int height = 50;
-				g.setColor(Color.RED);
-				g.fillRect(0, 0, 200, 50);
-				g.drawRect(0, 0, 400, 100);
-				// g.setColor(Color.WHITE); // test
-				// g.fillRect(0, 0, 400, 110); // test
-				// draw outlines of grid for testing purposes
-
-				// in actuality, draw the items that player is carrying
-				// each image would be 50x160(?) -- to fit within the panel
-			}
-		};
-		inventoryDrawing.setPreferredSize(new Dimension(410, 110));
-		inventoryDrawing.setVisible(true);
-		// playerInfo.add(inventory);
-		playerInfo.add(inventoryDrawing);
 		container.add(playerInfo);
-
-		// buttons for navigation
-		setNavigationButtons();
-		// buttons for actions
-		setActionButtons();
+		setNavigationButtons();	// buttons for navigation
+		setActionButtons();	// buttons for actions
 
 		// add everything to the frame
 		frame.add(container);
 		frame.pack();
-		// TODO: resize frame here!!!
+		// TODO: resize frame here??
 		frame.setVisible(true);
 	}
 
@@ -195,7 +165,6 @@ public abstract class GUI{
 			public void mouseClicked(MouseEvent e) {
 				String str = "GAME INFO HERE"; // <-- CHANGE THIS LATER
 				JOptionPane.showMessageDialog(frame, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
-				;
 			}
 		});
 
@@ -216,7 +185,7 @@ public abstract class GUI{
 		load.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// loadGame(); // BENNETTE RECONSIDER
+				 loadGame();
 			}
 
 		});
@@ -225,7 +194,7 @@ public abstract class GUI{
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// saveGame(); // BENNETTE RECONSIDER
+				 saveGame(); // BENNETTE RECONSIDER
 			}
 
 		});
@@ -288,6 +257,7 @@ public abstract class GUI{
 			}
 		});
 
+		// remove later: use key listener
 		JPanel navigation = new JPanel(new GridLayout(2, 3));
 		navigation.setMaximumSize(new Dimension(150, 60));
 		navigation.add(new JButton()); // blank area
@@ -366,7 +336,7 @@ public abstract class GUI{
 	 * Returns the JTextArea to display the description of examined
 	 * items or rooms.
 	 */
-	public static JTextArea getExaminedItemDisplay() {
+	public JTextArea getExaminedItemDisplay() {
 		return examinedItem;
 	}
 
@@ -374,7 +344,7 @@ public abstract class GUI{
 	 * Returns the display area that holds player's information,
 	 * like health and money.
 	 */
-	public static JTextArea getPlayerStatDisplay() {
+	public JTextArea getPlayerStatDisplay() {
 		return playerStats;
 	}
 

@@ -7,27 +7,15 @@ import gameworld.Location;
  */
 public abstract class CoinBank implements Strategy{
 
-	/** The location. */
-	private Location location;
-	
 	/** A long description of the entity. */
-	private String description;
-	
-	/** The name of the entity (short description) */
-	private String name;
-	
-	/** The coin bank. */
-	private int coinBank;
+	protected String description;
 
-	/**
-	 * Instantiates a new coin bank.
-	 *
-	 * @param location the location
-	 */
-	public CoinBank(Location location) {
-		this.location = location;
-	}
-	
+	/** The name of the entity (short description) */
+	protected String name;
+
+	/** The coin bank. */
+	protected int coinBank;
+
 	/**
 	 * Give player coins.
 	 *
@@ -36,7 +24,7 @@ public abstract class CoinBank implements Strategy{
 	 */
 	protected String givePlayerCoins(int amount) {
 		if(coinBank == 0) return description;
-		
+
 		int givenAmount = amount; // the amount of coins actually given to player
 		// add the rest of coinbank to player if amount exceeds coinbank
 		if(((coinBank - amount) < 0) && coinBank != 0){
@@ -47,26 +35,8 @@ public abstract class CoinBank implements Strategy{
 			Player.getInstance().addCoins(amount);
 			coinBank -= amount;
 		}
-		
+
 		return "You found " + givenAmount + " coins\n" + description;
-	}
-
-	/**
-	 * Gets the location.
-	 *
-	 * @return the location
-	 */
-	public Location getLocation() {
-		return location;
-	}
-
-	/**
-	 * Sets the location.
-	 *
-	 * @param location the location to set
-	 */
-	public void setLocation(Location location) {
-		this.location = location;
 	}
 
 	/**

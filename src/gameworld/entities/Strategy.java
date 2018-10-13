@@ -2,14 +2,55 @@ package gameworld.entities;
 
 import java.util.List;
 
+import gameworld.entities.Item.Action;
+
 /**
- *
+ * The Interface Strategy are the common methods that every item in the gameworld has.
+ * @author alabasdean 
  * @author yangcarr
- *
  */
 public interface Strategy {
-	public List<String> getActions();			// uses of the item that user can perform on it
-	public String getDescription();		// description of the item when user 'examines' it
-	public String getName(); // the name of the item
-	public void performAction(String action);	// performs specified action based on user choice
+	
+	/**
+	 * Gets the actions that the user can perform on it.
+	 *
+	 * @return the actions
+	 */
+	public List<String> getActions();	
+	
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
+	public String getDescription();		
+	
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName(); 
+	
+	/**
+	 * Checks if is solid (player cannot move into its location).
+	 *
+	 * @return true, if is solid
+	 */
+	public boolean isSolid(); 
+	
+	/**
+	 * Checks if is door.
+	 *
+	 * @return true, if is door
+	 */
+	public boolean isDoor();
+	
+	/**
+	 * Performs specified action based on user choice or item behavior.
+	 *
+	 * @param action the action
+	 * @return the result in String format
+	 */
+	public String performAction(Action action);	
 }

@@ -1,7 +1,6 @@
 package renderer;
 
 import java.awt.Color;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,8 +15,9 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import application.GUI;
-import gameworld.Location;
 import gameworld.entities.Item;
+import gameworld.entities.Potion;
+import gameworld.Location;
 
 /**
  * Package: Renderer Class: Board
