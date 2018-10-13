@@ -5,7 +5,7 @@ import java.util.List;
 
 import gameworld.entities.Item.Action;
 
-public abstract class LockableStrategy implements Strategy {
+public abstract class LockableStrategy extends CoinBank {
 	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString()); 
 
 	protected boolean isOpen, isLocked;
