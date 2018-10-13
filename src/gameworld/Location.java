@@ -15,6 +15,7 @@ public class Location {
 	private int col;
 
 	private boolean isSolid;
+	private boolean isDoor;
 	
 
 	/**
@@ -45,6 +46,20 @@ public class Location {
 	 */
 	public void setSolid(boolean isSolid) {
 		this.isSolid = isSolid;
+	}
+
+	/**
+	 * @return the isDoor
+	 */
+	public boolean isDoor() {
+		return isDoor;
+	}
+
+	/**
+	 * @param isDoor the isDoor to set
+	 */
+	public void setDoor(boolean isDoor) {
+		this.isDoor = isDoor;
 	}
 
 }
