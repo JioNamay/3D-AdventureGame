@@ -119,6 +119,13 @@ public class Room {
 		this.gameItems.remove(loc);
 	}
 
+	public Location getGameItemLocation(Item e) {
+		for (Map.Entry<Location, Item> entry : gameItems.entrySet()) {
+			if (entry.getValue().getItem().equals(e.getItem()))
+				return entry.getKey();
+		}
+		return null;
+	}
 	public void removeGameObject(PickUpAbleStrategy e) {
 		Location loc = null;
 		for (Map.Entry<Location, Item> entry : gameItems.entrySet()) {

@@ -19,6 +19,7 @@ public class Item {
 		OPEN,
 		CLOSE,
 		UNLOCK,
+		EQUIP
 	}
 
 	protected Strategy item;
