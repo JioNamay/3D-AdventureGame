@@ -15,6 +15,8 @@ public class Player implements Damageable {
 	private Location location;
 
 	private Room currentRoom;
+	
+	private PickUpAbleStrategy selectedItem;
 
 	private int coins = 0;
 
@@ -159,5 +161,19 @@ public class Player implements Damageable {
 	 */
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	/**
+	 * @return the selectedItem
+	 */
+	public PickUpAbleStrategy getSelectedItem() {
+		return selectedItem;
+	}
+
+	/**
+	 * @param selectedItem the selectedItem to set
+	 */
+	public void setSelectedItem(PickUpAbleStrategy selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 }
