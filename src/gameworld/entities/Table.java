@@ -26,7 +26,7 @@ public class Table extends LockableStrategy implements Container{
 		this.description = "ordinary table with drawers";
 		this.name = "Table";
 		Random rand = new Random();
-		int probability = rand.nextInt(4 + 1) + 1;
+		int probability = rand.nextInt(5 + 1) + 1;
 
 		if (probability == 1)
 			item = new Potion();
@@ -34,6 +34,8 @@ public class Table extends LockableStrategy implements Container{
 			item = new Key();
 		else if(probability == 3)
 			item = new HeavyBook();
+		else if(probability == 4)
+			item = new Note();
 	}
 
 	/* (non-Javadoc)
