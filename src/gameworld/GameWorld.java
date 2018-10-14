@@ -2,6 +2,7 @@ package gameworld;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import gameworld.entities.Cactus;
 import gameworld.entities.Player;
 
 /**
@@ -21,6 +22,7 @@ public class GameWorld {
 	public GameWorld() {
 		
 		this.currentRoom = new Room("Test Room");
+		Cactus testCactus = new Cactus();
 		
 	}
 	

@@ -4,6 +4,7 @@ import gameworld.Room;
 import gameworld.entities.Item.Action;
 import gameworld.entities.LockableStrategy;
 
+
 public class Door extends LockableStrategy {
 
 	Room goesTo;

@@ -49,11 +49,14 @@ public class Room {
 	public Location[][] getLocations() {
 		return locations;
 	}
-
+	
+	/**
+	 * @return the the items within room. 
+	 */
+	@XmlElement(name = "gameObjects")
 	public Map<Location, Item> getGameObjects() {
 		return gameItems;
 	}
-
 
 	/**
 	 * @param gameObjects
@@ -96,16 +99,7 @@ public class Room {
 		this.name = name;
 	}
 
-
-	/**
-	 * @return the hasPlayer
-	 */
-	@XmlElement(name = "Doors")
-	public List<Door> getDoors() {
-		return doors;
-	}
-
-	public boolean hasPlayer() {
+	 public boolean hasPlayer() {
 		return hasPlayer;
 	}
 

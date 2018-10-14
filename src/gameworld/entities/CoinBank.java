@@ -1,10 +1,14 @@
 package gameworld.entities;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import gameworld.Location;
 
 /**
  * The coinbank class is extended by every entity who is able to give player coins when a player interacts with it.
  */
+@XmlRootElement(name = "CoinBank")
 public abstract class CoinBank implements Strategy{
 
 	/** A long description of the entity. */
@@ -44,6 +48,7 @@ public abstract class CoinBank implements Strategy{
 	 *
 	 * @return the description
 	 */
+	@XmlElement(name = "CoinBankDescription")
 	public String getDescription() {
 		return description;
 	}
@@ -51,6 +56,7 @@ public abstract class CoinBank implements Strategy{
 	/**
 	 * @return the name
 	 */
+	@XmlElement(name ="CoinBankType")
 	public String getName() {
 		return name;
 	}
@@ -60,6 +66,7 @@ public abstract class CoinBank implements Strategy{
 	 *
 	 * @return the coinBank
 	 */
+	@XmlElement(name = "CoinBankBalance")
 	public int getCoinBank() {
 		return coinBank;
 	}

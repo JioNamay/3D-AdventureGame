@@ -9,18 +9,18 @@ import persistence.Persistence;
 
 public class PersistenceTests {
 	
-	@Test
-	public void saveFile(){
-		Persistence per = new Persistence();
-		per.saveTempRoom();
-	}
-	
-	@Test
-	public void loadFile(){
-		Persistence per = new Persistence();
-		per.loadTempRoom();
-		
-	}
+//	@Test
+//	public void saveFile(){
+//		Persistence per = new Persistence();
+//		per.saveTempRoom();
+//	}
+//	
+//	@Test
+//	public void loadFile(){
+//		Persistence per = new Persistence();
+//		per.loadTempRoom();
+//		
+//	}
 	
 	@Test
 	public void saveGameWorld(){
