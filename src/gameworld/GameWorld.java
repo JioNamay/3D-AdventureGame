@@ -1,35 +1,43 @@
 package gameworld;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
-import gameworld.entities.Cactus;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import gameworld.entities.Player;
 
 /**
- * GameWorld handles all the entities and items.
+ * GameWorld keeps track of all the rooms in the game.
+ * Each Room is like a single board on its own, whereas this class
+ * represents the overall boards.
  */
-@XmlRootElement(name = "GameWorld")
 public class GameWorld {
-
-
+	// Rooms in the GameWorld:
+	public static final String LIBRARY = "library";
+	public static final String GUEST_BEDROOM = "Guest Bedroom";
+	public static final String FOYER = "Foyer";
+	public static final String COURTYARD = "Courtyard";
+	public static final String MASTER_BEDROOM = "Master Bedroom";
+	public static final String KITCHEN = "Kitchen";
+	
+	//public Map<String, Room> rooms;	// map to keep track of the rooms in the world
+	
 	private Room currentRoom;
-	private Player player = Player.getInstance();
 
 	/**
 	 * Instantiates a new game world.
-	 *
+	 * Reads rooms from the given XML file and sets up the world.
 	 */
-	public GameWorld() {
-		
-		this.currentRoom = new Room("Test Room");
-		Cactus testCactus = new Cactus();
+	public GameWorld(File file) {
+		// rooms are created and added to the map
+		// parse the file and create the rooms
+		// set player in current room if the player is in room
 		
 	}
 	
-	@XmlElement(name = "CurrentRoom")
-	public Room getCurrentRoom() {
-		return currentRoom;
-	} 
+	private void setUpWorld() {
+	}
 
 	/**
 	 * Update.
@@ -37,32 +45,6 @@ public class GameWorld {
 	public void update() {
 
 	}
-
-	/**
-	 * Render.
-	 */
-	public void render() {
-
-		
-	}
 	
-	/**
-	 * Load game world.
-	 *
-	 * @param path the path
-	 */
-	private void loadGameWorld(String path){
-		
-	}
-	
-	/**
-	 * Save game world.
-	 */
-	private void SaveGameWorld(){
-		// should return something. Maybe a file? or maybe not return something.
-		// up to you bennette :)
-		
-	}
-	
-
+	public Room getCurrentRoom() { return currentRoom; }
 }

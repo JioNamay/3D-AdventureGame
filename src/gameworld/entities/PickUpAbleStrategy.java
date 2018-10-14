@@ -16,7 +16,10 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 	/** The actions. */
 	// all pickup-able items are, by default, not in the player's inventory at the start
 	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.PICKUP.toString());
-	
+	 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#performAction(gameworld.entities.Item.Action)
+	 */
 	@Override
 	public String performAction(Action action) {
 		switch(action) {
@@ -39,7 +42,7 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 		if(player.getInventory().isFull()) return "Cannot pickup " + this.getName() + ". Inventory is full.";
 		
 		// add item to player inventory and remove from room.
-		player.getCurrentRoom().removeGameObject(this);
+		player.getCurrentRoom().removeGameItem(this);
 		player.getInventory().add(this);
 		
 		return "You picked up " + this.getName();
@@ -57,7 +60,7 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 		if(!player.getInventory().contains(this)) return "How are you going to drop an item you aren't even holding?";
 		
 		// delegate drop to room - drops if location is available, else does nothing (but returns string with result)
-		return player.getCurrentRoom().playerDropGameObject(this);
+		return player.getCurrentRoom().playerDropGameItem(this);
 
 	}
 

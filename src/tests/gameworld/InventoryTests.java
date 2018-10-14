@@ -27,9 +27,9 @@ class InventoryTests {
 	@BeforeEach
 	public void setupPlayerAndInventory() {
 		player = Player.getInstance();
-		player.setInventory(new Inventory());
+		player.resetInventoryForTest();
 	}
-	
+	 
 	@Test
 	public void testInventoryAdd() {
 		assertTrue(player.getInventory().add(new Potion()));
@@ -85,7 +85,7 @@ class InventoryTests {
 		Location[][] roomLocs = room.getLocations();
 		
 		PickUpAbleStrategy key = new Key();
-		room.addGameObject(roomLocs[2][2], new Item(key));
+		room.addGameItem(2,2, new Item(key));
 		player.setLocation(roomLocs[2][2]);
 
 		
@@ -101,7 +101,7 @@ class InventoryTests {
 		Location[][] roomLocs = room.getLocations();
 		
 		PickUpAbleStrategy key = new Key();
-		room.addGameObject(roomLocs[2][2], new Item(key));
+		room.addGameItem(2,2, new Item(key));
 		player.setLocation(roomLocs[2][2]);
 		// check pick up works
 		key.performAction(Action.PICKUP);

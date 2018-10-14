@@ -1,16 +1,13 @@
 package gameworld.entities;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import gameworld.Location;
+import gameworld.Location.Direction;
 
 /**
  * The coinbank class is extended by every entity who is able to give player coins when a player interacts with it.
+ * @author Deanne Alabastro 300346210
  */
-@XmlRootElement(name = "CoinBank")
 public abstract class CoinBank implements Strategy{
-
+ 
 	/** A long description of the entity. */
 	protected String description;
 
@@ -19,6 +16,9 @@ public abstract class CoinBank implements Strategy{
 
 	/** The coin bank. */
 	protected int coinBank;
+
+	/** The direction the item is facing. */
+	protected Direction direction;
 
 	/**
 	 * Give player coins.
@@ -48,7 +48,6 @@ public abstract class CoinBank implements Strategy{
 	 *
 	 * @return the description
 	 */
-	@XmlElement(name = "CoinBankDescription")
 	public String getDescription() {
 		return description;
 	}
@@ -56,7 +55,6 @@ public abstract class CoinBank implements Strategy{
 	/**
 	 * @return the name
 	 */
-	@XmlElement(name ="CoinBankType")
 	public String getName() {
 		return name;
 	}
@@ -66,7 +64,6 @@ public abstract class CoinBank implements Strategy{
 	 *
 	 * @return the coinBank
 	 */
-	@XmlElement(name = "CoinBankBalance")
 	public int getCoinBank() {
 		return coinBank;
 	}
@@ -78,6 +75,23 @@ public abstract class CoinBank implements Strategy{
 	 */
 	public void setCoinBank(int coinBank) {
 		this.coinBank = coinBank;
+	}
+	
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getDirection()
+	 */
+	@Override
+	public Direction getDirection() {
+		if(direction == null) return Direction.NORTH;
+		return direction;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#setDirection()
+	 */
+	@Override
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 }

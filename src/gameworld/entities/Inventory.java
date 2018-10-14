@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * The player's inventory. Can only hold 10 items.
+ * @author Deanne Alabastro 300346210
  */
 public class Inventory implements Iterable<PickUpAbleStrategy> {
 	/** The inventory. */

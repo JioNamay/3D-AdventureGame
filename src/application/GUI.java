@@ -30,12 +30,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import gameworld.Location;
 import renderer.Board;
 
 /**
  * Class provides the graphical display of the GameWorld.
  *
- * @author yangcarr
+ * @author Carrie 300368805
  */
 public abstract class GUI{
 
@@ -45,6 +46,7 @@ public abstract class GUI{
 	protected abstract void saveGame();
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
 	protected abstract void updateInventory();	// redraws the inventory
+	protected abstract void navigatePlayer(Location.Direction dir);
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
@@ -207,7 +209,7 @@ public abstract class GUI{
 			}
 
 		});
-
+ 
 		game.add(load);
 		game.add(save);
 		game.add(newGame);
@@ -219,7 +221,8 @@ public abstract class GUI{
 	}
 
 	/**
-	 *
+	 * Allows players to move around the gameworld, one space in the 
+	 * chosen direction.
 	 */
 	private void setNavigationButtons() {
 		// vertical spacing between components
@@ -228,7 +231,7 @@ public abstract class GUI{
 		JButton west = new JButton("\u2190");
 		west.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				// move player west
+				navigatePlayer(Location.Direction.WEST);
 				// redraw player position (redraw the world)
 			}
 		});
@@ -236,7 +239,7 @@ public abstract class GUI{
 		JButton east = new JButton("\u2192");
 		east.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				// move player east
+				navigatePlayer(Location.Direction.EAST);
 				// redraw player position
 			}
 		});
@@ -244,7 +247,7 @@ public abstract class GUI{
 		JButton north = new JButton("\u2191");
 		north.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				// move player north
+				navigatePlayer(Location.Direction.NORTH);
 				// redraw player position
 			}
 		});
@@ -252,12 +255,11 @@ public abstract class GUI{
 		JButton south = new JButton("\u2193");
 		south.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				// move player south
+				navigatePlayer(Location.Direction.SOUTH);
 				// redraw player position
 			}
 		});
 
-		// remove later: use key listener
 		JPanel navigation = new JPanel(new GridLayout(2, 3));
 		navigation.setMaximumSize(new Dimension(150, 60));
 		navigation.add(new JButton()); // blank area
@@ -269,6 +271,7 @@ public abstract class GUI{
 		playerInfo.add(navigation);
 	}
 
+	// remove later: use mouse to determine actions
 	private void setActionButtons() {
 		JButton take = new JButton("Take Item");
 		take.addActionListener(new ActionListener() {

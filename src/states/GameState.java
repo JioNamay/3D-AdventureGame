@@ -6,7 +6,7 @@ public class GameState implements State{
 	private GameWorld world;
 
 	public GameState() {
-		this.world = new GameWorld();
+		//this.world = new GameWorld();
 	}
 
 	@Override
@@ -17,7 +17,7 @@ public class GameState implements State{
 
 	@Override
 	public void render() {
-		world.render();
+		//world.render();
 	}
 
 }

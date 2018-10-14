@@ -3,19 +3,28 @@ package gameworld.entities;
 import gameworld.Location;
 import gameworld.Room;
 
-public class Player implements Damageable {
+/**
+ * The player class. There can only be one instance of the player.
+ * @author Deanne Alabastro 300346210
+ */
+public class Player extends AttackingEntity {
 
 	/** The inventory. */
 	private Inventory inventory;
 
-	/** Player's health */
-	private int health;
-
 	/** The location. */
 	private Location location;
 
+	/** The current room. */
 	private Room currentRoom;
+	
+	/** The selected item. */
+	private PickUpAbleStrategy selectedItem;
+	
+	/** The equiped weapon. */
+	private EquipableStrategy equippedWeapon;
 
+	/** The coins. */
 	private int coins = 0;
 
 	// ********** SINGLETON PATTERN ********** //
@@ -27,6 +36,7 @@ public class Player implements Damageable {
 	 */
 	private Player() {
 		this.health = 100;
+		this.maxDamage = 5;
 	}
 
 	/**
@@ -35,11 +45,12 @@ public class Player implements Damageable {
 	 * @return single instance of Player
 	 */
 	public static Player getInstance() {
-		//if(instance == null) instance = new Player();
 		return instance;
 	}
 
 	/**
+	 * Gets the coins.
+	 *
 	 * @return the coins
 	 */
 	public int getCoins() {
@@ -47,6 +58,8 @@ public class Player implements Damageable {
 	}
 
 	/**
+	 * Adds the coins.
+	 *
 	 * @param coins the coins to set
 	 */
 	public void addCoins(int coins) {
@@ -60,9 +73,14 @@ public class Player implements Damageable {
 	 */
 	public void setInventory(Inventory inventory) {
 		if(this.inventory == null) this.inventory = inventory;
-		// only used for test to allow the inventory to be reset: 
-		this.inventory = inventory;
 	} 
+	
+	/**
+	 * Reset inventory for test. Only used for testing.
+	 */
+	public void resetInventoryForTest() {
+		this.inventory = new Inventory();
+	}
 
 	/**
 	 * Gets the inventory.
@@ -74,26 +92,16 @@ public class Player implements Damageable {
 	}
 
 	/**
-	 * Equip weapon.
-	 *
-	 * @param weapon the weapon
-	 */
-	/*public void equipWeapon(WeaponEntity weapon) {
-		this.weapon = weapon;
-		setAttackDamage();
-	}*/
-
-	/**
 	 * Sets the attack damage.
 	 */
-	/*private void setAttackDamage() {
-		if(this.weapon == null) {
+	private void setAttackDamage() {
+		if(equippedWeapon == null) {
 			// player uses fist
 			this.maxDamage = 5;
 		}else {
-			//this.maxDamage = weapon.getAttackDamage();
+			this.maxDamage = equippedWeapon.getAttackDamage();
 		}
-	}*/
+	}
 
 	// ********** INHERITED "ABSTRACT" METHODS ********** //
 
@@ -115,19 +123,10 @@ public class Player implements Damageable {
 		health = ((this.health + amount) > 100) ? 100 : health + amount;
 	}
 
-	@Override
-	public int getHealth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void getDamaged(int amount) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/**
+	 * Gets the current room.
+	 *
 	 * @return the currentRoom
 	 */
 	public Room getCurrentRoom() {
@@ -135,6 +134,8 @@ public class Player implements Damageable {
 	}
 
 	/**
+	 * Sets the current room.
+	 *
 	 * @param currentRoom the currentRoom to set
 	 */
 	public void setCurrentRoom(Room currentRoom) {
@@ -145,6 +146,8 @@ public class Player implements Damageable {
 	}
 
 	/**
+	 * Gets the location.
+	 *
 	 * @return the location
 	 */
 	public Location getLocation() {
@@ -152,9 +155,48 @@ public class Player implements Damageable {
 	}
 
 	/**
+	 * Sets the location.
+	 *
 	 * @param location the location to set
 	 */
 	public void setLocation(Location location) {
 		this.location = location;
+	}
+
+	/**
+	 * Gets the selected item.
+	 *
+	 * @return the selectedItem
+	 */
+	public PickUpAbleStrategy getSelectedItem() {
+		return selectedItem;
+	}
+
+	/**
+	 * Sets the selected item.
+	 *
+	 * @param selectedItem the selectedItem to set
+	 */
+	public void setSelectedItem(PickUpAbleStrategy selectedItem) {
+		this.selectedItem = selectedItem;
+	}
+
+	/**
+	 * Gets the equipped weapon.
+	 *
+	 * @return the equipedWeapon
+	 */
+	public EquipableStrategy getEquippedWeapon() {
+		return equippedWeapon;
+	}
+
+	/**
+	 * Sets the equipped weapon.
+	 *
+	 * @param equippedWeapon the equipedWeapon to set
+	 */
+	public void setEquippedWeapon(EquipableStrategy equippedWeapon) {
+		this.equippedWeapon = equippedWeapon;
+		setAttackDamage(); // update player's attack damage
 	}
 }

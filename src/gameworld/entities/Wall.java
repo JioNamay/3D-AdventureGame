@@ -1,40 +1,86 @@
 package gameworld.entities;
 
-import gameworld.Location;
+import java.util.List;
+
+import gameworld.Location.Direction;
+import gameworld.entities.Item.Action;
 
 /**
  * The wall object represents a wall and marks a location as solid so that a player cannot walk past it.
+ * @author Deanne Alabastro 300346210
  */
-public class Wall{
-	
-	/** The location. */
-	private Location location;
+public class Wall implements Strategy{
 
 	/**
 	 * Instantiates a new wall.
-	 *
-	 * @param location the location
 	 */
-	public Wall(Location location) {
-		this.setLocation(location);
-		location.setSolid(true);
+	public Wall() {
+		
 	}
 
-	/**
-	 * Gets the location.
-	 *
-	 * @return the location
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getActions()
 	 */
-	public Location getLocation() {
-		return location;
+	@Override
+	public List<String> getActions() {
+		return null;
 	}
 
-	/**
-	 * Sets the location.
-	 *
-	 * @param location the location to set
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getDescription()
 	 */
-	public void setLocation(Location location) {
-		this.location = location;
+	@Override
+	public String getDescription() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getName()
+	 */
+	@Override
+	public String getName() {
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isSolid()
+	 */
+	@Override
+	public boolean isSolid() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isDoor()
+	 */
+	@Override
+	public boolean isDoor() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getDirection()
+	 */
+	@Override
+	public Direction getDirection() {
+		return Direction.NORTH;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#setDirection(gameworld.Location.Direction)
+	 */
+	@Override
+	public void setDirection(Direction direction) {
+		return;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#performAction(gameworld.entities.Item.Action)
+	 */
+	@Override
+	public String performAction(Action action) {
+		return null;
 	}
 }
