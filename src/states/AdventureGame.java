@@ -116,11 +116,7 @@ public class AdventureGame extends GUI{
 	 */
 	@Override
 	public void updateInventory() {
-//		if (player == null) {
-//			System.out.println("player is null");	// test
-//			return;
-//		}
-		
+		Player player = Player.getInstance();
 
 		// go through player's inventory
 		// make an Inventory display
@@ -130,9 +126,9 @@ public class AdventureGame extends GUI{
 		Inventory i = new Inventory();
 		for (int index=0; index<10; index++)
 			i.add(new Potion());
-		//player.setInventory(i);
+		player.setInventory(i);
 
-		for (PickUpAbleStrategy item: i) {
+		for (PickUpAbleStrategy item: player.getInventory()) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
 				// Repaints the component to display the image of the item.
 				@Override
@@ -158,8 +154,12 @@ public class AdventureGame extends GUI{
 						player.setSelectedItem(selectedItem);
 					}
 				};
-			}
+				highlight.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH-5, InventoryDisplay.IMAGE_HEIGHT-5));
+				highlight.setVisible(true);
+				inventory.add(highlight);
+			}	
 			
+			System.out.println("inventory item selected: " + inventoryImageComponent.isSelected());
 			inventory.add(inventoryImageComponent);
 
 			System.out.println(item.getDescription());

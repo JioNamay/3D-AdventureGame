@@ -41,8 +41,10 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int x = e.getX() - 5;
-		int y = e.getY() - 5;
+		System.out.println("mouse click before x and y");
+		int x = e.getX();
+		int y = e.getY();
+		System.out.println("mouse x: " + x + ", mouse y: " + y);
 		isSelected = this.contains(x, y);
 	}
 	
