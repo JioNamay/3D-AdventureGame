@@ -155,6 +155,7 @@ public class AdventureGame extends GUI{
 
 		// gameworld.getroom
 		// render the room's items plus player if needed
+		// Draw.redraw(g, game.getRoom(), player.getCurrentRoom());
 	}
 
 
