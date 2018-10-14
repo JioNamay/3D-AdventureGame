@@ -22,7 +22,7 @@ public class TreasureChest extends LockableStrategy implements Container {
 	 */
 	public TreasureChest() {
 		this.coinBank = 5;
-		this.description = "a mysterious chest";
+		this.description = "mysterious chest";
 		this.name = "Chest";
 		Random rand = new Random();
 		int probability = rand.nextInt(3 + 1) + 1;
@@ -105,15 +105,16 @@ public class TreasureChest extends LockableStrategy implements Container {
 	 */
 	@Override
 	public void placeItem(PickUpAbleStrategy item) {
-		this.item = item;
+		if(item == null) this.item = item;
 	}
-
+ 
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Container#takeItem()
 	 */
 	@Override
 	public PickUpAbleStrategy takeItem() {
-		return item;
+		if(!Player.getInstance().getInventory().isFull()) return item;
+		return null;
 	}
 
 	/* (non-Javadoc)

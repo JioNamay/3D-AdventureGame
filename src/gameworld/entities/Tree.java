@@ -16,6 +16,7 @@ public class Tree extends Monster {
 		this.name = "Tree";
 		this.description = "An innocent tree";
 		this.health = 10;
+		this.maxDamage = 10;
 	}
 
 	/* (non-Javadoc)
