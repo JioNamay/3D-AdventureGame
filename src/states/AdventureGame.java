@@ -36,6 +36,7 @@ public class AdventureGame extends GUI{
 	private GameWorld game;			// containing the game logic
 	private Player player;			// player within the game
 	private Room currentRoom;
+	private PickUpAbleStrategy selectedItem = null;
 	
 	private File saveFile = new File("");	// XML file to store saved game
 	private File loadFile = new File("GameWorld.xml");	// XML filename to load game from
@@ -132,17 +133,33 @@ public class AdventureGame extends GUI{
 		//player.setInventory(i);
 
 		for (PickUpAbleStrategy item: i) {
-			InventoryDisplay inventoryImageComponent = new InventoryDisplay() {
+			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
 				// Repaints the component to display the image of the item.
 				@Override
 				public void paintComponent(Graphics g) {
 					// draw images of the items
 					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
 					g.drawImage(img, 0, 0, InventoryDisplay.IMAGE_WIDTH-5, InventoryDisplay.IMAGE_HEIGHT-5, null);
-
+					
 				}
 			};
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
+			
+			// highlight selected area and passes the selected item on to the player
+			if (inventoryImageComponent.isSelected()) {
+				JComponent highlight = new JComponent() {
+					// highlights the selected item in inventory
+					@Override
+					public void paintComponent(Graphics g) {
+						// draw images of the items
+						g.setColor(Color.GREEN);
+						g.drawRect(0, 0, InventoryDisplay.IMAGE_WIDTH-5, InventoryDisplay.IMAGE_HEIGHT-5);
+						selectedItem = inventoryImageComponent.getItem();
+						player.setSelectedItem(selectedItem);
+					}
+				};
+			}
+			
 			inventory.add(inventoryImageComponent);
 
 			System.out.println(item.getDescription());

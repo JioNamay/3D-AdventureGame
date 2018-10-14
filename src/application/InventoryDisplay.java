@@ -49,6 +49,7 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 	// GETTERS
 	/** Determines whether the user clicked on this component */
 	public boolean isSelected() { return isSelected; }
+	public PickUpAbleStrategy getItem() { return item; }
 
 	@Override
 	public void mousePressed(MouseEvent e) {
