@@ -1,5 +1,10 @@
 package gameworld;
 
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import gameworld.entities.Player;
 
 /**
@@ -13,35 +18,29 @@ public class GameWorld {
 	public static final String COURTYARD = "Courtyard";
 	public static final String MASTER_BEDROOM = "Master Bedroom";
 	public static final String KITCHEN = "Kitchen";
+	
+	//public Map<String, Room> rooms;	// map to keep track of the rooms in the world??
 
 	private Player player = Player.getInstance();
 	private Room currentRoom;
 
 	/**
 	 * Instantiates a new game world.
-	 * The player starts off in the courtyard.
+	 * Reads rooms from the given XML file and sets up the world.
 	 */
-	public GameWorld() {
-		setUpWorld();	// sets out the layout of the gameworld
-		// current room is the courtyard
-		// set player in the courtyard
+	public GameWorld(File file) {
+		// parse the file and create the rooms
+		// set player in current room if the player is in room
+		
 	}
 	
-	public void setUpWorld() {
-		
+	private void setUpWorld() {
 	}
 
 	/**
 	 * Update.
 	 */
 	public void update() {
-
-	}
-
-	/**
-	 * Render.
-	 */
-	public void render() {
 
 	}
 
