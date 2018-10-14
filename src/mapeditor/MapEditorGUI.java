@@ -214,9 +214,9 @@ public class MapEditorGUI {
 
 		String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
 
-		JComboBox petList = new JComboBox(roomStrings);
-		petList.setSelectedIndex(0);
-		petList.addActionListener(new ActionListener() {
+		JComboBox roomList = new JComboBox(roomStrings);
+		roomList.setSelectedIndex(0);
+		roomList.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -230,8 +230,8 @@ public class MapEditorGUI {
 
 		roomSelectLabel.setBounds(300, 0, 500, 60);
 		buttonPanel.add(roomSelectLabel);
-		petList.setBounds(427, 0, 170, 60);
-		buttonPanel.add(petList);
+		roomList.setBounds(427, 0, 170, 60);
+		buttonPanel.add(roomList);
 		/* ROOM SELECTION */
 
 		rockButton = new JButton("[1] Rock (contains key)");
