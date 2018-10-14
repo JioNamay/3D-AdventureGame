@@ -5,14 +5,28 @@ import java.util.List;
 
 import gameworld.entities.Item.Action;
 
+/**
+ * For all the items that can be locked.
+ * @author yangcarr 300368805
+ * @author Deanne Alabastro 300346210
+ */
 public abstract class LockableStrategy extends CoinBank {
+	
+	/** The actions. */
 	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString()); 
 
+	/** The is locked. */
 	protected boolean isOpen, isLocked;
 	
+	/** The description. */
 	protected String description;
+	
+	/** The name. */
 	protected String name;
  
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getActions()
+	 */
 	@Override
 	public List<String> getActions() {
 		if(isLocked) {
@@ -25,6 +39,9 @@ public abstract class LockableStrategy extends CoinBank {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#performAction(gameworld.entities.Item.Action)
+	 */
 	@Override
 	public String performAction(Action action) {
 		switch(action) {
@@ -39,11 +56,19 @@ public abstract class LockableStrategy extends CoinBank {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.CoinBank#getName()
+	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Unlock.
+	 *
+	 * @return the string
+	 */
 	private String unlock() {
 		if (Player.getInstance().getInventory().hasKey()) {
 			PickUpAbleStrategy key = Player.getInstance().getInventory().getAKey();
@@ -54,12 +79,22 @@ public abstract class LockableStrategy extends CoinBank {
 		return "You cannot unlock something without a key";
 	}
 	
+	/**
+	 * Open.
+	 *
+	 * @return the string
+	 */
 	private String open() {
 		if(isLocked) return "You cannot open a " + this.name + " while it is locked!";
 		isOpen = true;
 		return "You opened a " + this.name;
 	}
 	
+	/**
+	 * Close.
+	 *
+	 * @return the string
+	 */
 	private String close() {
 		if(isLocked || !isOpen) return "You cannot close a door that's locked or already closed!";
 		isOpen = false;

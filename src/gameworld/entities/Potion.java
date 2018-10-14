@@ -8,10 +8,18 @@ import gameworld.entities.Item.Action;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
 
+/**
+ * The potion can recover the player's health by 10.
+ * @author Deanne Alabastro 300346210
+ */
 public class Potion extends PickUpAbleStrategy implements Damageable {
 
+	/** The uses. */
 	private int uses;
 
+	/**
+	 * Instantiates a new potion.
+	 */
 	public Potion() {
 		this.uses = 1;
 		this.description = "A magical potion that restores 10 points of health";
@@ -19,16 +27,25 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 		this.coinBank = 3;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Damageable#getHealth()
+	 */
 	@Override
 	public int getHealth() {
 		return uses;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Damageable#die()
+	 */
 	@Override
 	public void die() {
 		Player.getInstance().getInventory().remove(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Damageable#getDamaged(int)
+	 */
 	@Override
 	public void getDamaged(int amount) {
 		if ((this.uses - amount) < 0) {
@@ -39,6 +56,9 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.PickUpAbleStrategy#performAction(gameworld.entities.Item.Action)
+	 */
 	@Override
 	public String performAction(Action action) {
 		switch (action) {
@@ -53,6 +73,9 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getActions()
+	 */
 	@Override
 	public List<String> getActions() {
 		if (!Player.getInstance().getInventory().contains(this))
@@ -62,11 +85,17 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 		return Arrays.asList(Action.EXAMINE.toString(), Action.USE.toString(), Action.DROP.toString());
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isSolid()
+	 */
 	@Override
 	public boolean isSolid() {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isDoor()
+	 */
 	@Override
 	public boolean isDoor() {
 		return false;

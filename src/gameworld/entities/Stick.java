@@ -13,6 +13,7 @@ public class Stick extends EquipableStrategy {
 		this.durability = 3;
 		this.description = "An ordinary stick.";
 		this.name = "Stick";
+		this.maxDamage = 10;
 		this.coinBank = 3;
 	}
 }

@@ -7,8 +7,7 @@ import gameworld.entities.Item.Action;
 
 /**
  * The Interface Strategy are the common methods that every item in the gameworld has.
- * @author alabasdean 
- * @author yangcarr
+ * @author yangcarr 300368805
  */
 public interface Strategy {
 	

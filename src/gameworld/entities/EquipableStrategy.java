@@ -44,14 +44,14 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 		case EXAMINE:
 			return givePlayerCoins(1);
 		case DROP:
-			if(Player.getInstance().getEquipedWeapon().equals(this)) {
+			if(Player.getInstance().getEquippedWeapon().equals(this)) {
 				return this.performAction(Action.UNEQUIP) + "\n" + drop();
 			}
 		case EQUIP:
-			Player.getInstance().setEquipedWeapon(this);
+			Player.getInstance().setEquippedWeapon(this);
 			return "Player equipped " + this.name;
 		case UNEQUIP:
-			Player.getInstance().setEquipedWeapon(null);
+			Player.getInstance().setEquippedWeapon(null);
 			return "Player unequipped " + this.name;
 		default:
 			return super.performAction(action);
@@ -65,7 +65,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 	public List<String> getActions() {
 		if (!Player.getInstance().getInventory().contains(this))
 			return actions; // return default actions if not in inventory
-		if (Player.getInstance().getEquipedWeapon().equals(this)) //if equipped
+		if (Player.getInstance().getEquippedWeapon().equals(this)) //if equipped
 			return Arrays.asList(Action.EXAMINE.toString(), Action.UNEQUIP.toString(), Action.DROP.toString());
 		return Arrays.asList(Action.EXAMINE.toString(), Action.EQUIP.toString(), Action.DROP.toString());
 	}
@@ -113,7 +113,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 	@Override
 	public void die() {
 		Player.getInstance().getInventory().remove(this);
-		Player.getInstance().setEquipedWeapon(null);
+		Player.getInstance().setEquippedWeapon(null);
 	}
 
 }

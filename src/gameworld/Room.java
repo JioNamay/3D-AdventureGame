@@ -9,6 +9,7 @@ import gameworld.entities.*;
 /**
  * The room handles all the object within it such as removing, adding, and
  * moving them.
+ * @author Deanne Alabastro 300346210
  */
 public class Room {
 
