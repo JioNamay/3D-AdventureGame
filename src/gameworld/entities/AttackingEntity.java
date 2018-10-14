@@ -2,6 +2,11 @@ package gameworld.entities;
 
 import java.util.Random;
 
+/**
+ * Has all the attacking methods used by entities that can attack such as the Player and items that
+ * retaliate when attacked
+ * @author Deanne Alabastro 300346210
+ */
 public abstract class AttackingEntity implements Damageable{
 	
 	/** The max damage. */
@@ -11,6 +16,8 @@ public abstract class AttackingEntity implements Damageable{
 	protected int health;
 
 	/**
+	 * Gets the health.
+	 *
 	 * @return the health
 	 */
 	public int getHealth() {
@@ -18,6 +25,8 @@ public abstract class AttackingEntity implements Damageable{
 	}
 
 	/**
+	 * Sets the health.
+	 *
 	 * @param health the health to set
 	 */
 	public void setHealth(int health) {
@@ -26,6 +35,8 @@ public abstract class AttackingEntity implements Damageable{
 
 	
 	/**
+	 * Gets the max damage.
+	 *
 	 * @return the maxDamage
 	 */
 	public int getMaxDamage() {
@@ -33,6 +44,8 @@ public abstract class AttackingEntity implements Damageable{
 	}
 
 	/**
+	 * Sets the max damage.
+	 *
 	 * @param maxDamage the maxDamage to set
 	 */
 	public void setMaxDamage(int maxDamage) {

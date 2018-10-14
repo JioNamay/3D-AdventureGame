@@ -3,6 +3,10 @@ package gameworld.entities;
 import gameworld.Location;
 import gameworld.Room;
 
+/**
+ * The player class. There can only be one instance of the player.
+ * @author Deanne Alabastro 300346210
+ */
 public class Player extends AttackingEntity {
 
 	/** The inventory. */
@@ -11,12 +15,16 @@ public class Player extends AttackingEntity {
 	/** The location. */
 	private Location location;
 
+	/** The current room. */
 	private Room currentRoom;
 	
+	/** The selected item. */
 	private PickUpAbleStrategy selectedItem;
 	
-	private EquipableStrategy equipedWeapon;
+	/** The equiped weapon. */
+	private EquipableStrategy equippedWeapon;
 
+	/** The coins. */
 	private int coins = 0;
 
 	// ********** SINGLETON PATTERN ********** //
@@ -41,6 +49,8 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Gets the coins.
+	 *
 	 * @return the coins
 	 */
 	public int getCoins() {
@@ -48,6 +58,8 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Adds the coins.
+	 *
 	 * @param coins the coins to set
 	 */
 	public void addCoins(int coins) {
@@ -83,11 +95,11 @@ public class Player extends AttackingEntity {
 	 * Sets the attack damage.
 	 */
 	private void setAttackDamage() {
-		if(equipedWeapon == null) {
+		if(equippedWeapon == null) {
 			// player uses fist
 			this.maxDamage = 5;
 		}else {
-			this.maxDamage = equipedWeapon.getAttackDamage();
+			this.maxDamage = equippedWeapon.getAttackDamage();
 		}
 	}
 
@@ -113,6 +125,8 @@ public class Player extends AttackingEntity {
 
 
 	/**
+	 * Gets the current room.
+	 *
 	 * @return the currentRoom
 	 */
 	public Room getCurrentRoom() {
@@ -120,6 +134,8 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Sets the current room.
+	 *
 	 * @param currentRoom the currentRoom to set
 	 */
 	public void setCurrentRoom(Room currentRoom) {
@@ -130,6 +146,8 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Gets the location.
+	 *
 	 * @return the location
 	 */
 	public Location getLocation() {
@@ -137,6 +155,8 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Sets the location.
+	 *
 	 * @param location the location to set
 	 */
 	public void setLocation(Location location) {
@@ -144,6 +164,8 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Gets the selected item.
+	 *
 	 * @return the selectedItem
 	 */
 	public PickUpAbleStrategy getSelectedItem() {
@@ -151,6 +173,8 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Sets the selected item.
+	 *
 	 * @param selectedItem the selectedItem to set
 	 */
 	public void setSelectedItem(PickUpAbleStrategy selectedItem) {
@@ -158,17 +182,21 @@ public class Player extends AttackingEntity {
 	}
 
 	/**
+	 * Gets the equipped weapon.
+	 *
 	 * @return the equipedWeapon
 	 */
-	public EquipableStrategy getEquipedWeapon() {
-		return equipedWeapon;
+	public EquipableStrategy getEquippedWeapon() {
+		return equippedWeapon;
 	}
 
 	/**
-	 * @param equipedWeapon the equipedWeapon to set
+	 * Sets the equipped weapon.
+	 *
+	 * @param equippedWeapon the equipedWeapon to set
 	 */
-	public void setEquipedWeapon(EquipableStrategy equipedWeapon) {
-		this.equipedWeapon = equipedWeapon;
+	public void setEquippedWeapon(EquipableStrategy equippedWeapon) {
+		this.equippedWeapon = equippedWeapon;
 		setAttackDamage(); // update player's attack damage
 	}
 }

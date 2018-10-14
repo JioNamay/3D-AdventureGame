@@ -5,10 +5,18 @@ import java.util.List;
 
 import gameworld.entities.Item.Action;
 
+/**
+ * The key can be used to unlock any locked items. It breaks after 1 use.
+ * @author Deanne Alabastro 300346210
+ */
 public class Key extends PickUpAbleStrategy implements Damageable {
 
+	/** The uses. */
 	private int uses;
 
+	/**
+	 * Instantiates a new key.
+	 */
 	public Key() {
 		this.uses = 1;
 		this.name = "Key";
@@ -22,6 +30,9 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 	 * It will also have a 'use' method, which is to be used when player
 	 * is in the same location as a locked door
 	 * Otherwise it will perform the parent's actions.
+	 *
+	 * @param action the action
+	 * @return the string
 	 */
 	public String performAction(Action action) {
 		switch(action) {
@@ -43,17 +54,26 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 		}
 	} 
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Damageable#getHealth()
+	 */
 	@Override
 	public int getHealth() {
 		return uses;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Damageable#die()
+	 */
 	@Override
 	public void die() {
 		Player.getInstance().getInventory().decrementKeys();
 		Player.getInstance().getInventory().remove(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Damageable#getDamaged(int)
+	 */
 	@Override
 	public void getDamaged(int amount) {
 		if((this.uses - amount) < 0) {
@@ -64,6 +84,9 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#getActions()
+	 */
 	@Override
 	public List<String> getActions() {
 		if(!Player.getInstance().getInventory().contains(this)) return actions; // return default actions if not in inventory
@@ -72,11 +95,17 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 		return Arrays.asList(Action.EXAMINE.toString(), Action.DROP.toString());
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isSolid()
+	 */
 	@Override
 	public boolean isSolid() {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isDoor()
+	 */
 	@Override
 	public boolean isDoor() {
 		return false;

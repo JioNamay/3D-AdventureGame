@@ -6,7 +6,8 @@ import gameworld.entities.Item.Action;
 import gameworld.entities.LockableStrategy;
 
 /**
- * The Class Door.
+ * The door keeps track of the room that it is in between and the directions that it faces in each room
+ * @author Deanne Alabastro 300346210
  */
 public class Door extends LockableStrategy {
 
