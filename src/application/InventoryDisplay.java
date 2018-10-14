@@ -16,7 +16,7 @@ import gameworld.entities.Inventory;
  * area, in the application window. The InventoryDisplay will draw the image of each of the
  * items in the player's inventory.
  *
- * @author yangcarr
+ * @author Carrie
  */
 public class InventoryDisplay extends JComponent implements MouseListener {
 	// the width and height of an individual area within the inventory panel
@@ -24,19 +24,31 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 	public static final int IMAGE_HEIGHT = 110/2;
 
 	private PickUpAbleStrategy item;
+	private boolean isSelected;
 
 	/**
 	 * An instance of this JComponent needs to know what item it represents.
-	 * @param item
+	 * @param item that the area displays
 	 */
-	public InventoryDisplay() {
+	public InventoryDisplay(PickUpAbleStrategy item) {
+		this.item = item;
 	}
 
+	/**
+	 * Determines whether a mouse click is on this JComponent.
+	 * The x and y coordinates of the mouse are 5 less, because the image is drawn 
+	 * 5 less than the actual size of the display area.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		int x = e.getX() - 5;
+		int y = e.getY() - 5;
+		isSelected = this.contains(x, y);
 	}
+	
+	// GETTERS
+	/** Determines whether the user clicked on this component */
+	public boolean isSelected() { return isSelected; }
 
 	@Override
 	public void mousePressed(MouseEvent e) {

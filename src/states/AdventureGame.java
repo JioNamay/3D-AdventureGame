@@ -34,11 +34,11 @@ import gameworld.entities.Potion;
  */
 public class AdventureGame extends GUI{
 	private GameWorld game;			// containing the game logic
-	private Player player = Player.getInstance();			// player within the game
+	private Player player;			// player within the game
 	private Room currentRoom;
 	
 	private File saveFile = new File("");	// XML file to store saved game
-	private File loadFile = new File("");	// XML filename to load game from
+	private File loadFile = new File("GameWorld.xml");	// XML filename to load game from
 
 	private boolean isSaved = false; // when a new game is made, it's not saved
  
@@ -96,13 +96,16 @@ public class AdventureGame extends GUI{
 	protected void onStart() {
 		if (game == null) {	// no game yet, so nothing to save
 			game = new GameWorld(loadFile);
+			player = Player.getInstance();
 			return;
 		}
 
 		// ask user whether to save or not
 		// if yes, then savegame
-
+		
+		// run a new game anyways
 		game = new GameWorld(loadFile);	// load new game from file
+		player = Player.getInstance();
 		// isSaved = false;
 		//redraw(drawingArea);
 	}
@@ -112,11 +115,11 @@ public class AdventureGame extends GUI{
 	 */
 	@Override
 	public void updateInventory() {
-		if (player == null) {
-			System.out.println("player is null");	// test
-			return;
-		}
-
+//		if (player == null) {
+//			System.out.println("player is null");	// test
+//			return;
+//		}
+		
 
 		// go through player's inventory
 		// make an Inventory display
@@ -126,9 +129,9 @@ public class AdventureGame extends GUI{
 		Inventory i = new Inventory();
 		for (int index=0; index<10; index++)
 			i.add(new Potion());
-		player.setInventory(i);
+		//player.setInventory(i);
 
-		for (PickUpAbleStrategy item: player.getInventory()) {
+		for (PickUpAbleStrategy item: i) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay() {
 				// Repaints the component to display the image of the item.
 				@Override
