@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -18,6 +19,7 @@ import javax.swing.JPanel;
 import application.GUI;
 import application.InventoryDisplay;
 import gameworld.GameWorld;
+import gameworld.Room;
 import gameworld.entities.Inventory;
 import gameworld.entities.Key;
 import gameworld.entities.PickUpAbleStrategy;
@@ -30,26 +32,21 @@ import gameworld.entities.Potion;
 public class AdventureGame extends GUI{
 	private GameWorld game;			// containing the game logic
 	private Player player = Player.getInstance();			// player within the game
-
-	private String saveFile = "";	// XML filename to store saved game
-	private String loadFile = "";	// XML filename to load game from
+	private Room currentRoom;
+	
+	private File saveFile = new File("");	// XML file to store saved game
+	private File loadFile = new File("");	// XML filename to load game from
 
 	private boolean isSaved = false; // when a new game is made, it's not saved
 	//private InventoryDisplay[] inventoryItems = new InventoryDisplay[10];
  
 	/**
 	 * Instantiates a new adventure game.
+	 * Reading the rooms from XML file, and generates a new gameworld.
 	 */
 	public AdventureGame() {
-		game = new GameWorld();
-		init();
-	}
-
-	/**
-	 * Initialise the game.
-	 */
-	private void init() {
-
+		//game = new GameWorld(loadFile);
+		onStart();
 	}
 
 	/**
@@ -60,15 +57,17 @@ public class AdventureGame extends GUI{
 	@Override
 	protected void loadGame() {
 		if (game == null) {
-			game = new GameWorld();
+			game = new GameWorld(loadFile);
 			return;
 		}
 
+		// if is not saved, 
 		// ask user whether to save or not
-		// if yes, then loadfile = save file
-		// and save current game
+		// if yes, then loadfile = savefile
+		// and save current game to savefile
 
 		// load game from loadfile
+		game = new GameWorld(loadFile);
 		// isSaved = false;
 		//redraw(drawingArea);
 	}
@@ -81,7 +80,7 @@ public class AdventureGame extends GUI{
 		if (isSaved)
 			return;	// game already saved
 
-		// save game to file
+		// save game to savefile
 
 		// isSaved = true;	// indicate whether was saved
 	}
@@ -94,14 +93,14 @@ public class AdventureGame extends GUI{
 	@Override
 	protected void onStart() {
 		if (game == null) {	// no game yet, so nothing to save
-			game = new GameWorld();	// game starting state?
+			game = new GameWorld(loadFile);
 			return;
 		}
 
 		// ask user whether to save or not
-		// if yes, then save current game
+		// if yes, then savegame
 
-		game = new GameWorld();	// load new game
+		game = new GameWorld(loadFile);	// load new game from file
 		// isSaved = false;
 		//redraw(drawingArea);
 	}
