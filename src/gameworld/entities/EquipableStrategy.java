@@ -68,7 +68,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 		if (Player.getInstance().getEquippedWeapon().equals(this)) //if equipped
 			return Arrays.asList(Action.EXAMINE.toString(), Action.UNEQUIP.toString(), Action.DROP.toString());
 		return Arrays.asList(Action.EXAMINE.toString(), Action.EQUIP.toString(), Action.DROP.toString());
-	}
+	} 
 
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Strategy#isSolid()
