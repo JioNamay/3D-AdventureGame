@@ -28,7 +28,9 @@ import gameworld.entities.Player;
 import gameworld.entities.Potion;
 
 /**
- * Handles threads and game state.
+ * Handles the functionality of the game between user and game logic.
+ * 
+ * @author Carrie
  */
 public class AdventureGame extends GUI{
 	private GameWorld game;			// containing the game logic
@@ -39,7 +41,6 @@ public class AdventureGame extends GUI{
 	private File loadFile = new File("");	// XML filename to load game from
 
 	private boolean isSaved = false; // when a new game is made, it's not saved
-	//private InventoryDisplay[] inventoryItems = new InventoryDisplay[10];
  
 	/**
 	 * Instantiates a new adventure game.
@@ -111,10 +112,10 @@ public class AdventureGame extends GUI{
 	 */
 	@Override
 	public void updateInventory() {
-//		if (player == null) {
-//			System.out.println("player is null");
-//			return;
-//		}
+		if (player == null) {
+			System.out.println("player is null");	// test
+			return;
+		}
 
 
 		// go through player's inventory
@@ -125,8 +126,9 @@ public class AdventureGame extends GUI{
 		Inventory i = new Inventory();
 		for (int index=0; index<10; index++)
 			i.add(new Potion());
+		player.setInventory(i);
 
-		for (PickUpAbleStrategy item: i) {
+		for (PickUpAbleStrategy item: player.getInventory()) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay() {
 				// Repaints the component to display the image of the item.
 				@Override

@@ -36,7 +36,7 @@ import renderer.Board;
 /**
  * Class provides the graphical display of the GameWorld.
  *
- * @author yangcarr
+ * @author Carrie 300368805
  */
 public abstract class GUI{
 
