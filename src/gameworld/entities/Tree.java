@@ -65,8 +65,12 @@ public class Tree extends AttackingEntity implements Strategy{
 
 	@Override
 	public String performAction(Action action) {
-		// TODO Auto-generated method stub
-		return null;
+		switch(action) {
+		case ATTACK:
+			Player.getInstance().attack(this);
+		default:
+			//return super.performAction(action);
+		}	
 	}
 
 }

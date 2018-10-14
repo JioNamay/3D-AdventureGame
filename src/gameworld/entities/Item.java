@@ -20,7 +20,8 @@ public class Item {
 		CLOSE,
 		UNLOCK,
 		EQUIP, 
-		UNEQUIP
+		UNEQUIP, 
+		ATTACK
 	}
 
 	protected Strategy item;
