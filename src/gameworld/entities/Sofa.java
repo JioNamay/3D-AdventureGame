@@ -69,5 +69,6 @@ public class Sofa extends Monster{
 		default:
 			throw new IllegalArgumentException("Unknown action: " + action.toString() + " for object: "+ this.name);
 		}
+	}
 
 }
