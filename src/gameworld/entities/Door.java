@@ -5,47 +5,70 @@ import gameworld.Room;
 import gameworld.entities.Item.Action;
 import gameworld.entities.LockableStrategy;
 
+/**
+ * The Class Door.
+ */
 public class Door extends LockableStrategy {
 
-	Room goesTo;
-	Room from;
+	/** The first room. */
+	Room firstRoom;
+	
+	/** The second room. */
+	Room secondRoom;
+	
+	/** The first room direction. */
+	private Direction firstRoomDirection;
+	
+	/** The second room direction. */
+	private Direction secondRoomDirection;
 
-	public Door(Room connectingRoom1, Room connectingRoom2) {
-		this.from = connectingRoom1;
-		this.goesTo = connectingRoom2;
-		this.description = "door between " + connectingRoom1.getName() + " and " + connectingRoom2.getName();
-		this.name = "Door";
+	/**
+	 * Instantiates a new door.
+	 */
+	public Door() {
+		this.name = "Door"; 
 	}
 
 	/**
-	 * @return the from
+	 * Gets the first room.
+	 *
+	 * @return the first room
 	 */
-	public Room getFrom() {
-		return from;
+	public Room getFirstRoom() {
+		return firstRoom;
 	}
 
 	/**
-	 * @param from the from to set
+	 * Sets the first room.
+	 *
+	 * @param firstRoom the new first room
 	 */
-	public void setFrom(Room from) {
-		this.from = from;
+	public void setFirstRoom(Room firstRoom) {
+		this.firstRoom = firstRoom;
 	}
 
 	/**
-	 * @return the goesTo
+	 * Gets the second room.
+	 *
+	 * @return the second room
 	 */
-	public Room getGoesTo() {
-		return goesTo;
+	public Room getSecondRoom() {
+		return secondRoom;
 	}
 
 	/**
-	 * @param goesTo
-	 *            the goesTo to set
+	 * Sets the second room.
+	 *
+	 * @param secondRoom the new second room
 	 */
-	public void setGoesTo(Room goesTo) {
-		this.goesTo = goesTo;
+	public void setSecondRoom(Room secondRoom) {
+		this.secondRoom = secondRoom;
+		this.description = "door between " + firstRoom.getName() + " and " + secondRoom.getName();
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.CoinBank#getDescription()
+	 */
 	@Override
 	public String getDescription() {
 		if (isLocked)
@@ -55,6 +78,9 @@ public class Door extends LockableStrategy {
 		return "A closed " + description;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.LockableStrategy#performAction(gameworld.entities.Item.Action)
+	 */
 	@Override
 	public String performAction(Action action) {
 		switch (action) {
@@ -65,25 +91,73 @@ public class Door extends LockableStrategy {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isSolid()
+	 */
 	@Override
 	public boolean isSolid() {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isDoor()
+	 */
 	@Override
 	public boolean isDoor() {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.CoinBank#getDirection()
+	 */
 	@Override
 	public Direction getDirection() {
-		// TODO Auto-generated method stub
-		return null;
+		if(Player.getInstance().getCurrentRoom().equals(firstRoom)) return firstRoomDirection;
+		return secondRoomDirection;
 	}
 
+	/**
+	 * Gets the first room direction.
+	 *
+	 * @return the first room direction
+	 */
+	public Direction getFirstRoomDirection() {
+		return firstRoomDirection;
+	}
+	
+	/**
+	 * Gets the second room direction.
+	 *
+	 * @return the second room direction
+	 */
+	public Direction getSecondRoomDirection() {
+		return secondRoomDirection;
+	}
+	
+	/**
+	 * Sets the first room direction.
+	 *
+	 * @param dir the new first room direction
+	 */
+	public void setFirstRoomDirection(Direction dir) {
+		 this.firstRoomDirection = dir;
+	}
+	
+	/**
+	 * Sets the second room direction.
+	 *
+	 * @param dir the new second room direction
+	 */
+	public void setSecondRoomDirection(Direction dir) {
+		this.secondRoomDirection = dir;
+	}
+	
+	/* (non-Javadoc)
+	 * @see gameworld.entities.CoinBank#setDirection(gameworld.Location.Direction)
+	 */
 	@Override
 	public void setDirection(Direction direction) {
-		// TODO Auto-generated method stub
-		
+		if(Player.getInstance().getCurrentRoom().equals(firstRoom)) setFirstRoomDirection(direction);
+		else setSecondRoomDirection(direction);
 	}
 }
