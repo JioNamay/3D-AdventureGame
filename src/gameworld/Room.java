@@ -9,6 +9,7 @@ import gameworld.entities.*;
 /**
  * The room handles all the object within it such as removing, adding, and
  * moving them.
+ * 
  * @author Deanne Alabastro 300346210
  */
 public class Room {
@@ -31,7 +32,7 @@ public class Room {
 	/**
 	 * Instantiates a new room.
 	 *
-	 * @param name 
+	 * @param name
 	 *            the name
 	 */
 	public Room(String name) {
@@ -223,8 +224,8 @@ public class Room {
 		case NORTH:
 			if (locations[playerLocRow + 1][playerLocCol].isSolid()) // check if player can move into loc
 				return false;
-			else if (locations[playerLocRow][playerLocCol].isDoor()) // check if loc is a door
-				return movePlayerToConnectingRoom(Direction.NORTH);
+			else if (locations[playerLocRow][playerLocCol].isDoor())
+				return movePlayerToConnectingRoom(Direction.EAST);
 
 			// move normally
 			Player.getInstance().setLocation(locations[playerLocRow + 1][playerLocCol]);
@@ -270,6 +271,11 @@ public class Room {
 		int playerLocCol = Player.getInstance().getLocation().getCol();
 
 		Door door = (Door) gameItems.get(Player.getInstance().getLocation()).getItem();
+		
+		// Player can only move room if door is open and unlocked
+		if (!door.isOpen() || door.isLocked()) 
+			return false;
+
 		Location[][] connectingRoomLoc = null; // locations of the room player is going to be moving to
 		Room goingTo = null; // room the player is going to be moving to
 
