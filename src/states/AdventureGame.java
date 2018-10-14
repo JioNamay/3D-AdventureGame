@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import application.GUI;
 import application.InventoryDisplay;
 import gameworld.GameWorld;
+import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Inventory;
 import gameworld.entities.Key;
@@ -154,7 +155,17 @@ public class AdventureGame extends GUI{
 
 		// gameworld.getroom
 		// render the room's items plus player if needed
-		// Draw.redraw(g, game.getRoom(), player.getCurrentRoom());
+		// Draw.redraw(g, player.getCurrentRoom(), player);
+	}
+	
+	/**
+	 * Moves the player in the respective direction of the room, as indicated by the player.
+	 * First checks to see if the location is valid for the player to move into, then 
+	 * moves player into it. If the location is invalid, player doesn't move.
+	 */
+	@Override
+	protected void navigatePlayer(Direction dir) {
+		currentRoom.movePlayer(dir);
 	}
 
 
@@ -164,5 +175,4 @@ public class AdventureGame extends GUI{
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
-
 }
