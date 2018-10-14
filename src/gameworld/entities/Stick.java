@@ -1,65 +1,18 @@
 package gameworld.entities;
 
-import java.util.List;
-
-import gameworld.Location.Direction;
-import gameworld.entities.Item.Action;
-
+/**
+ * A stick that drops from a tree upon its death. It can be used as a weapon for 3 hits.
+ * @author Deanne Alabastro 300346210
+ */
 public class Stick extends EquipableStrategy {
 	
+	/**
+	 * Instantiates a new stick.
+	 */
 	public Stick() {
-		this.durability = 1;
-		this.description = "A magical potion that restores 10 points of health";
-		this.name = "Health Potion";
+		this.durability = 3;
+		this.description = "An ordinary stick.";
+		this.name = "Stick";
 		this.coinBank = 3;
 	}
-
-	@Override
-	public List<String> getActions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isSolid() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isDoor() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Direction getDirection() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setDirection(Direction direction) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String performAction(Action action) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
