@@ -6,6 +6,13 @@ import gameworld.Location.Direction;
 import gameworld.entities.Item.Action;
 
 public class Stick extends EquipableStrategy {
+	
+	public Stick() {
+		this.durability = 1;
+		this.description = "A magical potion that restores 10 points of health";
+		this.name = "Health Potion";
+		this.coinBank = 3;
+	}
 
 	@Override
 	public List<String> getActions() {
