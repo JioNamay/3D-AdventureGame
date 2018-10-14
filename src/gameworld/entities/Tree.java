@@ -1,16 +1,12 @@
 package gameworld.entities;
 
-import java.util.List;
-
 import gameworld.Location;
-import gameworld.Location.Direction;
 import gameworld.Room;
-import gameworld.entities.Item.Action;
 
-public class Tree extends AttackingEntity implements Strategy{
-
+public class Tree extends Monster {
 	public Tree() {
-		// TODO Auto-generated constructor stub
+		this.name = "Tree";
+		this.description = "An innocent tree";
 	}
 
 	@Override
@@ -18,59 +14,7 @@ public class Tree extends AttackingEntity implements Strategy{
 		// remove tree from world and replace with drop
 		Room currentRoom = Player.getInstance().getCurrentRoom();
 		Location treeLoc = currentRoom.getGameItemLocation(new Item(this));
-		currentRoom.addGameObject(treeLoc, new Item (new Stick()));
+		currentRoom.addGameItem(treeLoc.getRow(), treeLoc.getCol(), new Item(new Stick()));
+		Player.getInstance().addCoins(5); // give player coins
 	}
-
-	@Override
-	public List<String> getActions() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isSolid() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isDoor() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Direction getDirection() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setDirection(Direction direction) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public String performAction(Action action) {
-		switch(action) {
-		case ATTACK:
-			Player.getInstance().attack(this);
-		default:
-			//return super.performAction(action);
-		}	
-	}
-
 }

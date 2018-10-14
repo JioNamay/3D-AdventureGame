@@ -57,17 +57,13 @@ public abstract class AttackingEntity implements Damageable{
 	/**
 	 * Attack.
 	 *
-	 * @param opponent
-	 *            the opponent
+	 * @param opponent            the opponent
+	 * @return the attackDamage
 	 */
-	protected boolean attack(AttackingEntity opponent) {
+	protected int attack(AttackingEntity opponent) {
 		int attackDamage = calculateAttackDamage();
-		if (attackDamage == 0)
-			return false;
-		else {
-			opponent.getDamaged(attackDamage);
-			return true;
-		}
+		opponent.getDamaged(attackDamage);
+		return attackDamage;
 	}
 
 	/**
