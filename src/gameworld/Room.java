@@ -30,7 +30,7 @@ public class Room {
 	/**
 	 * Instantiates a new room.
 	 *
-	 * @param name
+	 * @param name 
 	 *            the name
 	 */
 	public Room(String name) {
@@ -78,38 +78,6 @@ public class Room {
 	 */
 	public Map<Location, Item> getGameItems() {
 		return gameItems;
-	}
-
-	/**
-	 * Sets the game objects.
-	 *
-	 * @param gameObjects
-	 *            the gameObjects to set
-	 */
-	public void setGameObjects(Map<Location, Item> gameItems) {
-		this.gameItems = gameItems;
-		initialiseLocationSolidity();
-		initialiseDoorLocation();
-	}
-
-	/**
-	 * Initialise location solidity - i.e. whether the area is walkable.
-	 */
-	private void initialiseLocationSolidity() {
-		for (Map.Entry<Location, Item> entry : gameItems.entrySet()) {
-			if (entry.getValue().isSolid())
-				entry.getKey().setSolid(true);
-		}
-	}
-
-	/**
-	 * Initialise door locations.
-	 */
-	private void initialiseDoorLocation() {
-		for (Map.Entry<Location, Item> entry : gameItems.entrySet()) {
-			if (entry.getValue().isDoor())
-				entry.getKey().setDoor(true); // tell the door's location that it is a door
-		}
 	}
 
 	/**
