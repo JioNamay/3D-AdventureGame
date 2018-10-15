@@ -2,8 +2,13 @@ package gameworld;
 
 
 import java.io.File;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 
 import gameworld.entities.Player;
 
@@ -12,6 +17,7 @@ import gameworld.entities.Player;
  * Each Room is like a single board on its own, whereas this class
  * represents the overall boards.
  */
+
 public class GameWorld {
 	// Rooms in the GameWorld:
 	public static final String LIBRARY = "library";
@@ -46,5 +52,6 @@ public class GameWorld {
 
 	}
 	
+
 	public Room getCurrentRoom() { return currentRoom; }
 }

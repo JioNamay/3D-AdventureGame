@@ -1,5 +1,8 @@
 package gameworld.entities;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Item.Action;
@@ -9,6 +12,7 @@ import gameworld.entities.LockableStrategy;
  * The door keeps track of the room that it is in between and the directions that it faces in each room
  * @author Deanne Alabastro 300346210
  */
+
 public class Door extends LockableStrategy {
 
 	/** The first room. */
@@ -53,6 +57,7 @@ public class Door extends LockableStrategy {
 	 *
 	 * @return the second room
 	 */
+
 	public Room getSecondRoom() {
 		return secondRoom;
 	}

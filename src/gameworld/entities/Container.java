@@ -1,9 +1,12 @@
 package gameworld.entities;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 /**
  * The Interface Container.
  * @author yangcarr 300368805
  */
+
 public interface Container {
 	
 	/**
