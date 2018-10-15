@@ -12,6 +12,7 @@ import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -37,10 +38,9 @@ import renderer.Board;
 /**
  * Class provides the graphical display of the GameWorld.
  *
- * @author Carrie 300368805
+ * @author yangcarr 300368805
  */
-//public abstract class GUI extends JFrame implements MouseListener{
-public abstract class GUI extends JFrame{
+public abstract class GUI extends JFrame implements KeyListener{
 
 	// ************** ABSTRACT METHODS ****************** //
 	protected abstract void redraw(Graphics g); // T RECONSIDER
@@ -214,7 +214,7 @@ public abstract class GUI extends JFrame{
 			}
 
 		});
- 
+
 		game.add(load);
 		game.add(save);
 		game.add(newGame);
@@ -226,7 +226,7 @@ public abstract class GUI extends JFrame{
 	}
 
 	/**
-	 * Allows players to move around the gameworld, one space in the 
+	 * Allows players to move around the gameworld, one space in the
 	 * chosen direction.
 	 */
 	private void setNavigationButtons() {

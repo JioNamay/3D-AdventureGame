@@ -12,7 +12,7 @@ import gameworld.entities.Item.Action;
  * @author Deanne Alabastro 300346210
  *
  */
-public class Sofa extends Monster{
+public class Sofa extends AttackingItems{
 
 	/**
 	 * Instantiates a new Sofa.

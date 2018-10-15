@@ -11,7 +11,7 @@ import gameworld.entities.Item.Action;
  *
  * @author Deanne Alabastro 300346210
  */
-public class Bookshelf extends Monster implements Container {
+public class Bookshelf extends AttackingItems implements Container {
 	
 	public Bookshelf() {
 		this.name = "Bookshelf";

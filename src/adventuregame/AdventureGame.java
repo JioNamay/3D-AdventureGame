@@ -3,22 +3,14 @@ package adventuregame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
+import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import application.GUI;
 import application.InventoryDisplay;
@@ -26,7 +18,6 @@ import gameworld.GameWorld;
 import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Inventory;
-import gameworld.entities.Key;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
 import gameworld.entities.Potion;
@@ -34,19 +25,18 @@ import gameworld.entities.Potion;
 /**
  * Handles the functionality of the game between user and game logic.
  *
- * @author Carrie
+ * @author yangcarr
  */
 public class AdventureGame extends GUI{
 	// GAME HANDLERS
 	private GameWorld game;			// containing the game logic
 	//private Player player;			// player within the game
 	private Room currentRoom;
-	private PickUpAbleStrategy selectedItem = null;
 
+	// APPLICATION HANDLERS
 	private File saveFile = new File("");	// XML file to store saved game
 	private File loadFile = new File("GameWorld.xml");	// XML filename to load game from
 
-	// APPLICATION HANDLERS
 	private boolean isSaved = false; // when a new game is made, it's not saved
 	private List<InventoryDisplay> displayAreas;
 	private static InventoryDisplay selectedDisplay;
@@ -59,8 +49,8 @@ public class AdventureGame extends GUI{
 		//displayAreas = new InventoryDisplay[10];
 
 		//player = Player.getInstance();
-		//game = new GameWorld(loadFile);
-		onStart();
+		game = new GameWorld(loadFile);
+		//onStart();
 	}
 
 	/**
@@ -116,6 +106,7 @@ public class AdventureGame extends GUI{
 
 		// run a new game anyways
 		game = new GameWorld(loadFile);	// load new game from file
+		//player.resetPlayer();	// resets the player
 		// isSaved = false;
 		//redraw(drawingArea);
 	}
@@ -126,6 +117,11 @@ public class AdventureGame extends GUI{
 	@Override
 	public void updateInventory() {
 		Player player = Player.getInstance();
+//		if (player == null) {
+//			System.out.println("player is null");
+//			return;
+//		}
+
 		displayAreas = new ArrayList<InventoryDisplay>();
 
 		//if (player.getInventory() == null)		// nothing to display
@@ -137,8 +133,10 @@ public class AdventureGame extends GUI{
 			i.add(new Potion());
 		player.setInventory(i);
 
+		System.out.println("inventory full: " + i.isFull());
+
 		// draws every item in player's inventory
-		for (PickUpAbleStrategy item: player.getInventory()) {
+		for (PickUpAbleStrategy item: i) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
 				// Repaints the component to display the image of the item.
 				@Override
@@ -151,6 +149,7 @@ public class AdventureGame extends GUI{
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
 			displayAreas.add(inventoryImageComponent);
 			inventory.add(inventoryImageComponent);
+			System.out.println("adding item. size is = " + displayAreas.size());
 		}
 
 		System.out.println("no. of displays: " + displayAreas.size());
@@ -199,10 +198,34 @@ public class AdventureGame extends GUI{
 		currentRoom.movePlayer(dir);
 	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/**
+	 * Takes user input from keyboard. Stores information regarding
+	 * direction to move player, as well as actions that player can perform.
+	 */
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 	/**
 	 * Main method to run the AdventureGame.
 	 */
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
+
+
 }
