@@ -6,7 +6,10 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+
 import gameworld.entities.Item;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Inventory;
@@ -63,7 +66,7 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("item selected: " + item.getDescription());
-		
+		setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		isSelected = true;
 	}
 	
