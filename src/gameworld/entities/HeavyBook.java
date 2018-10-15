@@ -23,8 +23,8 @@ public class HeavyBook extends EquipableStrategy {
 	public HeavyBook() {
 		this.durability = 5;
 		this.maxDamage = 15;
-		this.description = "A magical potion that restores 10 points of health";
-		this.name = "Health Potion";
+		this.description = "heavy book";
+		this.name = "Book";
 		this.coinBank = 3;
 		
 		Random rand = new Random();
