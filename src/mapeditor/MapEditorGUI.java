@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,13 +19,16 @@ import java.util.Arrays;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import gameworld.Location.Direction;
 import gameworld.Room;
@@ -137,14 +142,26 @@ public class MapEditorGUI {
 	private BufferedImage potionImage_iso;
 	private BufferedImage stickImage_iso;
 
-	protected String roomSelected = "Library";
+	protected String currentRoom = "Library";
 	protected String selectedItem = " ";
 	protected boolean deleteMode = false;
 	protected boolean rotateMode = false;
 
+	private int[][] libraryMap;
+	private int[][] foyerMap;
+	private int[][] courtyardMap;
+	private int[][] studyMap;
+
 	private int[][] roomMap;
 
+	private String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
+
 	private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelComponent> boardTiles;
+
+	private Room libraryRoom;
+	private Room foyerRoom;
+	private Room courtyardRoom;
+	private Room studyRoom;
 
 	public MapEditorGUI() {
 
@@ -153,9 +170,17 @@ public class MapEditorGUI {
 		initializeImages();
 
 		roomMap = new int[7][7];
+		libraryMap = new int[7][7];
+		foyerMap = new int[7][7];
+		courtyardMap = new int[7][7];
+		studyMap = new int[7][7];
 		for (int i = 0; i < 7; i++) {
 			for (int j = 0; j < 7; j++) {
 				roomMap[i][j] = 0;
+				libraryMap[i][j] = 0;
+				foyerMap[i][j] = 0;
+				courtyardMap[i][j] = 0;
+				studyMap[i][j] = 0;
 			}
 		}
 		GUI();
@@ -178,7 +203,7 @@ public class MapEditorGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				exportToXML();
+				createRooms();
 			}
 
 		});
@@ -212,8 +237,6 @@ public class MapEditorGUI {
 		/* ROOM SELECTION */
 		roomSelectLabel = new JLabel("Select room to edit:");
 
-		String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
-
 		JComboBox roomList = new JComboBox(roomStrings);
 		roomList.setSelectedIndex(0);
 		roomList.addActionListener(new ActionListener() {
@@ -222,8 +245,63 @@ public class MapEditorGUI {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox cb = (JComboBox) e.getSource();
 				String roomName = (String) cb.getSelectedItem();
-				roomSelected = roomName;
-				// (roomSelected);
+				String previousRoom = currentRoom;
+				currentRoom = roomName;
+				if (previousRoom.equals("Library")) {
+					if (currentRoom.equals("Library")) {
+
+					} else if (currentRoom.equals("Foyer")) {
+						libraryMap = roomMap;
+						roomMap = foyerMap;
+					} else if (currentRoom.equals("Courtyard")) {
+						libraryMap = roomMap;
+						roomMap = courtyardMap;
+					} else if (currentRoom.equals("Study")) {
+						libraryMap = roomMap;
+						roomMap = studyMap;
+					}
+				} else if (previousRoom.equals("Foyer")) {
+					if (currentRoom.equals("Library")) {
+						foyerMap = roomMap;
+						roomMap = libraryMap;
+					} else if (currentRoom.equals("Foyer")) {
+
+					} else if (currentRoom.equals("Courtyard")) {
+						foyerMap = roomMap;
+						roomMap = courtyardMap;
+					} else if (currentRoom.equals("Study")) {
+						foyerMap = roomMap;
+						roomMap = studyMap;
+					}
+				} else if (previousRoom.equals("Courtyard")) {
+					if (currentRoom.equals("Library")) {
+						courtyardMap = roomMap;
+						roomMap = libraryMap;
+					} else if (currentRoom.equals("Foyer")) {
+						courtyardMap = roomMap;
+						roomMap = foyerMap;
+					} else if (currentRoom.equals("Courtyard")) {
+
+					} else if (currentRoom.equals("Study")) {
+						courtyardMap = roomMap;
+						roomMap = studyMap;
+					}
+				} else if (previousRoom.equals("Study")) {
+					if (currentRoom.equals("Library")) {
+						studyMap = roomMap;
+						roomMap = libraryMap;
+					} else if (currentRoom.equals("Foyer")) {
+						studyMap = roomMap;
+						roomMap = foyerMap;
+					} else if (currentRoom.equals("Courtyard")) {
+						studyMap = roomMap;
+						roomMap = courtyardMap;
+					} else if (currentRoom.equals("Study")) {
+
+					}
+				}
+				boardPanel.repaint();
+				// (currentRoom);
 			}
 
 		});
@@ -535,12 +613,24 @@ public class MapEditorGUI {
 		frame.setVisible(true);
 	}
 
-	public void exportToXML() {
-		Room roomToExport = new Room(roomSelected);
+	public void createRooms() {
+		libraryRoom = new Room("Library");
+		foyerRoom = new Room("Foyer");
+		courtyardRoom = new Room("Courtyard");
+		studyRoom = new Room("Study");
 		for (int row = 0; row < 7; row++) {
 			for (int col = 0; col < 7; col++) {
-				if (roomMap[row][col] != 0) {
-					roomToExport.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
+				if (libraryMap[row][col] != 0) {
+					libraryRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
+				}
+				if (foyerMap[row][col] != 0) {
+					foyerRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
+				}
+				if (courtyardMap[row][col] != 0) {
+					courtyardRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
+				}
+				if (studyMap[row][col] != 0) {
+					studyRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
 				}
 			}
 		}
@@ -904,6 +994,7 @@ public class MapEditorGUI {
 			return doorImage_top_south;
 		case 1104: // west facing door
 			return doorImage_top_west;
+
 		case 12:
 			return heavyBookImage_top;
 		case 13:
@@ -929,48 +1020,11 @@ public class MapEditorGUI {
 		}
 
 		public void paintComponent(Graphics g) {
-//
-////			if (selectedItem == "") {
-////				g.setColor(Color.WHITE);
-////			} else {
-////				g.setColor(Color.CYAN);
-////			}
-////			g.fillRect(0, 0, 7 * 40, 7 * 40);
-////			g.setColor(Color.GRAY);
-////
-////			for (int i = 0; i < 7; i++) {
-////				g.drawLine(i * 40, 0, i * 40, 7 * 40);
-////			}
-////
-////			for (int j = 0; j < 7; j++) {
-////				g.drawLine(0, j * 40, 7 * 40, j * 40);
-////			}
-////
-////			g.setColor(Color.BLACK);
-////			g.drawLine(0, 0, 7 * 40, 0);
-////			g.drawLine(0, 0, 0, 7 * 40);
-////			g.drawLine(7 * 40, 0, 7 * 40, 7 * 40);
-////			g.drawLine(0, 7 * 40, 7 * 40, 7 * 40);
-//
-//			map[0][0] = 'R';
-//			map[0][1] = 'R';
-//			map[0][2] = 'R';
 
 			for (BoardPanelComponent tile : boardTiles) {
 				tile.paintComponent(g);
 			}
 
-//			for (int i = 0; i < 7; i++) {
-//				for (int j = 0; j < 7; j++) {
-//					g.setColor(Color.WHITE);
-//					if (selectedItem != "" && map[i][j] == ' ') {
-//						g.setColor(Color.CYAN);
-//					}
-//					g.fillRect(j * 40, i * 40, 40, 40);
-//					g.setColor(Color.BLACK);
-//					g.drawRect(j * 40, i * 40, 40, 40);
-//				}
-//			}
 		}
 
 		class BoardPanelComponent extends JLayeredPane implements MouseListener {
@@ -1005,11 +1059,15 @@ public class MapEditorGUI {
 			public void mouseClicked(MouseEvent e) {
 
 				if (!selectedItem.equals(" ")) {
-					roomMap[x][y] = getItemAsInt(selectedItem);
-					selectedItem = " ";
-					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-					System.out.println("");
-					boardPanel.repaint();
+					if (selectedItem.equals("door")) {
+
+					} else {
+						roomMap[x][y] = getItemAsInt(selectedItem);
+						selectedItem = " ";
+						System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
+						System.out.println("");
+						boardPanel.repaint();
+					}
 				}
 
 				if (deleteMode == true) {
@@ -1024,6 +1082,74 @@ public class MapEditorGUI {
 					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
 					System.out.println("");
 					boardPanel.repaint();
+				}
+
+				if (selectedItem.equals(" ") && rotateMode == false && deleteMode == false && (roomMap[x][y] == 1101
+						|| roomMap[x][y] == 1102 || roomMap[x][y] == 1103 || roomMap[x][y] == 1104)) {
+
+					String[] doorToRoomStrings = new String[3];
+					int index = 0;
+					for (String roomName : roomStrings) {
+						if (!roomName.equals(currentRoom)) {
+							doorToRoomStrings[index++] = roomName;
+						}
+					}
+
+					JOptionPane optionPane = new JOptionPane("This door leads to:", JOptionPane.QUESTION_MESSAGE,
+							JOptionPane.DEFAULT_OPTION, null, doorToRoomStrings, null);
+
+					JDialog dialog = optionPane.createDialog(null, "Door to Room Selection");
+					dialog.setLocationRelativeTo(frame);
+					dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+					dialog.addWindowListener(new WindowAdapter() {
+						public void windowClosing(WindowEvent we) {
+							JOptionPane.showMessageDialog(dialog, "Select a room!");
+						}
+					});
+					dialog.setModal(true);
+					dialog.setVisible(true);
+
+					if (optionPane.getValue().equals("Library")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 110101;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 110101;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 110101;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 110101;
+						}
+					} else if (optionPane.getValue().equals("Foyer")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 110102;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 110102;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 110102;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 110102;
+						}
+					} else if (optionPane.getValue().equals("Courtyard")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 110103;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 110103;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 110103;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 110103;
+						}
+					} else if (optionPane.getValue().equals("Study")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 110104;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 110104;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 110104;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 110104;
+						}
+					}
 				}
 
 			}

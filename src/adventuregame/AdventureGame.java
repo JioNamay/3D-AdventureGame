@@ -1,4 +1,4 @@
-package states;
+package adventuregame;
 
 import java.awt.Color;
 import java.awt.Dimension;

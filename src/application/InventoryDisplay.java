@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import gameworld.entities.Item;
 import gameworld.entities.PickUpAbleStrategy;
-import states.AdventureGame;
+import adventuregame.AdventureGame;
 import gameworld.entities.Inventory;
 
 
