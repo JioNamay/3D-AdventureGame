@@ -66,7 +66,8 @@ public abstract class GUI extends JFrame implements KeyListener{
 
 	public GUI() {
 		setTitle("Adventure Game");
-		//addMouseListener(this);
+		addKeyListener(this);
+		setFocusable(true);		// to enable keyboard events
 		initialise();
 	}
 

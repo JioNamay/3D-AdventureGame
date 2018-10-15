@@ -11,10 +11,12 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import application.GUI;
 import application.InventoryDisplay;
 import gameworld.GameWorld;
+import gameworld.Location;
 import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Inventory;
@@ -32,6 +34,7 @@ public class AdventureGame extends GUI{
 	private GameWorld game;			// containing the game logic
 	//private Player player;			// player within the game
 	private Room currentRoom;
+	private Location.Direction dir;
 
 	// APPLICATION HANDLERS
 	private File saveFile = new File("");	// XML file to store saved game
@@ -46,8 +49,6 @@ public class AdventureGame extends GUI{
 	 * Reading the rooms from XML file, and generates a new gameworld.
 	 */
 	public AdventureGame() {
-		//displayAreas = new InventoryDisplay[10];
-
 		//player = Player.getInstance();
 		game = new GameWorld(loadFile);
 		//onStart();
@@ -195,6 +196,7 @@ public class AdventureGame extends GUI{
 	 */
 	@Override
 	protected void navigatePlayer(Direction dir) {
+		if (currentRoom == null) return;
 		currentRoom.movePlayer(dir);
 	}
 
@@ -206,18 +208,44 @@ public class AdventureGame extends GUI{
 
 	/**
 	 * Takes user input from keyboard. Stores information regarding
-	 * direction to move player, as well as actions that player can perform.
+	 * direction to move player
+	 *  as well as actions that player can perform.
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+
+		//default:	// warning message?
+
+
 
 	}
 
+	/**
+	 * Moves player in the specified direction.
+	 * Note that it only moves the player one location at a time.
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+			dir = Location.Direction.NORTH;
+			break;
+		case KeyEvent.VK_DOWN:
+			dir = Location.Direction.SOUTH;
+			break;
+		case KeyEvent.VK_LEFT:
+			dir = Location.Direction.WEST;
+			break;
+		case KeyEvent.VK_RIGHT:
+			dir = Location.Direction.EAST;
+			break;
+		default:
+			JOptionPane.showMessageDialog(this, "Not a valid direction for player");
+			return;
+		}
 
+		//System.out.println("player will be moving in direction: " + dir.toString());	// test
+		navigatePlayer(dir);
 	}
 
 	/**
