@@ -32,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import gameworld.Location;
-import renderer.Board;
 
 /**
  * Class provides the graphical display of the GameWorld.
@@ -57,7 +56,6 @@ public abstract class GUI extends JFrame{
 
 	//protected JFrame frame;
 	protected JPanel container; // global container to hold all the components in frame
-	protected Board board;
 	protected JPanel playerInfo, inventory;
 	protected JComponent drawing; // the canvas to display the rendered world
 	protected Graphics drawingArea;
@@ -214,7 +212,7 @@ public abstract class GUI extends JFrame{
 			}
 
 		});
- 
+
 		game.add(load);
 		game.add(save);
 		game.add(newGame);
@@ -226,7 +224,7 @@ public abstract class GUI extends JFrame{
 	}
 
 	/**
-	 * Allows players to move around the gameworld, one space in the 
+	 * Allows players to move around the gameworld, one space in the
 	 * chosen direction.
 	 */
 	private void setNavigationButtons() {
