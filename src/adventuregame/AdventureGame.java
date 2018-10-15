@@ -33,7 +33,7 @@ import gameworld.entities.Potion;
 
 /**
  * Handles the functionality of the game between user and game logic.
- * 
+ *
  * @author Carrie
  */
 public class AdventureGame extends GUI{
@@ -42,7 +42,7 @@ public class AdventureGame extends GUI{
 	//private Player player;			// player within the game
 	private Room currentRoom;
 	private PickUpAbleStrategy selectedItem = null;
-	
+
 	private File saveFile = new File("");	// XML file to store saved game
 	private File loadFile = new File("GameWorld.xml");	// XML filename to load game from
 
@@ -50,14 +50,14 @@ public class AdventureGame extends GUI{
 	private boolean isSaved = false; // when a new game is made, it's not saved
 	private List<InventoryDisplay> displayAreas;
 	private static InventoryDisplay selectedDisplay;
- 
+
 	/**
 	 * Instantiates a new adventure game.
 	 * Reading the rooms from XML file, and generates a new gameworld.
 	 */
 	public AdventureGame() {
 		//displayAreas = new InventoryDisplay[10];
-		
+
 		//player = Player.getInstance();
 		//game = new GameWorld(loadFile);
 		onStart();
@@ -75,7 +75,7 @@ public class AdventureGame extends GUI{
 			return;
 		}
 
-		// if is not saved, 
+		// if is not saved,
 		// ask user whether to save or not
 		// if yes, then loadfile = savefile
 		// and save current game to savefile
@@ -113,7 +113,7 @@ public class AdventureGame extends GUI{
 
 		// ask user whether to save or not
 		// if yes, then savegame
-		
+
 		// run a new game anyways
 		game = new GameWorld(loadFile);	// load new game from file
 		// isSaved = false;
@@ -127,10 +127,10 @@ public class AdventureGame extends GUI{
 	public void updateInventory() {
 		Player player = Player.getInstance();
 		displayAreas = new ArrayList<InventoryDisplay>();
-		 
+
 		//if (player.getInventory() == null)		// nothing to display
 			//return;
-		
+
 		// TEST:
 		Inventory i = new Inventory();
 		for (int index=0; index<10; index++)
@@ -149,31 +149,32 @@ public class AdventureGame extends GUI{
 				}
 			};
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-			displayAreas.add(inventoryImageComponent);	// ??
+			displayAreas.add(inventoryImageComponent);
 			inventory.add(inventoryImageComponent);
 		}
-		
+
+		System.out.println("no. of displays: " + displayAreas.size());
+
 		// selects a random item from inventory if nothing is selected
 		if (selectedDisplay == null) {
 			int rand = (int) (Math.random() * displayAreas.size());
-			setSelectedItem(displayAreas.get(rand));	// by default, the selected area is the first item
-			
+			setSelectedItem(displayAreas.get(rand));
 		}
 	}
-	
+
 	/**
 	 * Determines and highlights the selected item (only one selected at a time).
-	 * @param display 
+	 * @param display
 	 * 				the newly selected component (won't ever be null)
 	 */
-	public static void setSelectedItem(InventoryDisplay display) { 
-		selectedDisplay = display; 
+	public static void setSelectedItem(InventoryDisplay display) {
+		selectedDisplay = display;
 		selectedDisplay.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 		Player.getInstance().setSelectedItem(selectedDisplay.getItem());
 	}
-	
+
 	public static InventoryDisplay getSelectedItem() { return selectedDisplay; }
-	
+
 	/**
 	 * Renders the game world to the display area.
 	 */
@@ -187,10 +188,10 @@ public class AdventureGame extends GUI{
 		// render the room's items plus player if needed
 		// Draw.redraw(g, player.getCurrentRoom(), player);
 	}
-	
+
 	/**
 	 * Moves the player in the respective direction of the room, as indicated by the player.
-	 * First checks to see if the location is valid for the player to move into, then 
+	 * First checks to see if the location is valid for the player to move into, then
 	 * moves player into it. If the location is invalid, player doesn't move.
 	 */
 	@Override
