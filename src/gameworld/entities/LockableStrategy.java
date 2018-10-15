@@ -17,12 +17,6 @@ public abstract class LockableStrategy extends CoinBank {
 
 	/** The is locked. */
 	protected boolean isOpen, isLocked;
-	
-	/** The description. */
-	protected String description;
-	
-	/** The name. */
-	protected String name;
  
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Strategy#getActions()
