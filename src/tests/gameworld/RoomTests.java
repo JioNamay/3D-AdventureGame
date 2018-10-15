@@ -21,6 +21,7 @@ import gameworld.entities.Wall;
 class RoomTests {
 	Room courtyard;
 	Room foyer;
+	Room eastRoom;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -29,8 +30,9 @@ class RoomTests {
 		foyer = new Room("Test");
 		foyer.setName("Foyer");
 		assertEquals(foyer.getName(), "Foyer", "Expected name foyer but was not");
+		eastRoom = new Room("East");
 		
-		// set up door
+		// set up door between courtyard and foyer
 		Door door = new Door();
 		door.setFirstRoom(courtyard);
 		door.setSecondRoom(foyer);
@@ -40,14 +42,26 @@ class RoomTests {
 		// add door to both rooms
 		courtyard.addGameItem(0, 3, item);
 		foyer.addGameItem(6, 3, item);
+		
+		// set up door between courtyard and eastRoom
+		Door eastDoor = new Door();
+		eastDoor.setFirstRoom(courtyard);
+		eastDoor.setSecondRoom(eastRoom);
+		eastDoor.setFirstRoomDirection(Direction.WEST);
+		eastDoor.setSecondRoomDirection(Direction.EAST);
+		Item eastItem = new Item(eastDoor);
+		// add door to both rooms
+		courtyard.addGameItem(3, 6, eastItem);
+		eastRoom.addGameItem(3, 0, eastItem);
 
 		// add gameItems to courtyard
 		addWalls(courtyard);
 		addWalls(foyer);
+		//addWalls(eastRoom);
 		courtyard.addGameItem(3, 3, new Item(new Potion()));
 		foyer.addGameItem(3, 3, new Item(new Note()));
 		Player.getInstance().setLocation(courtyard.getLocation(5, 3));
-		Player.getInstance().setCurrentRoom(courtyard);
+		Player.getInstance().setCurrentRoom(courtyard); 
 
 	}
 
@@ -77,7 +91,12 @@ class RoomTests {
 		room.movePlayer(Direction.WEST);
 		assertTrue(Player.getInstance().getLocation().equals(room.getLocation(5, 2)));
 		room.movePlayer(Direction.WEST);
-		assertFalse(room.movePlayer(Direction.WEST)); // cant go past wall on left
+		assertFalse(room.movePlayer(Direction.WEST)); // cant go past wall on left 
+		Player.getInstance().setLocation(room.getLocation(4, 5)); // move next to east wall
+		assertFalse(room.movePlayer(Direction.EAST));
+		Player.getInstance().setLocation(room.getLocation(1, 5));
+		assertFalse(room.movePlayer(Direction.NORTH));
+		assertTrue(room.movePlayer(Direction.SOUTH));
 		
 	}
 
@@ -94,7 +113,7 @@ class RoomTests {
 	}
 
 	@Test
-	void testPlayerCanMoveRooms() {
+	void testPlayerCanMoveRoomsNorthSouth() {
 		// set player's location to be one off the door
 		Room currentRoom = Player.getInstance().getCurrentRoom();
 		Location nearDoor = currentRoom.getLocation(1, 3);
@@ -108,11 +127,55 @@ class RoomTests {
 		currentRoom.movePlayer(Direction.NORTH); // move to door location
 		assertFalse(currentRoom.movePlayer(Direction.NORTH)); // should be false because door is still closed
 		door.performAction(Action.OPEN);
+		
+		// move to room north
 		assertTrue(currentRoom.movePlayer(Direction.NORTH)); // move rooms
 		assertEquals(Player.getInstance().getCurrentRoom(), foyer, "Player expected to have moved rooms but did not");
+		assertTrue(Player.getInstance().getLocation().equals(foyer.getLocation(6, 3)));
 		assertFalse(courtyard.hasPlayer());
-		assertTrue(foyer.hasPlayer());
+		assertTrue(foyer.hasPlayer()); 
+		
+		// move to room south
+		assertTrue(Player.getInstance().getLocation().isDoor());
+		assertTrue(foyer.movePlayer(Direction.SOUTH)); // move rooms
+		assertEquals(Player.getInstance().getCurrentRoom(), courtyard, "Player expected to have moved rooms but did not");
+		assertTrue(Player.getInstance().getLocation().equals(courtyard.getLocation(0, 3)));
+		assertTrue(courtyard.hasPlayer());
+		assertFalse(foyer.hasPlayer()); 
+		
 	}
+	
+	@Test
+	void testPlayerMoveRoomEastWest() {
+		Room currentRoom = Player.getInstance().getCurrentRoom();
+		Player.getInstance().getInventory().add(new Key());
+		// move to door
+		currentRoom.movePlayer(Direction.EAST);
+		currentRoom.movePlayer(Direction.EAST);
+		currentRoom.movePlayer(Direction.NORTH);
+		currentRoom.movePlayer(Direction.NORTH);
+		currentRoom.movePlayer(Direction.EAST);
+		// make sure player cant get through locked door
+		assertFalse(currentRoom.movePlayer(Direction.EAST));
+		Door door = (Door)currentRoom.getGameItems().get(Player.getInstance().getLocation()).getItem();
+		door.performAction(Action.UNLOCK);
+		assertFalse(currentRoom.movePlayer(Direction.EAST)); // still closed
+		door.performAction(Action.OPEN);
+		// move to room east
+		assertTrue(currentRoom.movePlayer(Direction.EAST)); // move rooms
+		assertEquals(Player.getInstance().getCurrentRoom(), eastRoom, "Player expected to have moved rooms but did not");
+		assertTrue(Player.getInstance().getLocation().equals(eastRoom.getLocation(3, 0)));
+		assertTrue(eastRoom.hasPlayer());
+		assertFalse(courtyard.hasPlayer()); 
+		
+		//move to room west
+		assertTrue(eastRoom.movePlayer(Direction.WEST)); // move rooms
+		assertEquals(Player.getInstance().getCurrentRoom(), courtyard, "Player expected to have moved rooms but did not");
+		assertTrue(Player.getInstance().getLocation().equals(courtyard.getLocation(3, 6)));
+		assertTrue(courtyard.hasPlayer());
+		assertFalse(eastRoom.hasPlayer()); 
+}
+
 
 	@Test
 	void testPlayerDropItem() {
@@ -161,10 +224,4 @@ class RoomTests {
 		assertTrue(courtyard.getGameItemLocation(new Item(potion)).equals(courtyard.getLocation(2, 2)));
 		assertTrue(courtyard.getGameItemLocation(new Item(new Potion())) == null);
 	}
-
-	@Test
-	void testPlayerMoveRoomEast() {
-
-	}
-
 }
