@@ -157,16 +157,19 @@ public class AdventureGame extends GUI{
 		if (selectedDisplay == null) {
 			int rand = (int) (Math.random() * displayAreas.size());
 			setSelectedItem(displayAreas.get(rand));	// by default, the selected area is the first item
-			player.setSelectedItem(selectedDisplay.getItem());
+			
 		}
 	}
 	
 	/**
 	 * Determines and highlights the selected item (only one selected at a time).
+	 * @param display 
+	 * 				the newly selected component (won't ever be null)
 	 */
 	public static void setSelectedItem(InventoryDisplay display) { 
 		selectedDisplay = display; 
 		selectedDisplay.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		Player.getInstance().setSelectedItem(selectedDisplay.getItem());
 	}
 	
 	public static InventoryDisplay getSelectedItem() { return selectedDisplay; }
