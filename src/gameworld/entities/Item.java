@@ -26,7 +26,8 @@ public class Item {
 		EQUIP, 
 		UNEQUIP, 
 		ATTACK, 
-		READ
+		READ, 
+		THROWCOINS
 	}
 
 	/** The item. */
