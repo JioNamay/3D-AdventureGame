@@ -101,4 +101,32 @@ public abstract class LockableStrategy extends CoinBank {
 		return "You closed a " + this.name;
 	}
 
+	/**
+	 * @return the isOpen
+	 */
+	public boolean isOpen() {
+		return isOpen;
+	}
+
+	/**
+	 * @param isOpen the isOpen to set
+	 */
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	/**
+	 * @return the isLocked
+	 */
+	public boolean isLocked() {
+		return isLocked;
+	}
+
+	/**
+	 * @param isLocked the isLocked to set
+	 */
+	public void setLocked(boolean isLocked) {
+		this.isLocked = isLocked;
+	}
+
 }
