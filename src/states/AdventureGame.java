@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -47,10 +48,8 @@ public class AdventureGame extends GUI{
 
 	// APPLICATION HANDLERS
 	private boolean isSaved = false; // when a new game is made, it's not saved
-	// holds an array of jcomponents in which inventory items are displayed
-	//private InventoryDisplay displayAreas[] = new InventoryDisplay[10];
 	private List<InventoryDisplay> displayAreas;
-	// private List<JPanel> displayAreas;
+	private static InventoryDisplay selectedDisplay;
  
 	/**
 	 * Instantiates a new adventure game.
@@ -126,9 +125,11 @@ public class AdventureGame extends GUI{
 	 */
 	@Override
 	public void updateInventory() {
-	//public void updateInventory(MouseEvent e) {
 		Player player = Player.getInstance();
 		displayAreas = new ArrayList<InventoryDisplay>();
+		 
+		//if (player.getInventory() == null)		// nothing to display
+			//return;
 		
 		// TEST:
 		Inventory i = new Inventory();
@@ -142,32 +143,34 @@ public class AdventureGame extends GUI{
 				// Repaints the component to display the image of the item.
 				@Override
 				public void paintComponent(Graphics g) {
-					drawingArea = g;
 					// draw images of the items
 					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
 					g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH-2, InventoryDisplay.IMAGE_HEIGHT-2, null);
-					
 				}
 			};
-			inventoryImageComponent.setGraphics(drawingArea);
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-			displayAreas.add(inventoryImageComponent);
+			displayAreas.add(inventoryImageComponent);	// ??
 			inventory.add(inventoryImageComponent);
-			//System.out.println(item.getDescription());
 		}
 		
-		
-		System.out.println("no. of drawing areas: " + displayAreas.size());
-		//checkSelected();
+		// selects a random item from inventory if nothing is selected
+		if (selectedDisplay == null) {
+			int rand = (int) (Math.random() * displayAreas.size());
+			setSelectedItem(displayAreas.get(rand));	// by default, the selected area is the first item
+			player.setSelectedItem(selectedDisplay.getItem());
+		}
 	}
 	
-	public void checkSelected() {
-		for (InventoryDisplay display: displayAreas) {
-			if (display.isSelected())
-				display.highlight();
-		}
+	/**
+	 * Determines and highlights the selected item (only one selected at a time).
+	 */
+	public static void setSelectedItem(InventoryDisplay display) { 
+		selectedDisplay = display; 
+		selectedDisplay.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 	}
-
+	
+	public static InventoryDisplay getSelectedItem() { return selectedDisplay; }
+	
 	/**
 	 * Renders the game world to the display area.
 	 */
@@ -192,52 +195,10 @@ public class AdventureGame extends GUI{
 		currentRoom.movePlayer(dir);
 	}
 
-	/*@Override
-	public void mouseClicked(MouseEvent e) {
-		//if (displayAreas.isEmpty())
-		//	return;
-		System.out.println("mouse clicked: x = " + e.getX() + ", y = " + e.getY());
-		
-		for (InventoryDisplay display: displayAreas) {
-		//for (JPanel display: displayAreas) {
-			if (display.contains(e.getX(), e.getY()))
-				//display.setBackground(Color.GREEN);
-				//display.highlight();
-				System.out.println("inventory item: " + display.getItem().getDescription());
-		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}*/
-
 	/**
 	 * Main method to run the AdventureGame.
 	 */
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
-
-	
-
 }

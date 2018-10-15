@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import gameworld.entities.Item;
 import gameworld.entities.PickUpAbleStrategy;
+import states.AdventureGame;
 import gameworld.entities.Inventory;
 
 
@@ -30,7 +31,6 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 
 	private PickUpAbleStrategy item;
 	private boolean isSelected;
-	private Graphics canvas;
 
 	/**
 	 * An instance of this JComponent needs to know what item it represents.
@@ -46,27 +46,26 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 	public boolean isSelected() { return isSelected; }
 	public PickUpAbleStrategy getItem() { return item; }
 	
-	public void setGraphics(Graphics g) { canvas = g; }
-	
-	/**
-	 * Highlights the selected inventory item.
-	 */
-	public void highlight() {
-		if (canvas == null)
-			return;
-		
-		canvas.drawRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-	}
+	public void setSelected(boolean isSelected) { this.isSelected = isSelected; }
 
 	/**
-	 * Determines whether a mouse click is on this JComponent.
-	 * The x and y coordinates of the mouse are 5 less, because the image is drawn 
-	 * 5 less than the actual size of the display area.
+	 * Highlights the selected component when user clicks.
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("item selected: " + item.getDescription());
-		setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		/*System.out.println("item selected: " + item.getDescription());
+		//setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		if (AdventureGame.getSelectedItem() == null) {
+			isSelected = true;
+			AdventureGame.setSelectedItem(this);
+		}
+		else {	// de-select previous item, and set selected item to be this component
+			
+		}*/
+		
+		AdventureGame.getSelectedItem().setSelected(false);
+		AdventureGame.getSelectedItem().setBorder(BorderFactory.createEmptyBorder());
+		AdventureGame.setSelectedItem(this);
 		isSelected = true;
 	}
 	
