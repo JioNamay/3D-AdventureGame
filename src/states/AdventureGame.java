@@ -6,9 +6,12 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -33,21 +36,30 @@ import gameworld.entities.Potion;
  * @author Carrie
  */
 public class AdventureGame extends GUI{
+	// GAME HANDLERS
 	private GameWorld game;			// containing the game logic
-	private Player player;			// player within the game
+	//private Player player;			// player within the game
 	private Room currentRoom;
 	private PickUpAbleStrategy selectedItem = null;
 	
 	private File saveFile = new File("");	// XML file to store saved game
 	private File loadFile = new File("GameWorld.xml");	// XML filename to load game from
 
+	// APPLICATION HANDLERS
 	private boolean isSaved = false; // when a new game is made, it's not saved
+	// holds an array of jcomponents in which inventory items are displayed
+	//private InventoryDisplay displayAreas[] = new InventoryDisplay[10];
+	private List<InventoryDisplay> displayAreas;
+	// private List<JPanel> displayAreas;
  
 	/**
 	 * Instantiates a new adventure game.
 	 * Reading the rooms from XML file, and generates a new gameworld.
 	 */
 	public AdventureGame() {
+		//displayAreas = new InventoryDisplay[10];
+		
+		//player = Player.getInstance();
 		//game = new GameWorld(loadFile);
 		onStart();
 	}
@@ -97,7 +109,6 @@ public class AdventureGame extends GUI{
 	protected void onStart() {
 		if (game == null) {	// no game yet, so nothing to save
 			game = new GameWorld(loadFile);
-			player = Player.getInstance();
 			return;
 		}
 
@@ -106,7 +117,6 @@ public class AdventureGame extends GUI{
 		
 		// run a new game anyways
 		game = new GameWorld(loadFile);	// load new game from file
-		player = Player.getInstance();
 		// isSaved = false;
 		//redraw(drawingArea);
 	}
@@ -116,7 +126,11 @@ public class AdventureGame extends GUI{
 	 */
 	@Override
 	public void updateInventory() {
+	//public void updateInventory(MouseEvent e) {
 		Player player = Player.getInstance();
+		displayAreas = new ArrayList<InventoryDisplay>();
+		//displayAreas = new ArrayList<JPanel>();
+
 
 		// go through player's inventory
 		// make an Inventory display
@@ -129,42 +143,33 @@ public class AdventureGame extends GUI{
 		player.setInventory(i);
 
 		for (PickUpAbleStrategy item: player.getInventory()) {
+			JPanel holder = new JPanel();
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
 				// Repaints the component to display the image of the item.
 				@Override
 				public void paintComponent(Graphics g) {
 					// draw images of the items
 					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
-					g.drawImage(img, 0, 0, InventoryDisplay.IMAGE_WIDTH-5, InventoryDisplay.IMAGE_HEIGHT-5, null);
+					g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH-2, InventoryDisplay.IMAGE_HEIGHT-2, null);
 					
 				}
 			};
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
+			displayAreas.add(inventoryImageComponent);
+			//holder.add(inventoryImageComponent);		// storing jcomponent in jpanel
+			//displayAreas.add(holder);
 			
-			// highlight selected area and passes the selected item on to the player
-			if (inventoryImageComponent.isSelected()) {
-				JComponent highlight = new JComponent() {
-					// highlights the selected item in inventory
-					@Override
-					public void paintComponent(Graphics g) {
-						// draw images of the items
-						g.setColor(Color.GREEN);
-						g.drawRect(0, 0, InventoryDisplay.IMAGE_WIDTH-5, InventoryDisplay.IMAGE_HEIGHT-5);
-						selectedItem = inventoryImageComponent.getItem();
-						player.setSelectedItem(selectedItem);
-					}
-				};
-				highlight.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH-5, InventoryDisplay.IMAGE_HEIGHT-5));
-				highlight.setVisible(true);
-				inventory.add(highlight);
-			}	
-			
-			System.out.println("inventory item selected: " + inventoryImageComponent.isSelected());
 			inventory.add(inventoryImageComponent);
+			//inventory.add(holder);
 
 			System.out.println(item.getDescription());
 		}
+		
+		System.out.println("no. of drawing areas: " + displayAreas.size());
+		
 	}
+	
+
 
 	/**
 	 * Renders the game world to the display area.
@@ -190,6 +195,44 @@ public class AdventureGame extends GUI{
 		currentRoom.movePlayer(dir);
 	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		/*if (displayAreas.isEmpty())
+			return;*/
+		System.out.println("mouse clicked: x = " + e.getX() + ", y = " + e.getY());
+		
+		for (InventoryDisplay display: displayAreas) {
+		//for (JPanel display: displayAreas) {
+			if (display.contains(e.getX(), e.getY()))
+				//display.setBackground(Color.GREEN);
+				//display.highlight();
+				System.out.println("inventory item: " + display.getItem().getDescription());
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * Main method to run the AdventureGame.
@@ -197,4 +240,7 @@ public class AdventureGame extends GUI{
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
+
+	
+
 }
