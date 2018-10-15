@@ -15,7 +15,7 @@ import gameworld.entities.*;
  * 
  * @author Deanne Alabastro 300346210
  */
-@XmlRootElement(name = "Room")
+ 
 public class Room {
 
 	/** The Constant SIZE of the room. */
