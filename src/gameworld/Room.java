@@ -222,13 +222,13 @@ public class Room {
 		int playerLocCol = Player.getInstance().getLocation().getCol();
 		switch (dir) {
 		case NORTH:
-			if (locations[playerLocRow + 1][playerLocCol].isSolid()) // check if player can move into loc
+			if (locations[playerLocRow - 1][playerLocCol].isSolid()) // check if player can move into loc
 				return false;
 			else if (locations[playerLocRow][playerLocCol].isDoor())
-				return movePlayerToConnectingRoom(Direction.EAST);
+				return movePlayerToConnectingRoom(Direction.NORTH);
 
 			// move normally
-			Player.getInstance().setLocation(locations[playerLocRow + 1][playerLocCol]);
+			Player.getInstance().setLocation(locations[playerLocRow - 1][playerLocCol]);
 			return true;
 		case EAST:
 			if (locations[playerLocRow][playerLocCol + 1].isSolid())
@@ -239,12 +239,12 @@ public class Room {
 			Player.getInstance().setLocation(locations[playerLocRow][playerLocCol + 1]);
 			return true;
 		case SOUTH:
-			if (locations[playerLocRow - 1][playerLocCol].isSolid())
+			if (locations[playerLocRow + 1][playerLocCol].isSolid())
 				return false;
 			else if (locations[playerLocRow][playerLocCol].isDoor())
 				return movePlayerToConnectingRoom(Direction.SOUTH);
 
-			Player.getInstance().setLocation(locations[playerLocRow - 1][playerLocCol]);
+			Player.getInstance().setLocation(locations[playerLocRow + 1][playerLocCol]);
 			return true;
 		case WEST:
 			if (locations[playerLocRow][playerLocCol - 1].isSolid())
@@ -252,7 +252,7 @@ public class Room {
 			else if (locations[playerLocRow][playerLocCol].isDoor())
 				return movePlayerToConnectingRoom(Direction.WEST);
 
-			Player.getInstance().setLocation(locations[playerLocRow - 1][playerLocCol]);
+			Player.getInstance().setLocation(locations[playerLocRow][playerLocCol - 1]);
 			return true;
 		default:
 			throw new IllegalArgumentException("Direction: " + dir.toString() + " not recognised");

@@ -40,6 +40,7 @@ class RoomTests {
 		courtyard.addGameItem(3, 3, new Item(new Potion()));
 		foyer.addGameItem(3, 3, new Item(new Note()));
 		Player.getInstance().setLocation(courtyard.getLocation(5, 3));
+		Player.getInstance().setCurrentRoom(courtyard);
 		
 	}
 	
@@ -58,8 +59,8 @@ class RoomTests {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testMoveValid1() {
+		assertTrue(Player.getInstance().getCurrentRoom().movePlayer(Direction.NORTH));
 	}
 
 }
