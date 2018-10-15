@@ -19,14 +19,15 @@ import gameworld.entities.Inventory;
  *
  * @author Carrie
  */
-//public class InventoryDisplay extends JComponent implements MouseListener {
-public class InventoryDisplay extends JComponent {
+public class InventoryDisplay extends JComponent implements MouseListener {
+//public class InventoryDisplay extends JComponent {
 	// the width and height of an individual area within the inventory panel
 	public static final int IMAGE_WIDTH = 410/5;
 	public static final int IMAGE_HEIGHT = 110/2;
 
 	private PickUpAbleStrategy item;
 	private boolean isSelected;
+	private Graphics canvas;
 
 	/**
 	 * An instance of this JComponent needs to know what item it represents.
@@ -34,6 +35,7 @@ public class InventoryDisplay extends JComponent {
 	 */
 	public InventoryDisplay(PickUpAbleStrategy item) {
 		this.item = item;
+		addMouseListener(this);
 	}
 	
 	// GETTERS
@@ -41,11 +43,16 @@ public class InventoryDisplay extends JComponent {
 	public boolean isSelected() { return isSelected; }
 	public PickUpAbleStrategy getItem() { return item; }
 	
+	public void setGraphics(Graphics g) { canvas = g; }
+	
 	/**
 	 * Highlights the selected inventory item.
 	 */
 	public void highlight() {
-		setBackground(Color.GREEN);
+		if (canvas == null)
+			return;
+		
+		canvas.drawRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
 	}
 
 	/**
@@ -53,13 +60,11 @@ public class InventoryDisplay extends JComponent {
 	 * The x and y coordinates of the mouse are 5 less, because the image is drawn 
 	 * 5 less than the actual size of the display area.
 	 */
-	/*@Override
+	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("mouse click before x and y");
-		int x = e.getX();
-		int y = e.getY();
-		System.out.println("mouse x: " + x + ", mouse y: " + y);
-		isSelected = this.contains(x, y);
+		System.out.println("item selected: " + item.getDescription());
+		
+		isSelected = true;
 	}
 	
 	
@@ -86,5 +91,5 @@ public class InventoryDisplay extends JComponent {
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 
-	}*/
+	}
 }

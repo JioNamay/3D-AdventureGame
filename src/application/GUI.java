@@ -39,7 +39,8 @@ import renderer.Board;
  *
  * @author Carrie 300368805
  */
-public abstract class GUI extends JFrame implements MouseListener{
+//public abstract class GUI extends JFrame implements MouseListener{
+public abstract class GUI extends JFrame{
 
 	// ************** ABSTRACT METHODS ****************** //
 	protected abstract void redraw(Graphics g); // T RECONSIDER
@@ -65,7 +66,7 @@ public abstract class GUI extends JFrame implements MouseListener{
 
 	public GUI() {
 		setTitle("Adventure Game");
-		addMouseListener(this);
+		//addMouseListener(this);
 		initialise();
 	}
 

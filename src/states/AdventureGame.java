@@ -129,47 +129,44 @@ public class AdventureGame extends GUI{
 	//public void updateInventory(MouseEvent e) {
 		Player player = Player.getInstance();
 		displayAreas = new ArrayList<InventoryDisplay>();
-		//displayAreas = new ArrayList<JPanel>();
-
-
-		// go through player's inventory
-		// make an Inventory display
-		// add to inventory
-
+		
 		// TEST:
 		Inventory i = new Inventory();
 		for (int index=0; index<10; index++)
 			i.add(new Potion());
 		player.setInventory(i);
 
+		// draws every item in player's inventory
 		for (PickUpAbleStrategy item: player.getInventory()) {
-			JPanel holder = new JPanel();
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
 				// Repaints the component to display the image of the item.
 				@Override
 				public void paintComponent(Graphics g) {
+					drawingArea = g;
 					// draw images of the items
 					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
 					g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH-2, InventoryDisplay.IMAGE_HEIGHT-2, null);
 					
 				}
 			};
+			inventoryImageComponent.setGraphics(drawingArea);
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
 			displayAreas.add(inventoryImageComponent);
-			//holder.add(inventoryImageComponent);		// storing jcomponent in jpanel
-			//displayAreas.add(holder);
-			
 			inventory.add(inventoryImageComponent);
-			//inventory.add(holder);
-
-			System.out.println(item.getDescription());
+			//System.out.println(item.getDescription());
 		}
 		
-		System.out.println("no. of drawing areas: " + displayAreas.size());
 		
+		System.out.println("no. of drawing areas: " + displayAreas.size());
+		//checkSelected();
 	}
 	
-
+	public void checkSelected() {
+		for (InventoryDisplay display: displayAreas) {
+			if (display.isSelected())
+				display.highlight();
+		}
+	}
 
 	/**
 	 * Renders the game world to the display area.
@@ -195,10 +192,10 @@ public class AdventureGame extends GUI{
 		currentRoom.movePlayer(dir);
 	}
 
-	@Override
+	/*@Override
 	public void mouseClicked(MouseEvent e) {
-		/*if (displayAreas.isEmpty())
-			return;*/
+		//if (displayAreas.isEmpty())
+		//	return;
 		System.out.println("mouse clicked: x = " + e.getX() + ", y = " + e.getY());
 		
 		for (InventoryDisplay display: displayAreas) {
@@ -232,7 +229,7 @@ public class AdventureGame extends GUI{
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
-	}
+	}*/
 
 	/**
 	 * Main method to run the AdventureGame.
