@@ -2,6 +2,7 @@ package gameworld.entities;
 
 import gameworld.Location;
 import gameworld.Room;
+import gameworld.Location.Direction;
 
 /**
  * The player class. There can only be one instance of the player.
@@ -27,6 +28,9 @@ public class Player extends AttackingEntity {
 	/** The coins. */
 	private int coins = 0;
 
+	/** The direction. */
+	private Direction direction;
+
 	// ********** SINGLETON PATTERN ********** //
 	/** The only instance of player. */
 	private static Player instance = new Player();
@@ -37,6 +41,8 @@ public class Player extends AttackingEntity {
 	private Player() {
 		this.health = 100;
 		this.maxDamage = 5;
+		inventory = new Inventory();
+		direction = Direction.NORTH;
 	}
 
 	/**
@@ -46,6 +52,35 @@ public class Player extends AttackingEntity {
 	 */
 	public static Player getInstance() {
 		return instance;
+	}
+	
+	/**
+	 * Resets the players fields.
+	 */
+	public void resetPlayer() {
+		this.health = 100;
+		this.maxDamage = 5;
+		inventory = new Inventory();
+		coins = 0;
+		equippedWeapon = null;
+		selectedItem = null;
+		currentRoom = null;
+		location = null;
+		direction = Direction.NORTH;
+	}
+
+	/**
+	 * @return the direction
+	 */
+	public Direction getDirection() {
+		return direction;
+	}
+
+	/**
+	 * @param direction the direction to set
+	 */
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	/**

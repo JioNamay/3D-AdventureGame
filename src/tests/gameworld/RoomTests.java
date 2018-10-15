@@ -9,7 +9,10 @@ import gameworld.Room;
 import gameworld.Location.Direction;
 import gameworld.entities.Door;
 import gameworld.entities.Item;
+import gameworld.entities.Note;
 import gameworld.entities.Player;
+import gameworld.entities.Potion;
+import gameworld.entities.Wall;
 
 class RoomTests {
 	Room courtyard;
@@ -30,13 +33,34 @@ class RoomTests {
 		// add door to both rooms
 		courtyard.addGameItem(0,3, item);
 		foyer.addGameItem(6, 3, item);
-		Player.getInstance().setLocation(courtyard.getLocation(5, 3));
 		
+		// add gameItems to courtyard
+		addWalls(0,3,courtyard);
+		addWalls(6,3,foyer);
+		courtyard.addGameItem(3, 3, new Item(new Potion()));
+		foyer.addGameItem(3, 3, new Item(new Note()));
+		Player.getInstance().setLocation(courtyard.getLocation(5, 3));
+		Player.getInstance().setCurrentRoom(courtyard);
+		
+	}
+	
+	private void addWalls(int row, int col, Room room) {
+		for (int i = 0; i < 7; i++) {
+	        for (int j = 0; j < 7; j++) {
+	        	if((i == 0 || i == 6) || (j == 0 || j == 6)) {
+	        		if(i == row && j ==col) 
+	        			continue; // skip as this is a door
+	        		
+	        		room.addGameItem(i, j, new Item(new Wall()));
+	        	}
+	        	
+	        }
+	    }
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testMoveValid1() {
+		assertTrue(Player.getInstance().getCurrentRoom().movePlayer(Direction.NORTH));
 	}
 
 }

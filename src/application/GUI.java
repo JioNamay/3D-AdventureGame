@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
@@ -38,7 +39,8 @@ import renderer.Board;
  *
  * @author Carrie 300368805
  */
-public abstract class GUI{
+//public abstract class GUI extends JFrame implements MouseListener{
+public abstract class GUI extends JFrame{
 
 	// ************** ABSTRACT METHODS ****************** //
 	protected abstract void redraw(Graphics g); // T RECONSIDER
@@ -46,13 +48,14 @@ public abstract class GUI{
 	protected abstract void saveGame();
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
 	protected abstract void updateInventory();	// redraws the inventory
+	//protected abstract void updateInventory(MouseEvent e);	// redraws the inventory
 	protected abstract void navigatePlayer(Location.Direction dir);
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
-	protected JFrame frame;
+	//protected JFrame frame;
 	protected JPanel container; // global container to hold all the components in frame
 	protected Board board;
 	protected JPanel playerInfo, inventory;
@@ -62,6 +65,8 @@ public abstract class GUI{
 	protected JTextArea something;
 
 	public GUI() {
+		setTitle("Adventure Game");
+		//addMouseListener(this);
 		initialise();
 	}
 
@@ -70,8 +75,8 @@ public abstract class GUI{
 	 * items player is holding, and the various actions the player can perform.
 	 */
 	public void initialise() {
-		frame = new JFrame("Adventure Game");
-		frame.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
+		//frame = new JFrame("Adventure Game");
+		this.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
 
 		// container hold items that flow from top to bottom
 		container = new JPanel();
@@ -137,7 +142,7 @@ public abstract class GUI{
 
 		inventory = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
 		inventory.setPreferredSize(new Dimension(410, 110));
-		updateInventory();	// displays inventory to jpanel
+		updateInventory();
 		//inventory.setVisible(true);
 		playerInfo.add(inventory);
 
@@ -146,10 +151,10 @@ public abstract class GUI{
 		setActionButtons();	// buttons for actions
 
 		// add everything to the frame
-		frame.add(container);
-		frame.pack();
+		this.add(container);
+		this.pack();
 		// TODO: resize frame here??
-		frame.setVisible(true);
+		this.setVisible(true);
 	}
 
 	/**
@@ -166,7 +171,7 @@ public abstract class GUI{
 		help.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				String str = "GAME INFO HERE"; // <-- CHANGE THIS LATER
-				JOptionPane.showMessageDialog(frame, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(container, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
@@ -174,7 +179,7 @@ public abstract class GUI{
 		JMenu quit = new JMenu("Quit");
 		quit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int ans = JOptionPane.showConfirmDialog(frame, "Are you sure you want to leave?");
+				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
 				if (ans == JOptionPane.YES_OPTION)
 					System.exit(0);
 			}
@@ -217,7 +222,7 @@ public abstract class GUI{
 		mb.add(help);
 		mb.add(game);
 		mb.add(quit);
-		frame.setJMenuBar(mb);
+		setJMenuBar(mb);
 	}
 
 	/**
