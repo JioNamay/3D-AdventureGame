@@ -4,21 +4,17 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.MouseWheelEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -29,15 +25,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import adventuregame.AdventureGame;
 import gameworld.Location;
-
 import gameworld.Room;
-
-import gameworld.entities.PickUpAbleStrategy;
-
+import gameworld.entities.HeavyBook;
+import gameworld.entities.Key;
 import gameworld.entities.Player;
 import gameworld.entities.Potion;
+import gameworld.entities.Stick;
 
 /**
  * Class provides the graphical display of the GameWorld.
@@ -149,13 +143,13 @@ public abstract class GUI extends JFrame implements KeyListener {
 		drawing.addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent e) {
 				doDrag(e);
-			} 
+			}
 		});
 
 		drawing.addMouseWheelListener(new MouseAdapter() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				doScroll(e);
-			} 
+			}
 		});
 
 		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));

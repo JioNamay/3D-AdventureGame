@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 
 import application.GUI;
 import gameworld.Location;
+import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Bookshelf;
 import gameworld.entities.Cactus;
@@ -477,8 +478,11 @@ public class Renderer {
 	 * @return the location
 	 */
 	public Location doRelease(MouseEvent e) {
+		if (e.getButton() == 2) {
+			this.hideWalls = !hideWalls;
+		}
+
 		this.mouseDown = false;
-		this.hideWalls = false;
 
 		if (e.getButton() == 1) {
 			return getClickedLocation(e);
@@ -496,10 +500,6 @@ public class Renderer {
 	 *            the mouse event
 	 */
 	public void doPress(MouseEvent e) {
-		if (e.getButton() == 2) {
-			this.hideWalls = true;
-		}
-
 		this.mouseDown = true;
 		this.mouseLocation = e.getPoint();
 	}

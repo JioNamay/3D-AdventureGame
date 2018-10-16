@@ -10,10 +10,10 @@ import gameworld.entities.*;
 /**
  * The room handles all the object within it such as removing, adding, and
  * moving them.
- * 
+ *
  * @author Deanne Alabastro 300346210
  */
- 
+
 public class Room {
 
   /** The Constant SIZE of the room. */
@@ -222,6 +222,9 @@ public class Room {
   public boolean movePlayer(Direction dir) {
     int playerLocRow = Player.getInstance().getLocation().getRow();
     int playerLocCol = Player.getInstance().getLocation().getCol();
+
+    Player.getInstance().setDirection(dir);
+
     switch (dir) {
     case NORTH:
       // check if player can move into loc

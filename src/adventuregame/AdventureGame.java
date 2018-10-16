@@ -7,10 +7,13 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -115,22 +118,23 @@ public class AdventureGame extends GUI {
 		// if yes, then savegame
 
 		// run a new game anyways
-		game = new GameWorld(loadFile);	// load new game from file
-		//player.resetPlayer();	// resets the player
+		game = new GameWorld(loadFile); // load new game from file
+		// player.resetPlayer(); // resets the player
 		// isSaved = false;
 		// redraw(drawingArea);
 	}
 
 	/**
 	 * Asks user whether to save the current game or not
+	 *
 	 * @return user's response
 	 */
 	protected String askSave() {
 		if (isSaved)
 			return "";
 
-		int ans = JOptionPane.showConfirmDialog(container, "Would you like to save your game before you leave?",
-				null, JOptionPane.YES_NO_OPTION);
+		int ans = JOptionPane.showConfirmDialog(container, "Would you like to save your game before you leave?", null,
+				JOptionPane.YES_NO_OPTION);
 		if (ans == JOptionPane.YES_OPTION)
 			return "YES";
 
@@ -141,11 +145,11 @@ public class AdventureGame extends GUI {
 	 * Draws the items in player's inventory.
 	 */
 	public void updateInventory() {
-		//Player player = Player.getInstance();
+		// Player player = Player.getInstance();
 
 		displayAreas = new ArrayList<InventoryDisplay>();
-		//inventoryContainer.removeAll();
-		//System.out.println("inventory full: " + i.isFull());
+		// inventoryContainer.removeAll();
+		// System.out.println("inventory full: " + i.isFull());
 
 		// draws every item in player's inventory
 		for (PickUpAbleStrategy item : player.getInventory()) {
@@ -154,15 +158,41 @@ public class AdventureGame extends GUI {
 				@Override
 				public void paintComponent(Graphics g) {
 					// draw images of the items
-					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
-					g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+					// Image img = new
+					// ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
+
+					String url = "src/renderer/data/";
+
+					String name = item.getName().toLowerCase();
+
+					if (name.equals("potion") || name.equals("rock") || name.equals("tree") || name.equals("wall")) {
+						url += "else/";
+					} else {
+						url += "south/";
+					}
+
+					url += name;
+					url += ".png";
+
+					//Image img = new ImageIcon(url).getImage();
+					BufferedImage image = null;
+					try {
+						image = ImageIO.read(new File(url));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+					Image scaledImage = image.getScaledInstance((int) InventoryDisplay.IMAGE_WIDTH - 2, (int) InventoryDisplay.IMAGE_HEIGHT - 2, Image.SCALE_SMOOTH);
+
+					g.drawImage(scaledImage, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
 				}
 			};
 			inventoryImageComponent
 					.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
 			displayAreas.add(inventoryImageComponent); // ??
-			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-			//inventoryImageComponent.redrawInventory(this);
+			inventoryImageComponent
+					.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
+			// inventoryImageComponent.redrawInventory(this);
 			displayAreas.add(inventoryImageComponent);
 			inventoryContainer.add(inventoryImageComponent);
 			System.out.println("adding item. size is = " + displayAreas.size());
@@ -187,8 +217,9 @@ public class AdventureGame extends GUI {
 	/**
 	 * Determines and highlights the selected item (only one selected at a time).
 	 * The selected item in the inventory is passed on to player.
+	 *
 	 * @param display
-	 *            the newly selected component (won't ever be null) 
+	 *            the newly selected component (won't ever be null)
 	 */
 	public static void setSelectedItem(InventoryDisplay display) {
 		selectedDisplay = display;
@@ -215,8 +246,8 @@ public class AdventureGame extends GUI {
 	protected void doRelease(MouseEvent e) {
 		Location l = renderer.doRelease(e);
 
-		if(l != null) {
-			System.out.println("row[" +l.getRow()+ "], col[" +l.getCol()+ "]");
+		if (l != null) {
+			System.out.println("row[" + l.getRow() + "], col[" + l.getCol() + "]");
 		}
 	}
 
@@ -252,9 +283,7 @@ public class AdventureGame extends GUI {
 	 */
 	@Override
 	protected void navigatePlayer(Direction dir) {
-		if (currentRoom == null)
-			return;
-		currentRoom.movePlayer(dir);
+		Player.getInstance().getCurrentRoom().movePlayer(dir);
 	}
 
 	@Override
@@ -267,9 +296,9 @@ public class AdventureGame extends GUI {
 
 	/**
 	 * Takes user input from keyboard and moves player in the specified direction.
-	 * Note that it only moves the player one location at a time.
-	 * Moves player in the specified direction. Note that it only moves the player
-	 * one location at a time.
+	 * Note that it only moves the player one location at a time. Moves player in
+	 * the specified direction. Note that it only moves the player one location at a
+	 * time.
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -281,7 +310,7 @@ public class AdventureGame extends GUI {
 			dir = Location.Direction.SOUTH;
 			break;
 		case KeyEvent.VK_LEFT:
-			dir = Location.Direction.WEST;  
+			dir = Location.Direction.WEST;
 			break;
 		case KeyEvent.VK_RIGHT:
 			dir = Location.Direction.EAST;
@@ -291,7 +320,8 @@ public class AdventureGame extends GUI {
 			return;
 		}
 
-		//System.out.println("player will be moving in direction: " + dir.toString());	// test
+		// System.out.println("player will be moving in direction: " + dir.toString());
+		// // test
 		navigatePlayer(dir);
 	}
 
