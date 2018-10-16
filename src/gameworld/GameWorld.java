@@ -6,9 +6,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import gameworld.Location.Direction;
 import gameworld.entities.Door;
 import gameworld.entities.Fountain;
