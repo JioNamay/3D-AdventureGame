@@ -194,7 +194,6 @@ public abstract class GUI extends JFrame implements KeyListener {
 
 		container.add(playerInfo);
 		setNavigationButtons(); // buttons for navigation
-		setActionButtons(); // buttons for actions
 
 		// add everything to the frame
 		this.add(container);
