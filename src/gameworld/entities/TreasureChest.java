@@ -87,7 +87,7 @@ public class TreasureChest extends LockableStrategy implements Container {
 				}
 			}
 			Player.getInstance().getInventory().add(item);
-			String itemName = item.getName();
+			String itemName = item.getName(); 
 			item = null;
 			return "You got a " + itemName + " from the chest!";
 		case PLACE:
@@ -132,8 +132,16 @@ public class TreasureChest extends LockableStrategy implements Container {
 				else containsStr = "coins.";
 			}else containsStr = item.getName();	
 			
-			return "An open " + description + "containing " + containsStr;
+			return "An open " + description + " containing " + containsStr;
 		}
 		return "A closed " + description;
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Container#hasItem()
+	 */
+	@Override
+	public boolean hasItem() {
+		return item != null;
 	}
 }

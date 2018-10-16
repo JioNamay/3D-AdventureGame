@@ -18,7 +18,7 @@ public class Table extends LockableStrategy implements Container{
 	/** The item. */
 	private PickUpAbleStrategy item;
 	
-	/**
+	/** 
 	 * Instantiates a new treasure chest.
 	 */
 	public Table() {
@@ -87,7 +87,7 @@ public class Table extends LockableStrategy implements Container{
 				else containsStr = "coins.";
 			}else containsStr = item.getName();	
 			
-			return "An open " + description + "containing " + containsStr;
+			return "An open " + description + " containing " + containsStr;
 		}
 		return "A closed " + description;
 	}
@@ -143,6 +143,14 @@ public class Table extends LockableStrategy implements Container{
 		default:
 			return super.performAction(action);
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Container#hasItem()
+	 */
+	@Override
+	public boolean hasItem() {
+		return item != null;
 	}
 	
 }
