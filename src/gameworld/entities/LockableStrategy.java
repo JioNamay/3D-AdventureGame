@@ -11,13 +11,13 @@ import gameworld.entities.Item.Action;
  * @author Deanne Alabastro 300346210
  */
 public abstract class LockableStrategy extends CoinBank {
-	
+
 	/** The actions. */
-	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString()); 
+	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString());
 
 	/** The is locked. */
-	protected boolean isOpen, isLocked;
- 
+	protected boolean isOpen = false, isLocked = true;
+
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Strategy#getActions()
 	 */
@@ -72,7 +72,7 @@ public abstract class LockableStrategy extends CoinBank {
 		}
 		return "You cannot unlock something without a key";
 	}
-	
+
 	/**
 	 * Open.
 	 *
@@ -83,7 +83,7 @@ public abstract class LockableStrategy extends CoinBank {
 		isOpen = true;
 		return "You opened a " + this.name;
 	}
-	
+
 	/**
 	 * Close.
 	 *

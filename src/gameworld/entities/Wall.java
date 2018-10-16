@@ -15,7 +15,6 @@ public class Wall implements Strategy{
 	 * Instantiates a new wall.
 	 */
 	public Wall() {
-		
 	}
 
 	/* (non-Javadoc)
@@ -39,7 +38,7 @@ public class Wall implements Strategy{
 	 */
 	@Override
 	public String getName() {
-		return null;
+		return "Wall";
 	}
 
 	/* (non-Javadoc)

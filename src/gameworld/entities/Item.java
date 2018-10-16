@@ -9,7 +9,7 @@ package gameworld.entities;
  * @author alabasdean 300346210
  */
 public class Item {
-	
+
 	/**
 	 * The Enum Action - used for performing actions on items.
 	 */
@@ -23,10 +23,10 @@ public class Item {
 		OPEN,
 		CLOSE,
 		UNLOCK,
-		EQUIP, 
-		UNEQUIP, 
-		ATTACK, 
-		READ, 
+		EQUIP,
+		UNEQUIP,
+		ATTACK,
+		READ,
 		THROWCOINS
 	}
 
@@ -53,7 +53,7 @@ public class Item {
 	public String getDescription() {
 		return item.getDescription();
 	}
-	
+
 	/**
 	 * Gets the name.
 	 *
@@ -62,7 +62,7 @@ public class Item {
 	public String getName() {
 		return item.getName();
 	}
-	
+
 	/**
 	 * Checks if is solid.
 	 *
@@ -71,7 +71,7 @@ public class Item {
 	public boolean isSolid() {
 		return item.isSolid();
 	}
-	
+
 	/**
 	 * Checks if is door.
 	 *

@@ -108,7 +108,7 @@ public class TreasureChest extends LockableStrategy implements Container {
 	public void placeItem(PickUpAbleStrategy item) {
 		if(item == null) this.item = item;
 	}
- 
+
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Container#takeItem()
 	 */
@@ -130,10 +130,15 @@ public class TreasureChest extends LockableStrategy implements Container {
 			if(item == null) {
 				if(coinBank == 0) containsStr = "nothing.";
 				else containsStr = "coins.";
-			}else containsStr = item.getName();	
-			
+			}else containsStr = item.getName();
+
 			return "An open " + description + "containing " + containsStr;
 		}
 		return "A closed " + description;
+	}
+
+	@Override
+	public boolean hasItem() {
+		return item != null;
 	}
 }

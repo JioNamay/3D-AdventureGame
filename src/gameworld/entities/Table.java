@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package gameworld.entities;
 
@@ -14,10 +14,10 @@ import gameworld.entities.Item.Action;
  * @author Deanne Alabastro 300346210
  */
 public class Table extends LockableStrategy implements Container{
-	
+
 	/** The item. */
 	private PickUpAbleStrategy item;
-	
+
 	/**
 	 * Instantiates a new treasure chest.
 	 */
@@ -72,7 +72,7 @@ public class Table extends LockableStrategy implements Container{
 		if(!Player.getInstance().getInventory().isFull()) return item;
 		return null;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see gameworld.entities.CoinBank#getDescription()
 	 */
@@ -85,13 +85,13 @@ public class Table extends LockableStrategy implements Container{
 			if(item == null) {
 				if(coinBank == 0) containsStr = "nothing.";
 				else containsStr = "coins.";
-			}else containsStr = item.getName();	
-			
+			}else containsStr = item.getName();
+
 			return "An open " + description + "containing " + containsStr;
 		}
 		return "A closed " + description;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see gameworld.entities.LockableStrategy#getActions()
 	 */
@@ -133,7 +133,7 @@ public class Table extends LockableStrategy implements Container{
 			String itemName = item.getName();
 			item = null;
 			return "You got a " + itemName + " from the table!";
-			
+
 		case PLACE:
 			if(item != null) return "Can't place anything in the table. It is full";
 			PickUpAbleStrategy itemToPlace = Player.getInstance().getSelectedItem();
@@ -144,5 +144,10 @@ public class Table extends LockableStrategy implements Container{
 			return super.performAction(action);
 		}
 	}
-	
+
+	@Override
+	public boolean hasItem() {
+		return item != null;
+	}
+
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package gameworld.entities;
 
@@ -12,7 +12,7 @@ import gameworld.entities.Item.Action;
  * @author Deanne Alabastro 300346210
  */
 public class Bookshelf extends AttackingItems implements Container {
-	
+
 	public Bookshelf() {
 		this.name = "Bookshelf";
 		this.description = "a sturdy bookshelf";
@@ -22,7 +22,7 @@ public class Bookshelf extends AttackingItems implements Container {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see gameworld.entities.Damageable#die()
 	 */
 	@Override
@@ -36,7 +36,7 @@ public class Bookshelf extends AttackingItems implements Container {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * gameworld.entities.Container#placeItem(gameworld.entities.PickUpAbleStrategy)
 	 */
@@ -50,14 +50,14 @@ public class Bookshelf extends AttackingItems implements Container {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see gameworld.entities.Container#takeItem()
 	 */
 	@Override
 	public PickUpAbleStrategy takeItem() {
 		return new HeavyBook();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see gameworld.entities.LockableStrategy#performAction(gameworld.entities.Item.Action)
 	 */
@@ -77,6 +77,12 @@ public class Bookshelf extends AttackingItems implements Container {
 		default:
 			return super.performAction(action);
 		}
+	}
+
+	@Override
+	public boolean hasItem() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

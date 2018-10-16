@@ -23,7 +23,7 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
 	public Potion() {
 		this.uses = 1;
 		this.description = "A magical potion that restores 10 points of health";
-		this.name = "Health Potion";
+		this.name = "Potion";
 		this.coinBank = 3;
 	}
 
