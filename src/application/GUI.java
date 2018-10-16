@@ -4,16 +4,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -24,8 +28,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import adventuregame.AdventureGame;
 import gameworld.Location;
+import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
+import gameworld.entities.Potion;
 import renderer.Board;
 
 /**
@@ -48,14 +55,13 @@ public abstract class GUI extends JFrame implements KeyListener{
 	public static final int DRAWING_SIZE = 600;
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
-	//protected JFrame frame;
 	protected JPanel container; // global container to hold all the components in frame
 	protected Board board;
-	protected JPanel playerInfo, inventory;
+	protected JPanel playerInfo;
+	protected JPanel inventoryContainer;
 	protected JComponent drawing; // the canvas to display the rendered world
 	protected Graphics drawingArea;
-	protected JTextArea examinedItem, playerStats;
-	protected JTextArea something;
+	protected static JTextArea examinedItem, playerStats, actionDisplay;
 
 	//game fields
 	protected Player player = null;		// player within the game
@@ -64,6 +70,10 @@ public abstract class GUI extends JFrame implements KeyListener{
 		setTitle("Adventure Game");
 		addKeyListener(this);
 		player = Player.getInstance();
+
+		for (int index=0; index<9; index++)
+			player.getInventory().add(new Potion());
+
 		initialise();
 	}
 
@@ -72,7 +82,6 @@ public abstract class GUI extends JFrame implements KeyListener{
 	 * items player is holding, and the various actions the player can perform.
 	 */
 	public void initialise() {
-		//frame = new JFrame("Adventure Game");
 		this.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
 
 		// container hold items that flow from top to bottom
@@ -123,10 +132,10 @@ public abstract class GUI extends JFrame implements KeyListener{
 		descriptions.add(playerStats);
 
 		// display something.....
-		something = new JTextArea("???", 10, 20);
-		something.setEditable(false);
-		something.setLineWrap(true);
-		descriptions.add(something);
+		actionDisplay = new JTextArea("???", 10, 20);
+		actionDisplay.setEditable(false);
+		actionDisplay.setLineWrap(true);
+		descriptions.add(actionDisplay);
 
 		rendererPanel.add(descriptions);
 		container.add(rendererPanel);
@@ -137,11 +146,11 @@ public abstract class GUI extends JFrame implements KeyListener{
 		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
 		// playerInfo.setBackground(Color.GREEN); // test
 
-		inventory = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
-		inventory.setPreferredSize(new Dimension(410, 110));
+		inventoryContainer = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
+		inventoryContainer.setPreferredSize(new Dimension(410, 110));
 		updateInventory();
 		//inventory.setVisible(true);
-		playerInfo.add(inventory);
+		playerInfo.add(inventoryContainer);
 
 		container.add(playerInfo);
 		setNavigationButtons();	// buttons for navigation
@@ -210,6 +219,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 		newGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				player.resetPlayer();
 				onStart();
 			}
 
@@ -340,11 +350,48 @@ public abstract class GUI extends JFrame implements KeyListener{
 		playerInfo.add(actions);
 	}
 
+	/*public static void updateInventory() {
+		//Player player = Player.getInstance();
+
+			List<InventoryDisplay> displayAreas = new ArrayList<InventoryDisplay>();
+
+				// TEST:
+				//Inventory i = new Inventory();
+
+
+				//System.out.println("inventory full: " + i.isFull());
+
+				// draws every item in player's inventory
+				for (PickUpAbleStrategy item: Player.getInstance().getInventory()) {
+					InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
+						// Repaints the component to display the image of the item.
+						@Override
+						public void paintComponent(Graphics g) {
+							// draw images of the items
+							Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
+							g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH-2, InventoryDisplay.IMAGE_HEIGHT-2, null);
+						}
+					};
+					inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
+					displayAreas.add(inventoryImageComponent);
+					inventory.add(inventoryImageComponent);
+					System.out.println("adding item. size is = " + displayAreas.size());
+				}
+
+				System.out.println("no. of displays: " + displayAreas.size());
+
+				// selects a random item from inventory if nothing is selected
+				if (AdventureGame.getSelectedItem() == null) {
+					int rand = (int) (Math.random() * displayAreas.size());
+					AdventureGame.setSelectedItem(displayAreas.get(rand));
+				}
+	}*/
+
 	/**
 	 * Returns the JTextArea to display the description of examined
 	 * items or rooms.
 	 */
-	public JTextArea getExaminedItemDisplay() {
+	public static JTextArea getExaminedItemDisplay() {
 		return examinedItem;
 	}
 
@@ -352,9 +399,16 @@ public abstract class GUI extends JFrame implements KeyListener{
 	 * Returns the display area that holds player's information,
 	 * like health and money.
 	 */
-	public JTextArea getPlayerStatDisplay() {
+	public static JTextArea getPlayerStatDisplay() {
 		return playerStats;
 	}
 
-	// method to return the last JTextArea
+	/**
+	 * Returns the JTextArea to display the description of examined
+	 * items or rooms.
+	 */
+	public static JTextArea getActionDisplay() {
+		return actionDisplay;
+	}
+
 }

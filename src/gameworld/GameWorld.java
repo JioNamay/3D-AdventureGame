@@ -35,7 +35,7 @@ public class GameWorld {
 		// rooms are created and added to the map
 		// parse the file and create the rooms
 		// set player in current room if the player is in room
-
+		//currentRoom = null;
 	}
 
 	private void setUpWorld() {
