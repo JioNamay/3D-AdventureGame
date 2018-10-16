@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -17,7 +19,9 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 
 import application.GUI;
 import application.InventoryDisplay;
@@ -25,9 +29,12 @@ import gameworld.GameWorld;
 import gameworld.Location;
 import gameworld.Location.Direction;
 import gameworld.Room;
+import gameworld.entities.Item;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
 import gameworld.entities.Potion;
+import gameworld.entities.Strategy;
+import gameworld.entities.Item.Action;
 import renderer.Renderer;
 
 /**
@@ -45,7 +52,7 @@ public class AdventureGame extends GUI {
 	private GameWorld game; // containing the game logic
 	private Room currentRoom = null;
 	private Location.Direction dir;
-	private Location clickedLocation;
+	//private Location clickedLocation;
 
 	// APPLICATION HANDLERS
 	private File saveFile = new File(""); // XML file to store saved game
@@ -60,10 +67,6 @@ public class AdventureGame extends GUI {
 	 * generates a new gameworld.
 	 */
 	public AdventureGame() {
-		// displayAreas = new InventoryDisplay[10];
-
-		// player = Player.getInstance();
-		// game = new GameWorld(loadFile);
 		onStart();
 		game = new GameWorld(loadFile);
 	}
@@ -154,13 +157,8 @@ public class AdventureGame extends GUI {
 		// draws every item in player's inventory
 		for (PickUpAbleStrategy item : player.getInventory()) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
-				// Repaints the component to display the image of the item.
 				@Override
-				public void paintComponent(Graphics g) {
-					// draw images of the items
-					//Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
-					//g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
-
+				public void paintComponent(Graphics g) {	// draw images of the items
 					String url = "src/renderer/data/";
 
 					String name = item.getName().toLowerCase();
@@ -194,17 +192,10 @@ public class AdventureGame extends GUI {
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
 			displayAreas.add(inventoryImageComponent);
 			inventoryContainer.add(inventoryImageComponent);
-			System.out.println("adding item. size is = " + displayAreas.size());
+			//System.out.println("adding item. size is = " + displayAreas.size());
 		}
 
-		// selects a random item from inventory if nothing is selected
-		// if (selectedDisplay == null) {
-		// int rand = (int) (Math.random() * displayAreas.size());
-		// setSelectedItem(displayAreas.get(rand)); // by default, the selected area is
-		// the first item
-		//
-		// }
-		System.out.println("no. of displays: " + displayAreas.size());
+		//System.out.println("no. of displays: " + displayAreas.size());
 
 		// selects a random item from inventory if nothing is selected
 		if (selectedDisplay == null) {
@@ -242,15 +233,54 @@ public class AdventureGame extends GUI {
 	 */
 	@Override
 	protected void doRelease(MouseEvent e) {
-		clickedLocation = renderer.doRelease(e);
+		Location clickedLocation = renderer.doRelease(e);
 
+		// test
 		if(clickedLocation != null) {
 			System.out.println("row[" +clickedLocation.getRow()+ "], col[" +clickedLocation.getCol()+ "]");
 		}
+
+		Item item = player.getCurrentRoom().getGameItems().get(clickedLocation);
+
+		if (!(item instanceof Strategy)) {
+			//JOptionPane.showMessageDialog(this, "Location doesn't have an item.");
+			return;
+		}
+
+		JPopupMenu actionMenu = new JPopupMenu();
+		List<String> itemActions = item.getItem().getActions();
+		System.out.println(itemActions.size());
+		// go through the possible actions for the selected item
+		for (String actions: itemActions) {
+			JMenuItem action = new JMenuItem(actions);
+			action.addActionListener(createItemListener(action.getText(), item.getItem()));
+			actionMenu.add(action);
+		}
+
+		actionMenu.show(e.getComponent(), e.getX(), e.getY());
 	}
 
 	/**
-	 * Listens for mouse presses in the display area.
+	 * The action to be performed on this item in the room.
+	 *
+	 * @param action action to perform on item
+	 * @param item item user is interacting with
+	 * @return the ActionListener set on the menu item
+	 */
+	private ActionListener createItemListener(String action, Strategy item) {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String desc = item.performAction(Action.valueOf(action));
+				GUI.getActionDisplay().setText(desc);
+
+			}
+
+		};
+	}
+
+	/**
+	 * Listens for mouse presses in the JOptionPane.showMessageDialog(this, "Not a valid direction for player");display area.
 	 */
 	@Override
 	protected void doPress(MouseEvent e) {
@@ -331,5 +361,7 @@ public class AdventureGame extends GUI {
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
+
+
 
 }

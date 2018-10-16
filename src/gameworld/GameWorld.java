@@ -29,7 +29,7 @@ public class GameWorld {
 	public static final String COURTYARD = "courtyard";
 	public Map<String, Room> rooms = new HashMap<String, Room>();	// map to keep track of the rooms in the world
 
-	private Room currentRoom;
+	//private Room currentRoom;
 
 	/**
 	 * Instantiates a new game world. Reads rooms from the given XML file and sets
@@ -174,6 +174,8 @@ public class GameWorld {
 	    }
 	}
 
+	// ======== remove after everything is done ================
+
 	/**
 	 * Update.
 	 */
@@ -181,7 +183,7 @@ public class GameWorld {
 
 	}
 
-	public Room getCurrentRoom() {
-		return currentRoom;
-	}
+//	public Room getCurrentRoom() {
+//		return currentRoom;
+//	}
 }
