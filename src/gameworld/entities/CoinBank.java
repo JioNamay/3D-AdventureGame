@@ -1,11 +1,14 @@
 package gameworld.entities;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 import gameworld.Location.Direction;
 
 /**
  * The coinbank class is extended by every entity who is able to give player coins when a player interacts with it.
  * @author Deanne Alabastro 300346210
  */
+@XmlTransient
 public abstract class CoinBank implements Strategy{
  
 	/** A long description of the entity. */

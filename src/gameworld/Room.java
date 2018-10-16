@@ -3,6 +3,7 @@ package gameworld;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import gameworld.Location.Direction;
 import gameworld.entities.*;
 
@@ -12,6 +13,7 @@ import gameworld.entities.*;
  * 
  * @author Deanne Alabastro 300346210
  */
+ 
 public class Room {
 
   /** The Constant SIZE of the room. */
@@ -316,4 +318,5 @@ public class Room {
     Player.getInstance().setCurrentRoom(goingTo);
     return true;
   }
+
 }
