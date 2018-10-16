@@ -31,7 +31,11 @@ import javax.swing.JTextArea;
 
 import adventuregame.AdventureGame;
 import gameworld.Location;
+
+import gameworld.Room;
+
 import gameworld.entities.PickUpAbleStrategy;
+
 import gameworld.entities.Player;
 import gameworld.entities.Potion;
 
@@ -41,7 +45,7 @@ import gameworld.entities.Potion;
  * @author yangcarr 300368805
  */
 
-public abstract class GUI extends JFrame implements KeyListener{
+public abstract class GUI extends JFrame implements KeyListener {
 
 	/**
 	 *
@@ -49,7 +53,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 4310694644754610282L;
 
 	// ************** ABSTRACT METHODS ****************** //
-	protected abstract void doDraw(Graphics g);
+	protected abstract void doDraw(Graphics g, Room r);
 
 	protected abstract void doRelease(MouseEvent e);
 
@@ -66,8 +70,6 @@ public abstract class GUI extends JFrame implements KeyListener{
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
 
 	protected abstract void updateInventory(); // redraws the inventory
-	// protected abstract void updateInventory(MouseEvent e); // redraws the
-	// inventory
 
 	protected abstract String askSave();
 
@@ -77,7 +79,6 @@ public abstract class GUI extends JFrame implements KeyListener{
 	public static final int DRAWING_SIZE = 600;
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
-
 	// protected JFrame frame;
 	protected JPanel container; // global container to hold all the components in frame
 	protected JPanel playerInfo, inventoryContainer;
@@ -85,15 +86,16 @@ public abstract class GUI extends JFrame implements KeyListener{
 	protected Graphics drawingArea;
 	protected static JTextArea examinedItem, playerStats, actionDisplay;
 
-	//game fields
-	protected Player player = null;		// player within the game
+	// game fields
+	protected Player player = null; // player within the game
 
 	public GUI() {
 		setTitle("Adventure Game");
 		addKeyListener(this);
 		player = Player.getInstance();
+		setFocusable(true);		// handle key events
 
-		for (int index=0; index<9; index++)
+		for (int index = 0; index < 9; index++)
 			player.getInventory().add(new Potion());
 
 		initialise();
@@ -126,7 +128,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 
 			protected void paintComponent(Graphics g) {
 				drawingArea = g;
-				doDraw(drawingArea);
+				doDraw(drawingArea, Player.getInstance().getCurrentRoom());
 				drawing.repaint();
 			}
 		};
@@ -191,10 +193,10 @@ public abstract class GUI extends JFrame implements KeyListener{
 		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
 		// playerInfo.setBackground(Color.GREEN); // test
 
-		inventoryContainer = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
+		inventoryContainer = new JPanel(new GridLayout(2, 5)); // allocate area for inventory
 		inventoryContainer.setPreferredSize(new Dimension(410, 110));
 		updateInventory();
-		//inventory.setVisible(true);
+		// inventory.setVisible(true);
 		playerInfo.add(inventoryContainer);
 
 		container.add(playerInfo);
@@ -230,7 +232,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 		quit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
-				if (ans == JOptionPane.YES_OPTION) {	// ask player to save game before leaving
+				if (ans == JOptionPane.YES_OPTION) { // ask player to save game before leaving
 					if (askSave().equals("YES"))
 						saveGame();
 					else
@@ -281,8 +283,8 @@ public abstract class GUI extends JFrame implements KeyListener{
 	}
 
 	/**
-	 * Allows players to move around the gameworld, one space in the
-	 * chosen direction.
+	 * Allows players to move around the gameworld, one space in the chosen
+	 * direction.
 	 */
 	private void setNavigationButtons() {
 		// vertical spacing between components
@@ -395,42 +397,40 @@ public abstract class GUI extends JFrame implements KeyListener{
 		playerInfo.add(actions);
 	}
 
-	/*public static void updateInventory() {
-		//Player player = Player.getInstance();
-
-			List<InventoryDisplay> displayAreas = new ArrayList<InventoryDisplay>();
-
-				// TEST:
-				//Inventory i = new Inventory();
-
-
-				//System.out.println("inventory full: " + i.isFull());
-
-				// draws every item in player's inventory
-				for (PickUpAbleStrategy item: Player.getInstance().getInventory()) {
-					InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
-						// Repaints the component to display the image of the item.
-						@Override
-						public void paintComponent(Graphics g) {
-							// draw images of the items
-							Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
-							g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH-2, InventoryDisplay.IMAGE_HEIGHT-2, null);
-						}
-					};
-					inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-					displayAreas.add(inventoryImageComponent);
-					inventory.add(inventoryImageComponent);
-					System.out.println("adding item. size is = " + displayAreas.size());
-				}
-
-				System.out.println("no. of displays: " + displayAreas.size());
-
-				// selects a random item from inventory if nothing is selected
-				if (AdventureGame.getSelectedItem() == null) {
-					int rand = (int) (Math.random() * displayAreas.size());
-					AdventureGame.setSelectedItem(displayAreas.get(rand));
-				}
-	}*/
+	/*
+	 * public static void updateInventory() { //Player player =
+	 * Player.getInstance();
+	 *
+	 * List<InventoryDisplay> displayAreas = new ArrayList<InventoryDisplay>();
+	 *
+	 * // TEST: //Inventory i = new Inventory();
+	 *
+	 *
+	 * //System.out.println("inventory full: " + i.isFull());
+	 *
+	 * // draws every item in player's inventory for (PickUpAbleStrategy item:
+	 * Player.getInstance().getInventory()) { InventoryDisplay
+	 * inventoryImageComponent = new InventoryDisplay(item) { // Repaints the
+	 * component to display the image of the item.
+	 *
+	 * @Override public void paintComponent(Graphics g) { // draw images of the
+	 * items Image img = new
+	 * ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
+	 * g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH-2,
+	 * InventoryDisplay.IMAGE_HEIGHT-2, null); } };
+	 * inventoryImageComponent.setPreferredSize(new
+	 * Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
+	 * displayAreas.add(inventoryImageComponent);
+	 * inventory.add(inventoryImageComponent);
+	 * System.out.println("adding item. size is = " + displayAreas.size()); }
+	 *
+	 * System.out.println("no. of displays: " + displayAreas.size());
+	 *
+	 * // selects a random item from inventory if nothing is selected if
+	 * (AdventureGame.getSelectedItem() == null) { int rand = (int) (Math.random() *
+	 * displayAreas.size()); AdventureGame.setSelectedItem(displayAreas.get(rand));
+	 * } }
+	 */
 
 	/**
 	 * Returns the JTextArea to display the description of examined items or rooms.
@@ -448,8 +448,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 	}
 
 	/**
-	 * Returns the JTextArea to display the description of examined
-	 * items or rooms.
+	 * Returns the JTextArea to display the description of examined items or rooms.
 	 */
 	public static JTextArea getActionDisplay() {
 		return actionDisplay;

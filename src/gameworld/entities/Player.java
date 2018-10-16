@@ -44,7 +44,7 @@ public class Player extends AttackingEntity {
 		inventory = new Inventory();
 		direction = Direction.NORTH;
 	}
-
+   
 	/**
 	 * Gets the single instance of Player.
 	 *

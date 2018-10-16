@@ -6,8 +6,6 @@ import java.io.*;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
-import com.sun.org.apache.bcel.internal.classfile.Attribute;
-import com.sun.org.apache.xerces.internal.xni.QName;
 
 import gameworld.GameWorld;
 import gameworld.Room;
