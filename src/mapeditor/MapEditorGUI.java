@@ -54,122 +54,275 @@ import gameworld.entities.Tree;
 import gameworld.entities.Wall;
 import javanet.staxutils.IndentingXMLStreamWriter;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class MapEditorGUI.
+ *
  * @author namayraph 300374356
  */
 public class MapEditorGUI {
 
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The board panel. */
 	private JLayeredPane boardPanel;
+	
+	/** The button panel. */
 	private JPanel buttonPanel;
+	
+	/** The rock button. */
 	private JButton rockButton;
+	
+	/** The sofa button. */
 	private JButton sofaButton;
+	
+	/** The table button. */
 	private JButton tableButton;
+	
+	/** The tree button. */
 	private JButton treeButton;
+	
+	/** The note button. */
 	private JButton noteButton;
+	
+	/** The fountain button. */
 	private JButton fountainButton;
+	
+	/** The cactus button. */
 	private JButton cactusButton;
+	
+	/** The bookshelf button. */
 	private JButton bookshelfButton;
+	
+	/** The treasure chest button. */
 	private JButton treasureChestButton;
+	
+	/** The wall block button. */
 	private JButton wallBlockButton;
+	
+	/** The door button. */
 	private JButton doorButton;
+	
+	/** The heavy book button. */
 	private JButton heavyBookButton;
+	
+	/** The key button. */
 	private JButton keyButton;
+	
+	/** The potion button. */
 	private JButton potionButton;
+	
+	/** The stick button. */
 	private JButton stickButton;
+	
+	/** The delete button. */
 	private JButton deleteButton;
+	
+	/** The rotate button. */
 	private JButton rotateButton;
+	
+	/** The room select label. */
 	private JLabel roomSelectLabel;
+	
+	/** The menu bar. */
 	private JMenuBar menuBar;
+	
+	/** The file menu. */
 	private JMenu fileMenu;
+	
+	/** The save menu item. */
 	private JMenuItem saveMenuItem;
+	
+	/** The load menu item. */
 	private JMenuItem loadMenuItem;
 
+	/** The rock image top. */
 	private BufferedImage rockImage_top;
 
+	/** The sofa image top north. */
 	private BufferedImage sofaImage_top_north;
+	
+	/** The sofa image top east. */
 	private BufferedImage sofaImage_top_east;
+	
+	/** The sofa image top south. */
 	private BufferedImage sofaImage_top_south;
+	
+	/** The sofa image top west. */
 	private BufferedImage sofaImage_top_west;
 
+	/** The table image top north. */
 	private BufferedImage tableImage_top_north;
+	
+	/** The table image top east. */
 	private BufferedImage tableImage_top_east;
+	
+	/** The table image top south. */
 	private BufferedImage tableImage_top_south;
+	
+	/** The table image top west. */
 	private BufferedImage tableImage_top_west;
 
+	/** The tree image top. */
 	private BufferedImage treeImage_top;
 
+	/** The note image top. */
 	private BufferedImage noteImage_top;
 
+	/** The fountain image top. */
 	private BufferedImage fountainImage_top;
 
+	/** The cactus image top. */
 	private BufferedImage cactusImage_top;
 
+	/** The bookshelf image top north. */
 	private BufferedImage bookshelfImage_top_north;
+	
+	/** The bookshelf image top east. */
 	private BufferedImage bookshelfImage_top_east;
+	
+	/** The bookshelf image top south. */
 	private BufferedImage bookshelfImage_top_south;
+	
+	/** The bookshelf image top west. */
 	private BufferedImage bookshelfImage_top_west;
 
+	/** The treasure chest image top north. */
 	private BufferedImage treasureChestImage_top_north;
+	
+	/** The treasure chest image top east. */
 	private BufferedImage treasureChestImage_top_east;
+	
+	/** The treasure chest image top south. */
 	private BufferedImage treasureChestImage_top_south;
+	
+	/** The treasure chest image top west. */
 	private BufferedImage treasureChestImage_top_west;
 
+	/** The wall block image top. */
 	private BufferedImage wallBlockImage_top;
 
+	/** The door image top north. */
 	private BufferedImage doorImage_top_north;
+	
+	/** The door image top east. */
 	private BufferedImage doorImage_top_east;
+	
+	/** The door image top south. */
 	private BufferedImage doorImage_top_south;
+	
+	/** The door image top west. */
 	private BufferedImage doorImage_top_west;
 
+	/** The heavy book image top. */
 	private BufferedImage heavyBookImage_top;
 
+	/** The key image top. */
 	private BufferedImage keyImage_top;
 
+	/** The potion image top. */
 	private BufferedImage potionImage_top;
 
+	/** The stick image top. */
 	private BufferedImage stickImage_top;
 
+	/** The rock image iso. */
 	private BufferedImage rockImage_iso;
+	
+	/** The sofa image iso. */
 	private BufferedImage sofaImage_iso;
+	
+	/** The table image iso. */
 	private BufferedImage tableImage_iso;
+	
+	/** The tree image iso. */
 	private BufferedImage treeImage_iso;
+	
+	/** The note image iso. */
 	private BufferedImage noteImage_iso;
+	
+	/** The fountain image iso. */
 	private BufferedImage fountainImage_iso;
+	
+	/** The cactus image iso. */
 	private BufferedImage cactusImage_iso;
+	
+	/** The bookshelf image iso. */
 	private BufferedImage bookshelfImage_iso;
+	
+	/** The treasure chest image iso. */
 	private BufferedImage treasureChestImage_iso;
+	
+	/** The wall block image iso. */
 	private BufferedImage wallBlockImage_iso;
+	
+	/** The door image iso. */
 	private BufferedImage doorImage_iso;
+	
+	/** The heavy book image iso. */
 	private BufferedImage heavyBookImage_iso;
+	
+	/** The key image iso. */
 	private BufferedImage keyImage_iso;
+	
+	/** The potion image iso. */
 	private BufferedImage potionImage_iso;
+	
+	/** The stick image iso. */
 	private BufferedImage stickImage_iso;
 
+	/** The current room. */
 	protected String currentRoom = "Library";
+	
+	/** The selected item. */
 	protected String selectedItem = " ";
+	
+	/** The delete mode. */
 	protected boolean deleteMode = false;
+	
+	/** The rotate mode. */
 	protected boolean rotateMode = false;
 
+	/** The library map. */
 	private int[][] libraryMap;
+	
+	/** The foyer map. */
 	private int[][] foyerMap;
+	
+	/** The courtyard map. */
 	private int[][] courtyardMap;
+	
+	/** The study map. */
 	private int[][] studyMap;
 
+	/** The room map. */
 	private int[][] roomMap;
 
+	/** The room strings. */
 	private String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
 
+	/** The board tiles. */
 	private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile> boardTiles;
 
+	/** The library room. */
 	private Room libraryRoom;
+	
+	/** The foyer room. */
 	private Room foyerRoom;
+	
+	/** The courtyard room. */
 	private Room courtyardRoom;
+	
+	/** The study room. */
 	private Room studyRoom;
 
+	/** The config file. */
 	private String configFile = "myFile";
 
+	/**
+	 * Instantiates a new map editor GUI.
+	 */
 	public MapEditorGUI() {
 
 		boardTiles = new ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile>();
@@ -181,6 +334,9 @@ public class MapEditorGUI {
 		GUI();
 	}
 
+	/**
+	 * Setup frame.
+	 */
 	public void setupFrame() {
 
 		frame = new JFrame("Map Editor");
@@ -191,6 +347,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Setup menu bar.
+	 */
 	public void setupMenuBar() {
 
 		menuBar = new JMenuBar();
@@ -223,6 +382,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Setup board panel.
+	 */
 	public void setupBoardPanel() {
 
 		boardPanel = new BoardPanel();
@@ -232,6 +394,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Gui.
+	 */
 	public void GUI() {
 
 		setupFrame();
@@ -624,6 +789,9 @@ public class MapEditorGUI {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Export to XML.
+	 */
 	public void exportToXML() {
 
 		if (currentRoom.equals("Library")) {
@@ -709,6 +877,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Initialize images.
+	 */
 	public void initializeImages() {
 		try {
 
@@ -775,6 +946,9 @@ public class MapEditorGUI {
 		}
 	}
 
+	/**
+	 * Initialize maps.
+	 */
 	public void initializeMaps() {
 
 		roomMap = new int[7][7];
@@ -794,16 +968,30 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Turn delete mode off.
+	 */
 	public void turnDeleteModeOff() {
 		deleteMode = false;
 		deleteButton.setText("Delete Mode: Off");
 	}
 
+	/**
+	 * Turn rotate mode off.
+	 */
 	public void turnRotateModeOff() {
 		rotateMode = false;
 		rotateButton.setText("Rotate Mode: Off");
 	}
 
+	/**
+	 * Gets the item as int.
+	 *
+	 * @param item the item
+	 * @param x the x
+	 * @param y the y
+	 * @return the item as int
+	 */
 	public int getItemAsInt(String item, int x, int y) {
 		switch (item) {
 		case "rock":
@@ -848,6 +1036,12 @@ public class MapEditorGUI {
 		return -1;
 	}
 
+	/**
+	 * Gets the int as strategy.
+	 *
+	 * @param integer the integer
+	 * @return the int as strategy
+	 */
 	public Strategy getIntAsStrategy(int integer) {
 
 		// char[] digitArray = ("" + integer).toCharArray();
@@ -980,6 +1174,12 @@ public class MapEditorGUI {
 		return null;
 	}
 
+	/**
+	 * Gets the rotated int.
+	 *
+	 * @param integer the integer
+	 * @return the rotated int
+	 */
 	public int getRotatedInt(int integer) {
 
 		switch (integer) {
@@ -1056,6 +1256,12 @@ public class MapEditorGUI {
 		return integer;
 	}
 
+	/**
+	 * Gets the int as image.
+	 *
+	 * @param integer the integer
+	 * @return the int as image
+	 */
 	public BufferedImage getIntAsImage(int integer) {
 
 		if (integer == 1) {
@@ -1152,8 +1358,14 @@ public class MapEditorGUI {
 		return null;
 	}
 
+	/**
+	 * The Class BoardPanel.
+	 */
 	private class BoardPanel extends JLayeredPane {
 
+		/**
+		 * Adds the tiles.
+		 */
 		public void addTiles() {
 			for (int i = 0; i < 7; i++) {
 				for (int j = 0; j < 7; j++) {
@@ -1164,6 +1376,9 @@ public class MapEditorGUI {
 			}
 		}
 
+		/* (non-Javadoc)
+		 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+		 */
 		public void paintComponent(Graphics g) {
 
 			for (BoardPanelTile tile : boardTiles) {
@@ -1172,11 +1387,24 @@ public class MapEditorGUI {
 
 		}
 
+		/**
+		 * The Class BoardPanelTile.
+		 */
 		class BoardPanelTile extends JLayeredPane implements MouseListener {
 
+			/** The x. */
 			public int x;
+			
+			/** The y. */
 			public int y;
 
+			/**
+			 * Instantiates a new board panel tile.
+			 *
+			 * @param bounds the bounds
+			 * @param x the x
+			 * @param y the y
+			 */
 			public BoardPanelTile(Rectangle bounds, int x, int y) {
 				this.x = x;
 				this.y = y;
@@ -1184,6 +1412,9 @@ public class MapEditorGUI {
 				addMouseListener(this);
 			}
 
+			/* (non-Javadoc)
+			 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+			 */
 			public void paintComponent(Graphics g) {
 
 				if (!selectedItem.equals(" ") && selectedItem.equals("door")) {
@@ -1211,6 +1442,9 @@ public class MapEditorGUI {
 				g.drawRect(getBounds().x, getBounds().y, getWidth(), getHeight());
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
@@ -1470,24 +1704,36 @@ public class MapEditorGUI {
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
