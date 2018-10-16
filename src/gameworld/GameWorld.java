@@ -50,10 +50,7 @@ public class GameWorld {
 	public GameWorld(File file) {
 		// rooms are created and added to the map
 		// parse the file and create the rooms
-		// set player in current room if the player is in room
-
-		//currentRoom = null;
-		
+		// set player in current room if the player is in room		
 		rooms.put(COURTYARD, courtyard);
 		rooms.put(FOYER,foyer);
 		rooms.put(STUDY, study);
@@ -109,7 +106,7 @@ public class GameWorld {
 
 		courtyard.addGameItem(3, 3, new Item(new Fountain()));
 
-		courtyard.addGameItem(5, 2, new Item(new Tree()));
+		courtyard.addGameItem(5, 1, new Item(new Tree()));
 		courtyard.addGameItem(5, 5, new Item(new Tree()));
 		
 		Player.getInstance().setLocation(courtyard.getLocation(5, 3));
