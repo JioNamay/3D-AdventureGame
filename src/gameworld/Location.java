@@ -5,61 +5,60 @@ package gameworld;
  *
  */
 public class Location {
-	public enum Direction { 
-		NORTH,
-		SOUTH,
-		EAST,
-		WEST
-	}
-	private int row;
-	private int col;
+  public enum Direction {
+    NORTH, SOUTH, EAST, WEST
+  }
 
-	private boolean isSolid;
-	private boolean isDoor;
-	
+  private int row;
+  private int col;
 
-	/**
-	 * 
-	 */
-	public Location(int row, int col) {
-		this.row = row;
-		this.col = col;
-	}
+  private boolean isSolid;
+  private boolean isDoor;
 
-	public int getRow() {
-		return this.row;
-	}
+  /**
+   * 
+   */
+  public Location(int row, int col) {
+    this.row = row;
+    this.col = col;
+  }
 
-	public int getCol() {
-		return this.col;
-	}
+  public int getRow() {
+    return this.row;
+  }
 
-	/**
-	 * @return the isSolid
-	 */
-	public boolean isSolid() {
-		return isSolid;
-	}
+  public int getCol() {
+    return this.col;
+  }
 
-	/**
-	 * @param isSolid the isSolid to set
-	 */
-	public void setSolid(boolean isSolid) {
-		this.isSolid = isSolid;
-	}
+  /**
+   * @return the isSolid
+   */
+  public boolean isSolid() {
+    return isSolid;
+  }
 
-	/**
-	 * @return the isDoor
-	 */
-	public boolean isDoor() {
-		return isDoor;
-	}
+  /**
+   * @param isSolid
+   *          the isSolid to set
+   */
+  public void setSolid(boolean isSolid) {
+    this.isSolid = isSolid;
+  }
 
-	/**
-	 * @param isDoor the isDoor to set
-	 */
-	public void setDoor(boolean isDoor) {
-		this.isDoor = isDoor;
-	}
+  /**
+   * @return the isDoor
+   */
+  public boolean isDoor() {
+    return isDoor;
+  }
+
+  /**
+   * @param isDoor
+   *          the isDoor to set
+   */
+  public void setDoor(boolean isDoor) {
+    this.isDoor = isDoor;
+  }
 
 }

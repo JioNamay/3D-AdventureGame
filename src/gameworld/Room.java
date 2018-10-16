@@ -3,9 +3,11 @@ package gameworld;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import gameworld.Location.Direction;
-import gameworld.entities.*;
+import gameworld.entities.Door;
+import gameworld.entities.Item;
+import gameworld.entities.PickUpAbleStrategy;
+import gameworld.entities.Player;
 
 /**
  * The room handles all the object within it such as removing, adding, and
@@ -13,7 +15,7 @@ import gameworld.entities.*;
  * 
  * @author Deanne Alabastro 300346210
  */
- 
+
 public class Room {
 
   /** The Constant SIZE of the room. */
@@ -222,6 +224,9 @@ public class Room {
   public boolean movePlayer(Direction dir) {
     int playerLocRow = Player.getInstance().getLocation().getRow();
     int playerLocCol = Player.getInstance().getLocation().getCol();
+
+    Player.getInstance().setDirection(dir);
+
     switch (dir) {
     case NORTH:
       // check if player can move into loc
