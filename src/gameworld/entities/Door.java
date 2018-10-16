@@ -1,8 +1,5 @@
 package gameworld.entities;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Item.Action;
