@@ -318,4 +318,6 @@ public class Room {
 		Player.getInstance().setCurrentRoom(goingTo);
 		return true;
 	}
+
+
 }
