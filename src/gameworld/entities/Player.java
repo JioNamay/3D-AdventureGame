@@ -44,7 +44,7 @@ public class Player extends AttackingEntity {
 		inventory = new Inventory();
 		direction = Direction.NORTH;
 	}
-   
+
 	/**
 	 * Gets the single instance of Player.
 	 *
@@ -108,7 +108,7 @@ public class Player extends AttackingEntity {
 	 */
 	public void setInventory(Inventory inventory) {
 		if(this.inventory == null) this.inventory = inventory;
-	} 
+	}
 
 	/**
 	 * Gets the inventory.
@@ -226,5 +226,22 @@ public class Player extends AttackingEntity {
 	public void setEquippedWeapon(EquipableStrategy equippedWeapon) {
 		this.equippedWeapon = equippedWeapon;
 		setAttackDamage(); // update player's attack damage
+	}
+
+	/**
+	 * Method returns the player stats:
+	 *  max damage, health, no. of coins, equipped weapon
+	 */
+	@Override
+	public String toString() {
+		String info = "PLAYER STATS: \n";
+		info += "Health: " + health + "\n";
+		info += "Max damage received: " + maxDamage + "\n";
+		info += "No. of coins: " + coins + "\n";
+
+		String weapon = (equippedWeapon == null) ? "none" : equippedWeapon.getName();
+		info += "Weapon: " + weapon + "\n";
+
+		return info;
 	}
 }

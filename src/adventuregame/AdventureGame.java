@@ -271,9 +271,8 @@ public class AdventureGame extends GUI {
 			public void actionPerformed(ActionEvent e) {
 				String desc = item.performAction(Action.valueOf(action));
 				GUI.getActionDisplay().setText(desc);
-
+				GUI.getPlayerStatDisplay().setText(player.toString());
 			}
-
 		};
 	}
 
@@ -309,11 +308,7 @@ public class AdventureGame extends GUI {
 	 */
 	@Override
 	protected void navigatePlayer(Direction dir) {
-		//if (currentRoom == null)
-			//return;
-		//currentRoom.movePlayer(dir);
-
-		Player.getInstance().getCurrentRoom().movePlayer(dir);
+		player.getCurrentRoom().movePlayer(dir);
 	}
 
 	@Override

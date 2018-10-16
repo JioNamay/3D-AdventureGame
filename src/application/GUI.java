@@ -176,6 +176,7 @@ public abstract class GUI extends JFrame implements KeyListener {
 		playerStats = new JTextArea("display player stats here", 10, 20);
 		playerStats.setEditable(false);
 		playerStats.setLineWrap(true);
+		playerStats.setText(player.toString());
 		descriptions.add(playerStats);
 
 		rendererPanel.add(descriptions);
@@ -189,7 +190,6 @@ public abstract class GUI extends JFrame implements KeyListener {
 		inventoryContainer = new JPanel(new GridLayout(2, 5)); // allocate area for inventory
 		inventoryContainer.setPreferredSize(new Dimension(410, 110));
 		updateInventory();
-		// inventory.setVisible(true);
 		playerInfo.add(inventoryContainer);
 
 		container.add(playerInfo);
