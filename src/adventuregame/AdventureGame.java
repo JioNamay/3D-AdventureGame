@@ -7,10 +7,13 @@ import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -42,6 +45,7 @@ public class AdventureGame extends GUI {
 	private GameWorld game; // containing the game logic
 	private Room currentRoom = null;
 	private Location.Direction dir;
+	private Location clickedLocation;
 
 	// APPLICATION HANDLERS
 	private File saveFile = new File(""); // XML file to store saved game
@@ -154,15 +158,40 @@ public class AdventureGame extends GUI {
 				@Override
 				public void paintComponent(Graphics g) {
 					// draw images of the items
-					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
-					g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+					//Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
+					//g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+
+					String url = "src/renderer/data/";
+
+					String name = item.getName().toLowerCase();
+
+					if (name.equals("potion") || name.equals("rock") || name.equals("tree") || name.equals("wall")) {
+						url += "else/";
+					} else {
+						url += "south/";
+					}
+
+					url += name;
+					url += ".png";
+
+					//Image img = new ImageIcon(url).getImage();
+					BufferedImage image = null;
+					try {
+						image = ImageIO.read(new File(url));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+
+					Image scaledImage = image.getScaledInstance((int) InventoryDisplay.IMAGE_WIDTH - 2, (int) InventoryDisplay.IMAGE_HEIGHT - 2, Image.SCALE_SMOOTH);
+
+					g.drawImage(scaledImage, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+
 				}
 			};
 			inventoryImageComponent
 					.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
 			displayAreas.add(inventoryImageComponent); // ??
 			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-			//inventoryImageComponent.redrawInventory(this);
 			displayAreas.add(inventoryImageComponent);
 			inventoryContainer.add(inventoryImageComponent);
 			System.out.println("adding item. size is = " + displayAreas.size());
@@ -188,7 +217,7 @@ public class AdventureGame extends GUI {
 	 * Determines and highlights the selected item (only one selected at a time).
 	 * The selected item in the inventory is passed on to player.
 	 * @param display
-	 *            the newly selected component (won't ever be null) 
+	 *            the newly selected component (won't ever be null)
 	 */
 	public static void setSelectedItem(InventoryDisplay display) {
 		selectedDisplay = display;
@@ -213,10 +242,10 @@ public class AdventureGame extends GUI {
 	 */
 	@Override
 	protected void doRelease(MouseEvent e) {
-		Location l = renderer.doRelease(e);
+		clickedLocation = renderer.doRelease(e);
 
-		if(l != null) {
-			System.out.println("row[" +l.getRow()+ "], col[" +l.getCol()+ "]");
+		if(clickedLocation != null) {
+			System.out.println("row[" +clickedLocation.getRow()+ "], col[" +clickedLocation.getCol()+ "]");
 		}
 	}
 
@@ -252,9 +281,11 @@ public class AdventureGame extends GUI {
 	 */
 	@Override
 	protected void navigatePlayer(Direction dir) {
-		if (currentRoom == null)
-			return;
-		currentRoom.movePlayer(dir);
+		//if (currentRoom == null)
+			//return;
+		//currentRoom.movePlayer(dir);
+
+		Player.getInstance().getCurrentRoom().movePlayer(dir);
 	}
 
 	@Override
@@ -263,6 +294,23 @@ public class AdventureGame extends GUI {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+			dir = Location.Direction.NORTH;
+			break;
+		case KeyEvent.VK_DOWN:
+			dir = Location.Direction.SOUTH;
+			break;
+		case KeyEvent.VK_LEFT:
+			dir = Location.Direction.WEST;
+			break;
+		case KeyEvent.VK_RIGHT:
+			dir = Location.Direction.EAST;
+			break;
+		default:
+			JOptionPane.showMessageDialog(this, "Not a valid direction for player");
+			return;
+		}
 	}
 
 	/**
@@ -273,24 +321,6 @@ public class AdventureGame extends GUI {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			dir = Location.Direction.NORTH;
-			break;
-		case KeyEvent.VK_DOWN:
-			dir = Location.Direction.SOUTH;
-			break;
-		case KeyEvent.VK_LEFT:
-			dir = Location.Direction.WEST;  
-			break;
-		case KeyEvent.VK_RIGHT:
-			dir = Location.Direction.EAST;
-			break;
-		default:
-			JOptionPane.showMessageDialog(this, "Not a valid direction for player");
-			return;
-		}
-
 		//System.out.println("player will be moving in direction: " + dir.toString());	// test
 		navigatePlayer(dir);
 	}
