@@ -11,6 +11,7 @@ import gameworld.Room;
  */
 public class Player extends AttackingEntity {
 
+
   /** The inventory. */
   private Inventory inventory;
 
@@ -28,6 +29,9 @@ public class Player extends AttackingEntity {
 
   /** The coins. */
   private int coins = 0;
+
+  /** The coins to throw in fountain. */
+  private int fountainCoins = 0;
 
   /** The direction. */
   private Direction direction;
@@ -95,6 +99,31 @@ public class Player extends AttackingEntity {
    */
   public int getCoins() {
     return coins;
+  }
+
+  /**
+   * Sets the number of coins the user wants to throw into the fountain.
+   *
+   * @param coins the coins to set
+   */
+  public void addFountainCoins(int coins) {
+    this.setFountainCoins(this.getFountainCoins() + coins);
+  }
+
+  /**
+   * Return fountain coins.
+   * @return the fountainCoins
+   */
+  public int getFountainCoins() {
+    return fountainCoins;
+  }
+
+  /**
+   * Set fountain coins.
+   * @param fountainCoins the fountainCoins to set
+   */
+  public void setFountainCoins(int fountainCoins) {
+    this.fountainCoins = fountainCoins;
   }
 
   /**
@@ -245,20 +274,20 @@ public class Player extends AttackingEntity {
     setAttackDamage(); // update player's attack damage
   }
 
-	/**
-	 * Method returns the player stats:
-	 *  max damage, health, no. of coins, equipped weapon
-	 */
-	@Override
-	public String toString() {
-		String info = "PLAYER STATS: \n";
-		info += "Health: " + health + "\n";
-		info += "Max damage received: " + maxDamage + "\n";
-		info += "No. of coins: " + coins + "\n";
-
-		String weapon = (equippedWeapon == null) ? "none" : equippedWeapon.getName();
-		info += "Weapon: " + weapon + "\n";
-
-		return info;
-	}
+  /**
+   * Method returns the player stats:
+   *  max damage, health, no. of coins, equipped weapon
+   */
+  @Override
+  public String toString() {
+    String info = "PLAYER STATS: \n";
+    info += "Health: " + health + "\n";
+    info += "Max damage received: " + maxDamage + "\n";
+    info += "No. of coins: " + coins + "\n";
+    
+    String weapon = (equippedWeapon == null) ? "none" : equippedWeapon.getName();
+    info += "Weapon: " + weapon + "\n";
+    
+    return info;
+  }
 }

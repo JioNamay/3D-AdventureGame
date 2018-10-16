@@ -62,23 +62,52 @@ public class Fountain extends CoinBank {
   public String performAction(Action action) {
     switch (action) {
       case THROWCOINS:
-        return null;
+        return grantWish();
       default:
         return description;
     }
   }
 
   private String grantWish() {
-    // if coins thrown between 0 - 5return stick
-    // if coins thrown between 6 - 10 return coins
-    // if coins thrown between 11 - 15 return rock
-    // if coins thrown between 16-25 return heavyBook
-    // if coins thrown between 26-31 return note
-    // if coins thrown between 32-45 return key
-    // if coins thrown greater than 45 return potion
-    // default or no space in inventory return coins
-    return "";
-
+    int coins = Player.getInstance().getFountainCoins();
+    Inventory in = Player.getInstance().getInventory();
+    if(in.isFull()) {
+      Player.getInstance().addCoins(10);
+      return "Player got coins";
+    }else {
+      // if coins thrown between 0 - 5return stick
+      if(coins > 1 && coins < 6) {
+        in.add(new Stick());
+        return "Player got Stick";
+      }else if(coins > 6 && coins < 11) {
+        // if coins thrown between 6 - 10 return coins
+        Player.getInstance().addCoins(10);
+        return "Player got coins";
+      }else if(coins > 11 && coins < 16) {
+        // if coins thrown between 11 - 15 return rock
+        in.add(new Rock());
+        return "Player got Rock";
+      }else if(coins > 16 && coins < 26) {
+        // if coins thrown between 16-25 return heavyBook
+        in.add(new HeavyBook());
+        return "Player got Heavy Book";
+      }else if(coins > 26 && coins < 32) {  
+        // if coins thrown between 26-31 return note 
+        // if coins thrown between 26-31 return note
+        in.add(new Note());
+        return "Player got Note";
+      }else if(coins > 32 && coins < 46) {
+        // if coins thrown between 32-45 return key
+        in.add(new Key());
+        return "Player got Key";
+      }else{
+        // if coins thrown greater than 45 return potion
+        in.add(new Potion());
+        return "Player got Potion";
+      }
+         
+    }
+  
   }
 
 }
