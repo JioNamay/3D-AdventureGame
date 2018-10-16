@@ -12,8 +12,8 @@ Instructions:
 > Mouse Left Click -> Interacts with objects  
 > Mouse Left Click and Drag -> Pans the room   
 > Scroll -> Zooms room  
-> Arrow key buttons provided in the app frame -> Moves the player around  
+> Arrow key buttons provided in the app frame and keyboard arrows -> Moves the player around  
 
-Saving and loading the file does not work and neither does using the keyboard.
+Saving and loading the file does not work.
 
 
