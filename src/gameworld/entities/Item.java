@@ -4,6 +4,8 @@ package gameworld.entities;
  * Entity is the context class where the various items are used.
  * An instance of entity is made in the gameworld, where certain items
  * are placed in certain locations.
+ * 
+ * Uses the strategy pattern 
  *
  * @author yangcarr 300368805
  * @author alabasdean 300346210

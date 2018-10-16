@@ -47,7 +47,7 @@ public abstract class PickUpAbleStrategy extends CoinBank {
 		
 		return "You picked up " + this.getName();
 	}
-	
+	 
 	/**
 	 * Drop the item from player inventory.
 	 *
