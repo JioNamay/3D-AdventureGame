@@ -18,10 +18,10 @@ public class Player extends AttackingEntity {
 
 	/** The current room. */
 	private Room currentRoom;
-	
+
 	/** The selected item. */
 	private PickUpAbleStrategy selectedItem;
-	
+
 	/** The equiped weapon. */
 	private EquipableStrategy equippedWeapon;
 
@@ -53,7 +53,7 @@ public class Player extends AttackingEntity {
 	public static Player getInstance() {
 		return instance;
 	}
-	
+
 	/**
 	 * Resets the players fields.
 	 */
@@ -170,7 +170,7 @@ public class Player extends AttackingEntity {
 		if(this.currentRoom != null) this.currentRoom.setHasPlayer(false); // tell the old room that it no longer has player
 		this.currentRoom = currentRoom;
 		currentRoom.setHasPlayer(true);
-		
+
 	}
 
 	/**

@@ -1,29 +1,22 @@
 package application;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowListener;
+import java.awt.event.MouseWheelEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -33,41 +26,65 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import gameworld.Location;
-import renderer.Board;
+import gameworld.entities.Player;
 
 /**
  * Class provides the graphical display of the GameWorld.
  *
  * @author yangcarr 300368805
  */
+
 public abstract class GUI extends JFrame implements KeyListener{
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 4310694644754610282L;
+
 	// ************** ABSTRACT METHODS ****************** //
-	protected abstract void redraw(Graphics g); // T RECONSIDER
+	protected abstract void doDraw(Graphics g);
+
+	protected abstract void doRelease(MouseEvent e);
+
+	protected abstract void doPress(MouseEvent e);
+
+	protected abstract void doDrag(MouseEvent e);
+
+	protected abstract void doScroll(MouseWheelEvent e);
+
 	protected abstract void loadGame();
+
 	protected abstract void saveGame();
+
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
-	protected abstract void updateInventory();	// redraws the inventory
-	//protected abstract void updateInventory(MouseEvent e);	// redraws the inventory
+
+	protected abstract void updateInventory(); // redraws the inventory
+	// protected abstract void updateInventory(MouseEvent e); // redraws the
+	// inventory
+
+	protected abstract String askSave();
+
 	protected abstract void navigatePlayer(Location.Direction dir);
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
-	//protected JFrame frame;
+	// protected JFrame frame;
 	protected JPanel container; // global container to hold all the components in frame
-	protected Board board;
 	protected JPanel playerInfo, inventory;
 	protected JComponent drawing; // the canvas to display the rendered world
 	protected Graphics drawingArea;
 	protected JTextArea examinedItem, playerStats;
 	protected JTextArea something;
 
+	//game fields
+	protected Player player = null;		// player within the game
+
 	public GUI() {
 		setTitle("Adventure Game");
 		addKeyListener(this);
-		setFocusable(true);		// to enable keyboard events
+		player = Player.getInstance();
 		initialise();
 	}
 
@@ -76,7 +93,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 	 * items player is holding, and the various actions the player can perform.
 	 */
 	public void initialise() {
-		//frame = new JFrame("Adventure Game");
+		// frame = new JFrame("Adventure Game");
 		this.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
 
 		// container hold items that flow from top to bottom
@@ -89,21 +106,44 @@ public abstract class GUI extends JFrame implements KeyListener{
 		JPanel rendererPanel = new JPanel();
 		rendererPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
-		// RENDERER:
-		/*JPanel boardPanel = new JPanel();
-		boardPanel.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
-		boardPanel.setBounds(0, 0, DRAWING_SIZE, DRAWING_SIZE);
-		boardPanel.setVisible(true);
-		this.board = new Board(this, boardPanel);
-		rendererPanel.add(boardPanel, BorderLayout.LINE_START);*/
-
-		// sets the graphics when application window is first run, so you'll always have the area to draw on
+		// sets the graphics when application window is first run, so you'll always have
+		// the area to draw on
 		drawing = new JComponent() {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = -2691182121087316070L;
+
 			protected void paintComponent(Graphics g) {
 				drawingArea = g;
-				redraw(drawingArea);		// render the room
+				doDraw(drawingArea);
+				drawing.repaint();
 			}
 		};
+
+		drawing.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				doRelease(e);
+			}
+		});
+
+		drawing.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				doPress(e);
+			}
+		});
+
+		drawing.addMouseMotionListener(new MouseAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				doDrag(e);
+			}
+		});
+
+		drawing.addMouseWheelListener(new MouseAdapter() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				doScroll(e);
+			}
+		});
 
 		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
 		drawing.setVisible(true);
@@ -141,15 +181,15 @@ public abstract class GUI extends JFrame implements KeyListener{
 		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
 		// playerInfo.setBackground(Color.GREEN); // test
 
-		inventory = new JPanel(new GridLayout(2, 5));		// allocate area for inventory
+		inventory = new JPanel(new GridLayout(2, 5)); // allocate area for inventory
 		inventory.setPreferredSize(new Dimension(410, 110));
 		updateInventory();
-		//inventory.setVisible(true);
+		// inventory.setVisible(true);
 		playerInfo.add(inventory);
 
 		container.add(playerInfo);
-		setNavigationButtons();	// buttons for navigation
-		setActionButtons();	// buttons for actions
+		setNavigationButtons(); // buttons for navigation
+		setActionButtons(); // buttons for actions
 
 		// add everything to the frame
 		this.add(container);
@@ -161,8 +201,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 	/**
 	 * Creates the menu bar for the application window. This has the options: HELP
 	 * -> synopsis of game GAME -> load a saved game, save current game, load a new
-	 * game EDIT -> change the layout of the current map (?) QUIT -> exit the
-	 * game(?)
+	 * game QUIT -> exit the game
 	 */
 	private void setMenuBar() {
 		JMenuBar mb = new JMenuBar();
@@ -181,8 +220,12 @@ public abstract class GUI extends JFrame implements KeyListener{
 		quit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
-				if (ans == JOptionPane.YES_OPTION)
-					System.exit(0);
+				if (ans == JOptionPane.YES_OPTION) {	// ask player to save game before leaving
+					if (askSave().equals("YES"))
+						saveGame();
+					else
+						System.exit(0);
+				}
 			}
 		});
 
@@ -193,7 +236,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 		load.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 loadGame();
+				loadGame();
 			}
 
 		});
@@ -202,7 +245,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 saveGame(); // BENNETTE RECONSIDER
+				saveGame(); // BENNETTE RECONSIDER
 			}
 
 		});
@@ -342,16 +385,15 @@ public abstract class GUI extends JFrame implements KeyListener{
 	}
 
 	/**
-	 * Returns the JTextArea to display the description of examined
-	 * items or rooms.
+	 * Returns the JTextArea to display the description of examined items or rooms.
 	 */
 	public JTextArea getExaminedItemDisplay() {
 		return examinedItem;
 	}
 
 	/**
-	 * Returns the display area that holds player's information,
-	 * like health and money.
+	 * Returns the display area that holds player's information, like health and
+	 * money.
 	 */
 	public JTextArea getPlayerStatDisplay() {
 		return playerStats;
