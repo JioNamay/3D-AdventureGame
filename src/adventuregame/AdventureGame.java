@@ -154,8 +154,8 @@ public class AdventureGame extends GUI {
 				@Override
 				public void paintComponent(Graphics g) {
 					// draw images of the items
-					//Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
-					//g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+					Image img = new ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
+					g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
 				}
 			};
 			inventoryImageComponent
