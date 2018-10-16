@@ -20,6 +20,7 @@ import gameworld.entities.Tree;
 import gameworld.entities.Wall;
 
 
+// TODO: Auto-generated Javadoc
 /**
  * GameWorld keeps track of all the rooms in the game. Each Room is like a
  * single board on its own, whereas this class represents the overall boards.
@@ -28,24 +29,43 @@ import gameworld.entities.Wall;
  */
 
 public class GameWorld {
+	
+	/** The Constant LIBRARY. */
 	// Rooms in the GameWorld:
 	public static final String LIBRARY = "library";
+	
+	/** The Constant STUDY. */
 	public static final String STUDY = "study";
+	
+	/** The Constant FOYER. */
 	public static final String FOYER = "foyer";
+	
+	/** The Constant COURTYARD. */
 	public static final String COURTYARD = "courtyard";
 
+	/** The courtyard. */
 	private	Room courtyard = new Room("Courtyard");
+	
+	/** The foyer. */
 	private	Room foyer = new Room("Foyer");
+	
+	/** The study. */
 	private	Room study = new Room("Study");
+	
+	/** The library. */
 	private Room library = new Room("Library");
 
+	/** The rooms. */
 	public Map<String, Room> rooms = new HashMap<String, Room>();	// map to keep track of the rooms in the world
 
+	/** The current room. */
 	private Room currentRoom;
 
 	/**
 	 * Instantiates a new game world. Reads rooms from the given XML file and sets
 	 * up the world.
+	 *
+	 * @param file the file
 	 */
 	public GameWorld(File file) {
 		// rooms are created and added to the map
@@ -59,6 +79,9 @@ public class GameWorld {
 		
 	}
 
+	/**
+	 * Sets the up world.
+	 */
 	private void setUpWorld() {	
 		Player.getInstance();
 		makeCourtyard();
@@ -67,9 +90,8 @@ public class GameWorld {
 		makeLibrary();
 	}
 	
-
 	/**
-	 * Initialising the Courtyard and its objects inside it.
+	 * Make courtyard room, add Doors, and game items.
 	 */
 	public void makeCourtyard() {
 		Room courtyard = new Room("Courtyard");
@@ -113,7 +135,10 @@ public class GameWorld {
 		Player.getInstance().setCurrentRoom(courtyard);
 	}
 
-
+	
+	/**
+	 * Make foyer room, add Doors, and game items.
+	 */
 	public void makeFoyer() {
 		Room foyer = new Room("Foyer");
 		rooms.put(FOYER, foyer);
@@ -165,6 +190,10 @@ public class GameWorld {
 		
 	}
 	
+	
+	/**
+	 * Make study room, add Doors, and game items.
+	 */
 	public void makeStudy(){
 		Door door1 = new Door();
 		door1.setFirstRoom(study);
@@ -190,6 +219,10 @@ public class GameWorld {
 		
 	}
 	
+	
+	/**
+	 * Make library room, add Doors, and game items.
+	 */
 	public void makeLibrary(){
 		
 		Door door1 = new Door();
@@ -239,6 +272,11 @@ public class GameWorld {
 	}
 
 
+	/**
+	 * Adds the walls.
+	 *
+	 * @param room the room
+	 */
 	private void addWalls(Room room) {
 		for (int i = 0; i < 7; i++) {
 	        for (int j = 0; j < 7; j++) {
@@ -262,6 +300,11 @@ public class GameWorld {
 
 	}
 
+	/**
+	 * Gets the current room.
+	 *
+	 * @return the current room
+	 */
 	public Room getCurrentRoom() {
 		return currentRoom;
 	}
