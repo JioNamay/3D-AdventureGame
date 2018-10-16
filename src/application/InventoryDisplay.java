@@ -1,11 +1,17 @@
 package application;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
+import gameworld.entities.Item.Action;
 import gameworld.entities.PickUpAbleStrategy;
 import adventuregame.AdventureGame;
 
@@ -56,10 +62,7 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 
 		}*/
 
-		AdventureGame.getSelectedItem().setSelected(false);
-		AdventureGame.getSelectedItem().setBorder(BorderFactory.createEmptyBorder());
-		AdventureGame.setSelectedItem(this);
-		isSelected = true;
+
 	}
 
 
@@ -72,19 +75,66 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		// ============== in game ===============
+		// generate tooltip here
+		// when user clicks on location on drawing area, get the location that the user clicks on
+		// if location null (or location item is null), then return
+		// otherwise get the item at the location and display its actions as
+		// ======================================
 
+		// create the action menu
+		// which displays the list of actions for the item
+		// user selects one, calls another method to perform action on item
+				// passes (Item item, String action)
+				// in here, item.performAction
+		AdventureGame.getSelectedItem().setSelected(false);
+		AdventureGame.getSelectedItem().setBorder(BorderFactory.createEmptyBorder());
+		AdventureGame.setSelectedItem(this);
+		isSelected = true;
+
+
+		JPopupMenu actionMenu = new JPopupMenu();
+		List<String> itemActions = item.getActions();	// list of actions for the [selected?] item
+
+		// go through the possible actions for the selected item
+		for (String actions: itemActions) {
+			JMenuItem action = new JMenuItem(actions);
+			action.addActionListener(createItemListener(action.getText()));
+			actionMenu.add(action);
+		}
+
+		actionMenu.show(this, e.getX(), e.getY());
+		// updateInventory()
+	}
+
+	/**
+	 * The action to be performed on this item.
+	 * This method is only called when user chooses an item from the inventory.
+	 *
+	 * @param action action to perform on item
+	 * @return the ActionListener set on the menu item
+	 */
+	private ActionListener createItemListener(String action) {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GUI.getActionDisplay().setText("Test: " + action);
+
+				String desc = item.performAction(Action.valueOf(action));
+				GUI.getActionDisplay().setText(desc);
+
+			}
+
+		};
+	}
+
+	public void redrawInventory(AdventureGame game) {
+		game.updateInventory();
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseExited(MouseEvent e) {}
 }

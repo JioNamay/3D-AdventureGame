@@ -26,6 +26,7 @@ import gameworld.entities.HeavyBook;
 import gameworld.entities.Item;
 import gameworld.entities.Key;
 import gameworld.entities.Note;
+import gameworld.entities.Player;
 import gameworld.entities.Potion;
 import gameworld.entities.Rock;
 import gameworld.entities.Sofa;
@@ -75,6 +76,9 @@ public class Renderer {
 	/** The loaded images. */
 	private Map<String, BufferedImage> loadedImages = new HashMap<String, BufferedImage>();
 
+	/** Toggle the visibility of the walls */
+	private boolean hideWalls = false;
+
 	/**
 	 * Instantiates a new renderer.
 	 */
@@ -114,7 +118,48 @@ public class Renderer {
 
 		for (int row = 0; row < NUM_OF_TILES; row++) {
 			for (int col = 0; col < NUM_OF_TILES; col++) {
+				Player p = Player.getInstance();
+
+				// North rotation.
+				if (BOARD_ROTATION % 4 == 0) {
+					int pRow = row;
+					int pCol = col;
+
+					if (p.getLocation().getRow() == pRow && p.getLocation().getCol() == pCol) {
+						processLocation(g, r, p, row, col);
+						continue;
+					}
+					// East rotation.
+				} else if (BOARD_ROTATION % 4 == 1) {
+					int pRow = (NUM_OF_TILES - 1) - col;
+					int pCol = row;
+
+					if (p.getLocation().getRow() == pRow && p.getLocation().getCol() == pCol) {
+						processLocation(g, r, p, row, col);
+						continue;
+					}
+					// South rotation.
+				} else if (BOARD_ROTATION % 4 == 2) {
+					int pRow = (NUM_OF_TILES - 1) - row;
+					int pCol = (NUM_OF_TILES - 1) - col;
+
+					if (p.getLocation().getRow() == pRow && p.getLocation().getCol() == pCol) {
+						processLocation(g, r, p, row, col);
+						continue;
+					}
+					// West rotation.
+				} else if (BOARD_ROTATION % 4 == 3) {
+					int pRow = col;
+					int pCol = (NUM_OF_TILES - 1) - row;
+
+					if (p.getLocation().getRow() == pRow && p.getLocation().getCol() == pCol) {
+						processLocation(g, r, p, row, col);
+						continue;
+					}
+				}
+
 				Item i = null;
+
 				// North rotation.
 				if (BOARD_ROTATION % 4 == 0) {
 					i = items.get(r.getLocation(row, col));
@@ -132,6 +177,75 @@ public class Renderer {
 				processLocation(g, r, i, row, col);
 			}
 		}
+
+	}
+
+	/**
+	 * Processes the location by extracting the correct image to display for the
+	 * state of the player object at the given location.
+	 *
+	 * @param g
+	 *            the graphics
+	 * @param r
+	 *            the room
+	 * @param p
+	 *            the player
+	 * @param row
+	 *            the row
+	 * @param col
+	 *            the col
+	 */
+	private void processLocation(Graphics g, Room r, Player p, int row, int col) {
+		//
+		// start of the url of the image.
+		String url = "src/renderer/data/";
+		String name = "player";
+
+		int itemRotation = 0;
+
+		switch (p.getDirection()) {
+		case NORTH: {
+			itemRotation = 0;
+			break;
+		}
+		case EAST: {
+			itemRotation = 1;
+			break;
+		}
+		case SOUTH: {
+			itemRotation = 2;
+			break;
+		}
+		case WEST: {
+			itemRotation = 3;
+			break;
+		}
+		default:
+			itemRotation = 0;
+			break;
+		}
+
+		// combines the local direction of the item with the global rotation of the
+		// board and direct the url to the appropriate subfolder.
+		int finalRotation = BOARD_ROTATION + itemRotation;
+
+		if (finalRotation % 4 == 0) {
+			url += "north/";
+		} else if (finalRotation % 4 == 1) {
+			url += "east/";
+		} else if (finalRotation % 4 == 2) {
+			url += "south/";
+		} else if (finalRotation % 4 == 3) {
+			url += "west/";
+		}
+
+		// append the name of the item to the url.
+		url += name;
+
+		// append the file extension to the url.
+		url += ".png";
+
+		drawImageAtLocation(g, url.toLowerCase(), row, col);
 	}
 
 	/**
@@ -160,6 +274,11 @@ public class Renderer {
 		// start of the url of the image.
 		String url = "src/renderer/data/";
 		String name = i.getName().toLowerCase();
+
+		if (name.equals("wall") && hideWalls) {
+			drawImageAtLocation(g, "src/renderer/data/else/wall_hidden.png", row, col);
+			return;
+		}
 
 		int itemRotation = 0;
 
@@ -359,6 +478,7 @@ public class Renderer {
 	 */
 	public Location doRelease(MouseEvent e) {
 		this.mouseDown = false;
+		this.hideWalls = false;
 
 		if (e.getButton() == 1) {
 			return getClickedLocation(e);
@@ -376,6 +496,10 @@ public class Renderer {
 	 *            the mouse event
 	 */
 	public void doPress(MouseEvent e) {
+		if (e.getButton() == 2) {
+			this.hideWalls = true;
+		}
+
 		this.mouseDown = true;
 		this.mouseLocation = e.getPoint();
 	}
