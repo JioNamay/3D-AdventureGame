@@ -9,7 +9,7 @@ may get a null pointer exception which is fixed by doing
 Instructions:
 > Mouse Middle Button -> Makes the walls see-through  
 > Mouse Right Click -> Rotates the room  
-> Mouse Left Click -> Interacts with objects  
+> Mouse Left Click -> Interacts with objects (Click on floor tile of object)  
 > Mouse Left Click and Drag -> Pans the room   
 > Scroll -> Zooms room  
 > Arrow key buttons provided in the app frame and keyboard arrows -> Moves the player around  
