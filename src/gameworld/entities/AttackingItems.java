@@ -10,17 +10,17 @@ import gameworld.entities.Item.Action;
  * A monster is any entity besides the Player that can attack and get damaged.
  * @author Deanne Alabastro 300346210
  */
-public abstract class Monster extends AttackingEntity implements Strategy{
-	
+public abstract class AttackingItems extends AttackingEntity implements Strategy{
+
 	/** The name. */
 	protected String name;
-	
+
 	/** The description. */
 	protected String description;
-	
+
 	/** The direction. */
 	protected Direction direction;
-	
+
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Strategy#getActions()
 	 */
@@ -91,7 +91,7 @@ public abstract class Monster extends AttackingEntity implements Strategy{
 			if (weapon != null)
 				weapon.getDamaged(1); // decrease durability of player's weapon
 			int damage = Player.getInstance().attack(this); // get attacked by player
-			
+
 			// result of the player's attack
 			String result = null;
 			if (damage > 0)
@@ -116,5 +116,5 @@ public abstract class Monster extends AttackingEntity implements Strategy{
 		}
 	}
 
-	
+
 }

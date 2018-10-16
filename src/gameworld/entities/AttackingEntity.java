@@ -8,10 +8,10 @@ import java.util.Random;
  * @author Deanne Alabastro 300346210
  */
 public abstract class AttackingEntity implements Damageable{
-	
+
 	/** The max damage. */
 	protected int maxDamage;
-	
+
 	/** The health. */
 	protected int health;
 
@@ -33,7 +33,7 @@ public abstract class AttackingEntity implements Damageable{
 		this.health = health;
 	}
 
-	
+
 	/**
 	 * Gets the max damage.
 	 *
@@ -66,7 +66,7 @@ public abstract class AttackingEntity implements Damageable{
 			health -= amount;
 		}
 	}
-	
+
 	/**
 	 * Attack.
 	 *

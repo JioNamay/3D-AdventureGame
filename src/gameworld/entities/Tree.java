@@ -7,7 +7,7 @@ import gameworld.Room;
  * The tree drops a stick when dead.
  * @author Deanne Alabastro 300346210
  */
-public class Tree extends Monster {
+public class Tree extends AttackingItems {
 	
 	/**
 	 * Instantiates a new tree.

@@ -1,31 +1,22 @@
 package application;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
-import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -35,14 +26,20 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import gameworld.Location;
+import gameworld.entities.Player;
 
 /**
  * Class provides the graphical display of the GameWorld.
  *
- * @author Carrie 300368805
+ * @author yangcarr 300368805
  */
-// public abstract class GUI extends JFrame implements MouseListener{
-public abstract class GUI extends JFrame {
+
+public abstract class GUI extends JFrame implements KeyListener{
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 4310694644754610282L;
 
 	// ************** ABSTRACT METHODS ****************** //
 	protected abstract void doDraw(Graphics g);
@@ -65,6 +62,8 @@ public abstract class GUI extends JFrame {
 	// protected abstract void updateInventory(MouseEvent e); // redraws the
 	// inventory
 
+	protected abstract String askSave();
+
 	protected abstract void navigatePlayer(Location.Direction dir);
 
 	public static final int FRAME_SIZE = 900;
@@ -79,9 +78,13 @@ public abstract class GUI extends JFrame {
 	protected JTextArea examinedItem, playerStats;
 	protected JTextArea something;
 
+	//game fields
+	protected Player player = null;		// player within the game
+
 	public GUI() {
 		setTitle("Adventure Game");
-		// addMouseListener(this);
+		addKeyListener(this);
+		player = Player.getInstance();
 		initialise();
 	}
 
@@ -103,18 +106,14 @@ public abstract class GUI extends JFrame {
 		JPanel rendererPanel = new JPanel();
 		rendererPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
-		// RENDERER:
-		/*
-		 * JPanel boardPanel = new JPanel(); boardPanel.setPreferredSize(new
-		 * Dimension(DRAWING_SIZE, DRAWING_SIZE)); boardPanel.setBounds(0, 0,
-		 * DRAWING_SIZE, DRAWING_SIZE); boardPanel.setVisible(true); this.board = new
-		 * Board(this, boardPanel); rendererPanel.add(boardPanel,
-		 * BorderLayout.LINE_START);
-		 */
-
 		// sets the graphics when application window is first run, so you'll always have
 		// the area to draw on
 		drawing = new JComponent() {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = -2691182121087316070L;
+
 			protected void paintComponent(Graphics g) {
 				drawingArea = g;
 				doDraw(drawingArea);
@@ -202,8 +201,7 @@ public abstract class GUI extends JFrame {
 	/**
 	 * Creates the menu bar for the application window. This has the options: HELP
 	 * -> synopsis of game GAME -> load a saved game, save current game, load a new
-	 * game EDIT -> change the layout of the current map (?) QUIT -> exit the
-	 * game(?)
+	 * game QUIT -> exit the game
 	 */
 	private void setMenuBar() {
 		JMenuBar mb = new JMenuBar();
@@ -222,8 +220,12 @@ public abstract class GUI extends JFrame {
 		quit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
-				if (ans == JOptionPane.YES_OPTION)
-					System.exit(0);
+				if (ans == JOptionPane.YES_OPTION) {	// ask player to save game before leaving
+					if (askSave().equals("YES"))
+						saveGame();
+					else
+						System.exit(0);
+				}
 			}
 		});
 
@@ -268,8 +270,8 @@ public abstract class GUI extends JFrame {
 	}
 
 	/**
-	 * Allows players to move around the gameworld, one space in the chosen
-	 * direction.
+	 * Allows players to move around the gameworld, one space in the
+	 * chosen direction.
 	 */
 	private void setNavigationButtons() {
 		// vertical spacing between components

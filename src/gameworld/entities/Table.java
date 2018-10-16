@@ -82,10 +82,11 @@ public class Table extends LockableStrategy implements Container{
 			return "A locked " + description;
 		if (!isLocked && isOpen) {
 			String containsStr = null;
-			if(item == null && coinBank == 0) containsStr = "nothing.";
-			else if(item == null && coinBank > 0) containsStr = "coins.";
-			else containsStr = item.getName();
-				
+			if(item == null) {
+				if(coinBank == 0) containsStr = "nothing.";
+				else containsStr = "coins.";
+			}else containsStr = item.getName();	
+			
 			return "An open " + description + "containing " + containsStr;
 		}
 		return "A closed " + description;
@@ -120,17 +121,19 @@ public class Table extends LockableStrategy implements Container{
 			return givePlayerCoins(1);
 		case TAKE:
 			if(Player.getInstance().getInventory().isFull()) return "Can't take anything, inventory is full";
-			if(item == null && coinBank > 0) {
-				Player.getInstance().addCoins(1);
-				return "You got a coin from the table";
-			}else if(item == null && coinBank == 0) {
-				return "The table is empty, there is nothing to take";
-			}else {
-				Player.getInstance().getInventory().add(item);
-				String itemName = item.getName();
-				item = null;
-				return "You got a " + itemName + " from the table!";
+			if(item == null) {
+				if(coinBank > 0) {
+					Player.getInstance().addCoins(1);
+					return "You got a coin from the table";
+				}else {
+					return "The table is empty, there is nothing to take";
+				}
 			}
+			Player.getInstance().getInventory().add(item);
+			String itemName = item.getName();
+			item = null;
+			return "You got a " + itemName + " from the table!";
+			
 		case PLACE:
 			if(item != null) return "Can't place anything in the table. It is full";
 			PickUpAbleStrategy itemToPlace = Player.getInstance().getSelectedItem();

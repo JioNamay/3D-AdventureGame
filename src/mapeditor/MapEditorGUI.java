@@ -12,7 +12,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,12 +31,23 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import javax.xml.stream.XMLEventFactory;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import javax.xml.stream.events.Characters;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartDocument;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
 
 import gameworld.Location.Direction;
 import gameworld.Room;
 import gameworld.entities.Bookshelf;
 import gameworld.entities.Cactus;
 import gameworld.entities.Door;
+import gameworld.entities.Fountain;
 import gameworld.entities.HeavyBook;
 import gameworld.entities.Item;
 import gameworld.entities.Key;
@@ -162,6 +175,8 @@ public class MapEditorGUI {
 	private Room foyerRoom;
 	private Room courtyardRoom;
 	private Room studyRoom;
+
+	private String configFile = "myFile";
 
 	public MapEditorGUI() {
 
@@ -382,7 +397,7 @@ public class MapEditorGUI {
 		});
 		buttonPanel.add(treeButton);
 
-		fountainButton = new JButton("[5*] Fountain");
+		fountainButton = new JButton("[5] Fountain");
 		fountainButton.setBounds(470, 180, 170, 60);
 		fountainButton.setToolTipText("Fountain");
 		fountainButton.addActionListener(new ActionListener() {
@@ -621,6 +636,7 @@ public class MapEditorGUI {
 		for (int row = 0; row < 7; row++) {
 			for (int col = 0; col < 7; col++) {
 				if (libraryMap[row][col] != 0) {
+					//add from and to rooms
 					libraryRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
 				}
 				if (foyerMap[row][col] != 0) {
@@ -634,6 +650,61 @@ public class MapEditorGUI {
 				}
 			}
 		}
+		try {
+			exportToXML();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void exportToXML() throws Exception {
+
+		// create an XMLOutputFactory
+		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+		// create XMLEventWriter
+		XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(new FileOutputStream(configFile));
+		// create an EventFactory
+		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+		XMLEvent end = eventFactory.createDTD("\n");
+		// create and write Start Tag
+		StartDocument startDocument = eventFactory.createStartDocument();
+		eventWriter.add(startDocument);
+
+		// create config open tag
+		StartElement configStartElement = eventFactory.createStartElement("", "", "config");
+		eventWriter.add(configStartElement);
+		eventWriter.add(end);
+		// Write the different nodes
+		createNode(eventWriter, "mode", "1");
+		createNode(eventWriter, "unit", "901");
+		createNode(eventWriter, "current", "0");
+		createNode(eventWriter, "interactive", "0");
+
+		eventWriter.add(eventFactory.createEndElement("", "", "config"));
+		eventWriter.add(end);
+		eventWriter.add(eventFactory.createEndDocument());
+		eventWriter.close();
+
+	}
+
+	private void createNode(XMLEventWriter eventWriter, String name, String value) throws XMLStreamException {
+
+		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+		XMLEvent end = eventFactory.createDTD("\n");
+		XMLEvent tab = eventFactory.createDTD("\t");
+		// create Start node
+		StartElement sElement = eventFactory.createStartElement("", "", name);
+		eventWriter.add(tab);
+		eventWriter.add(sElement);
+		// create Content
+		Characters characters = eventFactory.createCharacters(value);
+		eventWriter.add(characters);
+		// create End node
+		EndElement eElement = eventFactory.createEndElement("", "", name);
+		eventWriter.add(eElement);
+		eventWriter.add(end);
+
 	}
 
 	public void initializeImages() {
@@ -712,7 +783,7 @@ public class MapEditorGUI {
 		rotateButton.setText("Rotate Mode: Off");
 	}
 
-	public int getItemAsInt(String item) {
+	public int getItemAsInt(String item, int x, int y) {
 		switch (item) {
 		case "rock":
 			return 1;
@@ -735,7 +806,15 @@ public class MapEditorGUI {
 		case "note":
 			return 10;
 		case "door":
-			return 1101;
+			if (x == 0 && y == 3) { // north
+				return 1101;
+			} else if (x == 3 && y == 6) { // east
+				return 1102;
+			} else if (x == 6 && y == 3) { // south
+				return 1103;
+			} else if (x == 3 && y == 0) { // west
+				return 1104;
+			}
 		case "heavy book":
 			return 12;
 		case "key":
@@ -749,113 +828,141 @@ public class MapEditorGUI {
 	}
 
 	public Strategy getIntAsStrategy(int integer) {
-		switch (integer) {
-		case 1:
+
+		char[] digitArray = ("" + integer).toCharArray();
+
+		if (integer == 1) {
 			return new Rock();
 
-		case 2001: // north facing sofa
+		} else if (integer == 2001) { // north facing sofa
 			return new Sofa();
-		case 2002: // east facing sofa
+		} else if (integer == 2002) { // east facing sofa
 			Sofa sofa_east = new Sofa();
 			sofa_east.setDirection(Direction.EAST);
 			return sofa_east;
-		case 2003: // south facing sofa
+		} else if (integer == 2003) { // south facing sofa
 			Sofa sofa_south = new Sofa();
 			sofa_south.setDirection(Direction.SOUTH);
 			return sofa_south;
-		case 2004: // west facing sofa
+		} else if (integer == 2004) {// west facing sofa
 			Sofa sofa_west = new Sofa();
 			sofa_west.setDirection(Direction.WEST);
 			return sofa_west;
 
-		case 3001: // north facing table
+		} else if (integer == 3001) { // north facing table
 			return new Table();
-		case 3002: // east facing table
+		} else if (integer == 300) { // east facing table
 			Table table_east = new Table();
 			table_east.setDirection(Direction.EAST);
 			return table_east;
-		case 3003: // south facing table
+		} else if (integer == 3003) { // south facing table
 			Table table_south = new Table();
 			table_south.setDirection(Direction.SOUTH);
 			return table_south;
-		case 3004: // west facing table
+		} else if (integer == 3004) { // west facing table
 			Table table_west = new Table();
 			table_west.setDirection(Direction.WEST);
 			return table_west;
 
-		case 4:
+		} else if (integer == 4) {
 			return new Tree();
 
-		// case 5:
-		// return new Fountain();
+		} else if (integer == 5) {
+			return new Fountain();
 
-		case 6:
+		} else if (integer == 6) {
 			return new Cactus();
 
-		case 7001: // north facing bookshelf
+		} else if (integer == 7001) { // north facing bookshelf
 			return new Bookshelf();
-		case 7002: // east facing bookshelf
+		} else if (integer == 7002) { // east facing bookshelf
 			Bookshelf bookshelf_east = new Bookshelf();
 			bookshelf_east.setDirection(Direction.EAST);
 			return bookshelf_east;
-		case 7003: // south facing bookshelf
+		} else if (integer == 7003) { // south facing bookshelf
 			Bookshelf bookshelf_south = new Bookshelf();
 			bookshelf_south.setDirection(Direction.SOUTH);
 			return bookshelf_south;
-		case 7004: // west facing bookshelf
+		} else if (integer == 7004) { // west facing bookshelf
 			Bookshelf bookshelf_west = new Bookshelf();
 			bookshelf_west.setDirection(Direction.WEST);
 			return bookshelf_west;
 
-		case 8001: // north facing treasure chest
+		} else if (integer == 8001) { // north facing treasure chest
 			return new TreasureChest();
-		case 8002: // east facing treasure chest
+		} else if (integer == 8002) { // east facing treasure chest
 			TreasureChest treasureChest_east = new TreasureChest();
 			treasureChest_east.setDirection(Direction.EAST);
 			return treasureChest_east;
-		case 8003: // south facing treasure chest
+		} else if (integer == 8003) { // south facing treasure chest
 			TreasureChest treasureChest_south = new TreasureChest();
 			treasureChest_south.setDirection(Direction.SOUTH);
 			return treasureChest_south;
-		case 8004: // west facing treasure chest
+		} else if (integer == 8004) { // west facing treasure chest
 			TreasureChest treasureChest_west = new TreasureChest();
 			treasureChest_west.setDirection(Direction.WEST);
 			return treasureChest_west;
 
-		case 9:
+		} else if (integer == 9) {
 			return new Wall();
 
-		case 10:
+		} else if (integer == 10) {
 			return new Note();
 
-		case 1101: // north facing door
-			return new Door();
-		case 1102: // east facing door
+		} else if (integer == 11010101 || integer == 11010102 || integer == 11010103 || integer == 11010104
+				|| integer == 11010201 || integer == 11010202 || integer == 11010203 || integer == 11010204
+				|| integer == 11010301 || integer == 11010302 || integer == 11010303 || integer == 11010304
+				|| integer == 11010401 || integer == 11010402 || integer == 11010403 || integer == 11010404) { // north
+			Door door_north = new Door();
+			door_north.setFirstRoomDirection(Direction.SOUTH);
+			door_north.setSecondRoomDirection(Direction.NORTH);
+			return door_north;
+		} else if (integer == 11020101 || integer == 11020102 || integer == 11020103 || integer == 11020104
+				|| integer == 11020201 || integer == 11020202 || integer == 11020203 || integer == 11020204
+				|| integer == 11020301 || integer == 11020302 || integer == 11020303 || integer == 11020304
+				|| integer == 11020401 || integer == 11020402 || integer == 11020403 || integer == 11020404) { // east
 			Door door_east = new Door();
-			door_east.setDirection(Direction.EAST);
+			door_east.setFirstRoomDirection(Direction.WEST);
+			door_east.setSecondRoomDirection(Direction.EAST);
 			return door_east;
-		case 1103: // south facing door
+		} else if (integer == 11030101 || integer == 11030102 || integer == 11030103 || integer == 11030104
+				|| integer == 11030201 || integer == 11030202 || integer == 11030203 || integer == 11030204
+				|| integer == 11030301 || integer == 11030302 || integer == 11030303 || integer == 11030304
+				|| integer == 11030401 || integer == 11030402 || integer == 11030403 || integer == 11030404) { // south
 			Door door_south = new Door();
-			door_south.setDirection(Direction.SOUTH);
+			door_south.setFirstRoomDirection(Direction.NORTH);
+			door_south.setSecondRoomDirection(Direction.SOUTH);
 			return door_south;
-		case 1104: // west facing door
+		} else if (integer == 11040101 || integer == 11040102 || integer == 11040103 || integer == 11040104
+				|| integer == 11040201 || integer == 11040202 || integer == 11040203 || integer == 11040204
+				|| integer == 11040301 || integer == 11040302 || integer == 11040303 || integer == 11040304
+				|| integer == 11040401 || integer == 11040402 || integer == 11040403 || integer == 11040404) { // west
 			Door door_west = new Door();
-			door_west.setDirection(Direction.WEST);
+			door_west.setFirstRoomDirection(Direction.EAST);
+			door_west.setSecondRoomDirection(Direction.WEST);
 			return door_west;
-		case 12:
+
+		} else if (integer == 12) {
 			return new HeavyBook();
-		case 13:
+
+		} else if (integer == 13) {
 			return new Key();
-		case 14:
+
+		} else if (integer == 14) {
 			return new Potion();
-		case 15:
+
+		} else if (integer == 15) {
 			return new Stick();
+
 		}
+
 		return null;
 	}
 
 	public int getRotatedInt(int integer) {
+
 		switch (integer) {
+
 		case 1:
 			return 1;
 
@@ -880,8 +987,8 @@ public class MapEditorGUI {
 		case 4:
 			return 4;
 
-		// case 5:
-		// return new Fountain();
+		case 5:
+			return 5;
 
 		case 6:
 			return 6;
@@ -910,14 +1017,11 @@ public class MapEditorGUI {
 		case 10:
 			return 10;
 
-		case 1101: // north facing door
-			return 1102;
-		case 1102: // east facing door
-			return 1103;
-		case 1103: // south facing door
-			return 1104;
-		case 1104: // west facing door
-			return 1101;
+//		case 1101: // y-axis facing door
+//			return 1101;
+//		case 1102: // x-axis facing door
+//			return 1102;
+
 		case 12:
 			return 12;
 		case 13:
@@ -927,83 +1031,99 @@ public class MapEditorGUI {
 		case 15:
 			return 15;
 		}
-		return -1;
+
+		return integer;
 	}
 
 	public BufferedImage getIntAsImage(int integer) {
-		switch (integer) {
-		case 1:
+
+		if (integer == 1) {
 			return rockImage_top;
 
-		case 2001: // north facing sofa
+		} else if (integer == 2001) { // north facing sofa
 			return sofaImage_top_north;
-		case 2002: // east facing sofa
+		} else if (integer == 2002) { // east facing sofa
 			return sofaImage_top_east;
-		case 2003: // south facing sofa
+		} else if (integer == 2003) { // south facing sofa
 			return sofaImage_top_south;
-		case 2004: // west facing sofa
+		} else if (integer == 2004) { // west facing sofa
 			return sofaImage_top_west;
 
-		case 3001: // north facing table
+		} else if (integer == 3001) { // north facing table
 			return tableImage_top_north;
-		case 3002: // east facing table
+		} else if (integer == 3002) { // east facing table
 			return tableImage_top_east;
-		case 3003: // south facing table
+		} else if (integer == 3003) { // south facing table
 			return tableImage_top_south;
-		case 3004: // west facing table
+		} else if (integer == 3004) { // west facing table
 			return tableImage_top_west;
 
-		case 4:
+		} else if (integer == 4) {
 			return treeImage_top;
 
-		// case 5:
-		// return new Fountain();
+		} else if (integer == 5) {
+			return fountainImage_top;
 
-		case 6:
+		} else if (integer == 6) {
 			return cactusImage_top;
 
-		case 7001: // north facing bookshelf
+		} else if (integer == 7001) { // north facing bookshelf
 			return bookshelfImage_top_north;
-		case 7002: // east facing bookshelf
+		} else if (integer == 7002) { // east facing bookshelf
 			return bookshelfImage_top_east;
-		case 7003: // south facing bookshelf
+		} else if (integer == 7003) { // south facing bookshelf
 			return bookshelfImage_top_south;
-		case 7004: // west facing bookshelf
+		} else if (integer == 7004) { // west facing bookshelf
 			return bookshelfImage_top_west;
 
-		case 8001: // north facing treasure chest
+		} else if (integer == 8001) { // north facing treasure chest
 			return treasureChestImage_top_north;
-		case 8002: // east facing treasure chest
+		} else if (integer == 8002) { // east facing treasure chest
 			return treasureChestImage_top_east;
-		case 8003: // south facing treasure chest
+		} else if (integer == 8003) { // south facing treasure chest
 			return treasureChestImage_top_south;
-		case 8004: // west facing treasure chest
+		} else if (integer == 8004) { // west facing treasure chest
 			return treasureChestImage_top_west;
 
-		case 9:
+		} else if (integer == 9) {
 			return wallBlockImage_top;
 
-		case 10:
+		} else if (integer == 10) {
 			return noteImage_top;
 
-		case 1101: // north facing door
+		} else if (integer == 1101 || integer == 11010101 || integer == 11010102 || integer == 11010103
+				|| integer == 11010104 || integer == 11010201 || integer == 11010202 || integer == 11010203
+				|| integer == 11010204 || integer == 11010301 || integer == 11010302 || integer == 11010303
+				|| integer == 11010304 || integer == 11010401 || integer == 11010402 || integer == 11010403
+				|| integer == 11010404 || integer == 1103 || integer == 11030101 || integer == 11030102
+				|| integer == 11030103 || integer == 11030104 || integer == 11030201 || integer == 11030202
+				|| integer == 11030203 || integer == 11030204 || integer == 11030301 || integer == 11030302
+				|| integer == 11030303 || integer == 11030304 || integer == 11030401 || integer == 11030402
+				|| integer == 11030403 || integer == 11030404) {
 			return doorImage_top_north;
-		case 1102: // east facing door
-			return doorImage_top_east;
-		case 1103: // south facing door
-			return doorImage_top_south;
-		case 1104: // west facing door
-			return doorImage_top_west;
 
-		case 12:
+		} else if (integer == 1102 || integer == 11020101 || integer == 11020102 || integer == 11020103
+				|| integer == 11020104 || integer == 11020201 || integer == 11020202 || integer == 11020203
+				|| integer == 11020204 || integer == 11020301 || integer == 11020302 || integer == 11020303
+				|| integer == 11020304 || integer == 11020401 || integer == 11020402 || integer == 11020403
+				|| integer == 11020404 || integer == 1104 || integer == 11040101 || integer == 11040102
+				|| integer == 11040103 || integer == 11040104 || integer == 11040201 || integer == 11040202
+				|| integer == 11040203 || integer == 11040204 || integer == 11040301 || integer == 11040302
+				|| integer == 11040303 || integer == 11040304 || integer == 11040401 || integer == 11040402
+				|| integer == 11040403 || integer == 11040404) {
+			return doorImage_top_east;
+		}
+
+		else if (integer == 12) {
 			return heavyBookImage_top;
-		case 13:
+		} else if (integer == 13) {
 			return keyImage_top;
-		case 14:
+		} else if (integer == 14) {
 			return potionImage_top;
-		case 15:
+		} else if (integer == 15) {
 			return stickImage_top;
 		}
+
 		return null;
 	}
 
@@ -1041,7 +1161,18 @@ public class MapEditorGUI {
 
 			public void paintComponent(Graphics g) {
 
-				if (!selectedItem.equals(" ") && roomMap[x][y] == 0) {
+				if (!selectedItem.equals(" ") && selectedItem.equals("door")) {
+					if (roomMap[x][y] == 0) {
+						if (((x == 3 && (y == 0 || y == 6)) || y == 3 && (x == 0 || x == 6))) {
+							g.setColor(Color.CYAN);
+						} else {
+							g.setColor(Color.WHITE);
+						}
+						g.fillRect(getBounds().x, getBounds().y, getWidth(), getHeight());
+					} else {
+						g.drawImage(getIntAsImage(roomMap[x][y]), getBounds().x, getBounds().y, 40, 40, this);
+					}
+				} else if (!selectedItem.equals(" ") && roomMap[x][y] == 0) {
 					g.setColor(Color.CYAN);
 					g.fillRect(getBounds().x, getBounds().y, getWidth(), getHeight());
 				} else if (selectedItem.equals(" ") && roomMap[x][y] == 0) {
@@ -1059,15 +1190,32 @@ public class MapEditorGUI {
 			public void mouseClicked(MouseEvent e) {
 
 				if (!selectedItem.equals(" ")) {
+
 					if (selectedItem.equals("door")) {
 
+						if (((x == 3 && (y == 0 || y == 6)) || y == 3 && (x == 0 || x == 6))) {
+
+							roomMap[x][y] = getItemAsInt(selectedItem, x, y);
+							selectedItem = " ";
+							System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
+							System.out.println("");
+							boardPanel.repaint();
+
+						} else {
+
+							JOptionPane.showMessageDialog(frame, "The door must be placed in a highlighted area!");
+
+						}
 					} else {
-						roomMap[x][y] = getItemAsInt(selectedItem);
+
+						roomMap[x][y] = getItemAsInt(selectedItem, x, y);
 						selectedItem = " ";
 						System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
 						System.out.println("");
 						boardPanel.repaint();
+
 					}
+
 				}
 
 				if (deleteMode == true) {
@@ -1087,69 +1235,174 @@ public class MapEditorGUI {
 				if (selectedItem.equals(" ") && rotateMode == false && deleteMode == false && (roomMap[x][y] == 1101
 						|| roomMap[x][y] == 1102 || roomMap[x][y] == 1103 || roomMap[x][y] == 1104)) {
 
-					String[] doorToRoomStrings = new String[3];
-					int index = 0;
-					for (String roomName : roomStrings) {
-						if (!roomName.equals(currentRoom)) {
-							doorToRoomStrings[index++] = roomName;
+					if (((x == 3 && (y == 0 || y == 6)) || y == 3 && (x == 0 || x == 6))) {
+
+						String[] doorToRoomStrings = new String[3];
+						int index = 0;
+						for (String roomName : roomStrings) {
+							if (!roomName.equals(currentRoom)) {
+								doorToRoomStrings[index++] = roomName;
+							}
+						}
+
+						JOptionPane optionPane = new JOptionPane("This door leads to:", JOptionPane.QUESTION_MESSAGE,
+								JOptionPane.DEFAULT_OPTION, null, doorToRoomStrings, null);
+
+						JDialog dialog = optionPane.createDialog(null, "Door to Room Selection");
+						dialog.setLocationRelativeTo(frame);
+						dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+						dialog.addWindowListener(new WindowAdapter() {
+							public void windowClosing(WindowEvent we) {
+								JOptionPane.showMessageDialog(dialog, "Select a room!");
+							}
+						});
+						dialog.setModal(true);
+						dialog.setVisible(true);
+
+						if (optionPane.getValue().equals("Library")) { // 110x0x01
+							if (currentRoom.equals("Library")) {
+								// can't set door from library to library
+							} else if (currentRoom.equals("Foyer")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010201;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020201;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030201;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040201;
+								}
+							} else if (currentRoom.equals("Courtyard")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010301;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020301;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030301;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040301;
+								}
+							} else if (currentRoom.equals("Study")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010401;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020401;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030401;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040401;
+								}
+							}
+						} else if (optionPane.getValue().equals("Foyer")) { // 110x0x02
+							if (currentRoom.equals("Library")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010102;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020102;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030102;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040102;
+								}
+							} else if (currentRoom.equals("Foyer")) {
+								// can't set door from foyer to foyer
+							} else if (currentRoom.equals("Courtyard")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010302;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020302;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030302;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040302;
+								}
+							} else if (currentRoom.equals("Study")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010402;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020402;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030402;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040402;
+								}
+							}
+						} else if (optionPane.getValue().equals("Courtyard")) { // 110x0x03
+							if (currentRoom.equals("Library")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010103;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020103;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030103;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040103;
+								}
+							} else if (currentRoom.equals("Foyer")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010203;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020203;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030203;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040203;
+								}
+							} else if (currentRoom.equals("Courtyard")) {
+								// can't set room from courtyard to courtyard
+							} else if (currentRoom.equals("Study")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010403;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020403;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030403;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040403;
+								}
+							}
+						} else if (optionPane.getValue().equals("Study")) { // 110x0x04
+							if (currentRoom.equals("Library")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010104;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020104;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030104;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040104;
+								}
+							} else if (currentRoom.equals("Foyer")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010204;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020204;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030204;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040204;
+								}
+							} else if (currentRoom.equals("Courtyard")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010304;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020304;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030304;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040304;
+								}
+							} else if (currentRoom.equals("Study")) {
+								// can't set room from study to study
+							}
 						}
 					}
 
-					JOptionPane optionPane = new JOptionPane("This door leads to:", JOptionPane.QUESTION_MESSAGE,
-							JOptionPane.DEFAULT_OPTION, null, doorToRoomStrings, null);
+				} else {
 
-					JDialog dialog = optionPane.createDialog(null, "Door to Room Selection");
-					dialog.setLocationRelativeTo(frame);
-					dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-					dialog.addWindowListener(new WindowAdapter() {
-						public void windowClosing(WindowEvent we) {
-							JOptionPane.showMessageDialog(dialog, "Select a room!");
-						}
-					});
-					dialog.setModal(true);
-					dialog.setVisible(true);
+					// JOptionPane.showMessageDialog(frame, "Doors must be placed along the edge of
+					// the room!");
 
-					if (optionPane.getValue().equals("Library")) {
-						if (roomMap[x][y] == 1101) { // north
-							roomMap[x][y] = 110101;
-						} else if (roomMap[x][y] == 1102) { // east
-							roomMap[x][y] = 110101;
-						} else if (roomMap[x][y] == 1103) { // south
-							roomMap[x][y] = 110101;
-						} else if (roomMap[x][y] == 1104) { // west
-							roomMap[x][y] = 110101;
-						}
-					} else if (optionPane.getValue().equals("Foyer")) {
-						if (roomMap[x][y] == 1101) { // north
-							roomMap[x][y] = 110102;
-						} else if (roomMap[x][y] == 1102) { // east
-							roomMap[x][y] = 110102;
-						} else if (roomMap[x][y] == 1103) { // south
-							roomMap[x][y] = 110102;
-						} else if (roomMap[x][y] == 1104) { // west
-							roomMap[x][y] = 110102;
-						}
-					} else if (optionPane.getValue().equals("Courtyard")) {
-						if (roomMap[x][y] == 1101) { // north
-							roomMap[x][y] = 110103;
-						} else if (roomMap[x][y] == 1102) { // east
-							roomMap[x][y] = 110103;
-						} else if (roomMap[x][y] == 1103) { // south
-							roomMap[x][y] = 110103;
-						} else if (roomMap[x][y] == 1104) { // west
-							roomMap[x][y] = 110103;
-						}
-					} else if (optionPane.getValue().equals("Study")) {
-						if (roomMap[x][y] == 1101) { // north
-							roomMap[x][y] = 110104;
-						} else if (roomMap[x][y] == 1102) { // east
-							roomMap[x][y] = 110104;
-						} else if (roomMap[x][y] == 1103) { // south
-							roomMap[x][y] = 110104;
-						} else if (roomMap[x][y] == 1104) { // west
-							roomMap[x][y] = 110104;
-						}
-					}
 				}
 
 			}
