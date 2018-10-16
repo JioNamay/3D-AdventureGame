@@ -29,7 +29,7 @@ import renderer.Renderer;
 /**
  * Handles the functionality of the game between user and game logic.
  *
- * @author yangcarr 
+ * @author yangcarr
  */
 public class AdventureGame extends GUI {
 	// GAME HANDLERS
@@ -207,8 +207,8 @@ public class AdventureGame extends GUI {
 	 * Renders the game world to the display area.
 	 */
 	@Override
-	protected void doDraw(Graphics g) {
-		renderer.doDraw(g);
+	protected void doDraw(Graphics g, Room r) {
+		renderer.doDraw(g, r);
 	}
 
 	/**

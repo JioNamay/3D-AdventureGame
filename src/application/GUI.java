@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import gameworld.Location;
+import gameworld.Room;
 import gameworld.entities.Player;
 
 /**
@@ -42,7 +43,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 	private static final long serialVersionUID = 4310694644754610282L;
 
 	// ************** ABSTRACT METHODS ****************** //
-	protected abstract void doDraw(Graphics g);
+	protected abstract void doDraw(Graphics g, Room r);
 
 	protected abstract void doRelease(MouseEvent e);
 
