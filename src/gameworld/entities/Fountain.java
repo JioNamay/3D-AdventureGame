@@ -1,19 +1,21 @@
-/**
- * 
- */
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.entities.Item.Action;
+
 
 /**
+ * Fountain that gives players things based on amount of coins thrown.
  * @author Deanne Alabastro 300346210
  *
  */
 public class Fountain extends CoinBank {
 
+  /**
+   * Instantiates a new fountain.
+   */
   public Fountain() {
     this.description = "beautiful foutain";
     this.name = "Fountain";
@@ -37,7 +39,6 @@ public class Fountain extends CoinBank {
    */
   @Override
   public boolean isSolid() {
-    // TODO Auto-generated method stub
     return true;
   }
 
@@ -48,7 +49,6 @@ public class Fountain extends CoinBank {
    */
   @Override
   public boolean isDoor() {
-    // TODO Auto-generated method stub
     return false;
   }
 
@@ -61,10 +61,10 @@ public class Fountain extends CoinBank {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case THROWCOINS:
-      return null;
-    default:
-      return description;
+      case THROWCOINS:
+        return null;
+      default:
+        return description;
     }
   }
 

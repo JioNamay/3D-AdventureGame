@@ -32,6 +32,15 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
   public boolean isFull() {
     return inventory.size() == 10;
   }
+  
+  /**
+   * Checks if is empty.
+   *
+   * @return true, if is empty
+   */
+  public boolean isEmpty() {
+    return inventory.size() == 0;
+  }
 
   /**
    * Adds the item to the inventory if there is space.
@@ -77,8 +86,9 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
    */
   public PickUpAbleStrategy getAKey() {
     for (PickUpAbleStrategy item : inventory) {
-      if (item instanceof Key)
+      if (item instanceof Key) {
         return item;
+      }
     }
     return null;
   }

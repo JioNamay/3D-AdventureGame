@@ -1,9 +1,8 @@
 package gameworld.entities;
 
-import java.util.List;
-
 import gameworld.Location.Direction;
 import gameworld.entities.Item.Action;
+import java.util.List;
 
 /**
  * The Interface Strategy are the common methods that every item in the

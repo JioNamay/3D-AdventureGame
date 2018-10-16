@@ -1,9 +1,10 @@
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.entities.Item.Action;
+
 
 /**
  * The key can be used to unlock any locked items. It breaks after 1 use.
@@ -37,24 +38,26 @@ public class Key extends PickUpAbleStrategy implements Damageable {
    */
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return givePlayerCoins(1);
-    case PICKUP:
-      String result = pickUp();
-      if (result.equals("You picked up " + this.getName()))
-        Player.getInstance().getInventory().incrementKeys();
-      return result;
-    case DROP:
-      result = drop();
-      if (result.equals("Player dropped " + this.getName()))
-        Player.getInstance().getInventory().decrementKeys();
-      return result;
-    case USE:
-      getDamaged(1);
-      return "Player used key. The key was too fragile and broke.";
-    default:
-      throw new IllegalArgumentException(
-          "Unknown action: " + action.toString() + " for object: " + this.name);
+      case EXAMINE:
+        return givePlayerCoins(1);
+      case PICKUP:
+        String result = pickUp();
+        if (result.equals("You picked up " + this.getName())) {
+          Player.getInstance().getInventory().incrementKeys();
+        }
+        return result;
+      case DROP:
+        result = drop();
+        if (result.equals("Player dropped " + this.getName())) {
+          Player.getInstance().getInventory().decrementKeys();
+        }
+        return result;
+      case USE:
+        getDamaged(1);
+        return "Player used key. The key was too fragile and broke.";
+      default:
+        throw new IllegalArgumentException(
+            "Unknown action: " + action.toString() + " for object: " + this.name);
     }
   }
 
@@ -101,8 +104,9 @@ public class Key extends PickUpAbleStrategy implements Damageable {
    */
   @Override
   public List<String> getActions() {
-    if (!Player.getInstance().getInventory().contains(this))
+    if (!Player.getInstance().getInventory().contains(this)) {
       return actions; // return default actions if not in inventory
+    }
 
     // return new action if in inventory
     return Arrays.asList(Action.EXAMINE.toString(), Action.DROP.toString());

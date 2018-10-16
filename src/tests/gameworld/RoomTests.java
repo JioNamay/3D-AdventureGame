@@ -4,9 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import gameworld.Location;
 import gameworld.Location.Direction;
 import gameworld.Room;
@@ -19,6 +16,11 @@ import gameworld.entities.Note;
 import gameworld.entities.Player;
 import gameworld.entities.Potion;
 import gameworld.entities.Wall;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
 
 class RoomTests {
   Room courtyard;
@@ -72,8 +74,9 @@ class RoomTests {
     for (int i = 0; i < 7; i++) {
       for (int j = 0; j < 7; j++) {
         if ((i == 0 || i == 6) || (j == 0 || j == 6)) {
-          if (room.getLocation(i, j).isDoor())
+          if (room.getLocation(i, j).isDoor()) {
             continue; // skip as this is a door
+          }
 
           room.addGameItem(i, j, new Item(new Wall()));
         }
@@ -133,8 +136,8 @@ class RoomTests {
 
     assertFalse(door.isLocked());
     currentRoom.movePlayer(Direction.NORTH); // move to door location
-    assertFalse(currentRoom.movePlayer(Direction.NORTH)); // should be false because door is still
-                                                          // closed
+    // should be false because door is still closed
+    assertFalse(currentRoom.movePlayer(Direction.NORTH)); 
     door.performAction(Action.OPEN);
 
     // move to room north

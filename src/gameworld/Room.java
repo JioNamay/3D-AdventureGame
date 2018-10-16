@@ -1,13 +1,13 @@
 package gameworld;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import gameworld.Location.Direction;
 import gameworld.entities.Door;
 import gameworld.entities.Item;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * The room handles all the object within it such as removing, adding, and
@@ -18,7 +18,6 @@ import gameworld.entities.Player;
 
 public class Room {
 
-	
   /** The Constant SIZE of the room. */
   public static final int SIZE = 7;
 
@@ -137,10 +136,12 @@ public class Room {
    */
   public void addGameItem(int row, int col, Item e) {
     this.gameItems.put(locations[row][col], e);
-    if (e.isSolid())
+    if (e.isSolid()) {
       locations[row][col].setSolid(true);
-    if (e.isDoor())
+    }
+    if (e.isDoor()) {
       locations[row][col].setDoor(true);
+    }
   }
 
   /**
@@ -158,8 +159,9 @@ public class Room {
       addGameItem(Player.getInstance().getLocation().getRow(),
           Player.getInstance().getLocation().getCol(), new Item(e));
       return "Player dropped " + e.getName();
-    } else
+    } else {
       return "Player cannot drop " + e.getName() + " location is occupied.";
+    }
 
   }
 
@@ -184,6 +186,22 @@ public class Room {
   public void removeGameItem(int row, int col) {
     this.gameItems.remove(locations[row][col]);
   }
+  
+  /**
+   * Removes the game object given the item.
+   *
+   * @param e
+   *          the e
+   */
+  public void removeGameItem(PickUpAbleStrategy e) {
+    Location loc = null;
+    for (Map.Entry<Location, Item> entry : gameItems.entrySet()) {
+      if (entry.getValue().getItem().equals(e)) {
+        loc = entry.getKey();
+      }
+    }
+    this.gameItems.remove(loc);
+  }
 
   /**
    * Gets the game item location.
@@ -194,25 +212,11 @@ public class Room {
    */
   public Location getGameItemLocation(Item e) {
     for (Map.Entry<Location, Item> entry : gameItems.entrySet()) {
-      if (entry.getValue().getItem().equals(e.getItem()))
+      if (entry.getValue().getItem().equals(e.getItem())) {
         return entry.getKey();
+      }
     }
     return null;
-  }
-
-  /**
-   * Removes the game object given the item.
-   *
-   * @param e
-   *          the e
-   */
-  public void removeGameItem(PickUpAbleStrategy e) {
-    Location loc = null;
-    for (Map.Entry<Location, Item> entry : gameItems.entrySet()) {
-      if (entry.getValue().getItem().equals(e))
-        loc = entry.getKey();
-    }
-    this.gameItems.remove(loc);
   }
 
   /**
@@ -229,48 +233,54 @@ public class Room {
     Player.getInstance().setDirection(dir);
 
     switch (dir) {
-    case NORTH:
-      // check if player can move into loc
-      if (!locations[playerLocRow][playerLocCol].isDoor()
-          && locations[playerLocRow - 1][playerLocCol].isSolid())
-        return false;
-      else if (locations[playerLocRow][playerLocCol].isDoor())
-        return movePlayerToConnectingRoom(Direction.NORTH);
-
-      // move normally
-      Player.getInstance().setLocation(locations[playerLocRow - 1][playerLocCol]);
-      return true;
-    case EAST:
-      if (!locations[playerLocRow][playerLocCol].isDoor()
-          && locations[playerLocRow][playerLocCol + 1].isSolid())
-        return false;
-      else if (locations[playerLocRow][playerLocCol].isDoor())
-        return movePlayerToConnectingRoom(Direction.EAST);
-
-      Player.getInstance().setLocation(locations[playerLocRow][playerLocCol + 1]);
-      return true;
-    case SOUTH:
-      if (!locations[playerLocRow][playerLocCol].isDoor()
-          && locations[playerLocRow + 1][playerLocCol].isSolid())
-        return false;
-      else if (locations[playerLocRow][playerLocCol].isDoor())
-        return movePlayerToConnectingRoom(Direction.SOUTH);
-
-      Player.getInstance().setLocation(locations[playerLocRow + 1][playerLocCol]);
-      return true;
-    case WEST:
-      if (!locations[playerLocRow][playerLocCol].isDoor()
-          && locations[playerLocRow][playerLocCol - 1].isSolid())
-        return false;
-      else if (locations[playerLocRow][playerLocCol].isDoor())
-        return movePlayerToConnectingRoom(Direction.WEST);
-
-      Player.getInstance().setLocation(locations[playerLocRow][playerLocCol - 1]);
-      return true;
-    default:
-      throw new IllegalArgumentException("Direction: " + dir.toString() + " not recognised");
+      case NORTH:
+        // check if player can move into loc
+        if (!locations[playerLocRow][playerLocCol].isDoor()
+            && locations[playerLocRow - 1][playerLocCol].isSolid()) {
+          return false;
+        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+          return movePlayerToConnectingRoom(Direction.NORTH);
+        }
+  
+        // move normally
+        Player.getInstance().setLocation(locations[playerLocRow - 1][playerLocCol]);
+        return true;
+      case EAST:
+        if (!locations[playerLocRow][playerLocCol].isDoor()
+            && locations[playerLocRow][playerLocCol + 1].isSolid()) {
+          return false;
+        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+          return movePlayerToConnectingRoom(Direction.EAST);
+        }
+  
+        Player.getInstance().setLocation(locations[playerLocRow][playerLocCol + 1]);
+        return true;
+      case SOUTH:
+        if (!locations[playerLocRow][playerLocCol].isDoor()
+            && locations[playerLocRow + 1][playerLocCol].isSolid()) {
+          return false;
+        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+          return movePlayerToConnectingRoom(Direction.SOUTH);
+        }
+  
+        Player.getInstance().setLocation(locations[playerLocRow + 1][playerLocCol]);
+        return true;
+      case WEST:
+        if (!locations[playerLocRow][playerLocCol].isDoor()
+            && locations[playerLocRow][playerLocCol - 1].isSolid()) {
+          return false;
+        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+          return movePlayerToConnectingRoom(Direction.WEST);
+        }
+  
+        Player.getInstance().setLocation(locations[playerLocRow][playerLocCol - 1]);
+        return true;
+      default:
+        throw new IllegalArgumentException("Direction: " + dir.toString() + " not "
+            + "recognised");
     }
   }
+
   /**
    * Move player to connecting room.
    *
@@ -285,16 +295,17 @@ public class Room {
     Door door = (Door) gameItems.get(Player.getInstance().getLocation()).getItem();
 
     // Player can only move room if door is open and unlocked
-    if (!door.isOpen() || door.isLocked())
+    if (!door.isOpen() || door.isLocked()) {
       return false;
+    }
 
     Location[][] connectingRoomLoc = null; // locations of the room player is going to be moving to
     Room goingTo = null; // room the player is going to be moving to
 
     // check which side of the door player is in
     if (Player.getInstance().getCurrentRoom().equals(door.getFirstRoom())) {
-      connectingRoomLoc = door.getSecondRoom().getLocations(); // get the locations of the other
-                                                               // side
+      // get the locations of the other side
+      connectingRoomLoc = door.getSecondRoom().getLocations(); 
       goingTo = door.getSecondRoom();
     } else {
       connectingRoomLoc = door.getFirstRoom().getLocations();
@@ -303,20 +314,21 @@ public class Room {
 
     // move the player to a location in the other room
     switch (dir) {
-    case NORTH:
-      Player.getInstance().setLocation(connectingRoomLoc[SIZE - 1][playerLocCol]);
-      break;
-    case EAST:
-      Player.getInstance().setLocation(connectingRoomLoc[playerLocRow][0]);
-      break;
-    case SOUTH:
-      Player.getInstance().setLocation(connectingRoomLoc[0][playerLocCol]);
-      break;
-    case WEST:
-      Player.getInstance().setLocation(connectingRoomLoc[playerLocRow][SIZE - 1]);
-      break;
-    default:
-      throw new IllegalArgumentException("Direction: " + dir.toString() + " not recognised");
+      case NORTH:
+        Player.getInstance().setLocation(connectingRoomLoc[SIZE - 1][playerLocCol]);
+        break;
+      case EAST:
+        Player.getInstance().setLocation(connectingRoomLoc[playerLocRow][0]);
+        break;
+      case SOUTH:
+        Player.getInstance().setLocation(connectingRoomLoc[0][playerLocCol]);
+        break;
+      case WEST:
+        Player.getInstance().setLocation(connectingRoomLoc[playerLocRow][SIZE - 1]);
+        break;
+      default:
+        throw new IllegalArgumentException("Direction: " + dir.toString() + " not "
+            + "recognised");
     }
 
     // set the player's current room to the new one

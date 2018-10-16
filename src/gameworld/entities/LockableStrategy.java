@@ -1,9 +1,10 @@
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.entities.Item.Action;
+
 
 /**
  * For all the items that can be locked.
@@ -29,15 +30,17 @@ public abstract class LockableStrategy extends CoinBank {
   @Override
   public List<String> getActions() {
     if (isLocked) {
-      if (Player.getInstance().getInventory().hasKey())
+      if (Player.getInstance().getInventory().hasKey()) {
         return actions;
-      else
+      } else {
         return Arrays.asList(Action.EXAMINE.toString());
+      }
     } else {
-      if (isOpen)
+      if (isOpen) {
         return Arrays.asList(Action.EXAMINE.toString(), Action.CLOSE.toString());
-      else
+      } else {
         return Arrays.asList(Action.EXAMINE.toString(), Action.OPEN.toString());
+      }
     }
   }
 
@@ -50,15 +53,15 @@ public abstract class LockableStrategy extends CoinBank {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case UNLOCK:
-      return unlock();
-    case OPEN:
-      return open();
-    case CLOSE:
-      return close();
-    default:
-      throw new IllegalArgumentException(
-          "Unknown action: " + action.toString() + " for object: " + this.name);
+      case UNLOCK:
+        return unlock();
+      case OPEN:
+        return open();
+      case CLOSE:
+        return close();
+      default:
+        throw new IllegalArgumentException(
+            "Unknown action: " + action.toString() + " for object: " + this.name);
     }
   }
 
@@ -93,8 +96,9 @@ public abstract class LockableStrategy extends CoinBank {
    * @return the string
    */
   private String open() {
-    if (isLocked)
+    if (isLocked) {
       return "You cannot open a " + this.name + " while it is locked!";
+    }
     isOpen = true;
     return "You opened a " + this.name;
   }
@@ -105,13 +109,15 @@ public abstract class LockableStrategy extends CoinBank {
    * @return the string
    */
   private String close() {
-    if (isLocked || !isOpen)
+    if (isLocked || !isOpen) {
       return "You cannot close a door that's locked or already closed!";
+    }
     isOpen = false;
     return "You closed a " + this.name;
   }
 
   /**
+   * Returns if item is open.
    * @return the isOpen
    */
   public boolean isOpen() {
@@ -119,6 +125,7 @@ public abstract class LockableStrategy extends CoinBank {
   }
 
   /**
+   * Sets if item is open.
    * @param isOpen
    *          the isOpen to set
    */
@@ -127,6 +134,7 @@ public abstract class LockableStrategy extends CoinBank {
   }
 
   /**
+   * Returns if item is locked.
    * @return the isLocked
    */
   public boolean isLocked() {
@@ -134,6 +142,7 @@ public abstract class LockableStrategy extends CoinBank {
   }
 
   /**
+   * Sets if item is locked.
    * @param isLocked
    *          the isLocked to set
    */

@@ -6,7 +6,7 @@ import gameworld.entities.Item.Action;
 
 /**
  * The door keeps track of the room that it is in between and the directions
- * that it faces in each room
+ * that it faces in each room.
  * 
  * @author Deanne Alabastro 300346210
  */
@@ -79,10 +79,12 @@ public class Door extends LockableStrategy {
    */
   @Override
   public String getDescription() {
-    if (isLocked)
+    if (isLocked) {
       return "A locked " + description;
-    if (!isLocked && isOpen)
+    }
+    if (!isLocked && isOpen) {
       return "An open " + description;
+    }
     return "A closed " + description;
   }
 
@@ -96,10 +98,10 @@ public class Door extends LockableStrategy {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return getDescription();
-    default:
-      return super.performAction(action);
+      case EXAMINE:
+        return getDescription();
+      default:
+        return super.performAction(action);
     }
   }
 
@@ -130,8 +132,9 @@ public class Door extends LockableStrategy {
    */
   @Override
   public Direction getDirection() {
-    if (Player.getInstance().getCurrentRoom().equals(firstRoom))
+    if (Player.getInstance().getCurrentRoom().equals(firstRoom)) {
       return firstRoomDirection;
+    }
     return secondRoomDirection;
   }
 
@@ -180,9 +183,10 @@ public class Door extends LockableStrategy {
    */
   @Override
   public void setDirection(Direction direction) {
-    if (Player.getInstance().getCurrentRoom().equals(firstRoom))
+    if (Player.getInstance().getCurrentRoom().equals(firstRoom)) {
       setFirstRoomDirection(direction);
-    else
+    } else {
       setSecondRoomDirection(direction);
+    }
   }
 }

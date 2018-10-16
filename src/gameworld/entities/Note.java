@@ -1,13 +1,10 @@
-/**
- * 
- */
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import gameworld.entities.Item.Action;
 
 /**
  * The note allows you to set the writing the player can see in it. It also
@@ -23,6 +20,9 @@ public class Note extends PickUpAbleStrategy {
   /** The writing on the note - allows developers to set what is written. */
   private String writing;
 
+  /**
+   * Instantiates a new note.
+   */
   public Note() {
     this.description = "note with some writing";
     this.name = "Note";
@@ -39,11 +39,13 @@ public class Note extends PickUpAbleStrategy {
    */
   @Override
   public List<String> getActions() {
-    if (!Player.getInstance().getInventory().contains(this))
+    if (!Player.getInstance().getInventory().contains(this)) {
       return actions; // return default actions if not in inventory
+    }
 
     // return new action if in inventory
-    return Arrays.asList(Action.EXAMINE.toString(), Action.READ.toString(), Action.DROP.toString());
+    return Arrays.asList(Action.EXAMINE.toString(), Action.READ.toString(), 
+        Action.DROP.toString());
   }
 
   /*
@@ -56,12 +58,12 @@ public class Note extends PickUpAbleStrategy {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return givePlayerCoins(3);
-    case READ:
-      return read();
-    default:
-      return super.performAction(action);
+      case EXAMINE:
+        return givePlayerCoins(3);
+      case READ:
+        return read();
+      default:
+        return super.performAction(action);
     }
   }
 
@@ -71,21 +73,24 @@ public class Note extends PickUpAbleStrategy {
    * @return the words written in the Note
    */
   private String read() {
-    if (writing != null)
+    if (writing != null) {
       return writing;
+    }
     switch (probability) {
-    case 1:
-      return "Toss some coins into the fountain and make a wish.";
-    case 2:
-      return "Sometimes the best places to hide keys are in the most obvious or overlooked places.";
-    case 3:
-      return "This note is blank";
-    case 4:
-      return "I love secret rooms. I wonder where the entrance is.";
-    case 5:
-      return "Bookshelves are the best at hiding things but one wrong move and all the books may come tumbling down.";
-    default:
-      return "The writing is illegible";
+      case 1:
+        return "Toss some coins into the fountain and make a wish.";
+      case 2:
+        return "Sometimes the best places to hide keys are in the most obvious or "
+            + "overlooked places.";
+      case 3:
+        return "This note is blank";
+      case 4:
+        return "I love secret rooms. I wonder where the entrance is.";
+      case 5:
+        return "Bookshelves are the best at hiding things but one wrong move and all "
+            + "the books may come tumbling down.";
+      default:
+        return "The writing is illegible";
     }
   }
 
@@ -112,6 +117,7 @@ public class Note extends PickUpAbleStrategy {
   }
 
   /**
+   * Returns the writing on the note.
    * @return the writing
    */
   public String getWriting() {
@@ -119,6 +125,7 @@ public class Note extends PickUpAbleStrategy {
   }
 
   /**
+   * Sets the writing on the note.
    * @param writing
    *          the writing to set
    */

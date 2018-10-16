@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  * Has all the attacking methods used by entities that can attack such as the
- * Player and items that retaliate when attacked
+ * Player and items that retaliate when attacked.
  * 
  * @author Deanne Alabastro 300346210
  */
@@ -59,7 +59,6 @@ public abstract class AttackingEntity implements Damageable {
    *
    * @param amount
    *          the amount
-   * @return the damaged
    */
   public void getDamaged(int amount) {
     if ((this.health - amount) < 0) {
@@ -110,8 +109,9 @@ public abstract class AttackingEntity implements Damageable {
 
     // with 5% chance, check to see if entity can increase attack damage through a
     // "critical hit"
-    if (new Random().nextInt(101) < 5)
+    if (new Random().nextInt(101) < 5) {
       damage += generateRandomDamage();
+    }
 
     return damage;
   }

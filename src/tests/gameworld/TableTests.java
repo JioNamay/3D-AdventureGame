@@ -1,13 +1,7 @@
-/**
- * 
- */
 package tests.gameworld;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import gameworld.Room;
 import gameworld.entities.Item;
@@ -15,8 +9,13 @@ import gameworld.entities.Item.Action;
 import gameworld.entities.Key;
 import gameworld.entities.Player;
 import gameworld.entities.Table;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
 
 /**
+ * Tests for the table.
  * @author Deanne Alabastro 300346210
  *
  */
@@ -26,7 +25,8 @@ class TableTests {
   private Table table;
 
   /**
-   * @throws java.lang.Exception
+   * Set up.
+   * @throws java.lang.Exception throw exception.
    */
   @BeforeEach
   void setUp() throws Exception {

@@ -1,9 +1,8 @@
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
-
-import gameworld.entities.Item.Action;
 
 /**
  * Contains the pick up behaviors for items the player can pick up.
@@ -28,13 +27,13 @@ public abstract class PickUpAbleStrategy extends CoinBank {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case PICKUP:
-      return pickUp();
-    case DROP:
-      return drop();
-    default:
-      throw new IllegalArgumentException(
-          "Unknown action: " + action.toString() + " for object: " + this.name);
+      case PICKUP:
+        return pickUp();
+      case DROP:
+        return drop();
+      default:
+        throw new IllegalArgumentException(
+            "Unknown action: " + action.toString() + " for object: " + this.name);
     }
   }
 
@@ -46,8 +45,9 @@ public abstract class PickUpAbleStrategy extends CoinBank {
   protected String pickUp() {
     Player player = Player.getInstance();
     // check if pickup is valid.
-    if (player.getInventory().isFull())
+    if (player.getInventory().isFull()) {
       return "Cannot pickup " + this.getName() + ". Inventory is full.";
+    }
 
     // add item to player inventory and remove from room.
     player.getCurrentRoom().removeGameItem(this);
@@ -65,8 +65,9 @@ public abstract class PickUpAbleStrategy extends CoinBank {
     Player player = Player.getInstance();
 
     // check if drop valid.
-    if (!player.getInventory().contains(this))
+    if (!player.getInventory().contains(this)) {
       return "How are you going to drop an item you aren't even holding?";
+    }
 
     // delegate drop to room - drops if location is available, else does nothing
     // (but returns string with result)

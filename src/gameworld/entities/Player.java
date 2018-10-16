@@ -72,6 +72,7 @@ public class Player extends AttackingEntity {
   }
 
   /**
+   * Returns the direction.
    * @return the direction
    */
   public Direction getDirection() {
@@ -79,6 +80,7 @@ public class Player extends AttackingEntity {
   }
 
   /**
+   * Sets the direction.
    * @param direction
    *          the direction to set
    */
@@ -112,8 +114,9 @@ public class Player extends AttackingEntity {
    *          the new inventory
    */
   public void setInventory(Inventory inventory) {
-    if (this.inventory == null)
+    if (this.inventory == null) {
       this.inventory = inventory;
+    }
   }
 
   /**
@@ -176,8 +179,9 @@ public class Player extends AttackingEntity {
    *          the currentRoom to set
    */
   public void setCurrentRoom(Room currentRoom) {
-    if (this.currentRoom != null)
+    if (this.currentRoom != null) {
       this.currentRoom.setHasPlayer(false); // tell the old room that it no longer has player
+    }
     this.currentRoom = currentRoom;
     currentRoom.setHasPlayer(true);
 

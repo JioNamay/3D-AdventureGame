@@ -1,13 +1,10 @@
-/**
- *
- */
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import gameworld.entities.Item.Action;
 
 /**
  * The player can take and place things inside a table.
@@ -29,14 +26,15 @@ public class Table extends LockableStrategy implements Container {
     Random rand = new Random();
     int probability = rand.nextInt(5 + 1) + 1;
 
-    if (probability == 1)
+    if (probability == 1) {
       item = new Potion();
-    else if (probability == 2)
+    } else if (probability == 2) {
       item = new Key();
-    else if (probability == 3)
+    } else if (probability == 3) {
       item = new HeavyBook();
-    else if (probability == 4)
+    } else if (probability == 4) {
       item = new Note();
+    }
   }
 
   /*
@@ -46,7 +44,6 @@ public class Table extends LockableStrategy implements Container {
    */
   @Override
   public boolean isSolid() {
-    // TODO Auto-generated method stub
     return true;
   }
 
@@ -57,7 +54,6 @@ public class Table extends LockableStrategy implements Container {
    */
   @Override
   public boolean isDoor() {
-    // TODO Auto-generated method stub
     return false;
   }
 
@@ -69,8 +65,9 @@ public class Table extends LockableStrategy implements Container {
    */
   @Override
   public void placeItem(PickUpAbleStrategy item) {
-    if (item == null)
+    if (item == null) {
       this.item = item;
+    }
   }
 
   /*
@@ -80,8 +77,9 @@ public class Table extends LockableStrategy implements Container {
    */
   @Override
   public PickUpAbleStrategy takeItem() {
-    if (!Player.getInstance().getInventory().isFull())
+    if (!Player.getInstance().getInventory().isFull()) {
       return item;
+    }
     return null;
   }
 
@@ -92,17 +90,20 @@ public class Table extends LockableStrategy implements Container {
    */
   @Override
   public String getDescription() {
-    if (isLocked)
+    if (isLocked) {
       return "A locked " + description;
+    }
     if (!isLocked && isOpen) {
       String containsStr = null;
       if (item == null) {
-        if (coinBank == 0)
+        if (coinBank == 0) {
           containsStr = "nothing.";
-        else
+        } else {
           containsStr = "coins.";
-      } else
+        }
+      } else {
         containsStr = item.getName();
+      }
 
       return "An open " + description + " containing " + containsStr;
     }
@@ -117,16 +118,18 @@ public class Table extends LockableStrategy implements Container {
   @Override
   public List<String> getActions() {
     if (isLocked) {
-      if (Player.getInstance().getInventory().hasKey())
+      if (Player.getInstance().getInventory().hasKey()) {
         return actions;
-      else
+      } else {
         return Arrays.asList(Action.EXAMINE.toString());
+      }
     } else {
-      if (isOpen)
+      if (isOpen) {
         return Arrays.asList(Action.EXAMINE.toString(), Action.TAKE.toString(),
             Action.PLACE.toString(), Action.CLOSE.toString());
-      else
+      } else {
         return Arrays.asList(Action.EXAMINE.toString(), Action.OPEN.toString());
+      }
     }
   }
 
@@ -140,34 +143,37 @@ public class Table extends LockableStrategy implements Container {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return givePlayerCoins(1);
-    case TAKE:
-      if (Player.getInstance().getInventory().isFull())
-        return "Can't take anything, inventory is full";
-      if (item == null) {
-        if (coinBank > 0) {
-          Player.getInstance().addCoins(1);
-          return "You got a coin from the table";
-        } else {
-          return "The table is empty, there is nothing to take";
+      case EXAMINE:
+        return givePlayerCoins(1);
+      case TAKE:
+        if (Player.getInstance().getInventory().isFull()) {
+          return "Can't take anything, inventory is full";
         }
-      }
-      Player.getInstance().getInventory().add(item);
-      String itemName = item.getName();
-      item = null;
-      return "You got a " + itemName + " from the table!";
-
-    case PLACE:
-      if (item != null)
-        return "Can't place anything in the table. It is full";
-      PickUpAbleStrategy itemToPlace = Player.getInstance().getSelectedItem();
-      placeItem(itemToPlace);
-      if (itemToPlace == null)
-        return "Player placed nothing in the table.";
-      return "Player placed " + itemToPlace.getName() + " in the table.";
-    default:
-      return super.performAction(action);
+        if (item == null) {
+          if (coinBank > 0) {
+            Player.getInstance().addCoins(1);
+            return "You got a coin from the table";
+          } else {
+            return "The table is empty, there is nothing to take";
+          }
+        }
+        Player.getInstance().getInventory().add(item);
+        String itemName = item.getName();
+        item = null;
+        return "You got a " + itemName + " from the table!";
+  
+      case PLACE:
+        if (item != null) {
+          return "Can't place anything in the table. It is full";
+        }
+        PickUpAbleStrategy itemToPlace = Player.getInstance().getSelectedItem();
+        placeItem(itemToPlace);
+        if (itemToPlace == null) {
+          return "Player placed nothing in the table.";
+        }
+        return "Player placed " + itemToPlace.getName() + " in the table.";
+      default:
+        return super.performAction(action);
     }
   }
 

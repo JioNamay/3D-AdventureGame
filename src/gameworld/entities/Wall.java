@@ -1,9 +1,9 @@
 package gameworld.entities;
 
-import java.util.List;
-
 import gameworld.Location.Direction;
 import gameworld.entities.Item.Action;
+import java.util.List;
+
 
 /**
  * The wall object represents a wall and marks a location as solid so that a
@@ -56,7 +56,6 @@ public class Wall implements Strategy {
    */
   @Override
   public boolean isSolid() {
-    // TODO Auto-generated method stub
     return true;
   }
 
@@ -67,7 +66,6 @@ public class Wall implements Strategy {
    */
   @Override
   public boolean isDoor() {
-    // TODO Auto-generated method stub
     return false;
   }
 

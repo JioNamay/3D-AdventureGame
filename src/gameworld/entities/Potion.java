@@ -1,9 +1,10 @@
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.entities.Item.Action;
+
 
 /**
  * The potion can recover the player's health by 10.
@@ -70,14 +71,15 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return givePlayerCoins(3);
-    case USE:
-      Player.getInstance().recover(10);
-      getDamaged(1);
-      return "Player drank the potion and recovers 10 bits of life. As the last drop of liquid leaves the bottle, the bottle magically disappears!";
-    default:
-      return super.performAction(action);
+      case EXAMINE:
+        return givePlayerCoins(3);
+      case USE:
+        Player.getInstance().recover(10);
+        getDamaged(1);
+        return "Player drank the potion and recovers 10 bits of life. As the last drop of "
+            + "liquid leaves the bottle, the bottle magically disappears!";
+      default:
+        return super.performAction(action);
     }
   }
 
@@ -88,8 +90,9 @@ public class Potion extends PickUpAbleStrategy implements Damageable {
    */
   @Override
   public List<String> getActions() {
-    if (!Player.getInstance().getInventory().contains(this))
+    if (!Player.getInstance().getInventory().contains(this)) {
       return actions; // return default actions if not in inventory
+    }
 
     // return new action if in inventory
     return Arrays.asList(Action.EXAMINE.toString(), Action.USE.toString(), Action.DROP.toString());

@@ -25,7 +25,6 @@ public interface Damageable {
    *
    * @param amount
    *          the amount
-   * @return the damaged
    */
   public void getDamaged(int amount);
 }

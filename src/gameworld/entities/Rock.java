@@ -1,9 +1,9 @@
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.entities.Item.Action;
 
 /**
  * The rock, when dropped, removes itself from the players inventory and
@@ -33,8 +33,9 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
    */
   @Override
   public List<String> getActions() {
-    if (!Player.getInstance().getInventory().contains(this))
+    if (!Player.getInstance().getInventory().contains(this)) {
       return actions; // return default actions if not in inventory
+    }
 
     // return new action if in inventory
     return Arrays.asList(Action.EXAMINE.toString(), Action.DROP.toString());
@@ -105,15 +106,16 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return givePlayerCoins(3);
-    case DROP:
-      PickUpAbleStrategy key = new Key();
-      Player.getInstance().getInventory().remove(this);
-      Player.getInstance().getInventory().add(key);
-      return "Dropping the rock causes it to shatter into pieces revealing a key! It has been added to your inventory";
-    default:
-      return super.performAction(action);
+      case EXAMINE:
+        return givePlayerCoins(3);
+      case DROP:
+        PickUpAbleStrategy key = new Key();
+        Player.getInstance().getInventory().remove(this);
+        Player.getInstance().getInventory().add(key);
+        return "Dropping the rock causes it to shatter into pieces revealing a key! "
+            + "It has been added to your inventory";
+      default:
+        return super.performAction(action);
     }
   }
 }

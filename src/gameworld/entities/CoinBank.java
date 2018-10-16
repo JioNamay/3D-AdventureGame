@@ -14,7 +14,7 @@ public abstract class CoinBank implements Strategy {
   /** A long description of the entity. */
   protected String description;
 
-  /** The name of the entity (short description) */
+  /** The name of the entity (short description). */
   protected String name;
 
   /** The coin bank. */
@@ -31,8 +31,9 @@ public abstract class CoinBank implements Strategy {
    * @return the string
    */
   protected String givePlayerCoins(int amount) {
-    if (coinBank == 0)
+    if (coinBank == 0) {
       return description;
+    }
 
     int givenAmount = amount; // the amount of coins actually given to player
     // add the rest of coinbank to player if amount exceeds coinbank
@@ -68,6 +69,7 @@ public abstract class CoinBank implements Strategy {
   }
 
   /**
+   * Returns the name.
    * @return the name
    */
   public String getName() {
@@ -100,8 +102,9 @@ public abstract class CoinBank implements Strategy {
    */
   @Override
   public Direction getDirection() {
-    if (direction == null)
+    if (direction == null) {
       return Direction.NORTH;
+    }
     return direction;
   }
 

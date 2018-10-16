@@ -1,6 +1,3 @@
-/**
- *
- */
 package gameworld.entities;
 
 import gameworld.Room;
@@ -13,6 +10,9 @@ import gameworld.entities.Item.Action;
  */
 public class Bookshelf extends AttackingItems implements Container {
 
+  /**
+   * Instantiates a new bookshelf.
+   */
   public Bookshelf() {
     this.name = "Bookshelf";
     this.description = "a sturdy bookshelf";
@@ -44,8 +44,9 @@ public class Bookshelf extends AttackingItems implements Container {
   public void placeItem(PickUpAbleStrategy item) {
     Player player = Player.getInstance();
     // remove book from inventory if player is trying to place book in bookshelf
-    if (player.getSelectedItem() instanceof HeavyBook)
+    if (player.getSelectedItem() instanceof HeavyBook) {
       player.getInventory().remove(player.getSelectedItem());
+    }
   }
 
   /*
@@ -68,19 +69,20 @@ public class Bookshelf extends AttackingItems implements Container {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case TAKE:
-      if (Player.getInstance().getInventory().isFull())
-        return "Can't take anything, inventory is full";
-      Player.getInstance().getInventory().add(takeItem());
-      return "Player took a book from the bookshelf";
-    case PLACE:
-      if (Player.getInstance().getSelectedItem() instanceof HeavyBook) {
-        placeItem(Player.getInstance().getSelectedItem());
-        return "Player placed a book in the bookshelf";
-      }
-      return "Player can only place books in the bookshelf";
-    default:
-      return super.performAction(action);
+      case TAKE:
+        if (Player.getInstance().getInventory().isFull()) {
+          return "Can't take anything, inventory is full";
+        }
+        Player.getInstance().getInventory().add(takeItem());
+        return "Player took a book from the bookshelf";
+      case PLACE:
+        if (Player.getInstance().getSelectedItem() instanceof HeavyBook) {
+          placeItem(Player.getInstance().getSelectedItem());
+          return "Player placed a book in the bookshelf";
+        }
+        return "Player can only place books in the bookshelf";
+      default:
+        return super.performAction(action);
     }
   }
 

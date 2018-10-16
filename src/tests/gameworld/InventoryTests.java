@@ -4,11 +4,6 @@ package tests.gameworld;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.util.Iterator;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import gameworld.Location;
 import gameworld.Room;
 import gameworld.entities.Item;
@@ -17,9 +12,16 @@ import gameworld.entities.Key;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
 import gameworld.entities.Potion;
+import java.util.Iterator;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+
+
+
 
 /**
- * Tests for the Inventory class
+ * Tests for the Inventory class.
  * 
  * @author Deanne Alabastro 300346210
  *
@@ -83,8 +85,8 @@ class InventoryTests {
 
   @Test
   public void testInventoryHasKey() {
-    Room room = new Room("Key pickup test"); // need room to test key pickup which increments
-                                             // inventory keys
+    // need room to test key pickup which increments inventory keys
+    Room room = new Room("Key pickup test"); 
     player.setCurrentRoom(room);
     Location[][] roomLocs = room.getLocations();
 
@@ -99,8 +101,8 @@ class InventoryTests {
 
   @Test
   public void testInventoryDecrementsKeyCount() {
-    Room room = new Room("Key pickup test"); // need room to test key pickup which increments
-                                             // inventory keys
+    // need room to test key pickup which increments inventory keys
+    Room room = new Room("Key pickup test");
     player.setCurrentRoom(room);
     Location[][] roomLocs = room.getLocations();
 

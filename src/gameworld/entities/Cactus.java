@@ -1,10 +1,10 @@
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import gameworld.entities.Item.Action;
 
 /**
  * The cactus exhibits 4 behaviors randomly every time the player examines it.
@@ -39,24 +39,25 @@ public class Cactus extends CoinBank {
 
     // do action depending on probability
     switch (probability) {
-    case 1:
-      // give player coins, returns description if not enough coins in coinbank
-      return givePlayerCoins(1);
-    case 2:
-      // deal some damage to the player
-      int damage = rand.nextInt(5 + 1) + 1;
-      Player.getInstance().getDamaged(damage);
-      return "Shouldn't have gotten too close to the cactus. It decided to take " + damage
-          + " bits of your life";
-    case 3:
-      // give the player a key if their inventory isn't full, else follow case 1
-      if (Player.getInstance().getInventory().isFull())
-        givePlayerCoins(1);
-      Key key = new Key();
-      Player.getInstance().getInventory().add(key);
-      return "You found a " + key.getName();
-    default:
-      return description;
+      case 1:
+        // give player coins, returns description if not enough coins in coinbank
+        return givePlayerCoins(1);
+      case 2:
+        // deal some damage to the player
+        int damage = rand.nextInt(5 + 1) + 1;
+        Player.getInstance().getDamaged(damage);
+        return "Shouldn't have gotten too close to the cactus. It decided to take " + damage
+            + " bits of your life";
+      case 3:
+        // give the player a key if their inventory isn't full, else follow case 1
+        if (Player.getInstance().getInventory().isFull()) {
+          givePlayerCoins(1);
+        }
+        Key key = new Key();
+        Player.getInstance().getInventory().add(key);
+        return "You found a " + key.getName();
+      default:
+        return description;
     }
   }
 
@@ -79,11 +80,11 @@ public class Cactus extends CoinBank {
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return examine();
-    default:
-      throw new IllegalArgumentException(
-          "Unknown action: " + action.toString() + " for object: " + this.name);
+      case EXAMINE:
+        return examine();
+      default:
+        throw new IllegalArgumentException(
+            "Unknown action: " + action.toString() + " for object: " + this.name);
     }
   }
 

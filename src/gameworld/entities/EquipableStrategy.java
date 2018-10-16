@@ -1,9 +1,9 @@
 package gameworld.entities;
 
+import gameworld.entities.Item.Action;
 import java.util.Arrays;
 import java.util.List;
 
-import gameworld.entities.Item.Action;
 
 /**
  * The EquipableStrategy is for every item that has the capability to be a
@@ -48,20 +48,21 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
   @Override
   public String performAction(Action action) {
     switch (action) {
-    case EXAMINE:
-      return givePlayerCoins(1);
-    case DROP:
-      if (Player.getInstance().getEquippedWeapon().equals(this)) {
-        return this.performAction(Action.UNEQUIP) + "\n" + drop();
-      }
-    case EQUIP:
-      Player.getInstance().setEquippedWeapon(this);
-      return "Player equipped " + this.name;
-    case UNEQUIP:
-      Player.getInstance().setEquippedWeapon(null);
-      return "Player unequipped " + this.name;
-    default:
-      return super.performAction(action);
+      case EXAMINE:
+        return givePlayerCoins(1);
+      case DROP:
+        if (Player.getInstance().getEquippedWeapon().equals(this)) {
+          return this.performAction(Action.UNEQUIP) + "\n" + drop();
+        }
+        return "";
+      case EQUIP:
+        Player.getInstance().setEquippedWeapon(this);
+        return "Player equipped " + this.name;
+      case UNEQUIP:
+        Player.getInstance().setEquippedWeapon(null);
+        return "Player unequipped " + this.name;
+      default:
+        return super.performAction(action);
     }
   }
 
@@ -72,11 +73,13 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
    */
   @Override
   public List<String> getActions() {
-    if (!Player.getInstance().getInventory().contains(this))
+    if (!Player.getInstance().getInventory().contains(this)) {
       return actions; // return default actions if not in inventory
-    if (Player.getInstance().getEquippedWeapon().equals(this)) // if equipped
+    }
+    if (Player.getInstance().getEquippedWeapon().equals(this)) {
       return Arrays.asList(Action.EXAMINE.toString(), Action.UNEQUIP.toString(),
           Action.DROP.toString());
+    }
     return Arrays.asList(Action.EXAMINE.toString(), Action.EQUIP.toString(),
         Action.DROP.toString());
   }
