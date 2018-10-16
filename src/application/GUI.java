@@ -93,7 +93,7 @@ public abstract class GUI extends JFrame implements KeyListener {
 		setTitle("Adventure Game");
 		addKeyListener(this);
 		player = Player.getInstance();
-		setFocusable(true);
+		setFocusable(true);		// handle key events
 
 		for (int index = 0; index < 9; index++)
 			player.getInventory().add(new Potion());
