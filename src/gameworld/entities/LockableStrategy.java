@@ -16,7 +16,7 @@ public abstract class LockableStrategy extends CoinBank {
 	protected List<String> actions = Arrays.asList(Action.EXAMINE.toString(), Action.UNLOCK.toString()); 
 
 	/** The is locked. */
-	protected boolean isOpen, isLocked;
+	protected boolean isOpen = false, isLocked = true;
  
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Strategy#getActions()
