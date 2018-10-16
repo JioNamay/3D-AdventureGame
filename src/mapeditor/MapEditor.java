@@ -1,7 +1,5 @@
 package mapeditor;
 
-import gameworld.tiles.Tile;
-
 public class MapEditor extends MapEditorGUI {
 
 	public MapEditor() {

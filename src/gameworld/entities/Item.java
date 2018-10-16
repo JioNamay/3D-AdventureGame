@@ -4,12 +4,14 @@ package gameworld.entities;
  * Entity is the context class where the various items are used.
  * An instance of entity is made in the gameworld, where certain items
  * are placed in certain locations.
+ * 
+ * Uses the strategy pattern 
  *
  * @author yangcarr 300368805
  * @author alabasdean 300346210
  */
 public class Item {
-	
+
 	/**
 	 * The Enum Action - used for performing actions on items.
 	 */
@@ -23,10 +25,10 @@ public class Item {
 		OPEN,
 		CLOSE,
 		UNLOCK,
-		EQUIP, 
-		UNEQUIP, 
-		ATTACK, 
-		READ, 
+		EQUIP,
+		UNEQUIP,
+		ATTACK,
+		READ,
 		THROWCOINS
 	}
 
@@ -53,7 +55,7 @@ public class Item {
 	public String getDescription() {
 		return item.getDescription();
 	}
-	
+
 	/**
 	 * Gets the name.
 	 *
@@ -62,7 +64,7 @@ public class Item {
 	public String getName() {
 		return item.getName();
 	}
-	
+
 	/**
 	 * Checks if is solid.
 	 *
@@ -71,7 +73,7 @@ public class Item {
 	public boolean isSolid() {
 		return item.isSolid();
 	}
-	
+
 	/**
 	 * Checks if is door.
 	 *

@@ -12,9 +12,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -31,16 +30,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
-import javax.xml.stream.XMLEventFactory;
-import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartDocument;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
 
 import gameworld.Location.Direction;
 import gameworld.Room;
@@ -49,7 +41,6 @@ import gameworld.entities.Cactus;
 import gameworld.entities.Door;
 import gameworld.entities.Fountain;
 import gameworld.entities.HeavyBook;
-import gameworld.entities.Item;
 import gameworld.entities.Key;
 import gameworld.entities.Note;
 import gameworld.entities.Potion;
@@ -61,147 +52,292 @@ import gameworld.entities.Table;
 import gameworld.entities.TreasureChest;
 import gameworld.entities.Tree;
 import gameworld.entities.Wall;
+import javanet.staxutils.IndentingXMLStreamWriter;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class MapEditorGUI.
+ *
  * @author namayraph 300374356
  */
 public class MapEditorGUI {
 
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The board panel. */
 	private JLayeredPane boardPanel;
+	
+	/** The button panel. */
 	private JPanel buttonPanel;
+	
+	/** The rock button. */
 	private JButton rockButton;
+	
+	/** The sofa button. */
 	private JButton sofaButton;
+	
+	/** The table button. */
 	private JButton tableButton;
+	
+	/** The tree button. */
 	private JButton treeButton;
+	
+	/** The note button. */
 	private JButton noteButton;
+	
+	/** The fountain button. */
 	private JButton fountainButton;
+	
+	/** The cactus button. */
 	private JButton cactusButton;
+	
+	/** The bookshelf button. */
 	private JButton bookshelfButton;
+	
+	/** The treasure chest button. */
 	private JButton treasureChestButton;
+	
+	/** The wall block button. */
 	private JButton wallBlockButton;
+	
+	/** The door button. */
 	private JButton doorButton;
+	
+	/** The heavy book button. */
 	private JButton heavyBookButton;
+	
+	/** The key button. */
 	private JButton keyButton;
+	
+	/** The potion button. */
 	private JButton potionButton;
+	
+	/** The stick button. */
 	private JButton stickButton;
+	
+	/** The delete button. */
 	private JButton deleteButton;
+	
+	/** The rotate button. */
 	private JButton rotateButton;
+	
+	/** The room select label. */
 	private JLabel roomSelectLabel;
+	
+	/** The menu bar. */
 	private JMenuBar menuBar;
+	
+	/** The file menu. */
 	private JMenu fileMenu;
+	
+	/** The save menu item. */
 	private JMenuItem saveMenuItem;
+	
+	/** The load menu item. */
 	private JMenuItem loadMenuItem;
 
+	/** The rock image top. */
 	private BufferedImage rockImage_top;
 
+	/** The sofa image top north. */
 	private BufferedImage sofaImage_top_north;
+	
+	/** The sofa image top east. */
 	private BufferedImage sofaImage_top_east;
+	
+	/** The sofa image top south. */
 	private BufferedImage sofaImage_top_south;
+	
+	/** The sofa image top west. */
 	private BufferedImage sofaImage_top_west;
 
+	/** The table image top north. */
 	private BufferedImage tableImage_top_north;
+	
+	/** The table image top east. */
 	private BufferedImage tableImage_top_east;
+	
+	/** The table image top south. */
 	private BufferedImage tableImage_top_south;
+	
+	/** The table image top west. */
 	private BufferedImage tableImage_top_west;
 
+	/** The tree image top. */
 	private BufferedImage treeImage_top;
 
+	/** The note image top. */
 	private BufferedImage noteImage_top;
 
+	/** The fountain image top. */
 	private BufferedImage fountainImage_top;
 
+	/** The cactus image top. */
 	private BufferedImage cactusImage_top;
 
+	/** The bookshelf image top north. */
 	private BufferedImage bookshelfImage_top_north;
+	
+	/** The bookshelf image top east. */
 	private BufferedImage bookshelfImage_top_east;
+	
+	/** The bookshelf image top south. */
 	private BufferedImage bookshelfImage_top_south;
+	
+	/** The bookshelf image top west. */
 	private BufferedImage bookshelfImage_top_west;
 
+	/** The treasure chest image top north. */
 	private BufferedImage treasureChestImage_top_north;
+	
+	/** The treasure chest image top east. */
 	private BufferedImage treasureChestImage_top_east;
+	
+	/** The treasure chest image top south. */
 	private BufferedImage treasureChestImage_top_south;
+	
+	/** The treasure chest image top west. */
 	private BufferedImage treasureChestImage_top_west;
 
+	/** The wall block image top. */
 	private BufferedImage wallBlockImage_top;
 
+	/** The door image top north. */
 	private BufferedImage doorImage_top_north;
+	
+	/** The door image top east. */
 	private BufferedImage doorImage_top_east;
+	
+	/** The door image top south. */
 	private BufferedImage doorImage_top_south;
+	
+	/** The door image top west. */
 	private BufferedImage doorImage_top_west;
 
+	/** The heavy book image top. */
 	private BufferedImage heavyBookImage_top;
 
+	/** The key image top. */
 	private BufferedImage keyImage_top;
 
+	/** The potion image top. */
 	private BufferedImage potionImage_top;
 
+	/** The stick image top. */
 	private BufferedImage stickImage_top;
 
+	/** The rock image iso. */
 	private BufferedImage rockImage_iso;
+	
+	/** The sofa image iso. */
 	private BufferedImage sofaImage_iso;
+	
+	/** The table image iso. */
 	private BufferedImage tableImage_iso;
+	
+	/** The tree image iso. */
 	private BufferedImage treeImage_iso;
+	
+	/** The note image iso. */
 	private BufferedImage noteImage_iso;
+	
+	/** The fountain image iso. */
 	private BufferedImage fountainImage_iso;
+	
+	/** The cactus image iso. */
 	private BufferedImage cactusImage_iso;
+	
+	/** The bookshelf image iso. */
 	private BufferedImage bookshelfImage_iso;
+	
+	/** The treasure chest image iso. */
 	private BufferedImage treasureChestImage_iso;
+	
+	/** The wall block image iso. */
 	private BufferedImage wallBlockImage_iso;
+	
+	/** The door image iso. */
 	private BufferedImage doorImage_iso;
+	
+	/** The heavy book image iso. */
 	private BufferedImage heavyBookImage_iso;
+	
+	/** The key image iso. */
 	private BufferedImage keyImage_iso;
+	
+	/** The potion image iso. */
 	private BufferedImage potionImage_iso;
+	
+	/** The stick image iso. */
 	private BufferedImage stickImage_iso;
 
+	/** The current room. */
 	protected String currentRoom = "Library";
+	
+	/** The selected item. */
 	protected String selectedItem = " ";
+	
+	/** The delete mode. */
 	protected boolean deleteMode = false;
+	
+	/** The rotate mode. */
 	protected boolean rotateMode = false;
 
+	/** The library map. */
 	private int[][] libraryMap;
+	
+	/** The foyer map. */
 	private int[][] foyerMap;
+	
+	/** The courtyard map. */
 	private int[][] courtyardMap;
+	
+	/** The study map. */
 	private int[][] studyMap;
 
+	/** The room map. */
 	private int[][] roomMap;
 
+	/** The room strings. */
 	private String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
 
-	private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelComponent> boardTiles;
+	/** The board tiles. */
+	private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile> boardTiles;
 
+	/** The library room. */
 	private Room libraryRoom;
+	
+	/** The foyer room. */
 	private Room foyerRoom;
+	
+	/** The courtyard room. */
 	private Room courtyardRoom;
+	
+	/** The study room. */
 	private Room studyRoom;
 
+	/** The config file. */
 	private String configFile = "myFile";
 
+	/**
+	 * Instantiates a new map editor GUI.
+	 */
 	public MapEditorGUI() {
 
-		boardTiles = new ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelComponent>();
+		boardTiles = new ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile>();
 
 		initializeImages();
 
-		roomMap = new int[7][7];
-		libraryMap = new int[7][7];
-		foyerMap = new int[7][7];
-		courtyardMap = new int[7][7];
-		studyMap = new int[7][7];
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 7; j++) {
-				roomMap[i][j] = 0;
-				libraryMap[i][j] = 0;
-				foyerMap[i][j] = 0;
-				courtyardMap[i][j] = 0;
-				studyMap[i][j] = 0;
-			}
-		}
+		initializeMaps();
+
 		GUI();
 	}
 
-	public void GUI() {
+	/**
+	 * Setup frame.
+	 */
+	public void setupFrame() {
 
 		frame = new JFrame("Map Editor");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -209,7 +345,13 @@ public class MapEditorGUI {
 		frame.setLayout(new BorderLayout());
 		frame.setSize(700, 600);
 
-		/* MENU BAR */
+	}
+
+	/**
+	 * Setup menu bar.
+	 */
+	public void setupMenuBar() {
+
 		menuBar = new JMenuBar();
 		fileMenu = new JMenu("File");
 		saveMenuItem = new JMenuItem("Save");
@@ -218,31 +360,50 @@ public class MapEditorGUI {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				createRooms();
+				exportToXML();
 			}
 
 		});
 		loadMenuItem = new JMenuItem("Load");
+		loadMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
+				System.out.println("");
+
+			}
+
+		});
 		fileMenu.add(saveMenuItem);
 		fileMenu.add(loadMenuItem);
 		menuBar.add(fileMenu);
 		frame.setJMenuBar(menuBar);
-		/* MENU BAR */
 
-		/* BOARD PANEL */
+	}
+
+	/**
+	 * Setup board panel.
+	 */
+	public void setupBoardPanel() {
+
 		boardPanel = new BoardPanel();
 		boardPanel.setBounds(0, 0, 280, 280);
-		// boardPanel.setPreferredSize(new Dimension(280, 280));
 		((BoardPanel) boardPanel).addTiles();
-		frame.add(boardPanel/* , BorderLayout.CENTER */);
-//		boardPanel.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				selectedItem = "";
-//				boardPanel.repaint();
-//			}
-//		});
-		/* BOARD */
+		frame.add(boardPanel);
+
+	}
+
+	/**
+	 * Gui.
+	 */
+	public void GUI() {
+
+		setupFrame();
+
+		setupMenuBar();
+
+		setupBoardPanel();
 
 		/* BUTTON PANEL */
 		buttonPanel = new JPanel();
@@ -628,85 +789,97 @@ public class MapEditorGUI {
 		frame.setVisible(true);
 	}
 
-	public void createRooms() {
-		libraryRoom = new Room("Library");
-		foyerRoom = new Room("Foyer");
-		courtyardRoom = new Room("Courtyard");
-		studyRoom = new Room("Study");
-		for (int row = 0; row < 7; row++) {
-			for (int col = 0; col < 7; col++) {
-				if (libraryMap[row][col] != 0) {
-					//add from and to rooms
-					libraryRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
-				}
-				if (foyerMap[row][col] != 0) {
-					foyerRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
-				}
-				if (courtyardMap[row][col] != 0) {
-					courtyardRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
-				}
-				if (studyMap[row][col] != 0) {
-					studyRoom.addGameItem(row, col, new Item(getIntAsStrategy(roomMap[row][col])));
+	/**
+	 * Export to XML.
+	 */
+	public void exportToXML() {
+
+		if (currentRoom.equals("Library")) {
+			libraryMap = roomMap;
+		} else if (currentRoom.equals("Foyer")) {
+			foyerMap = roomMap;
+		} else if (currentRoom.equals("Courtyard")) {
+			courtyardMap = roomMap;
+		} else if (currentRoom.equals("Study")) {
+			studyMap = roomMap;
+		}
+
+		XMLOutputFactory factory = XMLOutputFactory.newInstance();
+
+		try {
+
+			XMLStreamWriter w = factory.createXMLStreamWriter(new FileWriter("gamemap.xml"));
+
+			IndentingXMLStreamWriter writer = new IndentingXMLStreamWriter(w);
+
+			writer.writeStartDocument();
+
+			writer.writeStartElement("gamemap");
+
+			writer.writeStartElement("library");
+			for (int row = 0; row < 7; row++) {
+				for (int col = 0; col < 7; col++) {
+					writer.writeStartElement("item");
+					writer.writeAttribute("itemID", "" + libraryMap[row][col]);
+					writer.writeAttribute("row", "" + row);
+					writer.writeAttribute("col", "" + col);
+					writer.writeEndElement();
 				}
 			}
-		}
-		try {
-			exportToXML();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			writer.writeEndElement();
+
+			writer.writeStartElement("foyer");
+			for (int row = 0; row < 7; row++) {
+				for (int col = 0; col < 7; col++) {
+					writer.writeStartElement("item");
+					writer.writeAttribute("itemID", "" + foyerMap[row][col]);
+					writer.writeAttribute("row", "" + row);
+					writer.writeAttribute("col", "" + col);
+					writer.writeEndElement();
+				}
+			}
+			writer.writeEndElement();
+
+			writer.writeStartElement("courtyard");
+			for (int row = 0; row < 7; row++) {
+				for (int col = 0; col < 7; col++) {
+					writer.writeStartElement("item");
+					writer.writeAttribute("itemID", "" + courtyardMap[row][col]);
+					writer.writeAttribute("row", "" + row);
+					writer.writeAttribute("col", "" + col);
+					writer.writeEndElement();
+				}
+			}
+			writer.writeEndElement();
+
+			writer.writeStartElement("study");
+			for (int row = 0; row < 7; row++) {
+				for (int col = 0; col < 7; col++) {
+					writer.writeStartElement("item");
+					writer.writeAttribute("itemID", "" + studyMap[row][col]);
+					writer.writeAttribute("row", "" + row);
+					writer.writeAttribute("col", "" + col);
+					writer.writeEndElement();
+				}
+			}
+			writer.writeEndElement();
+
+			writer.writeEndDocument();
+
+			writer.flush();
+			writer.close();
+
+		} catch (XMLStreamException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void exportToXML() throws Exception {
-
-		// create an XMLOutputFactory
-		XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-		// create XMLEventWriter
-		XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(new FileOutputStream(configFile));
-		// create an EventFactory
-		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		XMLEvent end = eventFactory.createDTD("\n");
-		// create and write Start Tag
-		StartDocument startDocument = eventFactory.createStartDocument();
-		eventWriter.add(startDocument);
-
-		// create config open tag
-		StartElement configStartElement = eventFactory.createStartElement("", "", "config");
-		eventWriter.add(configStartElement);
-		eventWriter.add(end);
-		// Write the different nodes
-		createNode(eventWriter, "mode", "1");
-		createNode(eventWriter, "unit", "901");
-		createNode(eventWriter, "current", "0");
-		createNode(eventWriter, "interactive", "0");
-
-		eventWriter.add(eventFactory.createEndElement("", "", "config"));
-		eventWriter.add(end);
-		eventWriter.add(eventFactory.createEndDocument());
-		eventWriter.close();
 
 	}
 
-	private void createNode(XMLEventWriter eventWriter, String name, String value) throws XMLStreamException {
-
-		XMLEventFactory eventFactory = XMLEventFactory.newInstance();
-		XMLEvent end = eventFactory.createDTD("\n");
-		XMLEvent tab = eventFactory.createDTD("\t");
-		// create Start node
-		StartElement sElement = eventFactory.createStartElement("", "", name);
-		eventWriter.add(tab);
-		eventWriter.add(sElement);
-		// create Content
-		Characters characters = eventFactory.createCharacters(value);
-		eventWriter.add(characters);
-		// create End node
-		EndElement eElement = eventFactory.createEndElement("", "", name);
-		eventWriter.add(eElement);
-		eventWriter.add(end);
-
-	}
-
+	/**
+	 * Initialize images.
+	 */
 	public void initializeImages() {
 		try {
 
@@ -773,16 +946,52 @@ public class MapEditorGUI {
 		}
 	}
 
+	/**
+	 * Initialize maps.
+	 */
+	public void initializeMaps() {
+
+		roomMap = new int[7][7];
+		libraryMap = new int[7][7];
+		foyerMap = new int[7][7];
+		courtyardMap = new int[7][7];
+		studyMap = new int[7][7];
+		for (int i = 0; i < 7; i++) {
+			for (int j = 0; j < 7; j++) {
+				roomMap[i][j] = 0;
+				libraryMap[i][j] = 0;
+				foyerMap[i][j] = 0;
+				courtyardMap[i][j] = 0;
+				studyMap[i][j] = 0;
+			}
+		}
+
+	}
+
+	/**
+	 * Turn delete mode off.
+	 */
 	public void turnDeleteModeOff() {
 		deleteMode = false;
 		deleteButton.setText("Delete Mode: Off");
 	}
 
+	/**
+	 * Turn rotate mode off.
+	 */
 	public void turnRotateModeOff() {
 		rotateMode = false;
 		rotateButton.setText("Rotate Mode: Off");
 	}
 
+	/**
+	 * Gets the item as int.
+	 *
+	 * @param item the item
+	 * @param x the x
+	 * @param y the y
+	 * @return the item as int
+	 */
 	public int getItemAsInt(String item, int x, int y) {
 		switch (item) {
 		case "rock":
@@ -827,9 +1036,15 @@ public class MapEditorGUI {
 		return -1;
 	}
 
+	/**
+	 * Gets the int as strategy.
+	 *
+	 * @param integer the integer
+	 * @return the int as strategy
+	 */
 	public Strategy getIntAsStrategy(int integer) {
 
-		char[] digitArray = ("" + integer).toCharArray();
+		// char[] digitArray = ("" + integer).toCharArray();
 
 		if (integer == 1) {
 			return new Rock();
@@ -959,6 +1174,12 @@ public class MapEditorGUI {
 		return null;
 	}
 
+	/**
+	 * Gets the rotated int.
+	 *
+	 * @param integer the integer
+	 * @return the rotated int
+	 */
 	public int getRotatedInt(int integer) {
 
 		switch (integer) {
@@ -1035,6 +1256,12 @@ public class MapEditorGUI {
 		return integer;
 	}
 
+	/**
+	 * Gets the int as image.
+	 *
+	 * @param integer the integer
+	 * @return the int as image
+	 */
 	public BufferedImage getIntAsImage(int integer) {
 
 		if (integer == 1) {
@@ -1099,7 +1326,9 @@ public class MapEditorGUI {
 				|| integer == 11030103 || integer == 11030104 || integer == 11030201 || integer == 11030202
 				|| integer == 11030203 || integer == 11030204 || integer == 11030301 || integer == 11030302
 				|| integer == 11030303 || integer == 11030304 || integer == 11030401 || integer == 11030402
-				|| integer == 11030403 || integer == 11030404) {
+				|| integer == 11030403 || integer == 11030404 || integer == 11010105 || integer == 11010205
+				|| integer == 11010305 || integer == 11010405 || integer == 11030105 || integer == 11030205
+				|| integer == 11030305 || integer == 11030405) {
 			return doorImage_top_north;
 
 		} else if (integer == 1102 || integer == 11020101 || integer == 11020102 || integer == 11020103
@@ -1110,7 +1339,9 @@ public class MapEditorGUI {
 				|| integer == 11040103 || integer == 11040104 || integer == 11040201 || integer == 11040202
 				|| integer == 11040203 || integer == 11040204 || integer == 11040301 || integer == 11040302
 				|| integer == 11040303 || integer == 11040304 || integer == 11040401 || integer == 11040402
-				|| integer == 11040403 || integer == 11040404) {
+				|| integer == 11040403 || integer == 11040404 || integer == 11020105 || integer == 11020205
+				|| integer == 11020305 || integer == 11020405 || integer == 11040105 || integer == 11040205
+				|| integer == 11040305 || integer == 11040405) {
 			return doorImage_top_east;
 		}
 
@@ -1127,38 +1358,63 @@ public class MapEditorGUI {
 		return null;
 	}
 
+	/**
+	 * The Class BoardPanel.
+	 */
 	private class BoardPanel extends JLayeredPane {
 
+		/**
+		 * Adds the tiles.
+		 */
 		public void addTiles() {
 			for (int i = 0; i < 7; i++) {
 				for (int j = 0; j < 7; j++) {
-					BoardPanelComponent bpc = new BoardPanelComponent(new Rectangle(j * 40, i * 40, 40, 40), i, j);
+					BoardPanelTile bpc = new BoardPanelTile(new Rectangle(j * 40, i * 40, 40, 40), i, j);
 					boardPanel.add(bpc);
 					boardTiles.add(bpc);
 				}
 			}
 		}
 
+		/* (non-Javadoc)
+		 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+		 */
 		public void paintComponent(Graphics g) {
 
-			for (BoardPanelComponent tile : boardTiles) {
+			for (BoardPanelTile tile : boardTiles) {
 				tile.paintComponent(g);
 			}
 
 		}
 
-		class BoardPanelComponent extends JLayeredPane implements MouseListener {
+		/**
+		 * The Class BoardPanelTile.
+		 */
+		class BoardPanelTile extends JLayeredPane implements MouseListener {
 
+			/** The x. */
 			public int x;
+			
+			/** The y. */
 			public int y;
 
-			public BoardPanelComponent(Rectangle bounds, int x, int y) {
+			/**
+			 * Instantiates a new board panel tile.
+			 *
+			 * @param bounds the bounds
+			 * @param x the x
+			 * @param y the y
+			 */
+			public BoardPanelTile(Rectangle bounds, int x, int y) {
 				this.x = x;
 				this.y = y;
 				setBounds(bounds);
 				addMouseListener(this);
 			}
 
+			/* (non-Javadoc)
+			 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+			 */
 			public void paintComponent(Graphics g) {
 
 				if (!selectedItem.equals(" ") && selectedItem.equals("door")) {
@@ -1186,6 +1442,9 @@ public class MapEditorGUI {
 				g.drawRect(getBounds().x, getBounds().y, getWidth(), getHeight());
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
@@ -1197,8 +1456,8 @@ public class MapEditorGUI {
 
 							roomMap[x][y] = getItemAsInt(selectedItem, x, y);
 							selectedItem = " ";
-							System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-							System.out.println("");
+//							System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
+//							System.out.println("");
 							boardPanel.repaint();
 
 						} else {
@@ -1210,8 +1469,8 @@ public class MapEditorGUI {
 
 						roomMap[x][y] = getItemAsInt(selectedItem, x, y);
 						selectedItem = " ";
-						System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-						System.out.println("");
+//						System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
+//						System.out.println("");
 						boardPanel.repaint();
 
 					}
@@ -1220,15 +1479,15 @@ public class MapEditorGUI {
 
 				if (deleteMode == true) {
 					roomMap[x][y] = 0;
-					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-					System.out.println("");
+//					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
+//					System.out.println("");
 					boardPanel.repaint();
 				}
 
 				if (rotateMode == true && roomMap[x][y] != 0) {
 					roomMap[x][y] = getRotatedInt(roomMap[x][y]);
-					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-					System.out.println("");
+//					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
+//					System.out.println("");
 					boardPanel.repaint();
 				}
 
@@ -1237,13 +1496,14 @@ public class MapEditorGUI {
 
 					if (((x == 3 && (y == 0 || y == 6)) || y == 3 && (x == 0 || x == 6))) {
 
-						String[] doorToRoomStrings = new String[3];
+						String[] doorToRoomStrings = new String[4];
 						int index = 0;
 						for (String roomName : roomStrings) {
 							if (!roomName.equals(currentRoom)) {
 								doorToRoomStrings[index++] = roomName;
 							}
 						}
+						doorToRoomStrings[index] = "Win Door";
 
 						JOptionPane optionPane = new JOptionPane("This door leads to:", JOptionPane.QUESTION_MESSAGE,
 								JOptionPane.DEFAULT_OPTION, null, doorToRoomStrings, null);
@@ -1395,36 +1655,85 @@ public class MapEditorGUI {
 							} else if (currentRoom.equals("Study")) {
 								// can't set room from study to study
 							}
+						} else if (optionPane.getValue().equals("Win Door")) {
+							if (currentRoom.equals("Library")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010105;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020105;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030105;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040105;
+								}
+							} else if (currentRoom.equals("Foyer")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010205;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020205;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030205;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040205;
+								}
+							} else if (currentRoom.equals("Courtyard")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010305;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020305;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030305;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040305;
+								}
+							} else if (currentRoom.equals("Study")) {
+								if (roomMap[x][y] == 1101) { // north
+									roomMap[x][y] = 11010405;
+								} else if (roomMap[x][y] == 1102) { // east
+									roomMap[x][y] = 11020405;
+								} else if (roomMap[x][y] == 1103) { // south
+									roomMap[x][y] = 11030405;
+								} else if (roomMap[x][y] == 1104) { // west
+									roomMap[x][y] = 11040405;
+								}
+							}
 						}
 					}
-
-				} else {
-
-					// JOptionPane.showMessageDialog(frame, "Doors must be placed along the edge of
-					// the room!");
 
 				}
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 
 			}
 
+			/* (non-Javadoc)
+			 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+			 */
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
@@ -1434,4 +1743,5 @@ public class MapEditorGUI {
 		}
 
 	}
+
 }

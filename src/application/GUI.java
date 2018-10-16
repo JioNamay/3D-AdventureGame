@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.MouseWheelEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -33,32 +34,53 @@ import gameworld.Location;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
 import gameworld.entities.Potion;
-import renderer.Board;
 
 /**
  * Class provides the graphical display of the GameWorld.
  *
  * @author yangcarr 300368805
  */
+
 public abstract class GUI extends JFrame implements KeyListener{
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 4310694644754610282L;
+
 	// ************** ABSTRACT METHODS ****************** //
-	protected abstract void redraw(Graphics g); // T RECONSIDER
+	protected abstract void doDraw(Graphics g);
+
+	protected abstract void doRelease(MouseEvent e);
+
+	protected abstract void doPress(MouseEvent e);
+
+	protected abstract void doDrag(MouseEvent e);
+
+	protected abstract void doScroll(MouseWheelEvent e);
+
 	protected abstract void loadGame();
+
 	protected abstract void saveGame();
-	protected abstract String askSave();
+
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
-	protected abstract void updateInventory();	// redraws the inventory
+
+	protected abstract void updateInventory(); // redraws the inventory
+	// protected abstract void updateInventory(MouseEvent e); // redraws the
+	// inventory
+
+	protected abstract String askSave();
+
 	protected abstract void navigatePlayer(Location.Direction dir);
 
 	public static final int FRAME_SIZE = 900;
 	public static final int DRAWING_SIZE = 600;
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
+
+	// protected JFrame frame;
 	protected JPanel container; // global container to hold all the components in frame
-	protected Board board;
-	protected JPanel playerInfo;
-	protected JPanel inventoryContainer;
+	protected JPanel playerInfo, inventoryContainer;
 	protected JComponent drawing; // the canvas to display the rendered world
 	protected Graphics drawingArea;
 	protected static JTextArea examinedItem, playerStats, actionDisplay;
@@ -94,21 +116,44 @@ public abstract class GUI extends JFrame implements KeyListener{
 		JPanel rendererPanel = new JPanel();
 		rendererPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
-		// RENDERER:
-		/*JPanel boardPanel = new JPanel();
-		boardPanel.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
-		boardPanel.setBounds(0, 0, DRAWING_SIZE, DRAWING_SIZE);
-		boardPanel.setVisible(true);
-		this.board = new Board(this, boardPanel);
-		rendererPanel.add(boardPanel, BorderLayout.LINE_START);*/
-
-		// sets the graphics when application window is first run, so you'll always have the area to draw on
+		// sets the graphics when application window is first run, so you'll always have
+		// the area to draw on
 		drawing = new JComponent() {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = -2691182121087316070L;
+
 			protected void paintComponent(Graphics g) {
 				drawingArea = g;
-				redraw(drawingArea);		// render the room
+				doDraw(drawingArea);
+				drawing.repaint();
 			}
 		};
+
+		drawing.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				doRelease(e);
+			}
+		});
+
+		drawing.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				doPress(e);
+			}
+		});
+
+		drawing.addMouseMotionListener(new MouseAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				doDrag(e);
+			}
+		});
+
+		drawing.addMouseWheelListener(new MouseAdapter() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				doScroll(e);
+			}
+		});
 
 		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
 		drawing.setVisible(true);
@@ -153,8 +198,8 @@ public abstract class GUI extends JFrame implements KeyListener{
 		playerInfo.add(inventoryContainer);
 
 		container.add(playerInfo);
-		setNavigationButtons();	// buttons for navigation
-		setActionButtons();	// buttons for actions
+		setNavigationButtons(); // buttons for navigation
+		setActionButtons(); // buttons for actions
 
 		// add everything to the frame
 		this.add(container);
@@ -201,7 +246,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 		load.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 loadGame();
+				loadGame();
 			}
 
 		});
@@ -210,7 +255,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 		save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 saveGame(); // BENNETTE RECONSIDER
+				saveGame(); // BENNETTE RECONSIDER
 			}
 
 		});
@@ -388,16 +433,15 @@ public abstract class GUI extends JFrame implements KeyListener{
 	}*/
 
 	/**
-	 * Returns the JTextArea to display the description of examined
-	 * items or rooms.
+	 * Returns the JTextArea to display the description of examined items or rooms.
 	 */
 	public static JTextArea getExaminedItemDisplay() {
 		return examinedItem;
 	}
 
 	/**
-	 * Returns the display area that holds player's information,
-	 * like health and money.
+	 * Returns the display area that holds player's information, like health and
+	 * money.
 	 */
 	public static JTextArea getPlayerStatDisplay() {
 		return playerStats;
