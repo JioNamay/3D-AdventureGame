@@ -27,236 +27,276 @@ import gameworld.entities.Wall;
  */
 
 public class GameWorld {
-  // Rooms in the GameWorld:
-  public static final String LIBRARY = "library";
-  public static final String STUDY = "study";
-  public static final String FOYER = "foyer";
-  public static final String COURTYARD = "courtyard";
 
-  private Room courtyard = new Room("Courtyard");
-  private Room foyer = new Room("Foyer");
-  private Room study = new Room("Study");
-  private Room library = new Room("Library");
+	/** The Constant LIBRARY. */
+	// Rooms in the GameWorld:
+	public static final String LIBRARY = "library";
 
-  public Map<String, Room> rooms = new HashMap<String, Room>(); // map to keep track of the rooms in
-                                                                // the world
+	/** The Constant STUDY. */
+	public static final String STUDY = "study";
 
-  private Room currentRoom;
+	/** The Constant FOYER. */
+	public static final String FOYER = "foyer";
 
-  /**
-   * Instantiates a new game world. Reads rooms from the given XML file and sets
-   * up the world.
-   */
-  public GameWorld(File file) {
-    // rooms are created and added to the map
-    // parse the file and create the rooms
-    // set player in current room if the player is in room
-    rooms.put(COURTYARD, courtyard);
-    rooms.put(FOYER, foyer);
-    rooms.put(STUDY, study);
-    rooms.put(LIBRARY, library);
-    setUpWorld();
+	/** The Constant COURTYARD. */
+	public static final String COURTYARD = "courtyard";
 
-  }
+	/** The courtyard. */
+	private	Room courtyard = new Room("Courtyard");
 
-  private void setUpWorld() {
-    Player.getInstance();
-    makeCourtyard();
-    makeFoyer();
-    makeStudy();
-    makeLibrary();
-  }
+	/** The foyer. */
+	private	Room foyer = new Room("Foyer");
 
-  /**
-   * Initialising the Courtyard and its objects inside it.
-   */
-  public void makeCourtyard() {
-    Room courtyard = new Room("Courtyard");
-    rooms.put(COURTYARD, courtyard);
-    // add items etc....
-    Room foyer = new Room("Foyer");
-    rooms.put(FOYER, foyer);
+	/** The study. */
+	private	Room study = new Room("Study");
 
-    // set up door
-    Door door = new Door();
-    door.setFirstRoom(courtyard);
-    door.setSecondRoom(foyer);
-    door.setFirstRoomDirection(Direction.SOUTH);
-    door.setSecondRoomDirection(Direction.NORTH);
-    Item item = new Item(door);
+	/** The library. */
+	private Room library = new Room("Library");
 
-    // Add door to current room
-    courtyard.addGameItem(0, 3, item);
+	/** The rooms. */
+	public Map<String, Room> rooms = new HashMap<String, Room>();	// map to keep track of the rooms in the world
 
-    // Add gameItems to courtyard
 
-    // add door to both rooms
-    courtyard.addGameItem(0, 3, item);
-    foyer.addGameItem(6, 3, item);
+	/**
+	 * Instantiates a new game world. Reads rooms from the given XML file and sets
+	 * up the world.
+	 *
+	 * @param file the file
+	 */
+	public GameWorld(File file) {
+		// rooms are created and added to the map
+		// parse the file and create the rooms
+		// set player in current room if the player is in room
+		rooms.put(COURTYARD, courtyard);
+		rooms.put(FOYER,foyer);
+		rooms.put(STUDY, study);
+		rooms.put(LIBRARY, library);
+		setUpWorld();
 
-    // add gameItems to courtyard
+	}
 
-    addWalls(courtyard);
+	/**
+	 * Sets the up world.
+	 */
+	private void setUpWorld() {
+		Player.getInstance();
+		makeCourtyard();
+		makeFoyer();
+		makeStudy();
+		makeLibrary();
+	}
 
-    courtyard.addGameItem(1, 1, new Item(new Tree()));
-    courtyard.addGameItem(1, 4, new Item(new Rock()));
-    courtyard.addGameItem(1, 5, new Item(new Tree()));
+	/**
+	 * Make courtyard room, add Doors, and game items.
+	 */
+	public void makeCourtyard() {
+		Room courtyard = new Room("Courtyard");
+		rooms.put(COURTYARD, courtyard);
+		// add items etc....
+		Room foyer = new Room("Foyer");
+		rooms.put(FOYER, foyer);
 
-    courtyard.addGameItem(3, 3, new Item(new Fountain()));
+		// set up door
+		Door door = new Door();
+		door.setFirstRoom(courtyard);
+		door.setSecondRoom(foyer);
+		door.setFirstRoomDirection(Direction.SOUTH);
+		door.setSecondRoomDirection(Direction.NORTH);
+		Item item = new Item(door);
 
-    courtyard.addGameItem(5, 1, new Item(new Tree()));
-    courtyard.addGameItem(5, 5, new Item(new Tree()));
+		// Add door to current room
+		courtyard.addGameItem(0,3, item);
 
-    Player.getInstance().setLocation(courtyard.getLocation(5, 3));
-    Player.getInstance().setCurrentRoom(courtyard);
-  }
 
-  public void makeFoyer() {
-    Room foyer = new Room("Foyer");
-    rooms.put(FOYER, foyer);
-    // add items etc....
-    Room study = new Room("Study");
-    rooms.put(STUDY, study);
+		// Add gameItems to courtyard
 
-    Room library = new Room("library");
-    rooms.put(LIBRARY, library);
+		// add door to both rooms
+		courtyard.addGameItem(0, 3, item);
+		foyer.addGameItem(6, 3, item);
 
-    // set up doors
-    Door door1 = new Door();
-    door1.setFirstRoom(foyer);
-    door1.setSecondRoom(study);
-    door1.setFirstRoomDirection(Direction.WEST);
-    door1.setSecondRoomDirection(Direction.EAST);
+		// add gameItems to courtyard
 
-    Item item1 = new Item(door1);
+		addWalls(courtyard);
 
-    // Add door to the room
-    foyer.addGameItem(0, 3, item1);
+		courtyard.addGameItem(1, 1, new Item(new Tree()));
+		courtyard.addGameItem(1, 4, new Item(new Rock()));
+		courtyard.addGameItem(1, 5, new Item(new Tree()));
 
-    Door door2 = new Door();
-    door2.setFirstRoom(foyer);
-    door2.setSecondRoom(library);
-    door2.setFirstRoomDirection(Direction.EAST);
-    door2.setSecondRoomDirection(Direction.WEST);
+		courtyard.addGameItem(3, 3, new Item(new Fountain()));
 
-    Item item2 = new Item(door2);
+		courtyard.addGameItem(5, 1, new Item(new Tree()));
+		courtyard.addGameItem(5, 5, new Item(new Tree()));
 
-    // Add door to the room
-    foyer.addGameItem(6, 3, item2);
+		Player.getInstance().setLocation(courtyard.getLocation(5, 3));
+		Player.getInstance().setCurrentRoom(courtyard);
+	}
 
-    Door door3 = new Door();
-    door3.setFirstRoom(foyer);
-    door3.setSecondRoom(courtyard);
-    door3.setFirstRoomDirection(Direction.SOUTH);
-    door3.setSecondRoomDirection(Direction.NORTH);
-    Item item3 = new Item(door3);
 
-    // Add door to the room
-    foyer.addGameItem(3, 6, item3);
+	/**
+	 * Make foyer room, add Doors, and game items.
+	 */
+	public void makeFoyer() {
+		Room foyer = new Room("Foyer");
+		rooms.put(FOYER, foyer);
+		// add items etc....
+		Room study = new Room("Study");
+		rooms.put(STUDY, study);
 
-    // Add Walls
-    addWalls(foyer);
+		Room library = new Room("library");
+		rooms.put(LIBRARY, library);
 
-    // Add Game Items
-    foyer.addGameItem(5, 5, new Item(new Note()));
+		// set up doors
+		Door door1 = new Door();
+		door1.setFirstRoom(foyer);
+		door1.setSecondRoom(study);
+		door1.setFirstRoomDirection(Direction.WEST);
+		door1.setSecondRoomDirection(Direction.EAST);
 
-  }
+		Item item1 = new Item(door1);
 
-  public void makeStudy() {
-    Door door1 = new Door();
-    door1.setFirstRoom(study);
-    door1.setSecondRoom(foyer);
-    door1.setFirstRoomDirection(Direction.WEST);
-    door1.setSecondRoomDirection(Direction.EAST);
-    Item item1 = new Item(door1);
+		//Add door to the room
+		foyer.addGameItem(0, 3, item1);
 
-    // Add Walls
-    addWalls(study);
-    // Add door to the room
-    study.addGameItem(6, 3, item1);
+		Door door2 = new Door();
+		door2.setFirstRoom(foyer);
+		door2.setSecondRoom(library);
+		door2.setFirstRoomDirection(Direction.EAST);
+		door2.setSecondRoomDirection(Direction.WEST);
 
-    // Add Game items
-    TreasureChest c = new TreasureChest();
-    c.setDirection(Direction.EAST);
-    study.addGameItem(2, 2, new Item(c));
+		Item item2 = new Item(door2);
 
-    Table t = new Table();
-    t.setDirection(Direction.SOUTH);
-    study.addGameItem(2, 3, new Item(c));
-    study.addGameItem(2, 4, new Item(new Cactus()));
+		//Add door to the room
+		foyer.addGameItem(6, 3, item2);
 
-  }
+		Door door3 = new Door();
+		door3.setFirstRoom(foyer);
+		door3.setSecondRoom(courtyard);
+		door3.setFirstRoomDirection(Direction.SOUTH);
+		door3.setSecondRoomDirection(Direction.NORTH);
+		Item item3 = new Item(door3);
 
-  public void makeLibrary() {
+		//Add door to the room
+		foyer.addGameItem(3, 6, item3);
 
-    Door door1 = new Door();
-    door1.setFirstRoom(library);
-    door1.setSecondRoom(foyer);
-    door1.setFirstRoomDirection(Direction.WEST);
-    door1.setSecondRoomDirection(Direction.EAST);
-    Item item1 = new Item(door1);
+		//Add Walls
+		addWalls(foyer);
 
-    // Add Walls
-    addWalls(library);
+		//Add Game Items
+		foyer.addGameItem(5, 5, new Item(new Note()));
 
-    // Add Game items
-    TreasureChest c = new TreasureChest();
-    c.setDirection(Direction.WEST);
-    study.addGameItem(5, 1, new Item(c));
+	}
 
-    study.addGameItem(2, 2, new Item(new Cactus()));
 
-    Sofa s = new Sofa();
-    s.setDirection(Direction.SOUTH);
-    study.addGameItem(3, 3, new Item(s));
+	/**
+	 * Make study room, add Doors, and game items.
+	 */
+	public void makeStudy(){
+		Door door1 = new Door();
+		door1.setFirstRoom(study);
+		door1.setSecondRoom(foyer);
+		door1.setFirstRoomDirection(Direction.WEST);
+		door1.setSecondRoomDirection(Direction.EAST);
+		Item item1 = new Item(door1);
 
-    Bookshelf b = new Bookshelf();
-    c.setDirection(Direction.WEST);
-    study.addGameItem(5, 2, new Item(c));
+		//Add Walls
+		addWalls(study);
+		//Add door to the room
+		study.addGameItem(6, 3, item1);
 
-    Bookshelf b1 = new Bookshelf();
-    c.setDirection(Direction.WEST);
-    study.addGameItem(5, 3, new Item(b1));
+		//Add Game items
+		TreasureChest c = new TreasureChest();
+		c.setDirection(Direction.EAST);
+		study.addGameItem(2, 2 , new Item(c));
 
-    study.addGameItem(2, 4, new Item(new Cactus()));
+		Table t = new Table();
+		t.setDirection(Direction.SOUTH);
+		study.addGameItem(2, 3 , new Item(c));
+		study.addGameItem(2, 4, new Item(new Cactus()));
 
-    Sofa s1 = new Sofa();
-    s.setDirection(Direction.SOUTH);
-    study.addGameItem(3, 4, new Item(s));
+	}
 
-    Bookshelf b2 = new Bookshelf();
-    c.setDirection(Direction.WEST);
-    study.addGameItem(5, 4, new Item(b2));
 
-    TreasureChest c1 = new TreasureChest();
-    c.setDirection(Direction.WEST);
-    study.addGameItem(5, 5, new Item(c1));
+	/**
+	 * Make library room, add Doors, and game items.
+	 */
+	public void makeLibrary(){
 
-  }
+		Door door1 = new Door();
+		door1.setFirstRoom(library);
+		door1.setSecondRoom(foyer);
+		door1.setFirstRoomDirection(Direction.WEST);
+		door1.setSecondRoomDirection(Direction.EAST);
+		Item item1 = new Item(door1);
 
-  private void addWalls(Room room) {
-    for (int i = 0; i < 7; i++) {
-      for (int j = 0; j < 7; j++) {
-        if ((i == 0 || i == 6) || (j == 0 || j == 6)) {
-          if (room.getLocation(i, j).isDoor())
-            continue; // skip as this is a door
+		//Add Walls
+		addWalls(library);
 
-          room.addGameItem(i, j, new Item(new Wall()));
-        }
+		//Add Game items
+		TreasureChest c = new TreasureChest();
+		c.setDirection(Direction.WEST);
+		study.addGameItem(5, 1, new Item(c));
 
-      }
-    }
-  }
+		study.addGameItem(2, 2, new Item(new Cactus()));
 
-  /**
-   * Update.
-   */
-  public void update() {
+		Sofa s = new Sofa();
+		s.setDirection(Direction.SOUTH);
+		study.addGameItem(3, 3, new Item(s));
 
-  }
+		Bookshelf b = new Bookshelf();
+		c.setDirection(Direction.WEST);
+		study.addGameItem(5, 2, new Item(c));
 
-  public Room getCurrentRoom() {
-    return currentRoom;
-  }
+		Bookshelf b1 = new Bookshelf();
+		c.setDirection(Direction.WEST);
+		study.addGameItem(5, 3, new Item(b1));
 
+		study.addGameItem(2, 4, new Item(new Cactus()));
+
+		Sofa s1 = new Sofa();
+		s.setDirection(Direction.SOUTH);
+		study.addGameItem(3, 4, new Item(s));
+
+		Bookshelf b2 = new Bookshelf();
+		c.setDirection(Direction.WEST);
+		study.addGameItem(5, 4, new Item(b2));
+
+		TreasureChest c1 = new TreasureChest();
+		c.setDirection(Direction.WEST);
+		study.addGameItem(5, 5 , new Item(c1));
+
+
+	}
+
+
+	/**
+	 * Adds the walls.
+	 *
+	 * @param room the room
+	 */
+	private void addWalls(Room room) {
+		for (int i = 0; i < 7; i++) {
+	        for (int j = 0; j < 7; j++) {
+	        	if((i == 0 || i == 6) || (j == 0 || j == 6)) {
+	        		if(room.getLocation(i, j).isDoor())
+	        			continue; // skip as this is a door
+
+	        		room.addGameItem(i, j, new Item(new Wall()));
+	        	}
+
+	        }
+	    }
+	}
+
+	// ======== remove after everything is done ================
+
+	/**
+	 * Update.
+	 */
+	public void update() {
+
+	}
+
+//	public Room getCurrentRoom() {
+//		return currentRoom;
+//	}
 }

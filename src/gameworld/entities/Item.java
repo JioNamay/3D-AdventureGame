@@ -1,5 +1,7 @@
 package gameworld.entities;
 
+import java.util.List;
+
 /**
  * Entity is the context class where the various items are used. An instance of
  * entity is made in the gameworld, where certain items are placed in certain
@@ -88,4 +90,12 @@ public class Item {
   public Strategy getItem() {
     return item;
   }
+
+	/**
+	 * The list of actions for the corresponding strategy
+	 * @return actions that can be performed on the Strategy
+	 */
+	public List<String> getActions(){
+		return item.getActions();
+	}
 }
