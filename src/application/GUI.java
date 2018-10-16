@@ -79,370 +79,322 @@ public abstract class GUI extends JFrame implements KeyListener {
   // game fields
   protected Player player = null; // player within the game
 
-  public GUI() {
-    setTitle("Adventure Game");
-    addKeyListener(this);
-    player = Player.getInstance();
-    setFocusable(true); // handle key events
+	public GUI() {
+		setTitle("Adventure Game");
+		addKeyListener(this);
+		player = Player.getInstance();
+		setFocusable(true);		// handle key events
 
-    for (int index = 0; index < 9; index++)
-      player.getInventory().add(new Potion());
+		for (int index = 0; index < 9; index++)
+			player.getInventory().add(new Potion());
 
-    initialise();
-  }
+		initialise();
+	}
 
-  /**
-   * Sets up the GUI window: the menubars, the canvas for drawing the game, the
-   * items player is holding, and the various actions the player can perform.
-   */
-  public void initialise() {
-    this.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
+	/**
+	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
+	 * items player is holding, and the various actions the player can perform.
+	 */
+	public void initialise() {
+		this.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
 
-    // container hold items that flow from top to bottom
-    container = new JPanel();
-    container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-    container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
+		// container hold items that flow from top to bottom
+		container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+		container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
 
-    setMenuBar();
+		setMenuBar();
 
-    JPanel rendererPanel = new JPanel();
-    rendererPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+		JPanel rendererPanel = new JPanel();
+		rendererPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
-    // sets the graphics when application window is first run, so you'll always have
-    // the area to draw on
-    drawing = new JComponent() {
-      /**
-       *
-       */
-      private static final long serialVersionUID = -2691182121087316070L;
+		// sets the graphics when application window is first run, so you'll always have
+		// the area to draw on
+		drawing = new JComponent() {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = -2691182121087316070L;
 
-      protected void paintComponent(Graphics g) {
-        drawingArea = g;
-        doDraw(drawingArea, Player.getInstance().getCurrentRoom());
-        drawing.repaint();
-      }
-    };
+			protected void paintComponent(Graphics g) {
+				drawingArea = g;
+				doDraw(drawingArea, Player.getInstance().getCurrentRoom());
+				drawing.repaint();
+			}
+		};
 
-    drawing.addMouseListener(new MouseAdapter() {
-      public void mouseReleased(MouseEvent e) {
-        doRelease(e);
-      }
-    });
+		drawing.addMouseListener(new MouseAdapter() {
+			public void mouseReleased(MouseEvent e) {
+				doRelease(e);
+			}
+		});
 
-    drawing.addMouseListener(new MouseAdapter() {
-      public void mousePressed(MouseEvent e) {
-        doPress(e);
-      }
-    });
+		drawing.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				doPress(e);
+			}
+		});
 
-    drawing.addMouseMotionListener(new MouseAdapter() {
-      public void mouseDragged(MouseEvent e) {
-        doDrag(e);
-      }
-    });
+		drawing.addMouseMotionListener(new MouseAdapter() {
+			public void mouseDragged(MouseEvent e) {
+				doDrag(e);
+			}
+		});
 
-    drawing.addMouseWheelListener(new MouseAdapter() {
-      public void mouseWheelMoved(MouseWheelEvent e) {
-        doScroll(e);
-      }
-    });
+		drawing.addMouseWheelListener(new MouseAdapter() {
+			public void mouseWheelMoved(MouseWheelEvent e) {
+				doScroll(e);
+			}
+		});
 
-    drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
-    drawing.setVisible(true);
-    drawing.repaint();
-    rendererPanel.add(drawing);
+		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
+		drawing.setVisible(true);
+		drawing.repaint();
+		rendererPanel.add(drawing);
 
-    rendererPanel.add(Box.createRigidArea(new Dimension(10, 0))); // spacing between drawing and
-                                                                  // info
-    JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10)); // 3 rows, 1 column
-    // descriptions.setBackground(Color.blue); // test
+		rendererPanel.add(Box.createRigidArea(new Dimension(10, 0))); // spacing between drawing and info
+		JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10)); // 3 rows, 1 column
 
-    // display description of examined item
-    examinedItem = new JTextArea("display examined item's info here", 10, 20);
-    examinedItem.setEditable(false);
-    examinedItem.setLineWrap(true);
-    descriptions.add(examinedItem);
+		// display description of examined item
+		actionDisplay = new JTextArea("???", 10, 20);
+		actionDisplay.setEditable(false);
+		actionDisplay.setLineWrap(true);
+		descriptions.add(actionDisplay);
 
-    // display player stats
-    playerStats = new JTextArea("display player stats here", 10, 20);
-    playerStats.setEditable(false);
-    playerStats.setLineWrap(true);
-    descriptions.add(playerStats);
+		// display player stats
+		playerStats = new JTextArea("display player stats here", 10, 20);
+		playerStats.setEditable(false);
+		playerStats.setLineWrap(true);
+		descriptions.add(playerStats);
 
-    // display something.....
-    actionDisplay = new JTextArea("???", 10, 20);
-    actionDisplay.setEditable(false);
-    actionDisplay.setLineWrap(true);
-    descriptions.add(actionDisplay);
+		// remove at the end
+		examinedItem = new JTextArea("display examined item's info here", 10, 20);
+		examinedItem.setEditable(false);
+		examinedItem.setLineWrap(true);
+		descriptions.add(examinedItem);
 
-    rendererPanel.add(descriptions);
-    container.add(rendererPanel);
+		rendererPanel.add(descriptions);
+		container.add(rendererPanel);
 
-    // PLAYER'S INFO: holds inventory and player actions
-    playerInfo = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
-    playerInfo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-    playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
-    // playerInfo.setBackground(Color.GREEN); // test
+		// PLAYER'S INFO: holds inventory and player actions
+		playerInfo = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
+		playerInfo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
 
-    inventoryContainer = new JPanel(new GridLayout(2, 5)); // allocate area for inventory
-    inventoryContainer.setPreferredSize(new Dimension(410, 110));
-    updateInventory();
-    // inventory.setVisible(true);
-    playerInfo.add(inventoryContainer);
+		inventoryContainer = new JPanel(new GridLayout(2, 5)); // allocate area for inventory
+		inventoryContainer.setPreferredSize(new Dimension(410, 110));
+		updateInventory();
+		// inventory.setVisible(true);
+		playerInfo.add(inventoryContainer);
 
-    container.add(playerInfo);
-    setNavigationButtons(); // buttons for navigation
-    setActionButtons(); // buttons for actions
+		container.add(playerInfo);
+		setNavigationButtons(); // buttons for navigation
+		setActionButtons(); // buttons for actions
 
-    // add everything to the frame
-    this.add(container);
-    this.pack();
-    // TODO: resize frame here??
-    this.setVisible(true);
-  }
+		// add everything to the frame
+		this.add(container);
+		this.pack();
+		this.setVisible(true);
+	}
 
-  /**
-   * Creates the menu bar for the application window. This has the options: HELP
-   * -> synopsis of game GAME -> load a saved game, save current game, load a new
-   * game QUIT -> exit the game
-   */
-  private void setMenuBar() {
-    JMenuBar mb = new JMenuBar();
+	/**
+	 * Creates the menu bar for the application window. This has the options: HELP
+	 * -> synopsis of game GAME -> load a saved game, save current game, load a new
+	 * game QUIT -> exit the game
+	 */
+	private void setMenuBar() {
+		JMenuBar mb = new JMenuBar();
 
-    // HELP: pop-up dialog with game information and instructions
-    JMenu help = new JMenu("Help");
-    help.addMouseListener(new MouseAdapter() {
-      public void mouseClicked(MouseEvent e) {
-        String str = "GAME INFO HERE"; // <-- CHANGE THIS LATER
-        JOptionPane.showMessageDialog(container, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
-      }
-    });
+		// HELP: pop-up dialog with game information and instructions
+		JMenu help = new JMenu("Help");
+		help.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				String str = "GAME INFO HERE"; // <-- CHANGE THIS LATER
+				JOptionPane.showMessageDialog(container, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 
-    // QUIT: exits the game -- gets confirmation from user to leave
-    JMenu quit = new JMenu("Quit");
-    quit.addMouseListener(new MouseAdapter() {
-      public void mouseClicked(MouseEvent e) {
-        int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
-        if (ans == JOptionPane.YES_OPTION) { // ask player to save game before leaving
-          if (askSave().equals("YES"))
-            saveGame();
-          else
-            System.exit(0);
-        }
-      }
-    });
+		// QUIT: exits the game -- gets confirmation from user to leave
+		JMenu quit = new JMenu("Quit");
+		quit.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
+				if (ans == JOptionPane.YES_OPTION) { // ask player to save game before leaving
+					if (askSave().equals("YES"))
+						saveGame();
+					else
+						System.exit(0);
+				}
+			}
+		});
 
-    // GAME: Options to save, load, generate new game
-    JMenu game = new JMenu("Game");
+		// GAME: Options to save, load, generate new game
+		JMenu game = new JMenu("Game");
 
-    JMenuItem load = new JMenuItem("Load"); // load
-    load.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        loadGame();
-      }
+		JMenuItem load = new JMenuItem("Load"); // load
+		load.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				loadGame();
+			}
 
-    });
+		});
 
-    JMenuItem save = new JMenuItem("Save"); // save
-    save.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        saveGame(); // BENNETTE RECONSIDER
-      }
+		JMenuItem save = new JMenuItem("Save"); // save
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveGame(); // BENNETTE RECONSIDER
+			}
 
-    });
+		});
 
-    JMenuItem newGame = new JMenuItem("New"); // new game
-    newGame.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        player.resetPlayer();
-        onStart();
-      }
+		JMenuItem newGame = new JMenuItem("New"); // new game
+		newGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				player.resetPlayer();
+				onStart();
+			}
 
-    });
+		});
 
-    game.add(load);
-    game.add(save);
-    game.add(newGame);
+		game.add(load);
+		game.add(save);
+		game.add(newGame);
 
-    mb.add(help);
-    mb.add(game);
-    mb.add(quit);
-    setJMenuBar(mb);
-  }
+		mb.add(help);
+		mb.add(game);
+		mb.add(quit);
+		setJMenuBar(mb);
+	}
 
-  /**
-   * Allows players to move around the gameworld, one space in the chosen
-   * direction.
-   */
-  private void setNavigationButtons() {
-    // vertical spacing between components
-    playerInfo.add(Box.createRigidArea(new Dimension(10, 0)));
+	/**
+	 * Allows players to move around the gameworld, one space in the chosen
+	 * direction.
+	 */
+	private void setNavigationButtons() {
+		// vertical spacing between components
+		playerInfo.add(Box.createRigidArea(new Dimension(10, 0)));
 
-    JButton west = new JButton("\u2190");
-    west.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        navigatePlayer(Location.Direction.WEST);
-        // redraw player position (redraw the world)
-      }
-    });
+		JButton west = new JButton("\u2190");
+		west.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				navigatePlayer(Location.Direction.WEST);
+			}
+		});
 
-    JButton east = new JButton("\u2192");
-    east.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        navigatePlayer(Location.Direction.EAST);
-        // redraw player position
-      }
-    });
+		JButton east = new JButton("\u2192");
+		east.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				navigatePlayer(Location.Direction.EAST);
+			}
+		});
 
-    JButton north = new JButton("\u2191");
-    north.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        navigatePlayer(Location.Direction.NORTH);
-        // redraw player position
-      }
-    });
+		JButton north = new JButton("\u2191");
+		north.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				navigatePlayer(Location.Direction.NORTH);
+			}
+		});
 
-    JButton south = new JButton("\u2193");
-    south.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        navigatePlayer(Location.Direction.SOUTH);
-        // redraw player position
-      }
-    });
+		JButton south = new JButton("\u2193");
+		south.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				navigatePlayer(Location.Direction.SOUTH);
+			}
+		});
 
-    JPanel navigation = new JPanel(new GridLayout(2, 3));
-    navigation.setMaximumSize(new Dimension(150, 60));
-    navigation.add(new JButton()); // blank area
-    navigation.add(north);
-    navigation.add(new JButton()); // blank area
-    navigation.add(west);
-    navigation.add(south);
-    navigation.add(east);
-    playerInfo.add(navigation);
-  }
+		JPanel navigation = new JPanel(new GridLayout(2, 3));
+		navigation.setMaximumSize(new Dimension(150, 60));
+		navigation.add(new JButton()); // blank area
+		navigation.add(north);
+		navigation.add(new JButton()); // blank area
+		navigation.add(west);
+		navigation.add(south);
+		navigation.add(east);
+		playerInfo.add(navigation);
+	}
 
-  // remove later: use mouse to determine actions
-  private void setActionButtons() {
-    JButton take = new JButton("Take Item");
-    take.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        // player collects item
-        // redraw
-      }
-    });
+	// remove when finish
+	private void setActionButtons() {
+		JButton take = new JButton("Take Item");
+		take.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				// player collects item
+				// redraw
+			}
+		});
 
-    JButton examine = new JButton("Examine Item");
-    examine.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        // short description of the item is shown
-        // redraw(?)
-      }
-    });
+		JButton examine = new JButton("Examine Item");
+		examine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				// short description of the item is shown
+				// redraw(?)
+			}
+		});
 
-    JButton drop = new JButton("Drop Item");
-    take.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        // player drops the item (item is placed at current player's position)
-        // remove item from inventory when player drops it
-        // redraw
-      }
-    });
+		JButton drop = new JButton("Drop Item");
+		take.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				// player drops the item (item is placed at current player's position)
+				// remove item from inventory when player drops it
+				// redraw
+			}
+		});
 
-    JButton look = new JButton("Look into room");
-    look.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        // short description of location (current location?)
-        // redraw(?)
-      }
-    });
+		JButton look = new JButton("Look into room");
+		look.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				// short description of location (current location?)
+				// redraw(?)
+			}
+		});
 
-    JButton use = new JButton("Use Item");
-    use.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        // player uses item
-        // redraw(?)
-      }
-    });
+		JButton use = new JButton("Use Item");
+		use.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				// player uses item
+				// redraw(?)
+			}
+		});
 
-    JButton attack = new JButton("Attack");
-    take.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent ev) {
-        // player attacks with current selected item
-        // redraw
-      }
-    });
+		JButton attack = new JButton("Attack");
+		take.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				// player attacks with current selected item
+				// redraw
+			}
+		});
 
-    playerInfo.add(Box.createRigidArea(new Dimension(10, 0)));
-    JPanel actions = new JPanel(new GridLayout(3, 2));
-    actions.setMaximumSize(new Dimension(240, 90)); // does anything?
+		playerInfo.add(Box.createRigidArea(new Dimension(10, 0)));
+		JPanel actions = new JPanel(new GridLayout(3, 2));
+		actions.setMaximumSize(new Dimension(240, 90)); // does anything?
 
-    actions.add(take);
-    actions.add(examine);
-    actions.add(drop);
-    actions.add(look);
-    actions.add(use);
-    actions.add(attack);
-    playerInfo.add(actions);
-  }
+		actions.add(take);
+		actions.add(examine);
+		actions.add(drop);
+		actions.add(look);
+		actions.add(use);
+		actions.add(attack);
+		playerInfo.add(actions);
+	}
 
-  /*
-   * public static void updateInventory() { //Player player =
-   * Player.getInstance();
-   *
-   * List<InventoryDisplay> displayAreas = new ArrayList<InventoryDisplay>();
-   *
-   * // TEST: //Inventory i = new Inventory();
-   *
-   *
-   * //System.out.println("inventory full: " + i.isFull());
-   *
-   * // draws every item in player's inventory for (PickUpAbleStrategy item:
-   * Player.getInstance().getInventory()) { InventoryDisplay
-   * inventoryImageComponent = new InventoryDisplay(item) { // Repaints the
-   * component to display the image of the item.
-   *
-   * @Override public void paintComponent(Graphics g) { // draw images of the
-   * items Image img = new
-   * ImageIcon(this.getClass().getResource("/test.jpg")).getImage();
-   * g.drawImage(img, 2, 2, InventoryDisplay.IMAGE_WIDTH-2,
-   * InventoryDisplay.IMAGE_HEIGHT-2, null); } };
-   * inventoryImageComponent.setPreferredSize(new
-   * Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-   * displayAreas.add(inventoryImageComponent);
-   * inventory.add(inventoryImageComponent);
-   * System.out.println("adding item. size is = " + displayAreas.size()); }
-   *
-   * System.out.println("no. of displays: " + displayAreas.size());
-   *
-   * // selects a random item from inventory if nothing is selected if
-   * (AdventureGame.getSelectedItem() == null) { int rand = (int) (Math.random() *
-   * displayAreas.size()); AdventureGame.setSelectedItem(displayAreas.get(rand));
-   * } }
-   */
 
-  /**
-   * Returns the JTextArea to display the description of examined items or rooms.
-   */
-  public static JTextArea getExaminedItemDisplay() {
-    return examinedItem;
-  }
 
-  /**
-   * Returns the display area that holds player's information, like health and
-   * money.
-   */
-  public static JTextArea getPlayerStatDisplay() {
-    return playerStats;
-  }
+	/**
+	 * Returns the display area that holds player's information, like health and
+	 * money.
+	 */
+	public static JTextArea getPlayerStatDisplay() {
+		return playerStats;
+	}
 
-  /**
-   * Returns the JTextArea to display the description of examined items or rooms.
-   */
-  public static JTextArea getActionDisplay() {
-    return actionDisplay;
-  }
+	/**
+	 * Returns the JTextArea to display the actions user performed on items.
+	 */
+	public static JTextArea getActionDisplay() {
+		return actionDisplay;
+	}
 
 }

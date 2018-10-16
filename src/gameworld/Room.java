@@ -18,6 +18,7 @@ import gameworld.entities.Player;
 
 public class Room {
 
+	
   /** The Constant SIZE of the room. */
   public static final int SIZE = 7;
 
@@ -270,7 +271,6 @@ public class Room {
       throw new IllegalArgumentException("Direction: " + dir.toString() + " not recognised");
     }
   }
-
   /**
    * Move player to connecting room.
    *
