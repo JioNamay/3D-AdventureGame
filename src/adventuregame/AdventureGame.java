@@ -240,8 +240,12 @@ public class AdventureGame extends GUI {
 		}
 
 		currentRoom = player.getCurrentRoom();
+//		if (currentRoom.getGameItems().containsKey(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol())))
+//			return;
+
 		Item item = currentRoom.getGameItems().get(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()));
 
+		// player clicked an area that doesn't contain an item
 		if (item == null || !(item.getItem() instanceof Strategy)) {
 			return;
 		}
