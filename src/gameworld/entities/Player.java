@@ -109,13 +109,6 @@ public class Player extends AttackingEntity {
 	public void setInventory(Inventory inventory) {
 		if(this.inventory == null) this.inventory = inventory;
 	} 
-	
-	/**
-	 * Reset inventory for test. Only used for testing.
-	 */
-	public void resetInventoryForTest() {
-		this.inventory = new Inventory();
-	}
 
 	/**
 	 * Gets the inventory.
