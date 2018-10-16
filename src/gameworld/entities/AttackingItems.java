@@ -44,6 +44,14 @@ public abstract class AttackingItems extends AttackingEntity implements Strategy
 	public String getName() {
 		return name;
 	}
+	
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isWall()
+	 */
+	@Override
+	public boolean isWall() {
+	  return false;
+	}
 
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Strategy#isSolid()

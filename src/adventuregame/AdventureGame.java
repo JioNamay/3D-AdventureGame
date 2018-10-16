@@ -186,16 +186,9 @@ public class AdventureGame extends GUI {
 
 	/**
 	 * Determines and highlights the selected item (only one selected at a time).
-<<<<<<< HEAD
 	 * The selected item in the inventory is passed on to player.
-=======
-	 * <<<<<<< HEAD
-	 *
 	 * @param display
-	 *            the newly selected component (won't ever be null) =======
->>>>>>> 7691222b9a028383bba64dd6695cea386fad81f6
-	 * @param display
-	 *            the newly selected component (won't ever be null) >>>>>>> master
+	 *            the newly selected component (won't ever be null) 
 	 */
 	public static void setSelectedItem(InventoryDisplay display) {
 		selectedDisplay = display;
@@ -288,7 +281,7 @@ public class AdventureGame extends GUI {
 			dir = Location.Direction.SOUTH;
 			break;
 		case KeyEvent.VK_LEFT:
-			dir = Location.Direction.WEST;
+			dir = Location.Direction.WEST;  
 			break;
 		case KeyEvent.VK_RIGHT:
 			dir = Location.Direction.EAST;

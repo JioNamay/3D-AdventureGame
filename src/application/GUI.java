@@ -149,13 +149,13 @@ public abstract class GUI extends JFrame implements KeyListener {
 		drawing.addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent e) {
 				doDrag(e);
-			}
+			} 
 		});
 
 		drawing.addMouseWheelListener(new MouseAdapter() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				doScroll(e);
-			}
+			} 
 		});
 
 		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));

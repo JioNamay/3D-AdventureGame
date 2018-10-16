@@ -1,7 +1,6 @@
 package gameworld;
 
 import java.io.File;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,13 +8,11 @@ import gameworld.Location.Direction;
 import gameworld.entities.Door;
 import gameworld.entities.Fountain;
 import gameworld.entities.Item;
-import gameworld.entities.Note;
 import gameworld.entities.Player;
-import gameworld.entities.Potion;
 import gameworld.entities.Rock;
 import gameworld.entities.Tree;
 import gameworld.entities.Wall;
-import persistence.Persistence;
+
 
 /**
  * GameWorld keeps track of all the rooms in the game. Each Room is like a
@@ -30,8 +27,8 @@ public class GameWorld {
 	public static final String STUDY = "study";
 	public static final String FOYER = "foyer";
 	public static final String COURTYARD = "courtyard";
+	public Map<String, Room> rooms = new HashMap<String, Room>();	// map to keep track of the rooms in the world
 
-	public Map<String, Room> rooms = new HashMap<String, Room>(); // map to keep track of the rooms in the world
 	private Room currentRoom;
 
 	/**
@@ -42,12 +39,15 @@ public class GameWorld {
 		// rooms are created and added to the map
 		// parse the file and create the rooms
 		// set player in current room if the player is in room
+
 		// currentRoom = null;
 		setUpWorld();
 	}
 
+
 	private void setUpWorld() {
-		Player.getInstance();
+	  Player.getInstance();
+
 		Room courtyard = new Room("Courtyard");
 		rooms.put(COURTYARD, courtyard);
 		// add items etc....
@@ -154,20 +154,24 @@ public class GameWorld {
 		// add gameItems to foyer
 		addWalls(foyer);
 		addWalls(foyer);
+
 	}
+
+
+
 
 	private void addWalls(Room room) {
 		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 7; j++) {
-				if ((i == 0 || i == 6) || (j == 0 || j == 6)) {
-					if (room.getLocation(i, j).isDoor())
-						continue; // skip as this is a door
+	        for (int j = 0; j < 7; j++) {
+	        	if((i == 0 || i == 6) || (j == 0 || j == 6)) {
+	        		if(room.getLocation(i, j).isDoor())
+	        			continue; // skip as this is a door
 
-					room.addGameItem(i, j, new Item(new Wall()));
-				}
+	        		room.addGameItem(i, j, new Item(new Wall()));
+	        	}
 
-			}
-		}
+	        }
+	    }
 	}
 
 	/**

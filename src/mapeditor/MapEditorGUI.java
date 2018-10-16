@@ -52,7 +52,6 @@ import gameworld.entities.Table;
 import gameworld.entities.TreasureChest;
 import gameworld.entities.Tree;
 import gameworld.entities.Wall;
-import javanet.staxutils.IndentingXMLStreamWriter;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -64,76 +63,76 @@ public class MapEditorGUI {
 
 	/** The frame. */
 	private JFrame frame;
-	
+
 	/** The board panel. */
 	private JLayeredPane boardPanel;
-	
+
 	/** The button panel. */
 	private JPanel buttonPanel;
-	
+
 	/** The rock button. */
 	private JButton rockButton;
-	
+
 	/** The sofa button. */
 	private JButton sofaButton;
-	
+
 	/** The table button. */
 	private JButton tableButton;
-	
+
 	/** The tree button. */
 	private JButton treeButton;
-	
+
 	/** The note button. */
 	private JButton noteButton;
-	
+
 	/** The fountain button. */
 	private JButton fountainButton;
-	
+
 	/** The cactus button. */
 	private JButton cactusButton;
-	
+
 	/** The bookshelf button. */
 	private JButton bookshelfButton;
-	
+
 	/** The treasure chest button. */
 	private JButton treasureChestButton;
-	
+
 	/** The wall block button. */
 	private JButton wallBlockButton;
-	
+
 	/** The door button. */
 	private JButton doorButton;
-	
+
 	/** The heavy book button. */
 	private JButton heavyBookButton;
-	
+
 	/** The key button. */
 	private JButton keyButton;
-	
+
 	/** The potion button. */
 	private JButton potionButton;
-	
+
 	/** The stick button. */
 	private JButton stickButton;
-	
+
 	/** The delete button. */
 	private JButton deleteButton;
-	
+
 	/** The rotate button. */
 	private JButton rotateButton;
-	
+
 	/** The room select label. */
 	private JLabel roomSelectLabel;
-	
+
 	/** The menu bar. */
 	private JMenuBar menuBar;
-	
+
 	/** The file menu. */
 	private JMenu fileMenu;
-	
+
 	/** The save menu item. */
 	private JMenuItem saveMenuItem;
-	
+
 	/** The load menu item. */
 	private JMenuItem loadMenuItem;
 
@@ -142,25 +141,25 @@ public class MapEditorGUI {
 
 	/** The sofa image top north. */
 	private BufferedImage sofaImage_top_north;
-	
+
 	/** The sofa image top east. */
 	private BufferedImage sofaImage_top_east;
-	
+
 	/** The sofa image top south. */
 	private BufferedImage sofaImage_top_south;
-	
+
 	/** The sofa image top west. */
 	private BufferedImage sofaImage_top_west;
 
 	/** The table image top north. */
 	private BufferedImage tableImage_top_north;
-	
+
 	/** The table image top east. */
 	private BufferedImage tableImage_top_east;
-	
+
 	/** The table image top south. */
 	private BufferedImage tableImage_top_south;
-	
+
 	/** The table image top west. */
 	private BufferedImage tableImage_top_west;
 
@@ -178,25 +177,25 @@ public class MapEditorGUI {
 
 	/** The bookshelf image top north. */
 	private BufferedImage bookshelfImage_top_north;
-	
+
 	/** The bookshelf image top east. */
 	private BufferedImage bookshelfImage_top_east;
-	
+
 	/** The bookshelf image top south. */
 	private BufferedImage bookshelfImage_top_south;
-	
+
 	/** The bookshelf image top west. */
 	private BufferedImage bookshelfImage_top_west;
 
 	/** The treasure chest image top north. */
 	private BufferedImage treasureChestImage_top_north;
-	
+
 	/** The treasure chest image top east. */
 	private BufferedImage treasureChestImage_top_east;
-	
+
 	/** The treasure chest image top south. */
 	private BufferedImage treasureChestImage_top_south;
-	
+
 	/** The treasure chest image top west. */
 	private BufferedImage treasureChestImage_top_west;
 
@@ -205,13 +204,13 @@ public class MapEditorGUI {
 
 	/** The door image top north. */
 	private BufferedImage doorImage_top_north;
-	
+
 	/** The door image top east. */
 	private BufferedImage doorImage_top_east;
-	
+
 	/** The door image top south. */
 	private BufferedImage doorImage_top_south;
-	
+
 	/** The door image top west. */
 	private BufferedImage doorImage_top_west;
 
@@ -229,70 +228,70 @@ public class MapEditorGUI {
 
 	/** The rock image iso. */
 	private BufferedImage rockImage_iso;
-	
+
 	/** The sofa image iso. */
 	private BufferedImage sofaImage_iso;
-	
+
 	/** The table image iso. */
 	private BufferedImage tableImage_iso;
-	
+
 	/** The tree image iso. */
 	private BufferedImage treeImage_iso;
-	
+
 	/** The note image iso. */
 	private BufferedImage noteImage_iso;
-	
+
 	/** The fountain image iso. */
 	private BufferedImage fountainImage_iso;
-	
+
 	/** The cactus image iso. */
 	private BufferedImage cactusImage_iso;
-	
+
 	/** The bookshelf image iso. */
 	private BufferedImage bookshelfImage_iso;
-	
+
 	/** The treasure chest image iso. */
 	private BufferedImage treasureChestImage_iso;
-	
+
 	/** The wall block image iso. */
 	private BufferedImage wallBlockImage_iso;
-	
+
 	/** The door image iso. */
 	private BufferedImage doorImage_iso;
-	
+
 	/** The heavy book image iso. */
 	private BufferedImage heavyBookImage_iso;
-	
+
 	/** The key image iso. */
 	private BufferedImage keyImage_iso;
-	
+
 	/** The potion image iso. */
 	private BufferedImage potionImage_iso;
-	
+
 	/** The stick image iso. */
 	private BufferedImage stickImage_iso;
 
 	/** The current room. */
 	protected String currentRoom = "Library";
-	
+
 	/** The selected item. */
 	protected String selectedItem = " ";
-	
+
 	/** The delete mode. */
 	protected boolean deleteMode = false;
-	
+
 	/** The rotate mode. */
 	protected boolean rotateMode = false;
 
 	/** The library map. */
 	private int[][] libraryMap;
-	
+
 	/** The foyer map. */
 	private int[][] foyerMap;
-	
+
 	/** The courtyard map. */
 	private int[][] courtyardMap;
-	
+
 	/** The study map. */
 	private int[][] studyMap;
 
@@ -304,21 +303,6 @@ public class MapEditorGUI {
 
 	/** The board tiles. */
 	private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile> boardTiles;
-
-	/** The library room. */
-	private Room libraryRoom;
-	
-	/** The foyer room. */
-	private Room foyerRoom;
-	
-	/** The courtyard room. */
-	private Room courtyardRoom;
-	
-	/** The study room. */
-	private Room studyRoom;
-
-	/** The config file. */
-	private String configFile = "myFile";
 
 	/**
 	 * Instantiates a new map editor GUI.
@@ -808,9 +792,7 @@ public class MapEditorGUI {
 
 		try {
 
-			XMLStreamWriter w = factory.createXMLStreamWriter(new FileWriter("gamemap.xml"));
-
-			IndentingXMLStreamWriter writer = new IndentingXMLStreamWriter(w);
+			XMLStreamWriter writer = factory.createXMLStreamWriter(new FileWriter("gamemap.xml"));
 
 			writer.writeStartDocument();
 
@@ -883,47 +865,47 @@ public class MapEditorGUI {
 	public void initializeImages() {
 		try {
 
-			rockImage_top = ImageIO.read(new File("textures/test_north.jpg"));
+			rockImage_top = ImageIO.read(new File("src/renderer/data/top/rock.png"));
 
-			sofaImage_top_north = ImageIO.read(new File("textures/test_north.jpg"));
-			sofaImage_top_east = ImageIO.read(new File("textures/test_east.jpg"));
-			sofaImage_top_south = ImageIO.read(new File("textures/test_south.jpg"));
-			sofaImage_top_west = ImageIO.read(new File("textures/test_west.jpg"));
+			sofaImage_top_north = ImageIO.read(new File("src/renderer/data/top/sofa.png"));
+			sofaImage_top_east = ImageIO.read(new File("src/renderer/data/top/sofa_east.png"));
+			sofaImage_top_south = ImageIO.read(new File("src/renderer/data/top/sofa_south.png"));
+			sofaImage_top_west = ImageIO.read(new File("src/renderer/data/top/sofa_west.png"));
 
-			tableImage_top_north = ImageIO.read(new File("textures/test_north.jpg"));
-			tableImage_top_east = ImageIO.read(new File("textures/test_east.jpg"));
-			tableImage_top_south = ImageIO.read(new File("textures/test_south.jpg"));
-			tableImage_top_west = ImageIO.read(new File("textures/test_west.jpg"));
+			tableImage_top_north = ImageIO.read(new File("src/renderer/data/top/table.png"));
+			tableImage_top_east = ImageIO.read(new File("src/renderer/data/top/table_east.png"));
+			tableImage_top_south = ImageIO.read(new File("src/renderer/data/top/table_south.png"));
+			tableImage_top_west = ImageIO.read(new File("src/renderer/data/top/table_west.png"));
 
-			treeImage_top = ImageIO.read(new File("textures/test_north.jpg"));
+			treeImage_top = ImageIO.read(new File("src/renderer/data/top/tree.png"));
 
-			noteImage_top = ImageIO.read(new File("textures/test_north.jpg"));
+			noteImage_top = ImageIO.read(new File("src/renderer/data/top/note.png"));
 
-			fountainImage_top = ImageIO.read(new File("textures/test_north.jpg"));
+			fountainImage_top = ImageIO.read(new File("src/renderer/data/top/fountain.png"));
 
-			cactusImage_top = ImageIO.read(new File("textures/test_north.jpg"));
+			cactusImage_top = ImageIO.read(new File("src/renderer/data/top/cactus.png"));
 
-			bookshelfImage_top_north = ImageIO.read(new File("textures/test_north.jpg"));
-			bookshelfImage_top_east = ImageIO.read(new File("textures/test_east.jpg"));
-			bookshelfImage_top_south = ImageIO.read(new File("textures/test_south.jpg"));
-			bookshelfImage_top_west = ImageIO.read(new File("textures/test_west.jpg"));
+			bookshelfImage_top_north = ImageIO.read(new File("src/renderer/data/top/bookshelf.png"));
+			bookshelfImage_top_east = ImageIO.read(new File("src/renderer/data/top/bookshelf_east.png"));
+			bookshelfImage_top_south = ImageIO.read(new File("src/renderer/data/top/bookshelf_south.png"));
+			bookshelfImage_top_west = ImageIO.read(new File("src/renderer/data/top/bookshelf_west.png"));
 
-			treasureChestImage_top_north = ImageIO.read(new File("textures/test_north.jpg"));
-			treasureChestImage_top_east = ImageIO.read(new File("textures/test_east.jpg"));
-			treasureChestImage_top_south = ImageIO.read(new File("textures/test_south.jpg"));
-			treasureChestImage_top_west = ImageIO.read(new File("textures/test_west.jpg"));
+			treasureChestImage_top_north = ImageIO.read(new File("src/renderer/data/top/chest_closed.png"));
+			treasureChestImage_top_east = ImageIO.read(new File("src/renderer/data/top/chest_east.png"));
+			treasureChestImage_top_south = ImageIO.read(new File("src/renderer/data/top/chest_south.png"));
+			treasureChestImage_top_west = ImageIO.read(new File("src/renderer/data/top/chest_west.png"));
 
-			wallBlockImage_top = ImageIO.read(new File("textures/test_north.jpg"));
+			wallBlockImage_top = ImageIO.read(new File("src/renderer/data/top/wall.png"));
 
-			doorImage_top_north = ImageIO.read(new File("textures/test_north.jpg"));
-			doorImage_top_east = ImageIO.read(new File("textures/test_east.jpg"));
-			doorImage_top_south = ImageIO.read(new File("textures/test_south.jpg"));
-			doorImage_top_west = ImageIO.read(new File("textures/test_west.jpg"));
+			doorImage_top_north = ImageIO.read(new File("src/renderer/data/top/door.png"));
+			doorImage_top_east = ImageIO.read(new File("src/renderer/data/top/door_east.png"));
+			doorImage_top_south = ImageIO.read(new File("src/renderer/data/top/door_south.png"));
+			doorImage_top_west = ImageIO.read(new File("src/renderer/data/top/door_west.png"));
 
-			heavyBookImage_top = ImageIO.read(new File("textures/test_north.jpg"));
-			keyImage_top = ImageIO.read(new File("textures/test_north.jpg"));
-			potionImage_top = ImageIO.read(new File("textures/test_north.jpg"));
-			stickImage_top = ImageIO.read(new File("textures/test_north.jpg"));
+			heavyBookImage_top = ImageIO.read(new File("src/renderer/data/top/book.png"));
+			keyImage_top = ImageIO.read(new File("src/renderer/data/top/key.png"));
+			potionImage_top = ImageIO.read(new File("src/renderer/data/top/potion.png"));
+			stickImage_top = ImageIO.read(new File("src/renderer/data/top/stick.png"));
 
 			rockImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
 			sofaImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
@@ -988,8 +970,8 @@ public class MapEditorGUI {
 	 * Gets the item as int.
 	 *
 	 * @param item the item
-	 * @param x the x
-	 * @param y the y
+	 * @param x    the x
+	 * @param y    the y
 	 * @return the item as int
 	 */
 	public int getItemAsInt(String item, int x, int y) {
@@ -1034,144 +1016,6 @@ public class MapEditorGUI {
 			return 15;
 		}
 		return -1;
-	}
-
-	/**
-	 * Gets the int as strategy.
-	 *
-	 * @param integer the integer
-	 * @return the int as strategy
-	 */
-	public Strategy getIntAsStrategy(int integer) {
-
-		// char[] digitArray = ("" + integer).toCharArray();
-
-		if (integer == 1) {
-			return new Rock();
-
-		} else if (integer == 2001) { // north facing sofa
-			return new Sofa();
-		} else if (integer == 2002) { // east facing sofa
-			Sofa sofa_east = new Sofa();
-			sofa_east.setDirection(Direction.EAST);
-			return sofa_east;
-		} else if (integer == 2003) { // south facing sofa
-			Sofa sofa_south = new Sofa();
-			sofa_south.setDirection(Direction.SOUTH);
-			return sofa_south;
-		} else if (integer == 2004) {// west facing sofa
-			Sofa sofa_west = new Sofa();
-			sofa_west.setDirection(Direction.WEST);
-			return sofa_west;
-
-		} else if (integer == 3001) { // north facing table
-			return new Table();
-		} else if (integer == 300) { // east facing table
-			Table table_east = new Table();
-			table_east.setDirection(Direction.EAST);
-			return table_east;
-		} else if (integer == 3003) { // south facing table
-			Table table_south = new Table();
-			table_south.setDirection(Direction.SOUTH);
-			return table_south;
-		} else if (integer == 3004) { // west facing table
-			Table table_west = new Table();
-			table_west.setDirection(Direction.WEST);
-			return table_west;
-
-		} else if (integer == 4) {
-			return new Tree();
-
-		} else if (integer == 5) {
-			return new Fountain();
-
-		} else if (integer == 6) {
-			return new Cactus();
-
-		} else if (integer == 7001) { // north facing bookshelf
-			return new Bookshelf();
-		} else if (integer == 7002) { // east facing bookshelf
-			Bookshelf bookshelf_east = new Bookshelf();
-			bookshelf_east.setDirection(Direction.EAST);
-			return bookshelf_east;
-		} else if (integer == 7003) { // south facing bookshelf
-			Bookshelf bookshelf_south = new Bookshelf();
-			bookshelf_south.setDirection(Direction.SOUTH);
-			return bookshelf_south;
-		} else if (integer == 7004) { // west facing bookshelf
-			Bookshelf bookshelf_west = new Bookshelf();
-			bookshelf_west.setDirection(Direction.WEST);
-			return bookshelf_west;
-
-		} else if (integer == 8001) { // north facing treasure chest
-			return new TreasureChest();
-		} else if (integer == 8002) { // east facing treasure chest
-			TreasureChest treasureChest_east = new TreasureChest();
-			treasureChest_east.setDirection(Direction.EAST);
-			return treasureChest_east;
-		} else if (integer == 8003) { // south facing treasure chest
-			TreasureChest treasureChest_south = new TreasureChest();
-			treasureChest_south.setDirection(Direction.SOUTH);
-			return treasureChest_south;
-		} else if (integer == 8004) { // west facing treasure chest
-			TreasureChest treasureChest_west = new TreasureChest();
-			treasureChest_west.setDirection(Direction.WEST);
-			return treasureChest_west;
-
-		} else if (integer == 9) {
-			return new Wall();
-
-		} else if (integer == 10) {
-			return new Note();
-
-		} else if (integer == 11010101 || integer == 11010102 || integer == 11010103 || integer == 11010104
-				|| integer == 11010201 || integer == 11010202 || integer == 11010203 || integer == 11010204
-				|| integer == 11010301 || integer == 11010302 || integer == 11010303 || integer == 11010304
-				|| integer == 11010401 || integer == 11010402 || integer == 11010403 || integer == 11010404) { // north
-			Door door_north = new Door();
-			door_north.setFirstRoomDirection(Direction.SOUTH);
-			door_north.setSecondRoomDirection(Direction.NORTH);
-			return door_north;
-		} else if (integer == 11020101 || integer == 11020102 || integer == 11020103 || integer == 11020104
-				|| integer == 11020201 || integer == 11020202 || integer == 11020203 || integer == 11020204
-				|| integer == 11020301 || integer == 11020302 || integer == 11020303 || integer == 11020304
-				|| integer == 11020401 || integer == 11020402 || integer == 11020403 || integer == 11020404) { // east
-			Door door_east = new Door();
-			door_east.setFirstRoomDirection(Direction.WEST);
-			door_east.setSecondRoomDirection(Direction.EAST);
-			return door_east;
-		} else if (integer == 11030101 || integer == 11030102 || integer == 11030103 || integer == 11030104
-				|| integer == 11030201 || integer == 11030202 || integer == 11030203 || integer == 11030204
-				|| integer == 11030301 || integer == 11030302 || integer == 11030303 || integer == 11030304
-				|| integer == 11030401 || integer == 11030402 || integer == 11030403 || integer == 11030404) { // south
-			Door door_south = new Door();
-			door_south.setFirstRoomDirection(Direction.NORTH);
-			door_south.setSecondRoomDirection(Direction.SOUTH);
-			return door_south;
-		} else if (integer == 11040101 || integer == 11040102 || integer == 11040103 || integer == 11040104
-				|| integer == 11040201 || integer == 11040202 || integer == 11040203 || integer == 11040204
-				|| integer == 11040301 || integer == 11040302 || integer == 11040303 || integer == 11040304
-				|| integer == 11040401 || integer == 11040402 || integer == 11040403 || integer == 11040404) { // west
-			Door door_west = new Door();
-			door_west.setFirstRoomDirection(Direction.EAST);
-			door_west.setSecondRoomDirection(Direction.WEST);
-			return door_west;
-
-		} else if (integer == 12) {
-			return new HeavyBook();
-
-		} else if (integer == 13) {
-			return new Key();
-
-		} else if (integer == 14) {
-			return new Potion();
-
-		} else if (integer == 15) {
-			return new Stick();
-
-		}
-
-		return null;
 	}
 
 	/**
@@ -1319,33 +1163,38 @@ public class MapEditorGUI {
 			return noteImage_top;
 
 		} else if (integer == 1101 || integer == 11010101 || integer == 11010102 || integer == 11010103
-				|| integer == 11010104 || integer == 11010201 || integer == 11010202 || integer == 11010203
-				|| integer == 11010204 || integer == 11010301 || integer == 11010302 || integer == 11010303
-				|| integer == 11010304 || integer == 11010401 || integer == 11010402 || integer == 11010403
-				|| integer == 11010404 || integer == 1103 || integer == 11030101 || integer == 11030102
-				|| integer == 11030103 || integer == 11030104 || integer == 11030201 || integer == 11030202
-				|| integer == 11030203 || integer == 11030204 || integer == 11030301 || integer == 11030302
-				|| integer == 11030303 || integer == 11030304 || integer == 11030401 || integer == 11030402
-				|| integer == 11030403 || integer == 11030404 || integer == 11010105 || integer == 11010205
-				|| integer == 11010305 || integer == 11010405 || integer == 11030105 || integer == 11030205
-				|| integer == 11030305 || integer == 11030405) {
+				|| integer == 11010104 || integer == 11010105 || integer == 11010201 || integer == 11010202
+				|| integer == 11010203 || integer == 11010204 || integer == 11010205 || integer == 11010301
+				|| integer == 11010302 || integer == 11010303 || integer == 11010304 || integer == 11010305
+				|| integer == 11010401 || integer == 11010402 || integer == 11010403 || integer == 11010404
+				|| integer == 11010405) {
 			return doorImage_top_north;
 
 		} else if (integer == 1102 || integer == 11020101 || integer == 11020102 || integer == 11020103
-				|| integer == 11020104 || integer == 11020201 || integer == 11020202 || integer == 11020203
-				|| integer == 11020204 || integer == 11020301 || integer == 11020302 || integer == 11020303
-				|| integer == 11020304 || integer == 11020401 || integer == 11020402 || integer == 11020403
-				|| integer == 11020404 || integer == 1104 || integer == 11040101 || integer == 11040102
-				|| integer == 11040103 || integer == 11040104 || integer == 11040201 || integer == 11040202
-				|| integer == 11040203 || integer == 11040204 || integer == 11040301 || integer == 11040302
-				|| integer == 11040303 || integer == 11040304 || integer == 11040401 || integer == 11040402
-				|| integer == 11040403 || integer == 11040404 || integer == 11020105 || integer == 11020205
-				|| integer == 11020305 || integer == 11020405 || integer == 11040105 || integer == 11040205
-				|| integer == 11040305 || integer == 11040405) {
+				|| integer == 11020104 || integer == 11020105 || integer == 11020201 || integer == 11020202
+				|| integer == 11020203 || integer == 11020204 || integer == 11020205 || integer == 11020301
+				|| integer == 11020302 || integer == 11020303 || integer == 11020304 || integer == 11020305
+				|| integer == 11020401 || integer == 11020402 || integer == 11020403 || integer == 11020404
+				|| integer == 11020405) {
 			return doorImage_top_east;
-		}
 
-		else if (integer == 12) {
+		} else if (integer == 1103 || integer == 11030101 || integer == 11030102 || integer == 11030103
+				|| integer == 11030104 || integer == 11030105 || integer == 11030201 || integer == 11030202
+				|| integer == 11030203 || integer == 11030204 || integer == 11030205 || integer == 11030301
+				|| integer == 11030302 || integer == 11030303 || integer == 11030304 || integer == 11030305
+				|| integer == 11030401 || integer == 11030402 || integer == 11030403 || integer == 11030404
+				|| integer == 11030405) {
+			return doorImage_top_south;
+
+		} else if (integer == 1104 || integer == 11040101 || integer == 11040102 || integer == 11040103
+				|| integer == 11040104 || integer == 11040105 || integer == 11040201 || integer == 11040202
+				|| integer == 11040203 || integer == 11040204 || integer == 11040205 || integer == 11040301
+				|| integer == 11040302 || integer == 11040303 || integer == 11040304 || integer == 11040305
+				|| integer == 11040401 || integer == 11040402 || integer == 11040403 || integer == 11040404
+				|| integer == 11040405) {
+			return doorImage_top_west;
+
+		} else if (integer == 12) {
 			return heavyBookImage_top;
 		} else if (integer == 13) {
 			return keyImage_top;
@@ -1376,7 +1225,9 @@ public class MapEditorGUI {
 			}
 		}
 
-		/* (non-Javadoc)
+		/*
+		 * (non-Javadoc)
+		 * 
 		 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 		 */
 		public void paintComponent(Graphics g) {
@@ -1394,7 +1245,7 @@ public class MapEditorGUI {
 
 			/** The x. */
 			public int x;
-			
+
 			/** The y. */
 			public int y;
 
@@ -1402,8 +1253,8 @@ public class MapEditorGUI {
 			 * Instantiates a new board panel tile.
 			 *
 			 * @param bounds the bounds
-			 * @param x the x
-			 * @param y the y
+			 * @param x      the x
+			 * @param y      the y
 			 */
 			public BoardPanelTile(Rectangle bounds, int x, int y) {
 				this.x = x;
@@ -1412,7 +1263,9 @@ public class MapEditorGUI {
 				addMouseListener(this);
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 			 */
 			public void paintComponent(Graphics g) {
@@ -1442,7 +1295,9 @@ public class MapEditorGUI {
 				g.drawRect(getBounds().x, getBounds().y, getWidth(), getHeight());
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
 			 */
 			@Override
@@ -1704,7 +1559,9 @@ public class MapEditorGUI {
 
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 			 */
 			@Override
@@ -1713,7 +1570,9 @@ public class MapEditorGUI {
 
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
 			 */
 			@Override
@@ -1722,7 +1581,9 @@ public class MapEditorGUI {
 
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
 			 */
 			@Override
@@ -1731,7 +1592,9 @@ public class MapEditorGUI {
 
 			}
 
-			/* (non-Javadoc)
+			/*
+			 * (non-Javadoc)
+			 * 
 			 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
 			 */
 			@Override

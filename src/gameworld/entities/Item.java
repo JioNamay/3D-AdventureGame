@@ -82,6 +82,15 @@ public class Item {
 	public boolean isDoor() {
 		return item.isDoor();
 	}
+	
+	/**
+	 * Checks if is wall.
+	 *
+	 * @return true, if is wall
+	 */
+	public boolean isWall() {
+	  return item.isWall();
+	}
 
 	/**
 	 * Gets the item.
