@@ -29,10 +29,7 @@ import renderer.Renderer;
 /**
  * Handles the functionality of the game between user and game logic.
  *
- * <<<<<<< HEAD
- *
- * @author Carrie =======
- * @author yangcarr >>>>>>> master
+ * @author yangcarr 
  */
 public class AdventureGame extends GUI {
 	// GAME HANDLERS

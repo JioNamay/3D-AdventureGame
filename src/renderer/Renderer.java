@@ -35,24 +35,47 @@ import gameworld.entities.TreasureChest;
 import gameworld.entities.Tree;
 import gameworld.entities.Wall;
 
+/**
+ * The Class Renderer.
+ */
 public class Renderer {
 
+	/** The board rotation. */
 	public int BOARD_ROTATION;
 
+	/** The panel size. */
 	public int PANEL_SIZE;
+	
+	/** The num of tiles. */
 	public int NUM_OF_TILES;
+	
+	/** The tile size. */
 	public int TILE_SIZE;
 
+	/** The center x. */
 	public int CENTER_X;
+	
+	/** The center y. */
 	public int CENTER_Y;
+	
+	/** The tile width. */
 	public int TILE_WIDTH;
+	
+	/** The tile height. */
 	public double TILE_HEIGHT;
 
+	/** The mouse down. */
 	private boolean mouseDown = false;
+	
+	/** The mouse location. */
 	private Point mouseLocation;
 
+	/** The loaded images. */
 	private Map<String, BufferedImage> loadedImages = new HashMap<String, BufferedImage>();
 
+	/**
+	 * Instantiates a new renderer.
+	 */
 	public Renderer() {
 		BOARD_ROTATION = 0;
 
@@ -67,6 +90,11 @@ public class Renderer {
 		TILE_HEIGHT = TILE_SIZE * 0.577;
 	}
 
+	/**
+	 * Do draw.
+	 *
+	 * @param g the g
+	 */
 	public void doDraw(Graphics g) {
 		Room r = new Room("Test");
 		r.addGameItem(0, 0, new Item(new Bookshelf()));
@@ -115,6 +143,15 @@ public class Renderer {
 		}
 	}
 
+	/**
+	 * Process location.
+	 *
+	 * @param g the g
+	 * @param r the r
+	 * @param i the i
+	 * @param row the row
+	 * @param col the col
+	 */
 	private void processLocation(Graphics g, Room r, Item i, int row, int col) {
 		if (i == null) {
 			drawImageAtLocation(g, "src/renderer/data/else/floor.png", row, col);
@@ -193,6 +230,14 @@ public class Renderer {
 		drawImageAtLocation(g, url.toLowerCase(), row, col);
 	}
 
+	/**
+	 * Draw image at location.
+	 *
+	 * @param g the g
+	 * @param fileName the file name
+	 * @param row the row
+	 * @param col the col
+	 */
 	private void drawImageAtLocation(Graphics g, String fileName, int row, int col) {
 
 		if (!loadedImages.containsKey(fileName)) {
@@ -217,6 +262,13 @@ public class Renderer {
 		g.drawImage(scaledImage, (int) x, (int) (y - scaledImage.getHeight(null)), null);
 	}
 
+	/**
+	 * Gets the isometric polygon.
+	 *
+	 * @param row the row
+	 * @param col the col
+	 * @return the isometric polygon
+	 */
 	private Polygon getIsometricPolygon(int row, int col) {
 		int x = col;
 		int y = row;
@@ -241,6 +293,12 @@ public class Renderer {
 		return p;
 	}
 
+	/**
+	 * Gets the clicked location.
+	 *
+	 * @param e the e
+	 * @return the clicked location
+	 */
 	private Location getClickedLocation(MouseEvent e) {
 		for (int row = 0; row < NUM_OF_TILES; row++) {
 			for (int col = 0; col < NUM_OF_TILES; col++) {
@@ -268,6 +326,12 @@ public class Renderer {
 		return null;
 	}
 
+	/**
+	 * Do release.
+	 *
+	 * @param e the e
+	 * @return the location
+	 */
 	public Location doRelease(MouseEvent e) {
 		this.mouseDown = false;
 
@@ -280,11 +344,21 @@ public class Renderer {
 		return null;
 	}
 
+	/**
+	 * Do press.
+	 *
+	 * @param e the e
+	 */
 	public void doPress(MouseEvent e) {
 		this.mouseDown = true;
 		this.mouseLocation = e.getPoint();
 	}
 
+	/**
+	 * Do drag.
+	 *
+	 * @param e the e
+	 */
 	public void doDrag(MouseEvent e) {
 		if (mouseDown) {
 			double dx = mouseLocation.getX() - e.getPoint().getX();
@@ -296,6 +370,11 @@ public class Renderer {
 		}
 	}
 
+	/**
+	 * Do scroll.
+	 *
+	 * @param e the e
+	 */
 	public void doScroll(MouseWheelEvent e) {
 		if (e.getWheelRotation() < 0) {
 			TILE_SIZE++;
