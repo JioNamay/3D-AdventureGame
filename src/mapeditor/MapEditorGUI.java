@@ -3,6 +3,7 @@ package mapeditor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,9 +16,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -29,12 +30,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MapEditorGUI.
  *
@@ -113,9 +114,6 @@ public class MapEditorGUI {
 
 	/** The save menu item. */
 	private JMenuItem saveMenuItem;
-
-	/** The load menu item. */
-	private JMenuItem loadMenuItem;
 
 	/** The rock image top. */
 	private BufferedImage rockImage_top;
@@ -207,51 +205,6 @@ public class MapEditorGUI {
 	/** The stick image top. */
 	private BufferedImage stickImage_top;
 
-	/** The rock image iso. */
-	private BufferedImage rockImage_iso;
-
-	/** The sofa image iso. */
-	private BufferedImage sofaImage_iso;
-
-	/** The table image iso. */
-	private BufferedImage tableImage_iso;
-
-	/** The tree image iso. */
-	private BufferedImage treeImage_iso;
-
-	/** The note image iso. */
-	private BufferedImage noteImage_iso;
-
-	/** The fountain image iso. */
-	private BufferedImage fountainImage_iso;
-
-	/** The cactus image iso. */
-	private BufferedImage cactusImage_iso;
-
-	/** The bookshelf image iso. */
-	private BufferedImage bookshelfImage_iso;
-
-	/** The treasure chest image iso. */
-	private BufferedImage treasureChestImage_iso;
-
-	/** The wall block image iso. */
-	private BufferedImage wallBlockImage_iso;
-
-	/** The door image iso. */
-	private BufferedImage doorImage_iso;
-
-	/** The heavy book image iso. */
-	private BufferedImage heavyBookImage_iso;
-
-	/** The key image iso. */
-	private BufferedImage keyImage_iso;
-
-	/** The potion image iso. */
-	private BufferedImage potionImage_iso;
-
-	/** The stick image iso. */
-	private BufferedImage stickImage_iso;
-
 	/** The current room. */
 	protected String currentRoom = "Library";
 
@@ -297,65 +250,6 @@ public class MapEditorGUI {
 		initializeMaps();
 
 		GUI();
-	}
-
-	/**
-	 * Setup frame.
-	 */
-	public void setupFrame() {
-
-		frame = new JFrame("Map Editor");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setLayout(new BorderLayout());
-		frame.setSize(700, 600);
-
-	}
-
-	/**
-	 * Setup menu bar.
-	 */
-	public void setupMenuBar() {
-
-		menuBar = new JMenuBar();
-		fileMenu = new JMenu("File");
-		saveMenuItem = new JMenuItem("Save");
-		saveMenuItem.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				exportToXML();
-			}
-
-		});
-		loadMenuItem = new JMenuItem("Load");
-		loadMenuItem.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-				System.out.println("");
-
-			}
-
-		});
-		fileMenu.add(saveMenuItem);
-		fileMenu.add(loadMenuItem);
-		menuBar.add(fileMenu);
-		frame.setJMenuBar(menuBar);
-
-	}
-
-	/**
-	 * Setup board panel.
-	 */
-	public void setupBoardPanel() {
-
-		boardPanel = new BoardPanel();
-		boardPanel.setBounds(0, 0, 280, 280);
-		((BoardPanel) boardPanel).addTiles();
-		frame.add(boardPanel);
 
 	}
 
@@ -375,7 +269,112 @@ public class MapEditorGUI {
 		buttonPanel.setLayout(null);
 		/* BUTTON PANEL */
 
-		/* ROOM SELECTION */
+		setupRoomSelection();
+
+		addRockButton();
+
+		addSofaButton();
+
+		addTableButton();
+
+		addTreeButton();
+
+		addFountainButton();
+
+		addCactusButton();
+
+		addBookshelfButton();
+
+		addTreasureChestButton();
+
+		addWallBlockButton();
+
+		addNoteButton();
+
+		addDoorButton();
+
+		addHeavyBookButton();
+
+		addKeyButton();
+
+		addPotionButton();
+
+		addStickButton();
+
+		addDeleteButton();
+
+		addRotateButton();
+
+		frame.add(buttonPanel);
+		frame.setVisible(true);
+
+	}
+
+	/**
+	 * Setup frame.
+	 */
+	public void setupFrame() {
+
+		frame = new JFrame("Map Editor");
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent we) {
+				int dialogResult = JOptionPane.showConfirmDialog(frame, "Save map as XML file before exiting?");
+				if (dialogResult == JOptionPane.YES_OPTION) {
+					exportToXML();
+					frame.setVisible(false);
+					frame.dispose();
+				} else if (dialogResult == JOptionPane.NO_OPTION) {
+					frame.setVisible(false);
+					frame.dispose();
+				}
+			}
+		});
+
+		frame.setResizable(false);
+		frame.setLayout(new BorderLayout());
+		frame.setSize(670, 600);
+
+	}
+
+	/**
+	 * Setup menu bar.
+	 */
+	public void setupMenuBar() {
+
+		menuBar = new JMenuBar();
+		fileMenu = new JMenu("File");
+		saveMenuItem = new JMenuItem("Save");
+		saveMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				exportToXML();
+			}
+
+		});
+
+		fileMenu.add(saveMenuItem);
+		menuBar.add(fileMenu);
+		frame.setJMenuBar(menuBar);
+
+	}
+
+	/**
+	 * Setup board panel.
+	 */
+	public void setupBoardPanel() {
+
+		boardPanel = new BoardPanel();
+		boardPanel.setBounds(0, 0, 280, 280);
+		((BoardPanel) boardPanel).addTiles();
+		frame.add(boardPanel);
+
+	}
+
+	public void setupRoomSelection() {
+
 		roomSelectLabel = new JLabel("Select room to edit:");
 
 		JComboBox roomList = new JComboBox(roomStrings);
@@ -442,21 +441,22 @@ public class MapEditorGUI {
 					}
 				}
 				boardPanel.repaint();
-				// (currentRoom);
+
 			}
 
 		});
 
-		roomSelectLabel.setBounds(300, 0, 500, 60);
+		roomSelectLabel.setBounds(320, 0, 500, 60);
 		buttonPanel.add(roomSelectLabel);
-		roomList.setBounds(427, 0, 170, 60);
+		roomList.setBounds(447, 0, 170, 60);
 		buttonPanel.add(roomList);
-		/* ROOM SELECTION */
 
-		rockButton = new JButton("[1] Rock (contains key)");
+	}
+
+	public void addRockButton() {
+
+		rockButton = new JButton();
 		rockButton.setBounds(300, 60, 170, 60);
-		// rockButton.setOpaque(true);
-		// rockButton.setIcon(new javax.swing.ImageIcon("textures/grass_texture.jpg"));
 		rockButton.setToolTipText("Rock (contains key)");
 		rockButton.addActionListener(new ActionListener() {
 
@@ -470,9 +470,18 @@ public class MapEditorGUI {
 			}
 
 		});
+		rockButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(rockImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Rock", SwingConstants.CENTER);
+		rockButton.add(imageLabel, BorderLayout.WEST);
+		rockButton.add(textLabel);
 		buttonPanel.add(rockButton);
 
-		sofaButton = new JButton("[2] Sofa");
+	}
+
+	public void addSofaButton() {
+
+		sofaButton = new JButton();
 		sofaButton.setBounds(470, 60, 170, 60);
 		sofaButton.setToolTipText("Sofa");
 		sofaButton.addActionListener(new ActionListener() {
@@ -487,9 +496,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		sofaButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(
+				new ImageIcon(sofaImage_top_north.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Sofa", SwingConstants.CENTER);
+		sofaButton.add(imageLabel, BorderLayout.WEST);
+		sofaButton.add(textLabel);
 		buttonPanel.add(sofaButton);
 
-		tableButton = new JButton("[3] Table");
+	}
+
+	public void addTableButton() {
+
+		tableButton = new JButton();
 		tableButton.setBounds(300, 120, 170, 60);
 		tableButton.setToolTipText("Table");
 		tableButton.addActionListener(new ActionListener() {
@@ -504,9 +523,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		tableButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(
+				new ImageIcon(tableImage_top_north.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Table", SwingConstants.CENTER);
+		tableButton.add(imageLabel, BorderLayout.WEST);
+		tableButton.add(textLabel);
 		buttonPanel.add(tableButton);
 
-		treeButton = new JButton("[4] Tree");
+	}
+
+	public void addTreeButton() {
+
+		treeButton = new JButton();
 		treeButton.setBounds(470, 120, 170, 60);
 		treeButton.setToolTipText("Tree");
 		treeButton.addActionListener(new ActionListener() {
@@ -521,10 +550,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		treeButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(treeImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Tree", SwingConstants.CENTER);
+		treeButton.add(imageLabel, BorderLayout.WEST);
+		treeButton.add(textLabel);
 		buttonPanel.add(treeButton);
 
-		fountainButton = new JButton("[5] Fountain");
-		fountainButton.setBounds(470, 180, 170, 60);
+	}
+
+	public void addFountainButton() {
+
+		fountainButton = new JButton();
+		fountainButton.setBounds(300, 180, 170, 60);
 		fountainButton.setToolTipText("Fountain");
 		fountainButton.addActionListener(new ActionListener() {
 
@@ -538,10 +576,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		fountainButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(fountainImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Fountain", SwingConstants.CENTER);
+		fountainButton.add(imageLabel, BorderLayout.WEST);
+		fountainButton.add(textLabel);
 		buttonPanel.add(fountainButton);
 
-		cactusButton = new JButton("[6] Cactus");
-		cactusButton.setBounds(300, 240, 170, 60);
+	}
+
+	public void addCactusButton() {
+
+		cactusButton = new JButton();
+		cactusButton.setBounds(470, 180, 170, 60);
 		cactusButton.setToolTipText("Cactus");
 		cactusButton.addActionListener(new ActionListener() {
 
@@ -555,10 +602,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		cactusButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(cactusImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Cactus", SwingConstants.CENTER);
+		cactusButton.add(imageLabel, BorderLayout.WEST);
+		cactusButton.add(textLabel);
 		buttonPanel.add(cactusButton);
 
-		bookshelfButton = new JButton("[7] Bookshelf");
-		bookshelfButton.setBounds(470, 240, 170, 60);
+	}
+
+	public void addBookshelfButton() {
+
+		bookshelfButton = new JButton();
+		bookshelfButton.setBounds(300, 240, 170, 60);
 		bookshelfButton.setToolTipText("Bookshelf");
 		bookshelfButton.addActionListener(new ActionListener() {
 
@@ -572,10 +628,20 @@ public class MapEditorGUI {
 			}
 
 		});
+		bookshelfButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(
+				new ImageIcon(bookshelfImage_top_north.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Bookshelf", SwingConstants.CENTER);
+		bookshelfButton.add(imageLabel, BorderLayout.WEST);
+		bookshelfButton.add(textLabel);
 		buttonPanel.add(bookshelfButton);
 
-		treasureChestButton = new JButton("[8] Treasure Chest");
-		treasureChestButton.setBounds(300, 300, 170, 60);
+	}
+
+	public void addTreasureChestButton() {
+
+		treasureChestButton = new JButton();
+		treasureChestButton.setBounds(470, 240, 170, 60);
 		treasureChestButton.setToolTipText("Treasure Chest");
 		treasureChestButton.addActionListener(new ActionListener() {
 
@@ -589,10 +655,20 @@ public class MapEditorGUI {
 			}
 
 		});
+		treasureChestButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(
+				new ImageIcon(treasureChestImage_top_north.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Treasure Chest", SwingConstants.CENTER);
+		treasureChestButton.add(imageLabel, BorderLayout.WEST);
+		treasureChestButton.add(textLabel);
 		buttonPanel.add(treasureChestButton);
 
-		wallBlockButton = new JButton("[9] Wall Block");
-		wallBlockButton.setBounds(470, 300, 170, 60);
+	}
+
+	public void addWallBlockButton() {
+
+		wallBlockButton = new JButton();
+		wallBlockButton.setBounds(300, 300, 170, 60);
 		wallBlockButton.setToolTipText("Wall Block");
 		wallBlockButton.addActionListener(new ActionListener() {
 
@@ -606,10 +682,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		wallBlockButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(wallBlockImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Wall Block", SwingConstants.CENTER);
+		wallBlockButton.add(imageLabel, BorderLayout.WEST);
+		wallBlockButton.add(textLabel);
 		buttonPanel.add(wallBlockButton);
 
-		noteButton = new JButton("[10] Note");
-		noteButton.setBounds(300, 360, 170, 60);
+	}
+
+	public void addNoteButton() {
+
+		noteButton = new JButton();
+		noteButton.setBounds(470, 300, 170, 60);
 		noteButton.setToolTipText("Note");
 		noteButton.addActionListener(new ActionListener() {
 
@@ -623,10 +708,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		noteButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(noteImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Note", SwingConstants.CENTER);
+		noteButton.add(imageLabel, BorderLayout.WEST);
+		noteButton.add(textLabel);
 		buttonPanel.add(noteButton);
 
-		doorButton = new JButton("[11] Door");
-		doorButton.setBounds(470, 360, 170, 60);
+	}
+
+	public void addDoorButton() {
+
+		doorButton = new JButton();
+		doorButton.setBounds(300, 360, 170, 60);
 		doorButton.setToolTipText("Door");
 		doorButton.addActionListener(new ActionListener() {
 
@@ -640,10 +734,20 @@ public class MapEditorGUI {
 			}
 
 		});
+		doorButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(
+				new ImageIcon(doorImage_top_north.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Door", SwingConstants.CENTER);
+		doorButton.add(imageLabel, BorderLayout.WEST);
+		doorButton.add(textLabel);
 		buttonPanel.add(doorButton);
 
-		heavyBookButton = new JButton("[12] Heavy Book");
-		heavyBookButton.setBounds(300, 420, 170, 60);
+	}
+
+	public void addHeavyBookButton() {
+
+		heavyBookButton = new JButton();
+		heavyBookButton.setBounds(470, 360, 170, 60);
 		heavyBookButton.setToolTipText("Heavy Book");
 		heavyBookButton.addActionListener(new ActionListener() {
 
@@ -657,10 +761,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		heavyBookButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(heavyBookImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Heavy Book", SwingConstants.CENTER);
+		heavyBookButton.add(imageLabel, BorderLayout.WEST);
+		heavyBookButton.add(textLabel);
 		buttonPanel.add(heavyBookButton);
 
-		keyButton = new JButton("[13] Key");
-		keyButton.setBounds(470, 420, 170, 60);
+	}
+
+	public void addKeyButton() {
+
+		keyButton = new JButton();
+		keyButton.setBounds(300, 420, 170, 60);
 		keyButton.setToolTipText("Key");
 		keyButton.addActionListener(new ActionListener() {
 
@@ -674,10 +787,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		keyButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(keyImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Key", SwingConstants.CENTER);
+		keyButton.add(imageLabel, BorderLayout.WEST);
+		keyButton.add(textLabel);
 		buttonPanel.add(keyButton);
 
-		potionButton = new JButton("[14] Potion");
-		potionButton.setBounds(300, 480, 170, 60);
+	}
+
+	public void addPotionButton() {
+
+		potionButton = new JButton();
+		potionButton.setBounds(470, 420, 170, 60);
 		potionButton.setToolTipText("Potion");
 		potionButton.addActionListener(new ActionListener() {
 
@@ -691,10 +813,19 @@ public class MapEditorGUI {
 			}
 
 		});
+		potionButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(potionImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Potion", SwingConstants.CENTER);
+		potionButton.add(imageLabel, BorderLayout.WEST);
+		potionButton.add(textLabel);
 		buttonPanel.add(potionButton);
 
-		stickButton = new JButton("[15] Stick");
-		stickButton.setBounds(470, 480, 170, 60);
+	}
+
+	public void addStickButton() {
+
+		stickButton = new JButton();
+		stickButton.setBounds(keyButton.getX() + keyButton.getWidth() / 2, 480, 170, 60);
 		stickButton.setToolTipText("Stick");
 		stickButton.addActionListener(new ActionListener() {
 
@@ -708,7 +839,16 @@ public class MapEditorGUI {
 			}
 
 		});
+		stickButton.setLayout(new BorderLayout());
+		JLabel imageLabel = new JLabel(new ImageIcon(stickImage_top.getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+		JLabel textLabel = new JLabel("Stick", SwingConstants.CENTER);
+		stickButton.add(imageLabel, BorderLayout.WEST);
+		stickButton.add(textLabel);
 		buttonPanel.add(stickButton);
+
+	}
+
+	public void addDeleteButton() {
 
 		deleteButton = new JButton("Delete Mode: Off");
 		deleteButton.setBounds(40 * 7 / 2 - 170 / 2, 40 * 7 + 30, 170, 60);
@@ -730,6 +870,10 @@ public class MapEditorGUI {
 		});
 		buttonPanel.add(deleteButton);
 
+	}
+
+	public void addRotateButton() {
+
 		rotateButton = new JButton("Rotate Mode: Off");
 		rotateButton.setBounds(40 * 7 / 2 - 170 / 2, 40 * 7 + 30 + 60, 170, 60);
 		rotateButton.addActionListener(new ActionListener() {
@@ -750,8 +894,6 @@ public class MapEditorGUI {
 		});
 		buttonPanel.add(rotateButton);
 
-		frame.add(buttonPanel);
-		frame.setVisible(true);
 	}
 
 	/**
@@ -832,6 +974,8 @@ public class MapEditorGUI {
 			writer.flush();
 			writer.close();
 
+			JOptionPane.showMessageDialog(frame, "Map successfully exported as 'gamemap.xml'");
+
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -888,22 +1032,6 @@ public class MapEditorGUI {
 			potionImage_top = ImageIO.read(new File("images/potion.png"));
 			stickImage_top = ImageIO.read(new File("images/stick.png"));
 
-			rockImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			sofaImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			tableImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			treeImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			noteImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			fountainImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			cactusImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			bookshelfImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			treasureChestImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			wallBlockImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			doorImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			heavyBookImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			keyImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			potionImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-			stickImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -919,13 +1047,13 @@ public class MapEditorGUI {
 		foyerMap = new int[7][7];
 		courtyardMap = new int[7][7];
 		studyMap = new int[7][7];
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 7; j++) {
-				roomMap[i][j] = 0;
-				libraryMap[i][j] = 0;
-				foyerMap[i][j] = 0;
-				courtyardMap[i][j] = 0;
-				studyMap[i][j] = 0;
+		for (int row = 0; row < 7; row++) {
+			for (int col = 0; col < 7; col++) {
+				roomMap[row][col] = 0;
+				libraryMap[row][col] = 0;
+				foyerMap[row][col] = 0;
+				courtyardMap[row][col] = 0;
+				studyMap[row][col] = 0;
 			}
 		}
 
@@ -1197,9 +1325,9 @@ public class MapEditorGUI {
 		 * Adds the tiles.
 		 */
 		public void addTiles() {
-			for (int i = 0; i < 7; i++) {
-				for (int j = 0; j < 7; j++) {
-					BoardPanelTile bpc = new BoardPanelTile(new Rectangle(j * 40, i * 40, 40, 40), i, j);
+			for (int row = 0; row < 7; row++) {
+				for (int col = 0; col < 7; col++) {
+					BoardPanelTile bpc = new BoardPanelTile(new Rectangle(col * 40, row * 40, 40, 40), row, col);
 					boardPanel.add(bpc);
 					boardTiles.add(bpc);
 				}
@@ -1292,8 +1420,6 @@ public class MapEditorGUI {
 
 							roomMap[x][y] = getItemAsInt(selectedItem, x, y);
 							selectedItem = " ";
-//							System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-//							System.out.println("");
 							boardPanel.repaint();
 
 						} else {
@@ -1305,8 +1431,6 @@ public class MapEditorGUI {
 
 						roomMap[x][y] = getItemAsInt(selectedItem, x, y);
 						selectedItem = " ";
-//						System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-//						System.out.println("");
 						boardPanel.repaint();
 
 					}
@@ -1315,15 +1439,11 @@ public class MapEditorGUI {
 
 				if (deleteMode == true) {
 					roomMap[x][y] = 0;
-//					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-//					System.out.println("");
 					boardPanel.repaint();
 				}
 
 				if (rotateMode == true && roomMap[x][y] != 0) {
 					roomMap[x][y] = getRotatedInt(roomMap[x][y]);
-//					System.out.println(Arrays.deepToString(roomMap).replace("], ", "]\n"));
-//					System.out.println("");
 					boardPanel.repaint();
 				}
 
@@ -1339,13 +1459,12 @@ public class MapEditorGUI {
 								doorToRoomStrings[index++] = roomName;
 							}
 						}
-						doorToRoomStrings[index] = "Win Door";
+						doorToRoomStrings[index] = "Win Room";
 
 						JOptionPane optionPane = new JOptionPane("This door leads to:", JOptionPane.QUESTION_MESSAGE,
 								JOptionPane.DEFAULT_OPTION, null, doorToRoomStrings, null);
 
-						JDialog dialog = optionPane.createDialog(null, "Door to Room Selection");
-						dialog.setLocationRelativeTo(frame);
+						JDialog dialog = optionPane.createDialog(frame, "Door to Room Selection");
 						dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 						dialog.addWindowListener(new WindowAdapter() {
 							public void windowClosing(WindowEvent we) {
@@ -1491,7 +1610,7 @@ public class MapEditorGUI {
 							} else if (currentRoom.equals("Study")) {
 								// can't set room from study to study
 							}
-						} else if (optionPane.getValue().equals("Win Door")) {
+						} else if (optionPane.getValue().equals("Win Room")) {
 							if (currentRoom.equals("Library")) {
 								if (roomMap[x][y] == 1101) { // north
 									roomMap[x][y] = 11010105;
@@ -1547,7 +1666,6 @@ public class MapEditorGUI {
 			 */
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -1558,7 +1676,6 @@ public class MapEditorGUI {
 			 */
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -1569,7 +1686,6 @@ public class MapEditorGUI {
 			 */
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -1580,12 +1696,15 @@ public class MapEditorGUI {
 			 */
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 		}
 
+	}
+
+	public static void main(String[] args) {
+		new MapEditorGUI();
 	}
 
 }
