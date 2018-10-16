@@ -43,212 +43,211 @@ import javax.xml.stream.XMLStreamWriter;
  */
 public class MapEditorGUI {
 
-  /** The frame. */
-  private JFrame frame;
+	/** The frame. */
+	private JFrame frame;
 
-  /** The board panel. */
-  private JLayeredPane boardPanel;
+	/** The board panel. */
+	private JLayeredPane boardPanel;
 
-  /** The button panel. */
-  private JPanel buttonPanel;
+	/** The button panel. */
+	private JPanel buttonPanel;
 
-  /** The rock button. */
-  private JButton rockButton;
+	/** The rock button. */
+	private JButton rockButton;
 
-  /** The sofa button. */
-  private JButton sofaButton;
+	/** The sofa button. */
+	private JButton sofaButton;
 
-  /** The table button. */
-  private JButton tableButton;
+	/** The table button. */
+	private JButton tableButton;
 
-  /** The tree button. */
-  private JButton treeButton;
+	/** The tree button. */
+	private JButton treeButton;
 
-  /** The note button. */
-  private JButton noteButton;
+	/** The note button. */
+	private JButton noteButton;
 
-  /** The fountain button. */
-  private JButton fountainButton;
+	/** The fountain button. */
+	private JButton fountainButton;
 
-  /** The cactus button. */
-  private JButton cactusButton;
+	/** The cactus button. */
+	private JButton cactusButton;
 
-  /** The bookshelf button. */
-  private JButton bookshelfButton;
+	/** The bookshelf button. */
+	private JButton bookshelfButton;
 
-  /** The treasure chest button. */
-  private JButton treasureChestButton;
+	/** The treasure chest button. */
+	private JButton treasureChestButton;
 
-  /** The wall block button. */
-  private JButton wallBlockButton;
+	/** The wall block button. */
+	private JButton wallBlockButton;
 
-  /** The door button. */
-  private JButton doorButton;
+	/** The door button. */
+	private JButton doorButton;
 
-  /** The heavy book button. */
-  private JButton heavyBookButton;
+	/** The heavy book button. */
+	private JButton heavyBookButton;
 
-  /** The key button. */
-  private JButton keyButton;
+	/** The key button. */
+	private JButton keyButton;
 
-  /** The potion button. */
-  private JButton potionButton;
+	/** The potion button. */
+	private JButton potionButton;
 
-  /** The stick button. */
-  private JButton stickButton;
+	/** The stick button. */
+	private JButton stickButton;
 
-  /** The delete button. */
-  private JButton deleteButton;
+	/** The delete button. */
+	private JButton deleteButton;
 
-  /** The rotate button. */
-  private JButton rotateButton;
+	/** The rotate button. */
+	private JButton rotateButton;
 
-  /** The room select label. */
-  private JLabel roomSelectLabel;
+	/** The room select label. */
+	private JLabel roomSelectLabel;
 
-  /** The menu bar. */
-  private JMenuBar menuBar;
+	/** The menu bar. */
+	private JMenuBar menuBar;
 
-  /** The file menu. */
-  private JMenu fileMenu;
+	/** The file menu. */
+	private JMenu fileMenu;
 
-  /** The save menu item. */
-  private JMenuItem saveMenuItem;
+	/** The save menu item. */
+	private JMenuItem saveMenuItem;
 
 	/** The rock image top. */
 	private BufferedImage rockImage_top;
 
-  /** The sofa image top north. */
-  private BufferedImage sofaImage_top_north;
+	/** The sofa image top north. */
+	private BufferedImage sofaImage_top_north;
 
-  /** The sofa image top east. */
-  private BufferedImage sofaImage_top_east;
+	/** The sofa image top east. */
+	private BufferedImage sofaImage_top_east;
 
-  /** The sofa image top south. */
-  private BufferedImage sofaImage_top_south;
+	/** The sofa image top south. */
+	private BufferedImage sofaImage_top_south;
 
-  /** The sofa image top west. */
-  private BufferedImage sofaImage_top_west;
+	/** The sofa image top west. */
+	private BufferedImage sofaImage_top_west;
 
-  /** The table image top north. */
-  private BufferedImage tableImage_top_north;
+	/** The table image top north. */
+	private BufferedImage tableImage_top_north;
 
-  /** The table image top east. */
-  private BufferedImage tableImage_top_east;
+	/** The table image top east. */
+	private BufferedImage tableImage_top_east;
 
-  /** The table image top south. */
-  private BufferedImage tableImage_top_south;
+	/** The table image top south. */
+	private BufferedImage tableImage_top_south;
 
-  /** The table image top west. */
-  private BufferedImage tableImage_top_west;
+	/** The table image top west. */
+	private BufferedImage tableImage_top_west;
 
-  /** The tree image top. */
-  private BufferedImage treeImage_top;
+	/** The tree image top. */
+	private BufferedImage treeImage_top;
 
-  /** The note image top. */
-  private BufferedImage noteImage_top;
+	/** The note image top. */
+	private BufferedImage noteImage_top;
 
-  /** The fountain image top. */
-  private BufferedImage fountainImage_top;
+	/** The fountain image top. */
+	private BufferedImage fountainImage_top;
 
-  /** The cactus image top. */
-  private BufferedImage cactusImage_top;
+	/** The cactus image top. */
+	private BufferedImage cactusImage_top;
 
-  /** The bookshelf image top north. */
-  private BufferedImage bookshelfImage_top_north;
+	/** The bookshelf image top north. */
+	private BufferedImage bookshelfImage_top_north;
 
-  /** The bookshelf image top east. */
-  private BufferedImage bookshelfImage_top_east;
+	/** The bookshelf image top east. */
+	private BufferedImage bookshelfImage_top_east;
 
-  /** The bookshelf image top south. */
-  private BufferedImage bookshelfImage_top_south;
+	/** The bookshelf image top south. */
+	private BufferedImage bookshelfImage_top_south;
 
-  /** The bookshelf image top west. */
-  private BufferedImage bookshelfImage_top_west;
+	/** The bookshelf image top west. */
+	private BufferedImage bookshelfImage_top_west;
 
-  /** The treasure chest image top north. */
-  private BufferedImage treasureChestImage_top_north;
+	/** The treasure chest image top north. */
+	private BufferedImage treasureChestImage_top_north;
 
-  /** The treasure chest image top east. */
-  private BufferedImage treasureChestImage_top_east;
+	/** The treasure chest image top east. */
+	private BufferedImage treasureChestImage_top_east;
 
-  /** The treasure chest image top south. */
-  private BufferedImage treasureChestImage_top_south;
+	/** The treasure chest image top south. */
+	private BufferedImage treasureChestImage_top_south;
 
-  /** The treasure chest image top west. */
-  private BufferedImage treasureChestImage_top_west;
+	/** The treasure chest image top west. */
+	private BufferedImage treasureChestImage_top_west;
 
-  /** The wall block image top. */
-  private BufferedImage wallBlockImage_top;
+	/** The wall block image top. */
+	private BufferedImage wallBlockImage_top;
 
-  /** The door image top north. */
-  private BufferedImage doorImage_top_north;
+	/** The door image top north. */
+	private BufferedImage doorImage_top_north;
 
-  /** The door image top east. */
-  private BufferedImage doorImage_top_east;
+	/** The door image top east. */
+	private BufferedImage doorImage_top_east;
 
-  /** The door image top south. */
-  private BufferedImage doorImage_top_south;
+	/** The door image top south. */
+	private BufferedImage doorImage_top_south;
 
-  /** The door image top west. */
-  private BufferedImage doorImage_top_west;
+	/** The door image top west. */
+	private BufferedImage doorImage_top_west;
 
-  /** The heavy book image top. */
-  private BufferedImage heavyBookImage_top;
+	/** The heavy book image top. */
+	private BufferedImage heavyBookImage_top;
 
-  /** The key image top. */
-  private BufferedImage keyImage_top;
+	/** The key image top. */
+	private BufferedImage keyImage_top;
 
-  /** The potion image top. */
-  private BufferedImage potionImage_top;
+	/** The potion image top. */
+	private BufferedImage potionImage_top;
 
-  /** The stick image top. */
-  private BufferedImage stickImage_top;
+	/** The stick image top. */
+	private BufferedImage stickImage_top;
 
 	/** The current room. */
 	protected String currentRoom = "Library";
 
+	/** The selected item. */
+	protected String selectedItem = " ";
 
-  /** The selected item. */
-  protected String selectedItem = " ";
+	/** The delete mode. */
+	protected boolean deleteMode = false;
 
-  /** The delete mode. */
-  protected boolean deleteMode = false;
+	/** The rotate mode. */
+	protected boolean rotateMode = false;
 
-  /** The rotate mode. */
-  protected boolean rotateMode = false;
+	/** The library map. */
+	private int[][] libraryMap;
 
-  /** The library map. */
-  private int[][] libraryMap;
+	/** The foyer map. */
+	private int[][] foyerMap;
 
-  /** The foyer map. */
-  private int[][] foyerMap;
+	/** The courtyard map. */
+	private int[][] courtyardMap;
 
-  /** The courtyard map. */
-  private int[][] courtyardMap;
+	/** The study map. */
+	private int[][] studyMap;
 
-  /** The study map. */
-  private int[][] studyMap;
+	/** The room map. */
+	private int[][] roomMap;
 
-  /** The room map. */
-  private int[][] roomMap;
+	/** The room strings. */
+	private String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
 
-  /** The room strings. */
-  private String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
+	/** The board tiles. */
+	private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile> boardTiles;
 
-  /** The board tiles. */
-  private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile> boardTiles;
+	/**
+	 * Instantiates a new map editor GUI.
+	 */
+	public MapEditorGUI() {
 
-  /**
-   * Instantiates a new map editor GUI.
-   */
-  public MapEditorGUI() {
+		boardTiles = new ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile>();
 
-    boardTiles = new ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile>();
+		initializeImages();
 
-    initializeImages();
-
-    initializeMaps();
+		initializeMaps();
 
 		GUI();
 
@@ -311,14 +310,15 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Setup frame.
+	 */
+	public void setupFrame() {
 
-  /**
-   * Setup frame.
-   */
-  public void setupFrame() {
 		frame = new JFrame("Map Editor");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
+
 			public void windowClosing(WindowEvent we) {
 				int dialogResult = JOptionPane.showConfirmDialog(frame, "Save map as XML file before exiting?");
 				if (dialogResult == JOptionPane.YES_OPTION) {
@@ -330,25 +330,27 @@ public class MapEditorGUI {
 					frame.dispose();
 				}
 			}
+
 		});
 
 		frame.setResizable(false);
 		frame.setLayout(new BorderLayout());
 		frame.setSize(670, 600);
-  }
 
-  /**
-   * Setup menu bar.
-   */
-  public void setupMenuBar() {
+	}
 
-    menuBar = new JMenuBar();
-    fileMenu = new JMenu("File");
-    saveMenuItem = new JMenuItem("Save");
-    saveMenuItem.addActionListener(new ActionListener() {
+	/**
+	 * Setup menu bar.
+	 */
+	public void setupMenuBar() {
+
+		menuBar = new JMenuBar();
+		fileMenu = new JMenu("File");
+		saveMenuItem = new JMenuItem("Save");
+		saveMenuItem.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				exportToXML();
 			}
 
@@ -372,6 +374,10 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Setup room selection. If the user decides to edit another room, the current
+	 * room layout will be stored and the GUI map will reflect the selected room.
+	 */
 	public void setupRoomSelection() {
 
 		roomSelectLabel = new JLabel("Select room to edit:");
@@ -387,19 +393,22 @@ public class MapEditorGUI {
 				String previousRoom = currentRoom;
 				currentRoom = roomName;
 				if (previousRoom.equals("Library")) {
-					if (currentRoom.equals("Library")) {
 
+					if (currentRoom.equals("Library")) {
+						// not changing rooms
 					} else if (currentRoom.equals("Foyer")) {
-						libraryMap = roomMap;
-						roomMap = foyerMap;
+						libraryMap = roomMap; // store previous room layout
+						roomMap = foyerMap; // now use the layout of the selected room
 					} else if (currentRoom.equals("Courtyard")) {
-						libraryMap = roomMap;
-						roomMap = courtyardMap;
+						libraryMap = roomMap; // store previous room layout
+						roomMap = courtyardMap; // now use the layout of the selected room
 					} else if (currentRoom.equals("Study")) {
-						libraryMap = roomMap;
-						roomMap = studyMap;
+						libraryMap = roomMap; // store previous room layout
+						roomMap = studyMap; // now use the layout of the selected room
 					}
+
 				} else if (previousRoom.equals("Foyer")) {
+
 					if (currentRoom.equals("Library")) {
 						foyerMap = roomMap;
 						roomMap = libraryMap;
@@ -412,7 +421,9 @@ public class MapEditorGUI {
 						foyerMap = roomMap;
 						roomMap = studyMap;
 					}
+
 				} else if (previousRoom.equals("Courtyard")) {
+
 					if (currentRoom.equals("Library")) {
 						courtyardMap = roomMap;
 						roomMap = libraryMap;
@@ -425,7 +436,9 @@ public class MapEditorGUI {
 						courtyardMap = roomMap;
 						roomMap = studyMap;
 					}
+
 				} else if (previousRoom.equals("Study")) {
+
 					if (currentRoom.equals("Library")) {
 						studyMap = roomMap;
 						roomMap = libraryMap;
@@ -452,6 +465,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the rock button.
+	 */
 	public void addRockButton() {
 
 		rockButton = new JButton();
@@ -464,7 +480,6 @@ public class MapEditorGUI {
 				selectedItem = "rock";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -478,6 +493,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the sofa button.
+	 */
 	public void addSofaButton() {
 
 		sofaButton = new JButton();
@@ -490,7 +508,6 @@ public class MapEditorGUI {
 				selectedItem = "sofa";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -505,6 +522,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the table button.
+	 */
 	public void addTableButton() {
 
 		tableButton = new JButton();
@@ -517,7 +537,6 @@ public class MapEditorGUI {
 				selectedItem = "table";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -532,6 +551,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the tree button.
+	 */
 	public void addTreeButton() {
 
 		treeButton = new JButton();
@@ -544,7 +566,6 @@ public class MapEditorGUI {
 				selectedItem = "tree";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -558,6 +579,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the fountain button.
+	 */
 	public void addFountainButton() {
 
 		fountainButton = new JButton();
@@ -570,7 +594,6 @@ public class MapEditorGUI {
 				selectedItem = "fountain";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -584,6 +607,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the cactus button.
+	 */
 	public void addCactusButton() {
 
 		cactusButton = new JButton();
@@ -596,7 +622,6 @@ public class MapEditorGUI {
 				selectedItem = "cactus";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -610,6 +635,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the bookshelf button.
+	 */
 	public void addBookshelfButton() {
 
 		bookshelfButton = new JButton();
@@ -622,7 +650,6 @@ public class MapEditorGUI {
 				selectedItem = "bookshelf";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -637,6 +664,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the treasure chest button.
+	 */
 	public void addTreasureChestButton() {
 
 		treasureChestButton = new JButton();
@@ -649,7 +679,6 @@ public class MapEditorGUI {
 				selectedItem = "treasure chest";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -664,6 +693,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the wall block button.
+	 */
 	public void addWallBlockButton() {
 
 		wallBlockButton = new JButton();
@@ -676,7 +708,6 @@ public class MapEditorGUI {
 				selectedItem = "wall block";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -690,6 +721,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the note button.
+	 */
 	public void addNoteButton() {
 
 		noteButton = new JButton();
@@ -702,7 +736,6 @@ public class MapEditorGUI {
 				selectedItem = "note";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -716,6 +749,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the door button.
+	 */
 	public void addDoorButton() {
 
 		doorButton = new JButton();
@@ -728,7 +764,6 @@ public class MapEditorGUI {
 				selectedItem = "door";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -743,6 +778,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the heavy book button.
+	 */
 	public void addHeavyBookButton() {
 
 		heavyBookButton = new JButton();
@@ -755,7 +793,6 @@ public class MapEditorGUI {
 				selectedItem = "heavy book";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -769,6 +806,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the key button.
+	 */
 	public void addKeyButton() {
 
 		keyButton = new JButton();
@@ -781,7 +821,6 @@ public class MapEditorGUI {
 				selectedItem = "key";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -795,6 +834,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the potion button.
+	 */
 	public void addPotionButton() {
 
 		potionButton = new JButton();
@@ -807,7 +849,6 @@ public class MapEditorGUI {
 				selectedItem = "potion";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -821,6 +862,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the stick button.
+	 */
 	public void addStickButton() {
 
 		stickButton = new JButton();
@@ -833,7 +877,6 @@ public class MapEditorGUI {
 				selectedItem = "stick";
 				turnDeleteModeOff();
 				turnRotateModeOff();
-				// (selectedItem);
 				boardPanel.repaint();
 			}
 
@@ -847,6 +890,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the delete button.
+	 */
 	public void addDeleteButton() {
 
 		deleteButton = new JButton("Delete Mode: Off");
@@ -871,6 +917,9 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * Adds the rotate button.
+	 */
 	public void addRotateButton() {
 
 		rotateButton = new JButton("Rotate Mode: Off");
@@ -1037,7 +1086,7 @@ public class MapEditorGUI {
 	}
 
 	/**
-	 * Initialize maps.
+	 * Initialize maps and sets all cells to 0.
 	 */
 	public void initializeMaps() {
 
@@ -1075,7 +1124,7 @@ public class MapEditorGUI {
 	}
 
 	/**
-	 * Gets the item as int.
+	 * Gets the item ID.
 	 *
 	 * @param item the item
 	 * @param x    the x
@@ -1083,6 +1132,7 @@ public class MapEditorGUI {
 	 * @return the item as int
 	 */
 	public int getItemAsInt(String item, int x, int y) {
+
 		switch (item) {
 		case "rock":
 			return 1;
@@ -1123,11 +1173,12 @@ public class MapEditorGUI {
 		case "stick":
 			return 15;
 		}
-		return -1;
+		return -1; // item does not exist
+
 	}
 
 	/**
-	 * Gets the rotated int.
+	 * Gets the item ID if the item were to be rotated 90 degrees clockwise.
 	 *
 	 * @param integer the integer
 	 * @return the rotated int
@@ -1186,15 +1237,8 @@ public class MapEditorGUI {
 
 		case 9:
 			return 9;
-
 		case 10:
 			return 10;
-
-//		case 1101: // y-axis facing door
-//			return 1101;
-//		case 1102: // x-axis facing door
-//			return 1102;
-
 		case 12:
 			return 12;
 		case 13:
@@ -1205,11 +1249,11 @@ public class MapEditorGUI {
 			return 15;
 		}
 
-		return integer;
+		return integer; // item cannot be rotated
 	}
 
 	/**
-	 * Gets the int as image.
+	 * Gets the item ID as an image.
 	 *
 	 * @param integer the integer
 	 * @return the int as image
@@ -1270,6 +1314,7 @@ public class MapEditorGUI {
 		} else if (integer == 10) {
 			return noteImage_top;
 
+			// all possible north door IDs
 		} else if (integer == 1101 || integer == 11010101 || integer == 11010102 || integer == 11010103
 				|| integer == 11010104 || integer == 11010105 || integer == 11010201 || integer == 11010202
 				|| integer == 11010203 || integer == 11010204 || integer == 11010205 || integer == 11010301
@@ -1278,6 +1323,7 @@ public class MapEditorGUI {
 				|| integer == 11010405) {
 			return doorImage_top_north;
 
+			// all possible east door IDs
 		} else if (integer == 1102 || integer == 11020101 || integer == 11020102 || integer == 11020103
 				|| integer == 11020104 || integer == 11020105 || integer == 11020201 || integer == 11020202
 				|| integer == 11020203 || integer == 11020204 || integer == 11020205 || integer == 11020301
@@ -1286,6 +1332,7 @@ public class MapEditorGUI {
 				|| integer == 11020405) {
 			return doorImage_top_east;
 
+			// all possible south door IDs
 		} else if (integer == 1103 || integer == 11030101 || integer == 11030102 || integer == 11030103
 				|| integer == 11030104 || integer == 11030105 || integer == 11030201 || integer == 11030202
 				|| integer == 11030203 || integer == 11030204 || integer == 11030205 || integer == 11030301
@@ -1294,6 +1341,7 @@ public class MapEditorGUI {
 				|| integer == 11030405) {
 			return doorImage_top_south;
 
+			// all possible west door IDs
 		} else if (integer == 1104 || integer == 11040101 || integer == 11040102 || integer == 11040103
 				|| integer == 11040104 || integer == 11040105 || integer == 11040201 || integer == 11040202
 				|| integer == 11040203 || integer == 11040204 || integer == 11040205 || integer == 11040301
@@ -1316,7 +1364,7 @@ public class MapEditorGUI {
 	}
 
 	/**
-	 * The Class BoardPanel.
+	 * The BoardPanel class, which represents the main board.
 	 */
 	private class BoardPanel extends JLayeredPane {
 
@@ -1326,9 +1374,9 @@ public class MapEditorGUI {
 		public void addTiles() {
 			for (int row = 0; row < 7; row++) {
 				for (int col = 0; col < 7; col++) {
-					BoardPanelTile bpc = new BoardPanelTile(new Rectangle(col * 40, row * 40, 40, 40), row, col);
-					boardPanel.add(bpc);
-					boardTiles.add(bpc);
+					BoardPanelTile bpt = new BoardPanelTile(new Rectangle(col * 40, row * 40, 40, 40), row, col);
+					boardPanel.add(bpt);
+					boardTiles.add(bpt);
 				}
 			}
 		}
@@ -1340,14 +1388,14 @@ public class MapEditorGUI {
 		 */
 		public void paintComponent(Graphics g) {
 
-			for (BoardPanelTile tile : boardTiles) {
+			for (BoardPanelTile tile : boardTiles) { // paints all tiles on the board
 				tile.paintComponent(g);
 			}
 
 		}
 
 		/**
-		 * The Class BoardPanelTile.
+		 * The BoardPanelTile class, which represents a tile on the BoardPanel.
 		 */
 		class BoardPanelTile extends JLayeredPane implements MouseListener {
 
@@ -1378,8 +1426,10 @@ public class MapEditorGUI {
 			 */
 			public void paintComponent(Graphics g) {
 
+				// a door item is selected
 				if (!selectedItem.equals(" ") && selectedItem.equals("door")) {
-					if (roomMap[x][y] == 0) {
+
+					if (roomMap[x][y] == 0) { // highlight only the places where the door can be placed
 						if (((x == 3 && (y == 0 || y == 6)) || y == 3 && (x == 0 || x == 6))) {
 							g.setColor(Color.CYAN);
 						} else {
@@ -1387,19 +1437,26 @@ public class MapEditorGUI {
 						}
 						g.fillRect(getBounds().x, getBounds().y, getWidth(), getHeight());
 					} else {
+						// tile is occupied
 						g.drawImage(getIntAsImage(roomMap[x][y]), getBounds().x, getBounds().y, 40, 40, this);
 					}
+
+					// a non-door item is selected and the tile is empty
 				} else if (!selectedItem.equals(" ") && roomMap[x][y] == 0) {
 					g.setColor(Color.CYAN);
 					g.fillRect(getBounds().x, getBounds().y, getWidth(), getHeight());
+
+					// no item is selected and the tile is empty
 				} else if (selectedItem.equals(" ") && roomMap[x][y] == 0) {
 					g.setColor(Color.WHITE);
 					g.fillRect(getBounds().x, getBounds().y, getWidth(), getHeight());
-				} else {
+
+				} else { // tile is occupied
 					g.drawImage(getIntAsImage(roomMap[x][y]), getBounds().x, getBounds().y, 40, 40, this);
 				}
 
 				g.setColor(Color.BLACK);
+				// draws the tile border to form a "grid"
 				g.drawRect(getBounds().x, getBounds().y, getWidth(), getHeight());
 			}
 
@@ -1415,17 +1472,19 @@ public class MapEditorGUI {
 
 					if (selectedItem.equals("door")) {
 
+						// the only tiles where the door can be placed
 						if (((x == 3 && (y == 0 || y == 6)) || y == 3 && (x == 0 || x == 6))) {
 
 							roomMap[x][y] = getItemAsInt(selectedItem, x, y);
 							selectedItem = " ";
 							boardPanel.repaint();
 
-						} else {
+						} else { // user clicked where a door cannot be placed
 
 							JOptionPane.showMessageDialog(frame, "The door must be placed in a highlighted area!");
 
 						}
+
 					} else {
 
 						roomMap[x][y] = getItemAsInt(selectedItem, x, y);
@@ -1437,225 +1496,239 @@ public class MapEditorGUI {
 				}
 
 				if (deleteMode == true) {
+					// delete the tile
 					roomMap[x][y] = 0;
 					boardPanel.repaint();
 				}
 
 				if (rotateMode == true && roomMap[x][y] != 0) {
+					// rotate the tile
 					roomMap[x][y] = getRotatedInt(roomMap[x][y]);
 					boardPanel.repaint();
 				}
 
+				// is a door tile
 				if (selectedItem.equals(" ") && rotateMode == false && deleteMode == false && (roomMap[x][y] == 1101
 						|| roomMap[x][y] == 1102 || roomMap[x][y] == 1103 || roomMap[x][y] == 1104)) {
 
+					// user clicks where they can place a door
 					if (((x == 3 && (y == 0 || y == 6)) || y == 3 && (x == 0 || x == 6))) {
 
-						String[] doorToRoomStrings = new String[4];
-						int index = 0;
-						for (String roomName : roomStrings) {
-							if (!roomName.equals(currentRoom)) {
-								doorToRoomStrings[index++] = roomName;
-							}
-						}
-						doorToRoomStrings[index] = "Win Room";
+						// prompt and force user to select where the door leads
+						forceDoorRoomSelection();
 
-						JOptionPane optionPane = new JOptionPane("This door leads to:", JOptionPane.QUESTION_MESSAGE,
-								JOptionPane.DEFAULT_OPTION, null, doorToRoomStrings, null);
-
-						JDialog dialog = optionPane.createDialog(frame, "Door to Room Selection");
-						dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-						dialog.addWindowListener(new WindowAdapter() {
-							public void windowClosing(WindowEvent we) {
-								JOptionPane.showMessageDialog(dialog, "Select a room!");
-							}
-						});
-						dialog.setModal(true);
-						dialog.setVisible(true);
-
-						if (optionPane.getValue().equals("Library")) { // 110x0x01
-							if (currentRoom.equals("Library")) {
-								// can't set door from library to library
-							} else if (currentRoom.equals("Foyer")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010201;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020201;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030201;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040201;
-								}
-							} else if (currentRoom.equals("Courtyard")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010301;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020301;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030301;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040301;
-								}
-							} else if (currentRoom.equals("Study")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010401;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020401;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030401;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040401;
-								}
-							}
-						} else if (optionPane.getValue().equals("Foyer")) { // 110x0x02
-							if (currentRoom.equals("Library")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010102;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020102;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030102;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040102;
-								}
-							} else if (currentRoom.equals("Foyer")) {
-								// can't set door from foyer to foyer
-							} else if (currentRoom.equals("Courtyard")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010302;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020302;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030302;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040302;
-								}
-							} else if (currentRoom.equals("Study")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010402;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020402;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030402;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040402;
-								}
-							}
-						} else if (optionPane.getValue().equals("Courtyard")) { // 110x0x03
-							if (currentRoom.equals("Library")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010103;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020103;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030103;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040103;
-								}
-							} else if (currentRoom.equals("Foyer")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010203;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020203;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030203;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040203;
-								}
-							} else if (currentRoom.equals("Courtyard")) {
-								// can't set room from courtyard to courtyard
-							} else if (currentRoom.equals("Study")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010403;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020403;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030403;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040403;
-								}
-							}
-						} else if (optionPane.getValue().equals("Study")) { // 110x0x04
-							if (currentRoom.equals("Library")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010104;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020104;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030104;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040104;
-								}
-							} else if (currentRoom.equals("Foyer")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010204;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020204;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030204;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040204;
-								}
-							} else if (currentRoom.equals("Courtyard")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010304;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020304;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030304;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040304;
-								}
-							} else if (currentRoom.equals("Study")) {
-								// can't set room from study to study
-							}
-						} else if (optionPane.getValue().equals("Win Room")) {
-							if (currentRoom.equals("Library")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010105;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020105;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030105;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040105;
-								}
-							} else if (currentRoom.equals("Foyer")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010205;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020205;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030205;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040205;
-								}
-							} else if (currentRoom.equals("Courtyard")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010305;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020305;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030305;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040305;
-								}
-							} else if (currentRoom.equals("Study")) {
-								if (roomMap[x][y] == 1101) { // north
-									roomMap[x][y] = 11010405;
-								} else if (roomMap[x][y] == 1102) { // east
-									roomMap[x][y] = 11020405;
-								} else if (roomMap[x][y] == 1103) { // south
-									roomMap[x][y] = 11030405;
-								} else if (roomMap[x][y] == 1104) { // west
-									roomMap[x][y] = 11040405;
-								}
-							}
-						}
 					}
 
 				}
 
+			}
+
+			/**
+			 * Forces the user to select where the door leads.
+			 */
+			public void forceDoorRoomSelection() {
+
+				String[] doorToRoomStrings = new String[4];
+				int index = 0;
+				for (String roomName : roomStrings) {
+					if (!roomName.equals(currentRoom)) {
+						doorToRoomStrings[index++] = roomName;
+					}
+				}
+				doorToRoomStrings[index] = "Win Room";
+
+				JOptionPane optionPane = new JOptionPane("This door leads to:", JOptionPane.QUESTION_MESSAGE,
+						JOptionPane.DEFAULT_OPTION, null, doorToRoomStrings, null);
+
+				JDialog dialog = optionPane.createDialog(frame, "Door to Room Selection");
+				dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+				dialog.addWindowListener(new WindowAdapter() {
+					public void windowClosing(WindowEvent we) {
+						JOptionPane.showMessageDialog(dialog, "Select a room!");
+					}
+				});
+				dialog.setModal(true);
+				dialog.setVisible(true);
+
+				if (optionPane.getValue().equals("Library")) {
+					if (currentRoom.equals("Library")) {
+						// can't set door from library to library
+					} else if (currentRoom.equals("Foyer")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010201;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020201;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030201;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040201;
+						}
+					} else if (currentRoom.equals("Courtyard")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010301;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020301;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030301;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040301;
+						}
+					} else if (currentRoom.equals("Study")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010401;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020401;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030401;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040401;
+						}
+					}
+				} else if (optionPane.getValue().equals("Foyer")) {
+					if (currentRoom.equals("Library")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010102;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020102;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030102;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040102;
+						}
+					} else if (currentRoom.equals("Foyer")) {
+						// can't set door from foyer to foyer
+					} else if (currentRoom.equals("Courtyard")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010302;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020302;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030302;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040302;
+						}
+					} else if (currentRoom.equals("Study")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010402;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020402;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030402;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040402;
+						}
+					}
+				} else if (optionPane.getValue().equals("Courtyard")) {
+					if (currentRoom.equals("Library")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010103;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020103;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030103;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040103;
+						}
+					} else if (currentRoom.equals("Foyer")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010203;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020203;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030203;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040203;
+						}
+					} else if (currentRoom.equals("Courtyard")) {
+						// can't set room from courtyard to courtyard
+					} else if (currentRoom.equals("Study")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010403;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020403;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030403;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040403;
+						}
+					}
+				} else if (optionPane.getValue().equals("Study")) {
+					if (currentRoom.equals("Library")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010104;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020104;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030104;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040104;
+						}
+					} else if (currentRoom.equals("Foyer")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010204;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020204;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030204;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040204;
+						}
+					} else if (currentRoom.equals("Courtyard")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010304;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020304;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030304;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040304;
+						}
+					} else if (currentRoom.equals("Study")) {
+						// can't set room from study to study
+					}
+				} else if (optionPane.getValue().equals("Win Room")) {
+					if (currentRoom.equals("Library")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010105;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020105;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030105;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040105;
+						}
+					} else if (currentRoom.equals("Foyer")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010205;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020205;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030205;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040205;
+						}
+					} else if (currentRoom.equals("Courtyard")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010305;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020305;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030305;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040305;
+						}
+					} else if (currentRoom.equals("Study")) {
+						if (roomMap[x][y] == 1101) { // north
+							roomMap[x][y] = 11010405;
+						} else if (roomMap[x][y] == 1102) { // east
+							roomMap[x][y] = 11020405;
+						} else if (roomMap[x][y] == 1103) { // south
+							roomMap[x][y] = 11030405;
+						} else if (roomMap[x][y] == 1104) { // west
+							roomMap[x][y] = 11040405;
+						}
+					}
+				}
 			}
 
 			/*
@@ -1702,6 +1775,11 @@ public class MapEditorGUI {
 
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		new MapEditorGUI();
 	}
