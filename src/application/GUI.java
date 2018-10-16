@@ -70,8 +70,6 @@ public abstract class GUI extends JFrame implements KeyListener {
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
 
 	protected abstract void updateInventory(); // redraws the inventory
-	// protected abstract void updateInventory(MouseEvent e); // redraws the
-	// inventory
 
 	protected abstract String askSave();
 
@@ -95,6 +93,7 @@ public abstract class GUI extends JFrame implements KeyListener {
 		setTitle("Adventure Game");
 		addKeyListener(this);
 		player = Player.getInstance();
+		setFocusable(true);
 
 		for (int index = 0; index < 9; index++)
 			player.getInventory().add(new Potion());
@@ -149,13 +148,13 @@ public abstract class GUI extends JFrame implements KeyListener {
 		drawing.addMouseMotionListener(new MouseAdapter() {
 			public void mouseDragged(MouseEvent e) {
 				doDrag(e);
-			} 
+			}
 		});
 
 		drawing.addMouseWheelListener(new MouseAdapter() {
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				doScroll(e);
-			} 
+			}
 		});
 
 		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
