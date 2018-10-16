@@ -96,8 +96,9 @@ public abstract class GUI extends JFrame implements KeyListener {
 		player = Player.getInstance();
 		setFocusable(true);		// handle key events
 
-//		for (int index = 0; index < 9; index++)
-//			player.getInventory().add(new Potion());
+		// test
+		for (int index = 0; index < 9; index++)
+			player.getInventory().add(new Potion());
 
 		initialise();
 	}
