@@ -17,7 +17,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
@@ -33,11 +32,9 @@ import gameworld.Room;
 import gameworld.entities.Item;
 import gameworld.entities.PickUpAbleStrategy;
 import gameworld.entities.Player;
-
 import gameworld.entities.Potion;
 import gameworld.entities.Strategy;
 import gameworld.entities.Item.Action;
-
 import renderer.Renderer;
 
 /**
@@ -150,11 +147,10 @@ public class AdventureGame extends GUI {
 	 * Draws the items in player's inventory.
 	 */
 	public void updateInventory() {
-		//Player player = Player.getInstance();
+		if (player.getInventory() == null)
+			return;
 
 		displayAreas = new ArrayList<InventoryDisplay>();
-		//inventoryContainer.removeAll();
-		//System.out.println("inventory full: " + i.isFull());
 
 		// draws every item in player's inventory
 		for (PickUpAbleStrategy item : player.getInventory()) {
@@ -174,7 +170,6 @@ public class AdventureGame extends GUI {
 					url += name;
 					url += ".png";
 
-					//Image img = new ImageIcon(url).getImage();
 					BufferedImage image = null;
 					try {
 						image = ImageIO.read(new File(url));
@@ -182,10 +177,10 @@ public class AdventureGame extends GUI {
 						e.printStackTrace();
 					}
 
-					Image scaledImage = image.getScaledInstance((int) InventoryDisplay.IMAGE_WIDTH - 2, (int) InventoryDisplay.IMAGE_HEIGHT - 2, Image.SCALE_SMOOTH);
-
-					g.drawImage(scaledImage, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
-
+					if (image != null) {
+						Image scaledImage = image.getScaledInstance((int) InventoryDisplay.IMAGE_WIDTH - 2, (int) InventoryDisplay.IMAGE_HEIGHT - 2, Image.SCALE_SMOOTH);
+						g.drawImage(scaledImage, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+					}
 				}
 			};
 			inventoryImageComponent
@@ -238,13 +233,13 @@ public class AdventureGame extends GUI {
 		Location clickedLocation = renderer.doRelease(e);
 
 		// test
-		if(clickedLocation != null) {
-			System.out.println("row[" +clickedLocation.getRow()+ "], col[" +clickedLocation.getCol()+ "]");
-		}
+//		if(clickedLocation != null) {
+//			System.out.println("row[" +clickedLocation.getRow()+ "], col[" +clickedLocation.getCol()+ "]");
+//		}
 
 		currentRoom = player.getCurrentRoom();
-//		if (currentRoom.getGameItems().containsKey(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol())))
-//			return;
+		if (!currentRoom.getGameItems().containsKey(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol())))
+			return;
 
 		Item item = currentRoom.getGameItems().get(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()));
 
@@ -361,4 +356,7 @@ public class AdventureGame extends GUI {
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
+
+
+
 }
