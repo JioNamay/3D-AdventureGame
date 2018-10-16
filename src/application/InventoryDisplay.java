@@ -23,7 +23,6 @@ import adventuregame.AdventureGame;
  * @author yangcarr
  */
 public class InventoryDisplay extends JComponent implements MouseListener {
-//public class InventoryDisplay extends JComponent {
 	// the width and height of an individual area within the inventory panel
 	public static final int IMAGE_WIDTH = 410/5;
 	public static final int IMAGE_HEIGHT = 110/2;
@@ -104,7 +103,6 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 		}
 
 		actionMenu.show(this, e.getX(), e.getY());
-		// updateInventory()
 	}
 
 	/**
@@ -118,8 +116,6 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GUI.getActionDisplay().setText("Test: " + action);
-
 				String desc = item.performAction(Action.valueOf(action));
 				GUI.getActionDisplay().setText(desc);
 
