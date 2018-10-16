@@ -26,7 +26,7 @@ import gameworld.entities.TreasureChest;
 /**
  * The Class Renderer.
  *
- * @author manaentawe
+ * @author manaentawe 300428465
  */
 public class Renderer {
 
