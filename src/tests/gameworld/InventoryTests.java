@@ -9,7 +9,6 @@ import java.util.Iterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import gameworld.entities.Inventory;
 import gameworld.entities.Player;
 import gameworld.entities.Item.Action;
 import gameworld.Location;
@@ -26,8 +25,8 @@ class InventoryTests {
 	
 	@BeforeEach
 	public void setupPlayerAndInventory() {
+		Player.getInstance().resetPlayer();
 		player = Player.getInstance();
-		player.resetInventoryForTest();
 	}
 	 
 	@Test

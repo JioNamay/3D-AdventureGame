@@ -20,6 +20,7 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 	 */
 	public Inventory() {
 		this.inventory = new ArrayList<PickUpAbleStrategy>();
+		keyCount = 0;
 	}
  
 	/**
@@ -43,7 +44,7 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 			return false;
 		} else {
 			inventory.add(item);
-			return true;
+			return true; 
 		}
 	}
 
@@ -74,7 +75,8 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 	 */
 	public PickUpAbleStrategy getAKey() {
 		for(PickUpAbleStrategy item : inventory) {
-			if(item instanceof Key) return item;
+			if(item instanceof Key) 
+				return item;
 		}
 		return null;	
 	}
@@ -89,26 +91,21 @@ public class Inventory implements Iterable<PickUpAbleStrategy> {
 	}
 
 	/**
-	 * Increment keys.
-	 */
-	public void incrementKeys() {
-		keyCount++;
-	}
-	
-	/**
-	 * Decrement keys.
-	 */
-	public void decrementKeys() {
-		keyCount--;
-	}
-
-	/**
 	 * Sets the key count.
 	 *
 	 * @param keyCount the new key count
 	 */
 	public void setKeyCount(int keyCount) {
 		this.keyCount = keyCount;
+	}
+	
+	public void incrementKeys() {
+		keyCount++;
+		
+	}
+	
+	public void decrementKeys() {
+		keyCount--;
 	}
 	
 	/**
