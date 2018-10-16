@@ -43,211 +43,212 @@ import javax.xml.stream.XMLStreamWriter;
  */
 public class MapEditorGUI {
 
-	/** The frame. */
-	private JFrame frame;
+  /** The frame. */
+  private JFrame frame;
 
-	/** The board panel. */
-	private JLayeredPane boardPanel;
+  /** The board panel. */
+  private JLayeredPane boardPanel;
 
-	/** The button panel. */
-	private JPanel buttonPanel;
+  /** The button panel. */
+  private JPanel buttonPanel;
 
-	/** The rock button. */
-	private JButton rockButton;
+  /** The rock button. */
+  private JButton rockButton;
 
-	/** The sofa button. */
-	private JButton sofaButton;
+  /** The sofa button. */
+  private JButton sofaButton;
 
-	/** The table button. */
-	private JButton tableButton;
+  /** The table button. */
+  private JButton tableButton;
 
-	/** The tree button. */
-	private JButton treeButton;
+  /** The tree button. */
+  private JButton treeButton;
 
-	/** The note button. */
-	private JButton noteButton;
+  /** The note button. */
+  private JButton noteButton;
 
-	/** The fountain button. */
-	private JButton fountainButton;
+  /** The fountain button. */
+  private JButton fountainButton;
 
-	/** The cactus button. */
-	private JButton cactusButton;
+  /** The cactus button. */
+  private JButton cactusButton;
 
-	/** The bookshelf button. */
-	private JButton bookshelfButton;
+  /** The bookshelf button. */
+  private JButton bookshelfButton;
 
-	/** The treasure chest button. */
-	private JButton treasureChestButton;
+  /** The treasure chest button. */
+  private JButton treasureChestButton;
 
-	/** The wall block button. */
-	private JButton wallBlockButton;
+  /** The wall block button. */
+  private JButton wallBlockButton;
 
-	/** The door button. */
-	private JButton doorButton;
+  /** The door button. */
+  private JButton doorButton;
 
-	/** The heavy book button. */
-	private JButton heavyBookButton;
+  /** The heavy book button. */
+  private JButton heavyBookButton;
 
-	/** The key button. */
-	private JButton keyButton;
+  /** The key button. */
+  private JButton keyButton;
 
-	/** The potion button. */
-	private JButton potionButton;
+  /** The potion button. */
+  private JButton potionButton;
 
-	/** The stick button. */
-	private JButton stickButton;
+  /** The stick button. */
+  private JButton stickButton;
 
-	/** The delete button. */
-	private JButton deleteButton;
+  /** The delete button. */
+  private JButton deleteButton;
 
-	/** The rotate button. */
-	private JButton rotateButton;
+  /** The rotate button. */
+  private JButton rotateButton;
 
-	/** The room select label. */
-	private JLabel roomSelectLabel;
+  /** The room select label. */
+  private JLabel roomSelectLabel;
 
-	/** The menu bar. */
-	private JMenuBar menuBar;
+  /** The menu bar. */
+  private JMenuBar menuBar;
 
-	/** The file menu. */
-	private JMenu fileMenu;
+  /** The file menu. */
+  private JMenu fileMenu;
 
-	/** The save menu item. */
-	private JMenuItem saveMenuItem;
+  /** The save menu item. */
+  private JMenuItem saveMenuItem;
 
 	/** The rock image top. */
 	private BufferedImage rockImage_top;
 
-	/** The sofa image top north. */
-	private BufferedImage sofaImage_top_north;
+  /** The sofa image top north. */
+  private BufferedImage sofaImage_top_north;
 
-	/** The sofa image top east. */
-	private BufferedImage sofaImage_top_east;
+  /** The sofa image top east. */
+  private BufferedImage sofaImage_top_east;
 
-	/** The sofa image top south. */
-	private BufferedImage sofaImage_top_south;
+  /** The sofa image top south. */
+  private BufferedImage sofaImage_top_south;
 
-	/** The sofa image top west. */
-	private BufferedImage sofaImage_top_west;
+  /** The sofa image top west. */
+  private BufferedImage sofaImage_top_west;
 
-	/** The table image top north. */
-	private BufferedImage tableImage_top_north;
+  /** The table image top north. */
+  private BufferedImage tableImage_top_north;
 
-	/** The table image top east. */
-	private BufferedImage tableImage_top_east;
+  /** The table image top east. */
+  private BufferedImage tableImage_top_east;
 
-	/** The table image top south. */
-	private BufferedImage tableImage_top_south;
+  /** The table image top south. */
+  private BufferedImage tableImage_top_south;
 
-	/** The table image top west. */
-	private BufferedImage tableImage_top_west;
+  /** The table image top west. */
+  private BufferedImage tableImage_top_west;
 
-	/** The tree image top. */
-	private BufferedImage treeImage_top;
+  /** The tree image top. */
+  private BufferedImage treeImage_top;
 
-	/** The note image top. */
-	private BufferedImage noteImage_top;
+  /** The note image top. */
+  private BufferedImage noteImage_top;
 
-	/** The fountain image top. */
-	private BufferedImage fountainImage_top;
+  /** The fountain image top. */
+  private BufferedImage fountainImage_top;
 
-	/** The cactus image top. */
-	private BufferedImage cactusImage_top;
+  /** The cactus image top. */
+  private BufferedImage cactusImage_top;
 
-	/** The bookshelf image top north. */
-	private BufferedImage bookshelfImage_top_north;
+  /** The bookshelf image top north. */
+  private BufferedImage bookshelfImage_top_north;
 
-	/** The bookshelf image top east. */
-	private BufferedImage bookshelfImage_top_east;
+  /** The bookshelf image top east. */
+  private BufferedImage bookshelfImage_top_east;
 
-	/** The bookshelf image top south. */
-	private BufferedImage bookshelfImage_top_south;
+  /** The bookshelf image top south. */
+  private BufferedImage bookshelfImage_top_south;
 
-	/** The bookshelf image top west. */
-	private BufferedImage bookshelfImage_top_west;
+  /** The bookshelf image top west. */
+  private BufferedImage bookshelfImage_top_west;
 
-	/** The treasure chest image top north. */
-	private BufferedImage treasureChestImage_top_north;
+  /** The treasure chest image top north. */
+  private BufferedImage treasureChestImage_top_north;
 
-	/** The treasure chest image top east. */
-	private BufferedImage treasureChestImage_top_east;
+  /** The treasure chest image top east. */
+  private BufferedImage treasureChestImage_top_east;
 
-	/** The treasure chest image top south. */
-	private BufferedImage treasureChestImage_top_south;
+  /** The treasure chest image top south. */
+  private BufferedImage treasureChestImage_top_south;
 
-	/** The treasure chest image top west. */
-	private BufferedImage treasureChestImage_top_west;
+  /** The treasure chest image top west. */
+  private BufferedImage treasureChestImage_top_west;
 
-	/** The wall block image top. */
-	private BufferedImage wallBlockImage_top;
+  /** The wall block image top. */
+  private BufferedImage wallBlockImage_top;
 
-	/** The door image top north. */
-	private BufferedImage doorImage_top_north;
+  /** The door image top north. */
+  private BufferedImage doorImage_top_north;
 
-	/** The door image top east. */
-	private BufferedImage doorImage_top_east;
+  /** The door image top east. */
+  private BufferedImage doorImage_top_east;
 
-	/** The door image top south. */
-	private BufferedImage doorImage_top_south;
+  /** The door image top south. */
+  private BufferedImage doorImage_top_south;
 
-	/** The door image top west. */
-	private BufferedImage doorImage_top_west;
+  /** The door image top west. */
+  private BufferedImage doorImage_top_west;
 
-	/** The heavy book image top. */
-	private BufferedImage heavyBookImage_top;
+  /** The heavy book image top. */
+  private BufferedImage heavyBookImage_top;
 
-	/** The key image top. */
-	private BufferedImage keyImage_top;
+  /** The key image top. */
+  private BufferedImage keyImage_top;
 
-	/** The potion image top. */
-	private BufferedImage potionImage_top;
+  /** The potion image top. */
+  private BufferedImage potionImage_top;
 
-	/** The stick image top. */
-	private BufferedImage stickImage_top;
+  /** The stick image top. */
+  private BufferedImage stickImage_top;
 
 	/** The current room. */
 	protected String currentRoom = "Library";
 
-	/** The selected item. */
-	protected String selectedItem = " ";
 
-	/** The delete mode. */
-	protected boolean deleteMode = false;
+  /** The selected item. */
+  protected String selectedItem = " ";
 
-	/** The rotate mode. */
-	protected boolean rotateMode = false;
+  /** The delete mode. */
+  protected boolean deleteMode = false;
 
-	/** The library map. */
-	private int[][] libraryMap;
+  /** The rotate mode. */
+  protected boolean rotateMode = false;
 
-	/** The foyer map. */
-	private int[][] foyerMap;
+  /** The library map. */
+  private int[][] libraryMap;
 
-	/** The courtyard map. */
-	private int[][] courtyardMap;
+  /** The foyer map. */
+  private int[][] foyerMap;
 
-	/** The study map. */
-	private int[][] studyMap;
+  /** The courtyard map. */
+  private int[][] courtyardMap;
 
-	/** The room map. */
-	private int[][] roomMap;
+  /** The study map. */
+  private int[][] studyMap;
 
-	/** The room strings. */
-	private String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
+  /** The room map. */
+  private int[][] roomMap;
 
-	/** The board tiles. */
-	private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile> boardTiles;
+  /** The room strings. */
+  private String[] roomStrings = { "Library", "Foyer", "Courtyard", "Study" };
 
-	/**
-	 * Instantiates a new map editor GUI.
-	 */
-	public MapEditorGUI() {
+  /** The board tiles. */
+  private ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile> boardTiles;
 
-		boardTiles = new ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile>();
+  /**
+   * Instantiates a new map editor GUI.
+   */
+  public MapEditorGUI() {
 
-		initializeImages();
+    boardTiles = new ArrayList<mapeditor.MapEditorGUI.BoardPanel.BoardPanelTile>();
 
-		initializeMaps();
+    initializeImages();
+
+    initializeMaps();
 
 		GUI();
 
@@ -310,11 +311,11 @@ public class MapEditorGUI {
 
 	}
 
-	/**
-	 * Setup frame.
-	 */
-	public void setupFrame() {
 
+  /**
+   * Setup frame.
+   */
+  public void setupFrame() {
 		frame = new JFrame("Map Editor");
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
@@ -334,19 +335,17 @@ public class MapEditorGUI {
 		frame.setResizable(false);
 		frame.setLayout(new BorderLayout());
 		frame.setSize(670, 600);
+  }
 
-	}
+  /**
+   * Setup menu bar.
+   */
+  public void setupMenuBar() {
 
-	/**
-	 * Setup menu bar.
-	 */
-	public void setupMenuBar() {
-
-		menuBar = new JMenuBar();
-		fileMenu = new JMenu("File");
-		saveMenuItem = new JMenuItem("Save");
-		saveMenuItem.addActionListener(new ActionListener() {
-
+    menuBar = new JMenuBar();
+    fileMenu = new JMenu("File");
+    saveMenuItem = new JMenuItem("Save");
+    saveMenuItem.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 

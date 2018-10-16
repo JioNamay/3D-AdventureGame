@@ -1,65 +1,97 @@
 package gameworld;
 
 /**
- * @author Deanne Alabastro
+ * Location class, knows if its solid (unwalkable) or is a door.
+ * @author Deanne Alabastro 300346210
  *
  */
 public class Location {
-	public enum Direction { 
-		NORTH,
-		SOUTH,
-		EAST,
-		WEST
-	}
-	private int row;
-	private int col;
+  
+  /**
+   * The Enum Direction.
+   */
+  public enum Direction {
+    NORTH, 
+    SOUTH,  
+    EAST, 
+    WEST
+  }
 
-	private boolean isSolid;
-	private boolean isDoor;
-	
+  /** The row. */
+  private int row;
+  
+  /** The col. */
+  private int col;
 
-	/**
-	 * 
-	 */
-	public Location(int row, int col) {
-		this.row = row;
-		this.col = col;
-	}
+  /** The is solid. */
+  private boolean isSolid;
+  
+  /** The is door. */
+  private boolean isDoor;
 
-	public int getRow() {
-		return this.row;
-	}
+  /**
+   * Instantiates a new location.
+   *
+   * @param row the row
+   * @param col the col
+   */
+  public Location(int row, int col) {
+    this.row = row;
+    this.col = col;
+  }
 
-	public int getCol() {
-		return this.col;
-	}
+  /**
+   * Gets the row.
+   *
+   * @return the row
+   */
+  public int getRow() {
+    return this.row;
+  }
 
-	/**
-	 * @return the isSolid
-	 */
-	public boolean isSolid() {
-		return isSolid;
-	}
+  /**
+   * Gets the col.
+   *
+   * @return the col
+   */
+  public int getCol() {
+    return this.col;
+  }
 
-	/**
-	 * @param isSolid the isSolid to set
-	 */
-	public void setSolid(boolean isSolid) {
-		this.isSolid = isSolid;
-	}
+  /**
+   * Checks if is solid.
+   *
+   * @return the isSolid
+   */
+  public boolean isSolid() {
+    return isSolid;
+  }
 
-	/**
-	 * @return the isDoor
-	 */
-	public boolean isDoor() {
-		return isDoor;
-	}
+  /**
+   * Sets the solid.
+   *
+   * @param isSolid          the isSolid to set
+   */
+  public void setSolid(boolean isSolid) {
+    this.isSolid = isSolid;
+  }
 
-	/**
-	 * @param isDoor the isDoor to set
-	 */
-	public void setDoor(boolean isDoor) {
-		this.isDoor = isDoor;
-	}
+  /**
+   * Checks if is door.
+   *
+   * @return the isDoor
+   */
+  public boolean isDoor() {
+    return isDoor;
+  }
+
+  /**
+   * Sets the door.
+   *
+   * @param isDoor          the isDoor to set
+   */
+  public void setDoor(boolean isDoor) {
+    this.isDoor = isDoor;
+  }
 
 }

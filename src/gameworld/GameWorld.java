@@ -19,8 +19,6 @@ import gameworld.entities.TreasureChest;
 import gameworld.entities.Tree;
 import gameworld.entities.Wall;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * GameWorld keeps track of all the rooms in the game. Each Room is like a
  * single board on its own, whereas this class represents the overall boards.
