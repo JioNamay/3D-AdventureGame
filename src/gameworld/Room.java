@@ -82,7 +82,7 @@ public class Room {
 	 *
 	 * @return the gameItems
 	 */
-	@XmlElement(name = "items")
+
 	public Map<Location, Item> getGameItems() {
 		return gameItems;
 	}
@@ -92,7 +92,7 @@ public class Room {
 	 *
 	 * @return the name
 	 */
-	@XmlElement(name = "room-name")
+
 	public String getName() {
 		return name;
 	}
@@ -112,7 +112,7 @@ public class Room {
 	 *
 	 * @return the hasPlayer
 	 */
-	@XmlElement(name = "player")
+
 	public boolean hasPlayer() {
 		return hasPlayer;
 	}

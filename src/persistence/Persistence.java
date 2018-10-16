@@ -7,9 +7,10 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import com.sun.org.apache.bcel.internal.classfile.Attribute;
+import com.sun.org.apache.xerces.internal.xni.QName;
 
 import gameworld.GameWorld;
-import mapeditor.MapEditor;
+import gameworld.Room;
 
 import javax.xml.*;
 import javax.xml.stream.*;
@@ -31,70 +32,55 @@ import javax.xml.stream.*;
 	 * @throws FileNotFoundException the file not found exception
 	 * @throws XMLStreamException the XML stream exception
 	 */
-	public static GameWorld loadGameWorld (File file) throws FileNotFoundException, XMLStreamException {
+	public static void loadGameWorld () throws FileNotFoundException, XMLStreamException {
 		// Will parse the file passed in, call the GameWorldParser
-		return null;
+		XMLInputFactory file = XMLInputFactory.newInstance();
+		// Instance of the class which helps on reading tags
+        XMLInputFactory factory = XMLInputFactory.newInstance();
+     
+        // Initializing the handler to access the tags in the XML file
+        XMLEventReader eventReader = factory.createXMLEventReader(new FileReader("gamemap.xml"));
+        //add room to gameWorld map
+
+        while(eventReader.hasNext()){
+        	XMLEvent xmlElement = eventReader.nextEvent();
+        	
+        	if(xmlElement.isStartElement())
+        	{
+        		
+        		StartElement startElement = xmlElement.asStartElement();
+                
+                //Creates Room objects according to the tags
+                switch(startElement.getName().getLocalPart()){
+                	case "library":
+                		Room library = new Room("Library"); 
+                		break;
+                	case "foyer":
+                		Room foyer = new Room("Foyer");
+                		break; 
+                	case "courtyard":
+                		Room courtyard = new Room("Courtyard");
+                		break;
+                	case "study":
+                		Room study = new Room("Study");
+                		break;
+                
+                } 
+               	
+        	}
+       
+        }
+		
 	}
+	
+
 
 
 	/**
 	 * Save game world.
 	 */
 	public static void saveGameWorld(){
-	
-		try {
-			XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
-			XMLStreamWriter streamWriter = outputFactory.
-					createXMLStreamWriter(new FileOutputStream("TestRoom.xml"));
-			
-			//Create GameWorld element
-			streamWriter.writeStartDocument("1.0");
-			//Create GameWorld element
-			streamWriter.writeStartElement("Room");
-			//Create Items element
-			streamWriter.writeStartElement("Items");
-			
-			//End of items
-			streamWriter.writeEndElement();
-			//Player tag
-			streamWriter.writeStartElement("Player");
-			streamWriter.writeStartElement("PlayerLoc");
-			//End of playerLoc
-			streamWriter.writeEndElement();
-			streamWriter.writeStartElement("Health");
-			streamWriter.writeCharacters("100");
-			//End of player healthTag
-			streamWriter.writeEndElement();
-			//Players Coins
-			streamWriter.writeStartElement("Coin");
-			streamWriter.writeCharacters("0");
-			streamWriter.writeEndElement();
-			
-			//End of Player
-			streamWriter.writeEndElement();
-			//End of Room tag
-			streamWriter.writeEndElement();
-			streamWriter.close();	
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (XMLStreamException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-						
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 	}
 
