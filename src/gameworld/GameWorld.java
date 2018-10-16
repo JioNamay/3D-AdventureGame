@@ -24,6 +24,7 @@ import gameworld.entities.Wall;
  * single board on its own, whereas this class represents the overall boards.
  *
  * @author yangcarr
+ * @author bennette yee
  */
 
 public class GameWorld {
