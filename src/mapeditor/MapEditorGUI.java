@@ -34,25 +34,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
-import gameworld.Location.Direction;
-import gameworld.Room;
-import gameworld.entities.Bookshelf;
-import gameworld.entities.Cactus;
-import gameworld.entities.Door;
-import gameworld.entities.Fountain;
-import gameworld.entities.HeavyBook;
-import gameworld.entities.Key;
-import gameworld.entities.Note;
-import gameworld.entities.Potion;
-import gameworld.entities.Rock;
-import gameworld.entities.Sofa;
-import gameworld.entities.Stick;
-import gameworld.entities.Strategy;
-import gameworld.entities.Table;
-import gameworld.entities.TreasureChest;
-import gameworld.entities.Tree;
-import gameworld.entities.Wall;
-
 // TODO: Auto-generated Javadoc
 /**
  * The Class MapEditorGUI.
@@ -865,47 +846,47 @@ public class MapEditorGUI {
 	public void initializeImages() {
 		try {
 
-			rockImage_top = ImageIO.read(new File("src/renderer/data/top/rock.png"));
+			rockImage_top = ImageIO.read(new File("images/rock.png"));
 
-			sofaImage_top_north = ImageIO.read(new File("src/renderer/data/top/sofa.png"));
-			sofaImage_top_east = ImageIO.read(new File("src/renderer/data/top/sofa_east.png"));
-			sofaImage_top_south = ImageIO.read(new File("src/renderer/data/top/sofa_south.png"));
-			sofaImage_top_west = ImageIO.read(new File("src/renderer/data/top/sofa_west.png"));
+			sofaImage_top_north = ImageIO.read(new File("images/sofa.png"));
+			sofaImage_top_east = ImageIO.read(new File("images/sofa_east.png"));
+			sofaImage_top_south = ImageIO.read(new File("images/sofa_south.png"));
+			sofaImage_top_west = ImageIO.read(new File("images/sofa_west.png"));
 
-			tableImage_top_north = ImageIO.read(new File("src/renderer/data/top/table.png"));
-			tableImage_top_east = ImageIO.read(new File("src/renderer/data/top/table_east.png"));
-			tableImage_top_south = ImageIO.read(new File("src/renderer/data/top/table_south.png"));
-			tableImage_top_west = ImageIO.read(new File("src/renderer/data/top/table_west.png"));
+			tableImage_top_north = ImageIO.read(new File("images/table.png"));
+			tableImage_top_east = ImageIO.read(new File("images/table_east.png"));
+			tableImage_top_south = ImageIO.read(new File("images/table_south.png"));
+			tableImage_top_west = ImageIO.read(new File("images/table_west.png"));
 
-			treeImage_top = ImageIO.read(new File("src/renderer/data/top/tree.png"));
+			treeImage_top = ImageIO.read(new File("images/tree.png"));
 
-			noteImage_top = ImageIO.read(new File("src/renderer/data/top/note.png"));
+			noteImage_top = ImageIO.read(new File("images/note.png"));
 
-			fountainImage_top = ImageIO.read(new File("src/renderer/data/top/fountain.png"));
+			fountainImage_top = ImageIO.read(new File("images/fountain.png"));
 
-			cactusImage_top = ImageIO.read(new File("src/renderer/data/top/cactus.png"));
+			cactusImage_top = ImageIO.read(new File("images/cactus.png"));
 
-			bookshelfImage_top_north = ImageIO.read(new File("src/renderer/data/top/bookshelf.png"));
-			bookshelfImage_top_east = ImageIO.read(new File("src/renderer/data/top/bookshelf_east.png"));
-			bookshelfImage_top_south = ImageIO.read(new File("src/renderer/data/top/bookshelf_south.png"));
-			bookshelfImage_top_west = ImageIO.read(new File("src/renderer/data/top/bookshelf_west.png"));
+			bookshelfImage_top_north = ImageIO.read(new File("images/bookshelf.png"));
+			bookshelfImage_top_east = ImageIO.read(new File("images/bookshelf_east.png"));
+			bookshelfImage_top_south = ImageIO.read(new File("images/bookshelf_south.png"));
+			bookshelfImage_top_west = ImageIO.read(new File("images/bookshelf_west.png"));
 
-			treasureChestImage_top_north = ImageIO.read(new File("src/renderer/data/top/chest_closed.png"));
-			treasureChestImage_top_east = ImageIO.read(new File("src/renderer/data/top/chest_east.png"));
-			treasureChestImage_top_south = ImageIO.read(new File("src/renderer/data/top/chest_south.png"));
-			treasureChestImage_top_west = ImageIO.read(new File("src/renderer/data/top/chest_west.png"));
+			treasureChestImage_top_north = ImageIO.read(new File("images/chest_closed.png"));
+			treasureChestImage_top_east = ImageIO.read(new File("images/chest_east.png"));
+			treasureChestImage_top_south = ImageIO.read(new File("images/chest_south.png"));
+			treasureChestImage_top_west = ImageIO.read(new File("images/chest_west.png"));
 
-			wallBlockImage_top = ImageIO.read(new File("src/renderer/data/top/wall.png"));
+			wallBlockImage_top = ImageIO.read(new File("images/wall.png"));
 
-			doorImage_top_north = ImageIO.read(new File("src/renderer/data/top/door.png"));
-			doorImage_top_east = ImageIO.read(new File("src/renderer/data/top/door_east.png"));
-			doorImage_top_south = ImageIO.read(new File("src/renderer/data/top/door_south.png"));
-			doorImage_top_west = ImageIO.read(new File("src/renderer/data/top/door_west.png"));
+			doorImage_top_north = ImageIO.read(new File("images/door.png"));
+			doorImage_top_east = ImageIO.read(new File("images/door_east.png"));
+			doorImage_top_south = ImageIO.read(new File("images/door_south.png"));
+			doorImage_top_west = ImageIO.read(new File("images/door_west.png"));
 
-			heavyBookImage_top = ImageIO.read(new File("src/renderer/data/top/book.png"));
-			keyImage_top = ImageIO.read(new File("src/renderer/data/top/key.png"));
-			potionImage_top = ImageIO.read(new File("src/renderer/data/top/potion.png"));
-			stickImage_top = ImageIO.read(new File("src/renderer/data/top/stick.png"));
+			heavyBookImage_top = ImageIO.read(new File("images/book.png"));
+			keyImage_top = ImageIO.read(new File("images/key.png"));
+			potionImage_top = ImageIO.read(new File("images/potion.png"));
+			stickImage_top = ImageIO.read(new File("images/stick.png"));
 
 			rockImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
 			sofaImage_iso = ImageIO.read(new File("textures/test_north.jpg"));
