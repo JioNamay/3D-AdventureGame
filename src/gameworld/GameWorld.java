@@ -2,10 +2,7 @@ package gameworld;
 
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
-import gameworld.entities.Player;
 
 /**
  * GameWorld keeps track of all the rooms in the game.
@@ -39,6 +36,7 @@ public class GameWorld {
 	}
 
 	private void setUpWorld() {
+	  
 	}
 
 	/**

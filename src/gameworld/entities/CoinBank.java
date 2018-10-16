@@ -42,6 +42,14 @@ public abstract class CoinBank implements Strategy{
 
 		return "You found " + givenAmount + " coins\n" + description;
 	}
+	
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Strategy#isWall()
+	 */
+	@Override
+	public boolean isWall() {
+	  return false;
+	}
 
 	/**
 	 * Gets the description.

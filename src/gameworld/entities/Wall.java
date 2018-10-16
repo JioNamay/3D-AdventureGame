@@ -58,6 +58,11 @@ public class Wall implements Strategy{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public boolean isWall() {
+	  return true;
+	}
 
 	/* (non-Javadoc)
 	 * @see gameworld.entities.Strategy#getDirection()

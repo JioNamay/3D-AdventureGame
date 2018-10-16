@@ -47,6 +47,13 @@ public interface Strategy {
 	public boolean isDoor();
 	
 	/**
+	 * Checks if is wall.
+	 *
+	 * @return true, if is wall
+	 */
+	public boolean isWall();
+	
+	/**
 	 * Gets the direction that the item is facing.
 	 *
 	 * @return the direction
