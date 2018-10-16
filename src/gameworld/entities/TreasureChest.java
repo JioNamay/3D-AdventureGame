@@ -132,11 +132,14 @@ public class TreasureChest extends LockableStrategy implements Container {
 				else containsStr = "coins.";
 			}else containsStr = item.getName();
 
-			return "An open " + description + "containing " + containsStr;
+			return "An open " + description + " containing " + containsStr;
 		}
 		return "A closed " + description;
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Container#hasItem()
+	 */
 	@Override
 	public boolean hasItem() {
 		return item != null;

@@ -25,6 +25,7 @@ class RoomTests {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		Player.getInstance().resetPlayer();
 		courtyard = new Room("Courtyard");
 		// add items etc....
 		foyer = new Room("Test");
@@ -83,7 +84,7 @@ class RoomTests {
 	void testMoveValid1() {
 		assertTrue(Player.getInstance().getCurrentRoom().movePlayer(Direction.NORTH));
 	}
-
+ 
 	@Test
 	void testInvalidMovePastWall() {
 		Room room = Player.getInstance().getCurrentRoom();
@@ -120,15 +121,22 @@ class RoomTests {
 		Player.getInstance().setLocation(nearDoor);
 
 		// unlock the door
-		Player.getInstance().getInventory().add(new Key());
+		Key key = new Key();
+		key.performAction(Action.PICKUP);
+
 		Location doorLoc = currentRoom.getLocation(0, 3);
 		Door door = (Door) currentRoom.getGameItems().get(doorLoc).getItem();
-		door.performAction(Action.UNLOCK);
+		assertTrue(door.isLocked());
+		assertTrue(door.performAction(Action.UNLOCK).equals("Player unlocked Door"));
+		
+		assertFalse(door.isLocked());
 		currentRoom.movePlayer(Direction.NORTH); // move to door location
 		assertFalse(currentRoom.movePlayer(Direction.NORTH)); // should be false because door is still closed
 		door.performAction(Action.OPEN);
 		
 		// move to room north
+	
+
 		assertTrue(currentRoom.movePlayer(Direction.NORTH)); // move rooms
 		assertEquals(Player.getInstance().getCurrentRoom(), foyer, "Player expected to have moved rooms but did not");
 		assertTrue(Player.getInstance().getLocation().equals(foyer.getLocation(6, 3)));
@@ -148,7 +156,9 @@ class RoomTests {
 	@Test
 	void testPlayerMoveRoomEastWest() {
 		Room currentRoom = Player.getInstance().getCurrentRoom();
-		Player.getInstance().getInventory().add(new Key());
+		// Get key
+		Key key = new Key();
+		key.performAction(Action.PICKUP);
 		// move to door
 		currentRoom.movePlayer(Direction.EAST);
 		currentRoom.movePlayer(Direction.EAST);
@@ -161,6 +171,7 @@ class RoomTests {
 		door.performAction(Action.UNLOCK);
 		assertFalse(currentRoom.movePlayer(Direction.EAST)); // still closed
 		door.performAction(Action.OPEN);
+		assertTrue(door.isOpen(), "Door should be opened");
 		// move to room east
 		assertTrue(currentRoom.movePlayer(Direction.EAST)); // move rooms
 		assertEquals(Player.getInstance().getCurrentRoom(), eastRoom, "Player expected to have moved rooms but did not");

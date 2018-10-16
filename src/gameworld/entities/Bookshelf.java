@@ -79,9 +79,11 @@ public class Bookshelf extends AttackingItems implements Container {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Container#hasItem()
+	 */
 	@Override
 	public boolean hasItem() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

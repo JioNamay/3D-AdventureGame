@@ -236,7 +236,7 @@ public class Room {
 				return false;
 			else if (locations[playerLocRow][playerLocCol].isDoor())
 				return movePlayerToConnectingRoom(Direction.EAST);
- 
+  
 			Player.getInstance().setLocation(locations[playerLocRow][playerLocCol + 1]);
 			return true;
 		case SOUTH:

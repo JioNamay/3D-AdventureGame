@@ -20,5 +20,10 @@ public interface Container {
 	 */
 	public PickUpAbleStrategy takeItem();		// get the item from inside the container
 
+	/**
+	 * Checks for item.
+	 *
+	 * @return true, if successful
+	 */
 	public boolean hasItem();
 }

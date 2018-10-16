@@ -87,7 +87,7 @@ public class Table extends LockableStrategy implements Container{
 				else containsStr = "coins.";
 			}else containsStr = item.getName();
 
-			return "An open " + description + "containing " + containsStr;
+			return "An open " + description + " containing " + containsStr;
 		}
 		return "A closed " + description;
 	}
@@ -145,9 +145,11 @@ public class Table extends LockableStrategy implements Container{
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see gameworld.entities.Container#hasItem()
+	 */
 	@Override
 	public boolean hasItem() {
 		return item != null;
 	}
-
 }
