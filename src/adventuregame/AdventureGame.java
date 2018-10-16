@@ -32,8 +32,7 @@ import gameworld.entities.Potion;
 public class AdventureGame extends GUI{
 	// GAME HANDLERS
 	private GameWorld game;			// containing the game logic
-	//private Player player;			// player within the game
-	private Room currentRoom;
+	private Room currentRoom = null;
 	private Location.Direction dir;
 
 	// APPLICATION HANDLERS
@@ -49,7 +48,7 @@ public class AdventureGame extends GUI{
 	 * Reading the rooms from XML file, and generates a new gameworld.
 	 */
 	public AdventureGame() {
-		//player = Player.getInstance();
+
 		game = new GameWorld(loadFile);
 		//onStart();
 	}
@@ -113,31 +112,36 @@ public class AdventureGame extends GUI{
 	}
 
 	/**
+	 * @return user's response regarding whether to save the current game or not
+	 */
+	protected String askSave() {
+		if (isSaved) return "";
+
+		int ans = JOptionPane.showConfirmDialog(container, "Would you like to save your game before you leave?");
+		if (ans == JOptionPane.YES_OPTION)
+			return "YES";
+
+		return "NO";
+	}
+
+	/**
 	 * Draws the items in player's inventory.
 	 */
 	@Override
 	public void updateInventory() {
-		Player player = Player.getInstance();
-//		if (player == null) {
-//			System.out.println("player is null");
-//			return;
-//		}
+		//Player player = Player.getInstance();
 
 		displayAreas = new ArrayList<InventoryDisplay>();
 
-		//if (player.getInventory() == null)		// nothing to display
-			//return;
-
 		// TEST:
-		Inventory i = new Inventory();
+		//Inventory i = new Inventory();
 		for (int index=0; index<10; index++)
-			i.add(new Potion());
-		player.setInventory(i);
+			player.getInventory().add(new Potion());
 
-		System.out.println("inventory full: " + i.isFull());
+		//System.out.println("inventory full: " + i.isFull());
 
 		// draws every item in player's inventory
-		for (PickUpAbleStrategy item: i) {
+		for (PickUpAbleStrategy item: player.getInventory()) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
 				// Repaints the component to display the image of the item.
 				@Override
@@ -202,8 +206,6 @@ public class AdventureGame extends GUI{
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -213,11 +215,6 @@ public class AdventureGame extends GUI{
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-
-		//default:	// warning message?
-
-
-
 	}
 
 	/**
@@ -244,7 +241,7 @@ public class AdventureGame extends GUI{
 			return;
 		}
 
-		//System.out.println("player will be moving in direction: " + dir.toString());	// test
+		System.out.println("player will be moving in direction: " + dir.toString());	// test
 		navigatePlayer(dir);
 	}
 

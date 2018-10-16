@@ -1,27 +1,20 @@
 package application;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
-import gameworld.entities.Item;
 import gameworld.entities.PickUpAbleStrategy;
 import adventuregame.AdventureGame;
-import gameworld.entities.Inventory;
-
 
 /**
  * This class specifies the individual JComponents that are to be placed within the inventory
  * area, in the application window. The InventoryDisplay will draw the image of each of the
  * items in the player's inventory.
  *
- * @author Carrie
+ * @author yangcarr
  */
 public class InventoryDisplay extends JComponent implements MouseListener {
 //public class InventoryDisplay extends JComponent {
@@ -40,12 +33,12 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 		this.item = item;
 		addMouseListener(this);
 	}
-	
+
 	// GETTERS
 	/** Determines whether the user clicked on this component */
 	public boolean isSelected() { return isSelected; }
 	public PickUpAbleStrategy getItem() { return item; }
-	
+
 	public void setSelected(boolean isSelected) { this.isSelected = isSelected; }
 
 	/**
@@ -60,16 +53,16 @@ public class InventoryDisplay extends JComponent implements MouseListener {
 			AdventureGame.setSelectedItem(this);
 		}
 		else {	// de-select previous item, and set selected item to be this component
-			
+
 		}*/
-		
+
 		AdventureGame.getSelectedItem().setSelected(false);
 		AdventureGame.getSelectedItem().setBorder(BorderFactory.createEmptyBorder());
 		AdventureGame.setSelectedItem(this);
 		isSelected = true;
 	}
-	
-	
+
+
 
 	@Override
 	public void mousePressed(MouseEvent e) {

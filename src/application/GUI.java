@@ -1,29 +1,21 @@
 package application;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -33,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import gameworld.Location;
+import gameworld.entities.Player;
 import renderer.Board;
 
 /**
@@ -46,9 +39,9 @@ public abstract class GUI extends JFrame implements KeyListener{
 	protected abstract void redraw(Graphics g); // T RECONSIDER
 	protected abstract void loadGame();
 	protected abstract void saveGame();
+	protected abstract String askSave();
 	protected abstract void onStart(); // loads a GameWorld (new or saved)
 	protected abstract void updateInventory();	// redraws the inventory
-	//protected abstract void updateInventory(MouseEvent e);	// redraws the inventory
 	protected abstract void navigatePlayer(Location.Direction dir);
 
 	public static final int FRAME_SIZE = 900;
@@ -64,10 +57,13 @@ public abstract class GUI extends JFrame implements KeyListener{
 	protected JTextArea examinedItem, playerStats;
 	protected JTextArea something;
 
+	//game fields
+	protected Player player = null;		// player within the game
+
 	public GUI() {
 		setTitle("Adventure Game");
 		addKeyListener(this);
-		setFocusable(true);		// to enable keyboard events
+		player = Player.getInstance();
 		initialise();
 	}
 
@@ -161,8 +157,7 @@ public abstract class GUI extends JFrame implements KeyListener{
 	/**
 	 * Creates the menu bar for the application window. This has the options: HELP
 	 * -> synopsis of game GAME -> load a saved game, save current game, load a new
-	 * game EDIT -> change the layout of the current map (?) QUIT -> exit the
-	 * game(?)
+	 * game QUIT -> exit the game
 	 */
 	private void setMenuBar() {
 		JMenuBar mb = new JMenuBar();
@@ -181,8 +176,12 @@ public abstract class GUI extends JFrame implements KeyListener{
 		quit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
-				if (ans == JOptionPane.YES_OPTION)
-					System.exit(0);
+				if (ans == JOptionPane.YES_OPTION) {	// ask player to save game before leaving
+					if (askSave().equals("YES"))
+						saveGame();
+					else
+						System.exit(0);
+				}
 			}
 		});
 
