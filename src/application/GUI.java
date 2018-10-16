@@ -167,7 +167,7 @@ public abstract class GUI extends JFrame implements KeyListener {
 		JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10)); // 3 rows, 1 column
 
 		// display description of examined item
-		actionDisplay = new JTextArea("???", 10, 20);
+		actionDisplay = new JTextArea("display item info here", 10, 20);
 		actionDisplay.setEditable(false);
 		actionDisplay.setLineWrap(true);
 		descriptions.add(actionDisplay);
@@ -177,12 +177,6 @@ public abstract class GUI extends JFrame implements KeyListener {
 		playerStats.setEditable(false);
 		playerStats.setLineWrap(true);
 		descriptions.add(playerStats);
-
-		// remove at the end
-		examinedItem = new JTextArea("display examined item's info here", 10, 20);
-		examinedItem.setEditable(false);
-		examinedItem.setLineWrap(true);
-		descriptions.add(examinedItem);
 
 		rendererPanel.add(descriptions);
 		container.add(rendererPanel);
@@ -326,72 +320,6 @@ public abstract class GUI extends JFrame implements KeyListener {
 		navigation.add(east);
 		playerInfo.add(navigation);
 	}
-
-	// remove when finish
-	private void setActionButtons() {
-		JButton take = new JButton("Take Item");
-		take.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				// player collects item
-				// redraw
-			}
-		});
-
-		JButton examine = new JButton("Examine Item");
-		examine.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				// short description of the item is shown
-				// redraw(?)
-			}
-		});
-
-		JButton drop = new JButton("Drop Item");
-		take.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				// player drops the item (item is placed at current player's position)
-				// remove item from inventory when player drops it
-				// redraw
-			}
-		});
-
-		JButton look = new JButton("Look into room");
-		look.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				// short description of location (current location?)
-				// redraw(?)
-			}
-		});
-
-		JButton use = new JButton("Use Item");
-		use.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				// player uses item
-				// redraw(?)
-			}
-		});
-
-		JButton attack = new JButton("Attack");
-		take.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				// player attacks with current selected item
-				// redraw
-			}
-		});
-
-		playerInfo.add(Box.createRigidArea(new Dimension(10, 0)));
-		JPanel actions = new JPanel(new GridLayout(3, 2));
-		actions.setMaximumSize(new Dimension(240, 90)); // does anything?
-
-		actions.add(take);
-		actions.add(examine);
-		actions.add(drop);
-		actions.add(look);
-		actions.add(use);
-		actions.add(attack);
-		playerInfo.add(actions);
-	}
-
-
 
 	/**
 	 * Returns the display area that holds player's information, like health and

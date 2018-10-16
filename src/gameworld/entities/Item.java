@@ -68,6 +68,14 @@ public class Item {
 	}
 
 	/**
+	 * The list of actions for the corresponding strategy
+	 * @return actions that can be performed on the Strategy
+	 */
+	public List<String> getActions(){
+		return item.getActions();
+	}
+
+	/**
 	 * Checks if is solid.
 	 *
 	 * @return true, if is solid

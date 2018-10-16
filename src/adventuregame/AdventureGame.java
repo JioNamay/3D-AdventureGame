@@ -52,7 +52,6 @@ public class AdventureGame extends GUI {
 	private GameWorld game; // containing the game logic
 	private Room currentRoom = null;
 	private Location.Direction dir;
-	//private Location clickedLocation;
 
 	// APPLICATION HANDLERS
 	private File saveFile = new File(""); // XML file to store saved game
@@ -240,16 +239,15 @@ public class AdventureGame extends GUI {
 			System.out.println("row[" +clickedLocation.getRow()+ "], col[" +clickedLocation.getCol()+ "]");
 		}
 
-		Item item = player.getCurrentRoom().getGameItems().get(clickedLocation);
+		currentRoom = player.getCurrentRoom();
+		Item item = currentRoom.getGameItems().get(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()));
 
-		if (!(item instanceof Strategy)) {
-			//JOptionPane.showMessageDialog(this, "Location doesn't have an item.");
+		if (item == null || !(item.getItem() instanceof Strategy)) {
 			return;
 		}
 
 		JPopupMenu actionMenu = new JPopupMenu();
-		List<String> itemActions = item.getItem().getActions();
-		System.out.println(itemActions.size());
+		List<String> itemActions = item.getActions();
 		// go through the possible actions for the selected item
 		for (String actions: itemActions) {
 			JMenuItem action = new JMenuItem(actions);
