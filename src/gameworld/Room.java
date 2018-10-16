@@ -3,6 +3,9 @@ package gameworld;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import gameworld.Location.Direction;
 import gameworld.entities.*;
 
@@ -12,6 +15,7 @@ import gameworld.entities.*;
  * 
  * @author Deanne Alabastro 300346210
  */
+ 
 public class Room {
 
 	/** The Constant SIZE of the room. */
@@ -78,6 +82,7 @@ public class Room {
 	 *
 	 * @return the gameItems
 	 */
+
 	public Map<Location, Item> getGameItems() {
 		return gameItems;
 	}
@@ -87,6 +92,7 @@ public class Room {
 	 *
 	 * @return the name
 	 */
+
 	public String getName() {
 		return name;
 	}
@@ -106,6 +112,7 @@ public class Room {
 	 *
 	 * @return the hasPlayer
 	 */
+
 	public boolean hasPlayer() {
 		return hasPlayer;
 	}

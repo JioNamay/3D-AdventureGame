@@ -1,9 +1,12 @@
 package gameworld.entities;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 /**
  * The Interface for all entities that are Damageable.
  * @author yangcarr 300368805
  */
+@XmlTransient 
 public interface Damageable {
 	
 	/**
