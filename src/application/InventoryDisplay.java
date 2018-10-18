@@ -29,16 +29,18 @@ public class InventoryDisplay extends JComponent implements MouseListener {
   public static final int IMAGE_HEIGHT = 110 / 2;
 
   private PickUpAbleStrategy item;
-  private boolean isSelected; 
+  private boolean isSelected;
+  private AdventureGame game;
 
   /**
    * An instance of this JComponent needs to know what item it represents.
-   * 
+   *
    * @param item
    *          that the area displays
    */
-  public InventoryDisplay(PickUpAbleStrategy item) {
+  public InventoryDisplay(PickUpAbleStrategy item, AdventureGame game) {
     this.item = item;
+    this.game = game;
     addMouseListener(this);
   }
 
@@ -56,29 +58,19 @@ public class InventoryDisplay extends JComponent implements MouseListener {
     this.isSelected = isSelected;
   }
 
-  /**
-   * Highlights the selected component when user clicks.
-   */
   @Override
   public void mouseClicked(MouseEvent e) {
-    /*
-     * System.out.println("item selected: " + item.getDescription());
-     * //setBorder(BorderFactory.createLineBorder(Color.GREEN)); if
-     * (AdventureGame.getSelectedItem() == null) { isSelected = true;
-     * AdventureGame.setSelectedItem(this); } else { // de-select previous item, and
-     * set selected item to be this component
-     * 
-     * }
-     */
-
+	    // TODO Auto-generated method stub
   }
 
   @Override
   public void mousePressed(MouseEvent e) {
     // TODO Auto-generated method stub
-
   }
 
+  /**
+   * Highlights the selected component when user clicks.
+   */
   @Override
   public void mouseReleased(MouseEvent e) {
     // ============== in game ===============
@@ -127,12 +119,13 @@ public class InventoryDisplay extends JComponent implements MouseListener {
         String desc = item.performAction(Action.valueOf(action));
         GUI.getActionDisplay().setText(desc);
 
+        System.out.println(action);
+        redrawInventory();
       }
-
     };
   }
 
-  public void redrawInventory(AdventureGame game) {
+  public void redrawInventory() {
     game.updateInventory();
   }
 

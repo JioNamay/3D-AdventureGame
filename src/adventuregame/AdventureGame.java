@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -41,6 +42,7 @@ import renderer.Renderer;
  * Handles the functionality of the game between user and game logic.
  *
  * @author yangcarr
+ * @author manaentawe 300428465
  */
 public class AdventureGame extends GUI {
 	// GAME HANDLERS
@@ -55,7 +57,8 @@ public class AdventureGame extends GUI {
 
 	// APPLICATION HANDLERS
 	private File saveFile = new File(""); // XML file to store saved game
-	private File loadFile = new File("GameWorld.xml"); // XML filename to load game from
+	private File loadFile = new File("GameWorld.xml"); // XML filename to load
+														// game from
 
 	private boolean isSaved = false; // when a new game is made, it's not saved
 	private List<InventoryDisplay> displayAreas;
@@ -123,22 +126,23 @@ public class AdventureGame extends GUI {
 		// if yes, then savegame
 
 		// run a new game anyways
-		game = new GameWorld(loadFile);	// load new game from file
-		//player.resetPlayer();	// resets the player
+		game = new GameWorld(loadFile); // load new game from file
+		// player.resetPlayer(); // resets the player
 		// isSaved = false;
 		// redraw(drawingArea);
 	}
 
 	/**
 	 * Asks user whether to save the current game or not
+	 *
 	 * @return user's response
 	 */
 	protected String askSave() {
 		if (isSaved)
 			return "";
 
-		int ans = JOptionPane.showConfirmDialog(container, "Would you like to save your game before you leave?",
-				null, JOptionPane.YES_NO_OPTION);
+		int ans = JOptionPane.showConfirmDialog(container, "Would you like to save your game before you leave?", null,
+				JOptionPane.YES_NO_OPTION);
 		if (ans == JOptionPane.YES_OPTION)
 			return "YES";
 
@@ -152,17 +156,25 @@ public class AdventureGame extends GUI {
 		if (player.getInventory() == null)
 			return;
 
-		displayAreas = new ArrayList<InventoryDisplay>();
+		Iterator<PickUpAbleStrategy> i = player.getInventory().iterator();
+		int count = 0;
+		System.out.println("CURRENT INVENTORY");
+		while (i.hasNext()) {
+			PickUpAbleStrategy p = i.next();
+			System.out.println(count++ + ": " + p.getName());
+		}
+		System.out.println("================================");
+
+		inventoryContainer.removeAll();
 
 		// draws every item in player's inventory
 		for (PickUpAbleStrategy item : player.getInventory()) {
-			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item) {
+			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item, this) {
 				@Override
-				public void paintComponent(Graphics g) {	// draw images of the items
+				public void paintComponent(Graphics g) {
 					String url = "src/renderer/data/";
-
 					String name = item.getName().toLowerCase();
- 
+
 					if (name.equals("potion") || name.equals("rock") || name.equals("tree") || name.equals("wall")) {
 						url += "else/";
 					} else {
@@ -180,38 +192,36 @@ public class AdventureGame extends GUI {
 					}
 
 					if (image != null) {
-						Image scaledImage = image.getScaledInstance((int) InventoryDisplay.IMAGE_WIDTH - 2, (int) InventoryDisplay.IMAGE_HEIGHT - 2, Image.SCALE_SMOOTH);
-						g.drawImage(scaledImage, 2, 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+						Image scaledImage = image.getScaledInstance((int) InventoryDisplay.IMAGE_WIDTH - 2,
+								(int) InventoryDisplay.IMAGE_HEIGHT - 2, Image.SCALE_SMOOTH);
+						g.drawImage(scaledImage, (int) ((g.getClipBounds().getWidth() - 2 - InventoryDisplay.IMAGE_WIDTH - 2) / 2), 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
 					}
 				}
 			};
+
 			inventoryImageComponent
 					.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-			displayAreas.add(inventoryImageComponent); // ??
-			inventoryImageComponent.setPreferredSize(new Dimension(InventoryDisplay.IMAGE_WIDTH, InventoryDisplay.IMAGE_HEIGHT));
-			displayAreas.add(inventoryImageComponent);
 			inventoryContainer.add(inventoryImageComponent);
-			//System.out.println("adding item. size is = " + displayAreas.size());
+
+			if (selectedDisplay == null) {
+				setSelectedItem(inventoryImageComponent);
+			}
 		}
 
-		//System.out.println("no. of displays: " + displayAreas.size());
-
-		// selects a random item from inventory if nothing is selected
-		if (selectedDisplay == null) {
-			int rand = (int) (Math.random() * displayAreas.size());
-			setSelectedItem(displayAreas.get(rand));
-		}
+		inventoryContainer.revalidate();
+		inventoryContainer.repaint();
 	}
 
 	/**
 	 * Determines and highlights the selected item (only one selected at a time).
 	 * The selected item in the inventory is passed on to player.
+	 *
 	 * @param display
 	 *            the newly selected component (won't ever be null)
 	 */
 	public static void setSelectedItem(InventoryDisplay display) {
 		selectedDisplay = display;
-		selectedDisplay.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+		selectedDisplay.setBorder(BorderFactory.createLineBorder(Color.gray));
 		Player.getInstance().setSelectedItem(selectedDisplay.getItem());
 	}
 
@@ -233,17 +243,19 @@ public class AdventureGame extends GUI {
 	@Override
 	protected void doRelease(MouseEvent e) {
 		Location clickedLocation = renderer.doRelease(e);
-		
-		if (clickedLocation == null) {
-		  return;
-		}
 
-		currentRoom = player.getCurrentRoom();
-		if (!currentRoom.getGameItems().containsKey(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()))) {
+		if (clickedLocation == null) {
 			return;
 		}
 
-		Item item = currentRoom.getGameItems().get(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()));
+		currentRoom = player.getCurrentRoom();
+		if (!currentRoom.getGameItems()
+				.containsKey(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()))) {
+			return;
+		}
+
+		Item item = currentRoom.getGameItems()
+				.get(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()));
 
 		// player clicked an area that doesn't contain an item
 		if (item == null || item.getName().toLowerCase().equals("wall")) {
@@ -253,7 +265,7 @@ public class AdventureGame extends GUI {
 		JPopupMenu actionMenu = new JPopupMenu();
 		List<String> itemActions = item.getActions();
 		// go through the possible actions for the selected item
-		for (String actions: itemActions) {
+		for (String actions : itemActions) {
 			JMenuItem action = new JMenuItem(actions);
 			action.addActionListener(createItemListener(action.getText(), item.getItem()));
 			actionMenu.add(action);
@@ -263,10 +275,12 @@ public class AdventureGame extends GUI {
 	}
 
 	/**
-	 * The action to be performed on this item in the room.
+	 * The action to be performed on this item in the room on the render panel.
 	 *
-	 * @param action action to perform on item
-	 * @param item item user is interacting with
+	 * @param action
+	 *            action to perform on item
+	 * @param item
+	 *            item user is interacting with
 	 * @return the ActionListener set on the menu item
 	 */
 	private ActionListener createItemListener(String action, Strategy item) {
@@ -275,20 +289,23 @@ public class AdventureGame extends GUI {
 			public void actionPerformed(ActionEvent e) {
 				if (action.equals(Action.THROWCOINS.toString())) {
 					String s = JOptionPane.showInputDialog("How many coins do you want to throw?: ");
-					int fountainCoins = Integer.parseInt(s);	// throws exception if not possible
-					if(Player.getInstance().getCoins() < fountainCoins) {
-					  JOptionPane.showMessageDialog( frame,
-					      "Player does not own the inputted amount of coins.",
-					      "Not enough coins",
-					      JOptionPane.ERROR_MESSAGE);
-					  
-					  return;
+					int fountainCoins = Integer.parseInt(s); // throws exception
+																// if not
+																// possible
+					if (Player.getInstance().getCoins() < fountainCoins) {
+						JOptionPane.showMessageDialog(frame, "Player does not own the inputted amount of coins.",
+								"Not enough coins", JOptionPane.ERROR_MESSAGE);
+
+						return;
 					}
 					player.addFountainCoins(fountainCoins);
 				}
+
 				String desc = item.performAction(Action.valueOf(action));
 				GUI.getActionDisplay().setText(desc);
 				GUI.getPlayerStatDisplay().setText(player.toString());
+
+				updateInventory();
 			}
 		};
 	}
@@ -348,21 +365,23 @@ public class AdventureGame extends GUI {
 			dir = Location.Direction.EAST;
 			break;
 		default:
-		//	JOptionPane.showMessageDialog(this, "Not a valid direction for player");
+			// JOptionPane.showMessageDialog(this, "Not a valid direction
+			// for player");
 			return;
 		}
 	}
 
 	/**
 	 * Takes user input from keyboard and moves player in the specified direction.
-	 * Note that it only moves the player one location at a time.
-	 * Moves player in the specified direction. Note that it only moves the player
-	 * one location at a time.
+	 * Note that it only moves the player one location at a time. Moves player in
+	 * the specified direction. Note that it only moves the player one location at a
+	 * time.
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//System.out.println("player will be moving in direction: " + dir.toString());	// test
-		navigatePlayer(dir);
+		if (dir != null) {
+			navigatePlayer(dir);
+		}
 	}
 
 	/**
@@ -371,7 +390,4 @@ public class AdventureGame extends GUI {
 	public static void main(String[] args) {
 		new AdventureGame();
 	}
-
-
-
 }

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * The rock, when dropped, removes itself from the players inventory and
  * replaces itself with a key.
- * 
+ *
  * @author Deanne Alabastro 300346210
  */
 public class Rock extends PickUpAbleStrategy implements Damageable {
@@ -28,7 +28,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#getActions()
    */
   @Override
@@ -43,7 +43,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#isSolid()
    */
   @Override
@@ -53,7 +53,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#isDoor()
    */
   @Override
@@ -63,7 +63,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#getHealth()
    */
   @Override
@@ -73,7 +73,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#die()
    */
   @Override
@@ -83,7 +83,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#getDamaged(int)
    */
   @Override
@@ -98,7 +98,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see
    * gameworld.entities.PickUpAbleStrategy#performAction(gameworld.entities.Item.
    * Action)
@@ -112,6 +112,7 @@ public class Rock extends PickUpAbleStrategy implements Damageable {
         PickUpAbleStrategy key = new Key();
         Player.getInstance().getInventory().remove(this);
         Player.getInstance().getInventory().add(key);
+        Player.getInstance().getInventory().incrementKeys();
         return "Dropping the rock causes it to shatter into pieces revealing a key! "
             + "It has been added to your inventory";
       default:

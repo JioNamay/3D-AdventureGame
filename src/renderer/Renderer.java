@@ -72,7 +72,7 @@ public class Renderer {
   public Renderer() {
     BOARD_ROTATION = 0;
 
-    PANEL_SIZE = GUI.DRAWING_SIZE;
+    PANEL_SIZE = GUI.DRAWING_WIDTH;
     CENTER_X = PANEL_SIZE / 2;
     CENTER_Y = PANEL_SIZE / 4;
 
@@ -473,7 +473,7 @@ public class Renderer {
     if(e.getButton() == 2) { // middle button
       this.hideWalls = !hideWalls;
     }
-    
+
     this.mouseDown = false;
 
     if (e.getButton() == 1) { // left click

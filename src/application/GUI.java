@@ -29,6 +29,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.border.Border;
 
 import adventuregame.AdventureGame;
 import gameworld.Location;
@@ -76,12 +77,16 @@ public abstract class GUI extends JFrame implements KeyListener {
 
 	protected abstract void navigatePlayer(Location.Direction dir);
 
-	public static final int FRAME_SIZE = 900;
-	public static final int DRAWING_SIZE = 600;
-	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final int FRAME_HEIGHT = 900;
+	public static final int FRAME_WIDTH = 1050;
+	public static final int DRAWING_WIDTH = FRAME_WIDTH - 10;
+	public static final int DRAWING_HEIGHT = 600;
+	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit()
+			.getScreenSize();
 
 	// protected JFrame frame;
-	protected JPanel container; // global container to hold all the components in frame
+	protected JPanel container; // global container to hold all the components
+								// in frame
 	protected JPanel playerInfo, inventoryContainer;
 	protected JComponent drawing; // the canvas to display the rendered world
 	protected Graphics drawingArea;
@@ -94,26 +99,24 @@ public abstract class GUI extends JFrame implements KeyListener {
 		setTitle("Adventure Game");
 		addKeyListener(this);
 		player = Player.getInstance();
-		setFocusable(true);		// handle key events
-
-		// test
-		for (int index = 0; index < 9; index++)
-			player.getInventory().add(new Key());
-		  player.getInventory().incrementKeys();
+		setFocusable(true); // handle key events
 
 		initialise();
-	} 
+	}
 
 	/**
-	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
-	 * items player is holding, and the various actions the player can perform.
+	 * Sets up the GUI window: the menubars, the canvas for drawing the game,
+	 * the items player is holding, and the various actions the player can
+	 * perform.
 	 */
 	public void initialise() {
-		this.setPreferredSize(new Dimension(FRAME_SIZE, FRAME_SIZE));
+		this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		this.setResizable(false);
 
 		// container hold items that flow from top to bottom
 		container = new JPanel();
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+		container.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
 		container.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
 
 		setMenuBar();
@@ -121,7 +124,8 @@ public abstract class GUI extends JFrame implements KeyListener {
 		JPanel rendererPanel = new JPanel();
 		rendererPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
-		// sets the graphics when application window is first run, so you'll always have
+		// sets the graphics when application window is first run, so you'll
+		// always have
 		// the area to draw on
 		drawing = new JComponent() {
 			/**
@@ -160,20 +164,15 @@ public abstract class GUI extends JFrame implements KeyListener {
 			}
 		});
 
-		drawing.setPreferredSize(new Dimension(DRAWING_SIZE, DRAWING_SIZE));
+		drawing.setPreferredSize(new Dimension(DRAWING_WIDTH, DRAWING_HEIGHT));
 		drawing.setVisible(true);
 		drawing.repaint();
 		rendererPanel.add(drawing);
 
-		rendererPanel.add(Box.createRigidArea(new Dimension(10, 0))); // spacing between drawing and info
-		JPanel descriptions = new JPanel(new GridLayout(3, 1, 0, 10)); // 3 rows, 1 column
-
-		// display description of examined item
-		actionDisplay = new JTextArea("display item info here", 10, 20);
-		actionDisplay.setEditable(false);
-		actionDisplay.setLineWrap(true);
-		descriptions.add(actionDisplay);
-
+		// rendererPanel.add(Box.createRigidArea(new Dimension(10, 0))); //
+		// spacing between drawing and info
+		JPanel descriptions = new JPanel(); // 3 rows, 1 column
+		
 		// display player stats
 		playerStats = new JTextArea("display player stats here", 10, 20);
 		playerStats.setEditable(false);
@@ -181,19 +180,29 @@ public abstract class GUI extends JFrame implements KeyListener {
 		playerStats.setText(player.toString());
 		descriptions.add(playerStats);
 
-		rendererPanel.add(descriptions);
+		// display description of examined item
+		actionDisplay = new JTextArea("display item info here", 10, 20);
+		actionDisplay.setEditable(false);
+		actionDisplay.setLineWrap(true);
+		descriptions.add(actionDisplay);
+
+		// rendererPanel.add(descriptions);
+
 		container.add(rendererPanel);
 
 		// PLAYER'S INFO: holds inventory and player actions
 		playerInfo = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
-		playerInfo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
-		playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
+		// playerInfo.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+		// playerInfo.setPreferredSize(new Dimension(FRAME_SIZE - 10, 155));
 
-		inventoryContainer = new JPanel(new GridLayout(2, 5)); // allocate area for inventory
-		inventoryContainer.setPreferredSize(new Dimension(410, 110));
+		inventoryContainer = new JPanel(new GridLayout(2, 5)); // allocate area
+																// for inventory
+		inventoryContainer.setPreferredSize(new Dimension(440, 140));
+		inventoryContainer
+				.setBorder(BorderFactory.createTitledBorder("Inventory"));
 		updateInventory();
 		playerInfo.add(inventoryContainer);
-
+		playerInfo.add(descriptions);
 		container.add(playerInfo);
 		setNavigationButtons(); // buttons for navigation
 
@@ -204,9 +213,9 @@ public abstract class GUI extends JFrame implements KeyListener {
 	}
 
 	/**
-	 * Creates the menu bar for the application window. This has the options: HELP
-	 * -> synopsis of game GAME -> load a saved game, save current game, load a new
-	 * game QUIT -> exit the game
+	 * Creates the menu bar for the application window. This has the options:
+	 * HELP -> synopsis of game GAME -> load a saved game, save current game,
+	 * load a new game QUIT -> exit the game
 	 */
 	private void setMenuBar() {
 		JMenuBar mb = new JMenuBar();
@@ -216,7 +225,8 @@ public abstract class GUI extends JFrame implements KeyListener {
 		help.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				String str = "GAME INFO HERE"; // <-- CHANGE THIS LATER
-				JOptionPane.showMessageDialog(container, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(container, str, "Game info",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
@@ -224,8 +234,10 @@ public abstract class GUI extends JFrame implements KeyListener {
 		JMenu quit = new JMenu("Quit");
 		quit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
-				if (ans == JOptionPane.YES_OPTION) { // ask player to save game before leaving
+				int ans = JOptionPane.showConfirmDialog(container,
+						"Are you sure you want to leave?");
+				if (ans == JOptionPane.YES_OPTION) { // ask player to save game
+														// before leaving
 					if (askSave().equals("YES"))
 						saveGame();
 					else
@@ -283,10 +295,10 @@ public abstract class GUI extends JFrame implements KeyListener {
 		// vertical spacing between components
 		playerInfo.add(Box.createRigidArea(new Dimension(10, 0)));
 
-		JButton west = new JButton("\u2190");
-		west.addActionListener(new ActionListener() {
+		JButton north = new JButton("\u2191");
+		north.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				navigatePlayer(Location.Direction.WEST);
+				navigatePlayer(Location.Direction.NORTH);
 			}
 		});
 
@@ -297,17 +309,17 @@ public abstract class GUI extends JFrame implements KeyListener {
 			}
 		});
 
-		JButton north = new JButton("\u2191");
-		north.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				navigatePlayer(Location.Direction.NORTH);
-			}
-		});
-
 		JButton south = new JButton("\u2193");
 		south.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				navigatePlayer(Location.Direction.SOUTH);
+			}
+		});
+
+		JButton west = new JButton("\u2190");
+		west.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				navigatePlayer(Location.Direction.WEST);
 			}
 		});
 

@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * The EquipableStrategy is for every item that has the capability to be a
  * weapon.
- * 
+ *
  * @author Deanne Alabastro 300346210
  */
 public abstract class EquipableStrategy extends PickUpAbleStrategy implements Damageable {
@@ -40,7 +40,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see
    * gameworld.entities.PickUpAbleStrategy#performAction(gameworld.entities.Item.
    * Action)
@@ -68,7 +68,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#getActions()
    */
   @Override
@@ -76,7 +76,8 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
     if (!Player.getInstance().getInventory().contains(this)) {
       return actions; // return default actions if not in inventory
     }
-    if (Player.getInstance().getEquippedWeapon().equals(this)) {
+    EquipableStrategy e = Player.getInstance().getEquippedWeapon();
+    if (e != null && e.equals(this)) {
       return Arrays.asList(Action.EXAMINE.toString(), Action.UNEQUIP.toString(),
           Action.DROP.toString());
     }
@@ -86,7 +87,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#isSolid()
    */
   @Override
@@ -96,7 +97,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#isDoor()
    */
   @Override
@@ -106,7 +107,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#getHealth()
    */
   @Override
@@ -116,7 +117,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#getDamaged(int)
    */
   @Override
@@ -131,7 +132,7 @@ public abstract class EquipableStrategy extends PickUpAbleStrategy implements Da
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#die()
    */
   @Override

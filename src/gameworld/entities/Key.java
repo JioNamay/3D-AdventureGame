@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * The key can be used to unlock any locked items. It breaks after 1 use.
- * 
+ *
  * @author Deanne Alabastro 300346210
  */
 public class Key extends PickUpAbleStrategy implements Damageable {
@@ -63,7 +63,7 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#getHealth()
    */
   @Override
@@ -73,23 +73,24 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#die()
    */
   @Override
   public void die() {
     Player.getInstance().getInventory().decrementKeys();
     Player.getInstance().getInventory().remove(this);
+    System.out.println("Died");
   }
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Damageable#getDamaged(int)
    */
   @Override
   public void getDamaged(int amount) {
-    if ((this.uses - amount) < 0) {
+    if ((this.uses - amount) <= 0) {
       this.uses = 0;
       this.die();
     } else {
@@ -99,7 +100,7 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#getActions()
    */
   @Override
@@ -114,7 +115,7 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#isSolid()
    */
   @Override
@@ -124,7 +125,7 @@ public class Key extends PickUpAbleStrategy implements Damageable {
 
   /*
    * (non-Javadoc)
-   * 
+   *
    * @see gameworld.entities.Strategy#isDoor()
    */
   @Override
