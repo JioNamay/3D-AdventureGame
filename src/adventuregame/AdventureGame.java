@@ -158,6 +158,8 @@ public class AdventureGame extends GUI {
 
 		inventoryContainer.removeAll();
 
+		inventoryContainer.setBackground(Color.white);
+
 		// draws every item in player's inventory
 		for (PickUpAbleStrategy item : player.getInventory()) {
 			InventoryDisplay inventoryImageComponent = new InventoryDisplay(item, this) {
@@ -185,7 +187,10 @@ public class AdventureGame extends GUI {
 					if (image != null) {
 						Image scaledImage = image.getScaledInstance((int) InventoryDisplay.IMAGE_WIDTH - 2,
 								(int) InventoryDisplay.IMAGE_HEIGHT - 2, Image.SCALE_SMOOTH);
-						g.drawImage(scaledImage, (int) ((g.getClipBounds().getWidth() - 2 - InventoryDisplay.IMAGE_WIDTH - 2) / 2), 2, InventoryDisplay.IMAGE_WIDTH - 2, InventoryDisplay.IMAGE_HEIGHT - 2, null);
+
+						int x = (int) ((g.getClipBounds().getWidth() - 2 - InventoryDisplay.IMAGE_WIDTH - 2) / 2);
+						int y = (int) ((g.getClipBounds().getHeight() - 2 - InventoryDisplay.IMAGE_HEIGHT - 2) / 2);
+						g.drawImage(scaledImage, x, y, null);
 					}
 				}
 			};

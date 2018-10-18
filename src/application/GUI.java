@@ -78,11 +78,10 @@ public abstract class GUI extends JFrame implements KeyListener {
 	protected abstract void navigatePlayer(Location.Direction dir);
 
 	public static final int FRAME_HEIGHT = 900;
-	public static final int FRAME_WIDTH = 1050;
+	public static final int FRAME_WIDTH = 1078;
 	public static final int DRAWING_WIDTH = FRAME_WIDTH - 10;
-	public static final int DRAWING_HEIGHT = 600;
-	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit()
-			.getScreenSize();
+	public static final int DRAWING_HEIGHT = 700;
+	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 
 	// protected JFrame frame;
 	protected JPanel container; // global container to hold all the components
@@ -105,9 +104,8 @@ public abstract class GUI extends JFrame implements KeyListener {
 	}
 
 	/**
-	 * Sets up the GUI window: the menubars, the canvas for drawing the game,
-	 * the items player is holding, and the various actions the player can
-	 * perform.
+	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
+	 * items player is holding, and the various actions the player can perform.
 	 */
 	public void initialise() {
 		this.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -172,18 +170,20 @@ public abstract class GUI extends JFrame implements KeyListener {
 		// rendererPanel.add(Box.createRigidArea(new Dimension(10, 0))); //
 		// spacing between drawing and info
 		JPanel descriptions = new JPanel(); // 3 rows, 1 column
-		
+
 		// display player stats
 		playerStats = new JTextArea("display player stats here", 10, 20);
 		playerStats.setEditable(false);
 		playerStats.setLineWrap(true);
 		playerStats.setText(player.toString());
+		playerStats.setBorder(BorderFactory.createTitledBorder("Player Stats"));
 		descriptions.add(playerStats);
 
 		// display description of examined item
 		actionDisplay = new JTextArea("display item info here", 10, 20);
 		actionDisplay.setEditable(false);
 		actionDisplay.setLineWrap(true);
+		actionDisplay.setBorder(BorderFactory.createTitledBorder("Descriptions"));
 		descriptions.add(actionDisplay);
 
 		// rendererPanel.add(descriptions);
@@ -197,9 +197,8 @@ public abstract class GUI extends JFrame implements KeyListener {
 
 		inventoryContainer = new JPanel(new GridLayout(2, 5)); // allocate area
 																// for inventory
-		inventoryContainer.setPreferredSize(new Dimension(440, 140));
-		inventoryContainer
-				.setBorder(BorderFactory.createTitledBorder("Inventory"));
+		inventoryContainer.setPreferredSize(new Dimension(440, 172));
+		inventoryContainer.setBorder(BorderFactory.createTitledBorder("Inventory"));
 		updateInventory();
 		playerInfo.add(inventoryContainer);
 		playerInfo.add(descriptions);
@@ -213,9 +212,9 @@ public abstract class GUI extends JFrame implements KeyListener {
 	}
 
 	/**
-	 * Creates the menu bar for the application window. This has the options:
-	 * HELP -> synopsis of game GAME -> load a saved game, save current game,
-	 * load a new game QUIT -> exit the game
+	 * Creates the menu bar for the application window. This has the options: HELP
+	 * -> synopsis of game GAME -> load a saved game, save current game, load a new
+	 * game QUIT -> exit the game
 	 */
 	private void setMenuBar() {
 		JMenuBar mb = new JMenuBar();
@@ -225,8 +224,7 @@ public abstract class GUI extends JFrame implements KeyListener {
 		help.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				String str = "GAME INFO HERE"; // <-- CHANGE THIS LATER
-				JOptionPane.showMessageDialog(container, str, "Game info",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(container, str, "Game info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 
@@ -234,8 +232,7 @@ public abstract class GUI extends JFrame implements KeyListener {
 		JMenu quit = new JMenu("Quit");
 		quit.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				int ans = JOptionPane.showConfirmDialog(container,
-						"Are you sure you want to leave?");
+				int ans = JOptionPane.showConfirmDialog(container, "Are you sure you want to leave?");
 				if (ans == JOptionPane.YES_OPTION) { // ask player to save game
 														// before leaving
 					if (askSave().equals("YES"))
