@@ -322,14 +322,14 @@ public class Renderer {
     // state.
     if (name.toLowerCase().equals("chest")) {
       TreasureChest c = (TreasureChest) i.getItem();
-      if (c.isLocked()) {
-        url += "_closed";
-      } else if (c.isOpen()) {
+      if (c.isOpen()) {
         if (c.hasItem()) {
           url += "_full";
         } else {
           url += "_empty";
         }
+      } else {
+          url += "_closed";
       }
     } else if (name.toLowerCase().equals("door")) {
       Door d = (Door) i.getItem();
