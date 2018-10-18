@@ -187,8 +187,9 @@ public class Player extends AttackingEntity {
    */
   @Override
   public void die() {
-    // Game end
-
+    // haven't implemented so just end game.
+    System.out.println("Player died. End game");
+    System.exit(0);
   }
 
   /**
@@ -289,13 +290,13 @@ public class Player extends AttackingEntity {
    */
   @Override
   public String toString() {
-    String info = "PLAYER STATS: \n";
+    String info = "";
     info += "Health: " + health + "\n";
-    info += "Max damage received: " + maxDamage + "\n";
+    info += "Max attack damage: " + maxDamage + "\n";
     info += "No. of coins: " + coins + "\n";
     
     String weapon = (equippedWeapon == null) ? "none" : equippedWeapon.getName();
-    info += "Weapon: " + weapon + "\n";
+    info += "Weapon equipped: " + weapon + "\n";
     
     return info;
   }

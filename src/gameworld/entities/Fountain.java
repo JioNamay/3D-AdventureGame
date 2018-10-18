@@ -101,6 +101,7 @@ public class Fountain extends CoinBank {
       }else if(coins > 32 && coins < 46) {
         // if coins thrown between 32-45 return key
         in.add(new Key());
+        in.incrementKeys();
         return "Player got Key";
       }else{
         // if coins thrown greater than 45 return potion

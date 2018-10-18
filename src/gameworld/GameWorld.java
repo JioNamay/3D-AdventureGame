@@ -23,7 +23,7 @@ import gameworld.entities.Wall;
  * GameWorld keeps track of all the rooms in the game. Each Room is like a
  * single board on its own, whereas this class represents the overall boards.
  *
- * @author
+ * @author yeebenn 300375341
  * @author alabasdean 300346210
  * @author manaentawe 300428465
  */

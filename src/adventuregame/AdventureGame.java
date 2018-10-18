@@ -103,6 +103,8 @@ public class AdventureGame extends GUI {
 	 */
 	@Override
 	protected void saveGame() { // save game to file
+	  // Havent implemented so just exit
+	  System.exit(0);
 		if (isSaved)
 			return; // game already saved
 
@@ -206,6 +208,8 @@ public class AdventureGame extends GUI {
 
 		inventoryContainer.revalidate();
 		inventoryContainer.repaint();
+		// set the player stats again in case inventory actions change something
+		GUI.getPlayerStatDisplay().setText(player.toString()); 
 	}
 
 	/**
@@ -285,6 +289,9 @@ public class AdventureGame extends GUI {
 			public void actionPerformed(ActionEvent e) {
 				if (action.equals(Action.THROWCOINS.toString())) {
 					String s = JOptionPane.showInputDialog("How many coins do you want to throw?: ");
+					if (s == null || s.equals("")) {
+					  return;
+					}
 					int fountainCoins = Integer.parseInt(s); // throws exception
 																// if not
 																// possible

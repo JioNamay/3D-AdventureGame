@@ -65,7 +65,10 @@ public class Table extends LockableStrategy implements Container {
    */
   @Override
   public void placeItem(PickUpAbleStrategy item) {
-    if (item == null) {
+    if (this.item == null) {
+      if (item instanceof Key) {
+        Player.getInstance().getInventory().decrementKeys();
+      }
       this.item = item;
     }
   }
@@ -78,6 +81,9 @@ public class Table extends LockableStrategy implements Container {
   @Override
   public PickUpAbleStrategy takeItem() {
     if (!Player.getInstance().getInventory().isFull()) {
+      if (item instanceof Key) {
+        Player.getInstance().getInventory().incrementKeys();
+      }
       return item;
     }
     return null;
@@ -158,8 +164,11 @@ public class Table extends LockableStrategy implements Container {
           }
         }
         Player.getInstance().getInventory().add(item);
+        if (item instanceof Key) {
+          Player.getInstance().getInventory().incrementKeys();
+        }
         String itemName = item.getName();
-        item = null;
+        item = null; // remove from table
         return "You got a " + itemName + " from the table!";
   
       case PLACE:

@@ -55,6 +55,7 @@ public class Cactus extends CoinBank {
         }
         Key key = new Key();
         Player.getInstance().getInventory().add(key);
+        Player.getInstance().getInventory().incrementKeys();
         return "You found a " + key.getName();
       default:
         return description;
