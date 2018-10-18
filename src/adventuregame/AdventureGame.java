@@ -60,6 +60,7 @@ public class AdventureGame extends GUI {
 	private boolean isSaved = false; // when a new game is made, it's not saved
 	private List<InventoryDisplay> displayAreas;
 	private static InventoryDisplay selectedDisplay;
+	private JFrame frame;
 
 	/**
 	 * Instantiates a new adventure game. Reading the rooms from XML file, and
@@ -67,6 +68,7 @@ public class AdventureGame extends GUI {
 	 */
 	public AdventureGame() {
 		onStart();
+		frame = this;
 		game = new GameWorld(loadFile);
 	}
 
@@ -160,7 +162,7 @@ public class AdventureGame extends GUI {
 					String url = "src/renderer/data/";
 
 					String name = item.getName().toLowerCase();
-
+ 
 					if (name.equals("potion") || name.equals("rock") || name.equals("tree") || name.equals("wall")) {
 						url += "else/";
 					} else {
@@ -231,20 +233,20 @@ public class AdventureGame extends GUI {
 	@Override
 	protected void doRelease(MouseEvent e) {
 		Location clickedLocation = renderer.doRelease(e);
-
-		// test
-//		if(clickedLocation != null) {
-//			System.out.println("row[" +clickedLocation.getRow()+ "], col[" +clickedLocation.getCol()+ "]");
-//		}
+		
+		if (clickedLocation == null) {
+		  return;
+		}
 
 		currentRoom = player.getCurrentRoom();
-		if (!currentRoom.getGameItems().containsKey(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol())))
+		if (!currentRoom.getGameItems().containsKey(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()))) {
 			return;
+		}
 
 		Item item = currentRoom.getGameItems().get(currentRoom.getLocation(clickedLocation.getRow(), clickedLocation.getCol()));
 
 		// player clicked an area that doesn't contain an item
-		if (item == null || !(item.getItem() instanceof Strategy)) {
+		if (item == null || item.getName().toLowerCase().equals("wall")) {
 			return;
 		}
 
@@ -274,6 +276,14 @@ public class AdventureGame extends GUI {
 				if (action.equals(Action.THROWCOINS.toString())) {
 					String s = JOptionPane.showInputDialog("How many coins do you want to throw?: ");
 					int fountainCoins = Integer.parseInt(s);	// throws exception if not possible
+					if(Player.getInstance().getCoins() < fountainCoins) {
+					  JOptionPane.showMessageDialog( frame,
+					      "Player does not own the inputted amount of coins.",
+					      "Not enough coins",
+					      JOptionPane.ERROR_MESSAGE);
+					  
+					  return;
+					}
 					player.addFountainCoins(fountainCoins);
 				}
 				String desc = item.performAction(Action.valueOf(action));
@@ -284,7 +294,7 @@ public class AdventureGame extends GUI {
 	}
 
 	/**
-	 * Listens for mouse presses in the JOptionPane.showMessageDialog(this, "Not a valid direction for player");display area.
+	 * Listens for mouse presses in the display area.
 	 */
 	@Override
 	protected void doPress(MouseEvent e) {
@@ -338,7 +348,7 @@ public class AdventureGame extends GUI {
 			dir = Location.Direction.EAST;
 			break;
 		default:
-			JOptionPane.showMessageDialog(this, "Not a valid direction for player");
+		//	JOptionPane.showMessageDialog(this, "Not a valid direction for player");
 			return;
 		}
 	}

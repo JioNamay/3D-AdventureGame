@@ -70,6 +70,8 @@ public class Fountain extends CoinBank {
 
   private String grantWish() {
     int coins = Player.getInstance().getFountainCoins();
+    Player.getInstance().setFountainCoins(0);
+    Player.getInstance().removeCoins(coins);
     Inventory in = Player.getInstance().getInventory();
     if(in.isFull()) {
       Player.getInstance().addCoins(10);

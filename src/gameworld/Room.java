@@ -229,16 +229,18 @@ public class Room {
   public boolean movePlayer(Direction dir) {
     int playerLocRow = Player.getInstance().getLocation().getRow();
     int playerLocCol = Player.getInstance().getLocation().getCol();
-
+    Location playerLoc = locations[playerLocRow][playerLocCol];
     Player.getInstance().setDirection(dir);
+    Item itemInLoc = gameItems.get(playerLoc);
 
     switch (dir) {
       case NORTH:
         // check if player can move into loc
-        if (!locations[playerLocRow][playerLocCol].isDoor()
+        if (!playerLoc.isDoor()
             && locations[playerLocRow - 1][playerLocCol].isSolid()) {
           return false;
-        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+        } else if (playerLoc.isDoor() 
+            && itemInLoc.getItem().getDirection().equals(Direction.SOUTH)) {
           return movePlayerToConnectingRoom(Direction.NORTH);
         }
   
@@ -249,7 +251,8 @@ public class Room {
         if (!locations[playerLocRow][playerLocCol].isDoor()
             && locations[playerLocRow][playerLocCol + 1].isSolid()) {
           return false;
-        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+        } else if (playerLoc.isDoor() 
+            && itemInLoc.getItem().getDirection().equals(Direction.WEST)) {
           return movePlayerToConnectingRoom(Direction.EAST);
         }
   
@@ -259,7 +262,8 @@ public class Room {
         if (!locations[playerLocRow][playerLocCol].isDoor()
             && locations[playerLocRow + 1][playerLocCol].isSolid()) {
           return false;
-        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+        } else if (playerLoc.isDoor() 
+            && itemInLoc.getItem().getDirection().equals(Direction.NORTH)) {
           return movePlayerToConnectingRoom(Direction.SOUTH);
         }
   
@@ -269,7 +273,8 @@ public class Room {
         if (!locations[playerLocRow][playerLocCol].isDoor()
             && locations[playerLocRow][playerLocCol - 1].isSolid()) {
           return false;
-        } else if (locations[playerLocRow][playerLocCol].isDoor()) {
+        } else if (playerLoc.isDoor() 
+            && itemInLoc.getItem().getDirection().equals(Direction.EAST)) {
           return movePlayerToConnectingRoom(Direction.WEST);
         }
   

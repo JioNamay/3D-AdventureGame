@@ -29,7 +29,7 @@ public class InventoryDisplay extends JComponent implements MouseListener {
   public static final int IMAGE_HEIGHT = 110 / 2;
 
   private PickUpAbleStrategy item;
-  private boolean isSelected;
+  private boolean isSelected; 
 
   /**
    * An instance of this JComponent needs to know what item it represents.

@@ -135,6 +135,15 @@ public class Player extends AttackingEntity {
   public void addCoins(int coins) {
     this.coins += coins;
   }
+  
+  /**
+   * Removes the coins.
+   *
+   * @param coins the coins
+   */
+  public void removeCoins(int coins) {
+    this.coins -= coins;
+  }
 
   /**
    * Sets the inventory.

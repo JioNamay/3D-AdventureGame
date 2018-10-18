@@ -97,10 +97,10 @@ public class Renderer {
     int width = (int) g.getClip().getBounds2D().getWidth();
     int height = (int) g.getClip().getBounds2D().getHeight();
 
-    g.setColor(Color.WHITE);
+    g.setColor(new Color(125, 195, 235));
     g.fillRect(0, 0, width, height);
 
-    // Display name of the room
+    // Display name of the room.
     g.setColor(Color.BLACK);
     g.drawString(r.getName(), PANEL_SIZE / 2 - (r.getName().length() * 3), TILE_SIZE / 2);
 
@@ -173,7 +173,7 @@ public class Renderer {
 
   /**
    * Processes the location by extracting the correct image to display for the
-   * state of the player object at the given location.
+   * state of the player object at the given location. Player is never null.
    *
    * @param g
    *          the graphics
@@ -241,7 +241,7 @@ public class Renderer {
 
   /**
    * Processes the location by extracting the correct image to display for the
-   * state of the item object at the given location.
+   * state of the item object at the given location. Item can be null.
    *
    * @param g
    *          the graphics
@@ -333,10 +333,10 @@ public class Renderer {
       }
     } else if (name.toLowerCase().equals("door")) {
       Door d = (Door) i.getItem();
-      if (d.isLocked()) {
-        url += "_closed";
-      } else {
+      if (d.isOpen()) {
         url += "_open";
+      } else {
+        url += "_closed";
       }
     }
 
@@ -467,13 +467,16 @@ public class Renderer {
    *
    * @param e
    *          the mouse event
-   * @return the location
+   * @return the location or null (if no location was clicked)
    */
   public Location doRelease(MouseEvent e) {
+    if(e.getButton() == 2) { // middle button
+      this.hideWalls = !hideWalls;
+    }
+    
     this.mouseDown = false;
-    this.hideWalls = false;
 
-    if (e.getButton() == 1) {
+    if (e.getButton() == 1) { // left click
       return getClickedLocation(e);
     } else if (e.getButton() == 3) { // right click
       this.BOARD_ROTATION++;
@@ -489,10 +492,6 @@ public class Renderer {
    *          the mouse event
    */
   public void doPress(MouseEvent e) {
-    if (e.getButton() == 2) {
-      this.hideWalls = true;
-    }
-
     this.mouseDown = true;
     this.mouseLocation = e.getPoint();
   }

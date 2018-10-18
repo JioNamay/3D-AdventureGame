@@ -148,8 +148,17 @@ class RoomTests {
     assertTrue(Player.getInstance().getLocation().equals(foyer.getLocation(6, 3)));
     assertFalse(courtyard.hasPlayer());
     assertTrue(foyer.hasPlayer());
+    foyer.movePlayer(Direction.NORTH);
+    if(foyer.hasPlayer() && Player.getInstance().getCurrentRoom().equals(foyer)){
+      System.out.println("Hi");
+    }
+    System.out.println(Player.getInstance().getCurrentRoom().getName());
+    System.out.println("Row " + Player.getInstance().getLocation().getRow() + "Col " + Player.getInstance().getLocation().getCol());
+    assertTrue(Player.getInstance().getLocation().equals(foyer.getLocation(5, 3)));
+   
 
     // move to room south
+    foyer.movePlayer(Direction.SOUTH);
     assertTrue(Player.getInstance().getLocation().isDoor());
     assertTrue(foyer.movePlayer(Direction.SOUTH)); // move rooms
     assertEquals(Player.getInstance().getCurrentRoom(), courtyard,

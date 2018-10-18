@@ -137,7 +137,7 @@ public abstract class AttackingItems extends AttackingEntity implements Strategy
       if (damage > 0) {
         retaliationStr = "The " + this.name
             + " shook from the attack attempt and dropped bits of itself onto "
-            + "the player. It caused " + damage + "damage.";
+            + "the player. It caused " + damage + " damage.";
       } else {
         retaliationStr = "Bits of the " + this.name
             + " fell near the player due to the attack. It caused no damage.";

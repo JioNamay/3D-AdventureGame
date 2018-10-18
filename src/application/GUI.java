@@ -34,7 +34,7 @@ import adventuregame.AdventureGame;
 import gameworld.Location;
 
 import gameworld.Room;
-
+import gameworld.entities.Key;
 import gameworld.entities.PickUpAbleStrategy;
 
 import gameworld.entities.Player;
@@ -98,10 +98,11 @@ public abstract class GUI extends JFrame implements KeyListener {
 
 		// test
 		for (int index = 0; index < 9; index++)
-			player.getInventory().add(new Potion());
+			player.getInventory().add(new Key());
+		  player.getInventory().incrementKeys();
 
 		initialise();
-	}
+	} 
 
 	/**
 	 * Sets up the GUI window: the menubars, the canvas for drawing the game, the
