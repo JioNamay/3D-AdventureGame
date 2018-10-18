@@ -137,9 +137,25 @@ public class GameWorld {
 
 		// add items
 		foyer.addGameItem(3, 3, new Item(new Note()));
-		foyer.addGameItem(2, 1, new Item(new Rock()));
-		foyer.addGameItem(1, 2, new Item(new Cactus()));
-		foyer.addGameItem(1, 4, new Item(new Cactus()));
+		foyer.addGameItem(4, 1, new Item(new Rock()));
+		foyer.addGameItem(1, 5, new Item(new Tree()));
+
+		Cactus c = new Cactus();
+		c.setDirection(Direction.SOUTH);
+		foyer.addGameItem(1, 1, new Item(c));
+
+		c = new Cactus();
+		c.setDirection(Direction.WEST);
+		foyer.addGameItem(5, 5, new Item(c));
+
+		Sofa s = new Sofa();
+		s.setDirection(Direction.SOUTH);
+		foyer.addGameItem(1, 3, new Item(s));
+
+		s = new Sofa();
+		s.setDirection(Direction.WEST);
+		foyer.addGameItem(3, 5, new Item(s));
+
 		// add walls
 		addWalls(foyer);
 	}

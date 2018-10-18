@@ -156,15 +156,6 @@ public class AdventureGame extends GUI {
 		if (player.getInventory() == null)
 			return;
 
-		Iterator<PickUpAbleStrategy> i = player.getInventory().iterator();
-		int count = 0;
-		System.out.println("CURRENT INVENTORY");
-		while (i.hasNext()) {
-			PickUpAbleStrategy p = i.next();
-			System.out.println(count++ + ": " + p.getName());
-		}
-		System.out.println("================================");
-
 		inventoryContainer.removeAll();
 
 		// draws every item in player's inventory
