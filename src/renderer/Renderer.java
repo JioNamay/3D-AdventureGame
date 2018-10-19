@@ -55,6 +55,9 @@ public class Renderer {
 	/** The tile height. */
 	public double TILE_HEIGHT;
 
+	/** The label margin. */
+	public int LABEL_MARGIN;
+
 	/** The mouse down. */
 	private boolean mouseDown = false;
 
@@ -81,6 +84,8 @@ public class Renderer {
 		TILE_SIZE = (PANEL_SIZE) / NUM_OF_TILES / 2;
 		TILE_WIDTH = TILE_SIZE;
 		TILE_HEIGHT = TILE_SIZE * 0.577;
+
+		LABEL_MARGIN = TILE_SIZE / 4;
 	}
 
 	/**
@@ -102,17 +107,17 @@ public class Renderer {
 		g.fillRect(0, 0, width, height);
 
 		// Display the name of the room.
-		int roomLabelX = TILE_SIZE / 4;
-		int roomLabelY = TILE_SIZE / 4;
+		int roomLabelX = LABEL_MARGIN;
+		int roomLabelY = (int) (LABEL_MARGIN * 1.5);
 
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.drawString(r.getName(), roomLabelX, roomLabelY);
 
 		// Display the direction of the room.
-		int directionLabelX = TILE_SIZE / 4;
-		int directionLabelY = TILE_SIZE / 2;
+		int directionLabelX = LABEL_MARGIN;
+		int directionLabelY = (int) (LABEL_MARGIN * 3);
 
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.drawString(getRotationDirection().toString(), directionLabelX, directionLabelY);
 
 		// Draw the isometric images.
